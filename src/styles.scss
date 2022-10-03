@@ -12,8 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$OnlineCV-primary: mat.define-palette(mat.$teal-palette);
-$OnlineCV-accent: mat.define-palette(mat.$amber-palette);
+$OnlineCV-primary: mat.define-palette(mat.$teal-palette, 50);
+$OnlineCV-accent: mat.define-palette(mat.$blue-grey-palette, 600);
 
 // The warn palette is optional (defaults to red).
 $OnlineCV-warn: mat.define-palette(mat.$red-palette);
@@ -33,7 +33,11 @@ $OnlineCV-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($OnlineCV-theme);
 
+
+
 /* You can add global styles to this file, and also import other style files */
 
+$test-aAllo: "testa";
+// @debug "primary:#{mat.define-palette(mat.$teal-palette, 50)}";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
