@@ -94,7 +94,7 @@ export class SkillsComponent implements OnInit {
     this.particles = [];
     let radius = 100;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       let x = this.randomIntFromRange(radius, this.canvasWid - radius);
       let y = this.randomIntFromRange(radius, this.canvasHei - radius);
 
@@ -115,6 +115,7 @@ export class SkillsComponent implements OnInit {
     }
 
   }
+
   animate() {
     requestAnimationFrame(this.animate.bind(this));
     this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
