@@ -7,7 +7,7 @@ import { Education } from 'src/assets/contentInterface';
   styleUrls: ['./formations.component.scss']
 })
 export class FormationsComponent  {
-  @Input() cvFormations: Education[] = []
+  @Input() cvFormations?: Education[] = []
 
   constructor() { }
 
