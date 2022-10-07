@@ -6,8 +6,8 @@ export interface CVDataContent {
   softskills: string[]
   passions: Passion[]
   profile: string
-  experiences: Experience[]
-  educations: Education[]
+  experiences?: Experience[]
+  educations?: Education[]
 }
 
 export interface Header {

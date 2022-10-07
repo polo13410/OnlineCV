@@ -1,4 +1,3 @@
-
 <p>
   <mat-toolbar color="primary">
     <span>Paul PERA</span>
@@ -8,10 +7,10 @@
 
 <div class="cards">
   <app-experiences [experiences]="cvData[0].experiences"></app-experiences>
-  <app-formations [cvFormations]="cvData[0].educations"></app-formations>
+  <app-formations [education]="cvData[0].educations"></app-formations>
 </div>
 
-<div>
+<div class="skills" id="skillcanva">
   <app-skills></app-skills>
 </div>
 

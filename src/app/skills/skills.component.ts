@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, } from '@angular/core';
 import { Particle } from './particles';
 
 @Component({
@@ -16,10 +16,17 @@ export class SkillsComponent implements OnInit {
   }
   public colors: any[] = [];
   public particles: any;
-  public canvasWid: number = 400;
-  public canvasHei: number = 400;
+  public canvasWid: number = 800;
+  public canvasHei: number = 800;
 
-  constructor() { this.handleOnResize(); }
+  constructor() {  }
+
+  @HostListener('window:load',['$event'])
+  onPageLoad(event: Event) {
+     console.log('loaded',event);
+     
+    this.onChanges();
+  }
 
   @HostListener('window:mousemove', ['$event'])
   handleMouseMove(event: any) {
@@ -29,12 +36,25 @@ export class SkillsComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   handleOnResize(event?: any) {
-    this.canvasWid = innerWidth;
-    this.canvasHei = innerHeight;
-    this.canvas.width = innerWidth;
-    this.canvas.height = innerHeight;
 
-    // this.init();
+    this.onChanges();
+  }
+
+  onChanges(){
+    const parentwidth = document.getElementById('skillcanva')?.clientWidth ?? 800;
+    const parentheight = document.getElementById('skillcanva')?.clientHeight ?? 800;
+
+    this.canvasWid = parentwidth;
+    this.canvasHei = parentheight;
+    this.canvas.width = parentwidth;
+    this.canvas.height = parentheight;
+
+    // this.canvasWid = window.innerWidth;
+    // this.canvasHei = window.innerHeight;
+    // this.canvas.width = window.innerWidth;
+    // this.canvas.height = window.innerHeight;
+
+    this.init();
   }
 
   ngOnInit() {
@@ -72,7 +92,7 @@ export class SkillsComponent implements OnInit {
 
   init() {
     this.particles = [];
-    let radius = 40;
+    let radius = 100;
 
     for (let i = 0; i < 10; i++) {
       let x = this.randomIntFromRange(radius, this.canvasWid - radius);
