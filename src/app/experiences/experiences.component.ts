@@ -8,7 +8,7 @@ import { Experience } from 'src/assets/contentInterface'
 })
 export class ExperiencesComponent {
   @Input()
-  experiences?: Experience[];
+  experiences?: Experience[]  = [];
 
   constructor() { }
 
