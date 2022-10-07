@@ -1,4 +1,4 @@
-<mat-card class="exp-card" *ngFor="let exp of cvFormations">
+<mat-card class="card" *ngFor="let exp of cvFormations">
     <mat-card-title color="primary">{{exp.title}}</mat-card-title>
     <mat-card-subtitle>{{exp.school}} - {{exp.location}}</mat-card-subtitle>
     <mat-card-content *ngFor="let desc of exp.descriptions">{{desc}}</mat-card-content>
