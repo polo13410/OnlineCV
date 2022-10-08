@@ -15,7 +15,7 @@ export class SkillsComponent implements OnInit {
     y: 0
   }
   public colors: any[] = [];
-  public particles: any;
+  public particles?: Particle[];
   public canvasWid: number = 800;
   public canvasHei: number = 800;
 
@@ -120,7 +120,7 @@ export class SkillsComponent implements OnInit {
     requestAnimationFrame(this.animate.bind(this));
     this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.particles.forEach((particle: { mousePos: { x: number; y: number; }; update: (arg0: any) => void; }) => {
+    this.particles?.forEach((particle: { mousePos: { x: number; y: number; }; update: (arg0: any) => void; }) => {
       particle.mousePos = this.mousePos;
       particle.update(this.particles);
     });

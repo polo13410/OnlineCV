@@ -9,6 +9,7 @@ export class Particle {
     public radius;
     public mass;
     public opacity = 0;
+    public text;
     public r;
     public g;
     public b;
@@ -27,6 +28,7 @@ export class Particle {
         y: (Math.random() - 0.5) * 0.1
       };
       this.radius = radius;
+      this.text = "text";
       this.mass = 1;
       this.opacity = 0;
       this.r = rgb.r;
@@ -96,6 +98,8 @@ export class Particle {
         this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         this.c.strokeStyle = `rgba(${this.r}, ${this.g}, ${this.b}, 1)`;
         this.c.stroke();
+        this.c.text = 'test';
+        // this.c.text = this.text;
         this.c.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity}`;
         this.c.fill();
         this.c.closePath();
