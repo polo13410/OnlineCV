@@ -1,18 +1,18 @@
-<p>
+
   <mat-toolbar color="primary">
-    <span>Paul PERA</span>
+    <button mat-button class="home-button">
+      <mat-icon class="home-button-icon" fontIcon="home">home</mat-icon>
+      <a class="home-button-text">
+        {{cvData[0].header.name}} {{cvData[0].header.surname}}
+      </a>
+    </button>
   </mat-toolbar>
-</p>
 
 
 <div class="cards">
   <app-experiences [experiences]="cvData[0].experiences"></app-experiences>
   <app-formations [education]="cvData[0].educations"></app-formations>
+  <app-skills [skills]="cvData[0].skills"></app-skills>
 </div>
-
-<div class="skills" id="skillcanva">
-  <app-skills></app-skills>
-</div>
-
 
 <router-outlet></router-outlet>

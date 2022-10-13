@@ -8,8 +8,26 @@
 
 
 .skills {
-  max-width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
-  height: 800px;
+  max-width: 95%;
+  margin-left: 3%;
+  margin-right: 3%;
+  height: 100%;
+}
+
+.home-button {
+  font-size: 30px;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
+.home-button-text {
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
+.home-button-icon{
+  justify-content: space-between;
+  vertical-align: middle;
+  transform: scale(1.35);
 }
