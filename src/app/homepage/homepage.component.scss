@@ -1,0 +1,21 @@
+.main-title {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img.profile-picture {
+    width: 15%;
+}

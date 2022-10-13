@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,6 +20,7 @@ import { FormationsComponent } from './formations/formations.component';
 import { SkillsComponent } from './skills/skills.component';
 import { BubbleComponent } from './bubble/bubble.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 
 @NgModule({
@@ -28,13 +30,20 @@ import { ProfileComponent } from './profile/profile.component';
     FormationsComponent,
     SkillsComponent,
     BubbleComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomepageComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    RouterModule.forRoot([
+      {path: 'home', component: HomepageComponent},
+      {path: 'edu', component: FormationsComponent},
+      {path: 'exp', component: ExperiencesComponent},
+      {path: 'skills', component: SkillsComponent},
+    ]),
     MatSliderModule,
     MatToolbarModule,
     MatCardModule,
