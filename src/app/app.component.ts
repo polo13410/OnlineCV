@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
 
+  protected cvData: CVDataContent[] = [];
   title = 'OnlineCV';
-  cvData: CVDataContent[] = [];
 
   constructor(private http: HttpClient) { }
 

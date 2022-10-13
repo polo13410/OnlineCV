@@ -1,2 +1,4 @@
-<canvas>
-</canvas>
+<mat-card class="card" *ngFor="let exp of skills">
+    <mat-card-title color="primary">{{exp.lang}}</mat-card-title>
+    <app-bubble></app-bubble>
+</mat-card>
