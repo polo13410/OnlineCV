@@ -1,4 +1,5 @@
 <mat-card class="card" *ngFor="let exp of skills">
     <mat-card-title color="primary">{{exp.lang}}</mat-card-title>
+    <mat-card-content color="primary">{{exp.time}} - {{exp.level}}</mat-card-content>
     <app-bubble></app-bubble>
 </mat-card>
