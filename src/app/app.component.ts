@@ -10,11 +10,18 @@ import { Header } from 'src/assets/contentInterface';
 export class AppComponent {
   title = 'Paul PERA';
 
-  header?: Header;
+  header?: Header = {
+    name:"",
+    surname:"",
+    address:"",
+    mail:"",
+    phone:"",
+    title:""
+  };
 
   constructor(private json: GetJsonService) {}
 
   ngOnInit(): void {
-    this.header = this.json.getHome(0);
+    this.header = this.json.getHeader(0);
   }
 }

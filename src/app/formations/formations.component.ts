@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { GetJsonService } from '../get-json.service';
 import { Education } from 'src/assets/contentInterface';
 
 @Component({
@@ -7,12 +8,12 @@ import { Education } from 'src/assets/contentInterface';
   styleUrls: ['./formations.component.scss']
 })
 export class FormationsComponent {
-  @Input() education?: Education[] = [];
+ education?: Education[] = [];
 
-  constructor() { }
+ constructor(private json: GetJsonService) {}
 
   ngOnInit(): void {
-
+    this.education = this.json.getEdu(0);
   }
 
 }

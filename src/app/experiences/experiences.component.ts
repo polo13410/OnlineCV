@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { GetJsonService } from '../get-json.service';
 import { Experience } from 'src/assets/contentInterface'
 
 @Component({
@@ -7,12 +8,13 @@ import { Experience } from 'src/assets/contentInterface'
   styleUrls: ['./experiences.component.scss']
 })
 export class ExperiencesComponent {
-  @Input()
+  
   experiences?: Experience[]  = [];
 
-  constructor() { }
+  constructor(private json: GetJsonService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.experiences = this.json.getExp(0);
   }
 
 }

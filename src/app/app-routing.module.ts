@@ -6,7 +6,7 @@ import { ExperiencesComponent } from './experiences/experiences.component';
 import { SkillsComponent } from './skills/skills.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomepageComponent },
+  { path: '', component: HomepageComponent },
   { path: 'edu', component: FormationsComponent },
   { path: 'exp', component: ExperiencesComponent },
   { path: 'skills', component: SkillsComponent },
