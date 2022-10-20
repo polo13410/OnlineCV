@@ -1,3 +1,25 @@
+.home-button {
+  font-size: 25px;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.home-button-text {
+  justify-content: space-between;
+  vertical-align: middle;
+}
+.home-button-icon {
+  justify-content: space-between;
+  vertical-align: middle;
+  transform: scale(1.35);
+}
+mat-drawer-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .cards {
   max-width: 70%;
   margin-top: 20px;
@@ -6,53 +28,12 @@
   margin-right: 15%;
 }
 
-
-.skills {
-  max-width: 94%;
-  margin-left: 3%;
-  margin-right: 3%;
-  height: 100%;
-}
-
-.home-button {
-  font-size: 25px;
-  display: flex;
-  justify-content: space-between;
-  vertical-align: middle;
-}
-
-.home-button-text {
-  justify-content: space-between;
-  vertical-align: middle;
-}
-
-.home-button-icon{
-  justify-content: space-between;
-  vertical-align: middle;
-  transform: scale(1.35);
-}
-
-.example-container {
-  width: 100%;
-  height: auto;
-}
-
-mat-drawer-content {
-  padding: 12px;
+.home-container{
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
-.drawer-main {
-  padding: 10px;
+.app-home{
+  flex-grow: 1;
 }
-
-.side-bar{
-  height: 100%;
-}
-
-// .home-container{
-//   height: 100%;
-//   width: 100%;
-// }

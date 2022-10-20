@@ -1,50 +1,16 @@
-// .profile-picture {
-//     width: 100%;
-//     display: flex;
-//     justify-content: center;
-// }
-
-
-//  img {
-//     width: 20%;
-// }
-
-.center {
-    // display: block;
-    vertical-align: middle;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
 }
 
-.title {
-    text-align: center;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.logo {
+  width: 15%;
+//   aspect-ratio: 1/1;
 }
 
-
-
-// .page{
-//     width: 100%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
-
-// .page{
-//     background-color: white;
-//     color: black;
-//     width: 100%;
-//     height: 100%;
-//     display: inline-flex;
-// }
-
-// .profile-picture{
-//     // width: 100px;
-//     // height: 100px;
-//     float: right;
-// }
+h1 {
+  text-align: center;
+}
