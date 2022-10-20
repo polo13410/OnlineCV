@@ -1,39 +1,38 @@
-.home-button {
-  font-size: 25px;
-  display: flex;
-  justify-content: space-between;
-  vertical-align: middle;
-}
-.home-button-text {
-  justify-content: space-between;
-  vertical-align: middle;
-}
-.home-button-icon {
-  justify-content: space-between;
-  vertical-align: middle;
-  transform: scale(1.35);
-}
-mat-drawer-content {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.cards {
-  max-width: 70%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 15%;
-  margin-right: 15%;
-}
-
-.home-container{
+.root-app {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.app-home{
+.wrapper {
+  display: flex;
   flex-grow: 1;
 }
+
+.side-bar {
+  display: flex;
+  flex-grow: 1;
+}
+
+.drawer-main {
+  min-width: 64px;
+  max-width: 600px;
+}
+
+.content-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.app-content {
+  flex-grow: 1;
+}
+
+// .cards {
+//   max-width: 70%;
+//   margin-top: 20px;
+//   margin-bottom: 20px;
+//   margin-left: 15%;
+//   margin-right: 15%;
+// }

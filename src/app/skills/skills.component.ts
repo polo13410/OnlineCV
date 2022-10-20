@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Skill } from 'src/assets/contentInterface';
-import { AppComponent } from '../app.component'; 
 
 @Component({
   selector: 'app-skills',
