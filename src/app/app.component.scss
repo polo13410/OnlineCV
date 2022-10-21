@@ -4,6 +4,7 @@
   flex-direction: column;
 }
 
+
 .wrapper {
   display: flex;
   flex-grow: 1;
@@ -31,10 +32,16 @@
   margin-right: 15%;
 }
 
-// .cards {
-//   max-width: 70%;
-//   margin-top: 20px;
-//   margin-bottom: 20px;
-//   margin-left: 15%;
-//   margin-right: 15%;
+// .home-button{
+//   display: flex;
+//   justify-content: space-between;
+//   vertical-align: middle;
 // }
+
+.site-title {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
