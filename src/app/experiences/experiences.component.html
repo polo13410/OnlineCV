@@ -5,20 +5,21 @@
     <mat-card-content *ngFor="let desc of exp.descriptions">{{desc}}</mat-card-content>
     <mat-card-content align="end">{{exp.dfrom}} / {{exp.to}}</mat-card-content>
 </mat-card> -->
-
-<mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel (opened)="false" *ngFor="let exp of experiences">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{exp.title}}
-            </mat-panel-title>
-            <mat-panel-description>
-                {{exp.company}} - {{exp.location}}
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p *ngFor="let desc of exp.descriptions">{{desc}}</p>
-        <mat-action-row>
-          <p>{{exp.dfrom}} / {{exp.to}}</p>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+<div class="container">
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel (opened)="true" *ngFor="let exp of experiences">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{exp.title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{exp.company}} - {{exp.location}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p *ngFor="let desc of exp.descriptions">{{desc}}</p>
+            <mat-action-row>
+                <p>{{exp.dfrom}} / {{exp.to}}</p>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

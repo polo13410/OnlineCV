@@ -29,6 +29,8 @@ export class GetJsonService {
   }
 
   getHeader(language: number) {
+    
+    console.log(this.cvData);
     return this.cvData[language]?.header;
   }
 

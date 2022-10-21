@@ -1,38 +1,47 @@
 <div class="root-app">
-
   <header>
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-          <mat-icon class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
-          
-        <button mat-button class="home-button">
-          <h2 class="home-button-text">
-            {{ header?.name }} {{ header?.surname }}
-          </h2>
+        <button mat-icon-button class="menu-button">
+          <mat-icon class="menu-icon" (click)="side.toggle()">menu</mat-icon>
         </button>
+        <div class="site-title">
+          <!-- <mat-icon>cake</mat-icon> -->
+          <h1 class="home-button-text">Paul PERA</h1>
+        </div>
       </mat-toolbar-row>
     </mat-toolbar>
   </header>
 
-  <nav class="wrapper">
-      <mat-sidenav-container class="side-bar" hasBackdrop="false">
-        <mat-sidenav class="drawer-main" #drawer mode="side">
-          <mat-toolbar>Menu</mat-toolbar>
-          <mat-list>
-            <mat-list-item><a routerLink="home">Accueil</a></mat-list-item>
-            <mat-list-item><a routerLink="exp">Experiences</a></mat-list-item>
-            <mat-list-item><a routerLink="edu">Formation</a></mat-list-item>
-            <mat-list-item><a routerLink="skills">Compétences</a></mat-list-item>
-          </mat-list>
-        </mat-sidenav>
-        <mat-sidenav-content class="content-container">
-
-          <div class="app-content">
-            <router-outlet></router-outlet>
-          </div>
-          
-        </mat-sidenav-content>
-      </mat-sidenav-container>
+  <nav class="wrapper" autosize>
+    <mat-sidenav-container class="side-bar" hasBackdrop="false">
+      <mat-sidenav class="drawer-main" #side mode="side">
+        <mat-toolbar>Menu</mat-toolbar>
+        <mat-nav-list>
+          <mat-list-item routerLink="/home"
+            ><mat-icon mat-list-icon>home</mat-icon
+            ><a>Accueil</a></mat-list-item
+          >
+          <mat-list-item routerLink="/exp"
+            ><mat-icon mat-list-icon>work</mat-icon
+            ><a>Experiences</a></mat-list-item
+          >
+          <mat-list-item routerLink="/edu"
+            ><mat-icon mat-list-icon>school</mat-icon
+            ><a>Formation</a></mat-list-item
+          >
+          <mat-list-item routerLink="/skills"
+            ><mat-icon mat-list-icon>code</mat-icon
+            ><a>Compétences</a></mat-list-item
+          >
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content class="content-container">
+        <div class="app-content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </nav>
 
   <!-- <router-outlet></router-outlet> -->

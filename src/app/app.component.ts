@@ -10,18 +10,29 @@ import { Header } from 'src/assets/contentInterface';
 export class AppComponent {
   title = 'Paul PERA';
 
-  header?: Header = {
-    name:"",
-    surname:"",
-    address:"",
-    mail:"",
-    phone:"",
-    title:""
-  };
+  header?: Header;
+  isExpanded = true;
+  showSubmenu: boolean = false;
+  isShowing = false;
+  showSubSubMenu: boolean = false;
 
   constructor(private json: GetJsonService) {}
 
   ngOnInit(): void {
     this.header = this.json.getHeader(0);
+    console.log(this.header);
   }
+
+  mouseEnter() {
+    if (!this.isExpanded) {
+      this.isShowing = true;
+    }
+  }
+
+  mouseLeave() {
+    if (!this.isExpanded) {
+      this.isShowing = false;
+    }
+  }
+
 }
