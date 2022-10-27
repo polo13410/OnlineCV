@@ -24,6 +24,7 @@ import { SkillsComponent } from './skills/skills.component';
 import { BubbleComponent } from './bubble/bubble.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,9 @@ import { HomepageComponent } from './homepage/homepage.component';
     BubbleComponent,
     ProfileComponent,
     HomepageComponent,
+    NotFoundComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -51,6 +52,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     MatFormFieldModule,
     MatListModule,
     MatSelectModule,
+    AppRoutingModule,
   ],
   providers: [AppComponent],
   bootstrap: [AppComponent],

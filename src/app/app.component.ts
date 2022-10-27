@@ -20,7 +20,6 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.header = this.json.getHeader(0);
-    console.log(this.header);
   }
 
   mouseEnter() {

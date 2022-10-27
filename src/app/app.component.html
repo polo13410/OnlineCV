@@ -1,6 +1,6 @@
 <div class="root-app">
   <header>
-    <mat-toolbar color="primary">
+    <mat-toolbar class="toolbar" color="primary">
       <mat-toolbar-row>
         <button mat-icon-button class="menu-button">
           <mat-icon class="menu-icon" (click)="side.toggle()">menu</mat-icon>
@@ -18,19 +18,19 @@
       <mat-sidenav class="drawer-main" #side mode="side">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
-          <mat-list-item routerLink="/home"
+          <mat-list-item [routerLink]="['/home']" routerLinkActive="active"
             ><mat-icon mat-list-icon>home</mat-icon
             ><a>Accueil</a></mat-list-item
           >
-          <mat-list-item routerLink="/exp"
+          <mat-list-item [routerLink]="['/exp']" routerLinkActive="active"
             ><mat-icon mat-list-icon>work</mat-icon
             ><a>Experiences</a></mat-list-item
           >
-          <mat-list-item routerLink="/edu"
+          <mat-list-item [routerLink]="['/edu']" routerLinkActive="active"
             ><mat-icon mat-list-icon>school</mat-icon
             ><a>Formation</a></mat-list-item
           >
-          <mat-list-item routerLink="/skills"
+          <mat-list-item [routerLink]="['/skills']" routerLinkActive="active"
             ><mat-icon mat-list-icon>code</mat-icon
             ><a>Compétences</a></mat-list-item
           >
