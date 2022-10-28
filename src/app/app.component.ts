@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GetJsonService } from './get-json.service';
 import { Header } from 'src/assets/contentInterface';
 
@@ -7,7 +7,7 @@ import { Header } from 'src/assets/contentInterface';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Paul PERA';
 
   header?: Header;

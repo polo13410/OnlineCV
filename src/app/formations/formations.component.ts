@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { GetJsonService } from '../get-json.service';
 import { Education } from 'src/assets/contentInterface';
 
@@ -7,7 +7,7 @@ import { Education } from 'src/assets/contentInterface';
   templateUrl: './formations.component.html',
   styleUrls: ['./formations.component.scss']
 })
-export class FormationsComponent {
+export class FormationsComponent implements OnInit {
  education?: Education[] = [];
 
  constructor(private json: GetJsonService) {}

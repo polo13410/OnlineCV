@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GetJsonService } from '../get-json.service';
 import { Skill } from 'src/assets/contentInterface';
 
@@ -7,7 +7,7 @@ import { Skill } from 'src/assets/contentInterface';
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
-export class SkillsComponent {
+export class SkillsComponent implements OnInit {
   skills?: Skill[];
 
   constructor(private json: GetJsonService) {}
