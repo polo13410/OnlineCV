@@ -1,37 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { GetJsonService } from './get-json.service';
-import { Header } from 'src/assets/contentInterface';
+import { Component, OnInit } from '@angular/core'
+import { GetJsonService } from './get-json.service'
+import { Header } from 'src/assets/contentInterface'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Paul PERA';
+  title = 'Paul PERA'
 
-  header?: Header;
-  isExpanded = true;
-  showSubmenu: boolean = false;
-  isShowing = false;
-  showSubSubMenu: boolean = false;
+  header?: Header
+  isExpanded = true
+  showSubmenu = false
+  isShowing = false
+  showSubSubMenu = false
 
-  constructor(private json: GetJsonService) {}
+  constructor (private readonly json: GetJsonService) {}
 
-  ngOnInit(): void {
-    this.header = this.json.getHeader(0);
+  ngOnInit (): void {
+    this.header = this.json.getHeader(0)
   }
 
-  mouseEnter() {
+  mouseEnter () {
     if (!this.isExpanded) {
-      this.isShowing = true;
+      this.isShowing = true
     }
   }
 
-  mouseLeave() {
+  mouseLeave () {
     if (!this.isExpanded) {
-      this.isShowing = false;
+      this.isShowing = false
     }
   }
-
 }
