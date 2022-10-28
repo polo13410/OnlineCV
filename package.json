@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "precommit": "npm run lint",
-    "pretty-quick": "pretty-quick"
+    "pretty-quick": "pretty-quick",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -42,10 +43,9 @@
     "@angular/compiler-cli": "^14.2.0",
     "@netlify-builder/deploy": "^5.0.0",
     "@types/jasmine": "~4.0.0",
-    "@typescript-eslint/eslint-plugin": "5.37.0",
-    "@typescript-eslint/parser": "5.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
     "eslint": "^8.23.1",
-    "husky": "^4.3.8",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
