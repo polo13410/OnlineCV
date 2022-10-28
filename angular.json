@@ -110,11 +110,23 @@
             "netlifyToken": "2AXscBNZ2euAPmm4iwlqnPVkrdHKNILbfCS4ZLgpwDM",
             "siteId": "ccdc1cca-684f-4ab9-bc77-4b96a4eb94b6"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "63f7c43c-1150-482f-8ed6-dda9837a1fe5"
+    "analytics": "63f7c43c-1150-482f-8ed6-dda9837a1fe5",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

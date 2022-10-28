@@ -1,18 +1,54 @@
+<div class="root-app">
+  <header>
+    <mat-toolbar class="toolbar" color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button class="menu-button">
+          <mat-icon class="menu-icon" (click)="side.toggle()">menu</mat-icon>
+        </button>
+        <div class="site-title">
+          <!-- <mat-icon>cake</mat-icon> -->
+          <h1 class="home-button-text">Paul PERA</h1>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </header>
 
-  <mat-toolbar color="primary">
-    <button mat-button class="home-button">
-      <mat-icon class="home-button-icon" fontIcon="home">home</mat-icon>
-      <a class="home-button-text">
-        {{cvData[0].header.name}} {{cvData[0].header.surname}}
-      </a>
-    </button>
-  </mat-toolbar>
+  <nav class="wrapper" autosize>
+    <mat-sidenav-container class="side-bar" hasBackdrop="false">
+      <mat-sidenav class="drawer-main" #side mode="side">
+        <mat-toolbar>Menu</mat-toolbar>
+        <mat-nav-list>
+          <mat-list-item [routerLink]="['/home']" routerLinkActive="active"
+            ><mat-icon mat-list-icon>home</mat-icon
+            ><a>Accueil</a></mat-list-item
+          >
+          <mat-list-item [routerLink]="['/exp']" routerLinkActive="active"
+            ><mat-icon mat-list-icon>work</mat-icon
+            ><a>Experiences</a></mat-list-item
+          >
+          <mat-list-item [routerLink]="['/edu']" routerLinkActive="active"
+            ><mat-icon mat-list-icon>school</mat-icon
+            ><a>Formation</a></mat-list-item
+          >
+          <mat-list-item [routerLink]="['/skills']" routerLinkActive="active"
+            ><mat-icon mat-list-icon>code</mat-icon
+            ><a>Compétences</a></mat-list-item
+          >
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content class="content-container">
+        <div class="app-content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </nav>
 
+  <!-- <router-outlet></router-outlet> -->
 
-<div class="cards">
-  <app-experiences [experiences]="cvData[0].experiences"></app-experiences>
-  <app-formations [education]="cvData[0].educations"></app-formations>
-  <app-skills [skills]="cvData[0].skills"></app-skills>
+  <!-- <div class="cards">
+    <app-experiences [experiences]="cvData[0].experiences"></app-experiences>
+    <app-formations [education]="cvData[0].educations"></app-formations>
+    <app-skills [skills]="cvData[0].skills"></app-skills>
+  </div> -->
 </div>
-
-<router-outlet></router-outlet>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CVDataContent } from 'src/assets/contentInterface';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core'
+import { GetJsonService } from './get-json.service'
+import { Header } from 'src/assets/contentInterface'
 
 @Component({
   selector: 'app-root',
@@ -8,19 +8,29 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  title = 'Paul PERA'
 
-  protected cvData: CVDataContent[] = [];
-  title = 'OnlineCV';
+  header?: Header
+  isExpanded = true
+  showSubmenu = false
+  isShowing = false
+  showSubSubMenu = false
 
-  constructor(private http: HttpClient) { }
+  constructor (private readonly json: GetJsonService) {}
 
-  ngOnInit() {
-    this.http
-      .get<CVDataContent[]>('/assets/content.json')
-      .subscribe((cvData: CVDataContent[]) => {
-        this.cvData = cvData;
-      });
+  ngOnInit (): void {
+    this.header = this.json.getHeader(0)
   }
 
+  mouseEnter () {
+    if (!this.isExpanded) {
+      this.isShowing = true
+    }
+  }
 
+  mouseLeave () {
+    if (!this.isExpanded) {
+      this.isShowing = false
+    }
+  }
 }
