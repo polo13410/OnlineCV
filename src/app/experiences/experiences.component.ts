@@ -13,6 +13,8 @@ export class ExperiencesComponent implements OnInit {
   constructor (private readonly json: GetJsonService) {}
 
   ngOnInit (): void {
-    this.experiences = this.json.getExp(0)
+    this.json.getExp(0)?.subscribe(data =>  {
+    this.experiences = data;
+  });
   }
 }
