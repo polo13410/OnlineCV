@@ -13,6 +13,8 @@ export class FormationsComponent implements OnInit {
   constructor (private readonly json: GetJsonService) {}
 
   ngOnInit (): void {
-    this.education = this.json.getEdu(0)
+    this.json.getEdu(0)?.subscribe(data =>  {
+      this.education = data;
+    });
   }
 }

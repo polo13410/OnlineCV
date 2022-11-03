@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { GetJsonService } from '../get-json.service'
 
 @Component({
   selector: 'app-homepage',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  constructor () { }
+  education?: string | undefined
+
+  constructor (private readonly json: GetJsonService) {}
 
   ngOnInit (): void {
+    this.json.getProfile(0)?.subscribe(data =>  {
+      this.education = data;
+    });
   }
 }

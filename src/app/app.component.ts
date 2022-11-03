@@ -19,7 +19,9 @@ export class AppComponent implements OnInit {
   constructor (private readonly json: GetJsonService) {}
 
   ngOnInit (): void {
-    this.header = this.json.getHeader(0)
+    this.json.getHeader(0)?.subscribe(data =>  {
+    this.header = data;
+  });
   }
 
   mouseEnter () {
