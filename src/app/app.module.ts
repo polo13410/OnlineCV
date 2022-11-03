@@ -54,7 +54,7 @@ import { NotFoundComponent } from './not-found/not-found.component'
     MatSelectModule,
     AppRoutingModule
   ],
-  providers: [AppComponent],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

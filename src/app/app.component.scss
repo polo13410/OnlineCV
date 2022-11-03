@@ -4,44 +4,23 @@
   flex-direction: column;
 }
 
-.toolbar{
-  // position: absolute;
-}
-
-.wrapper {
+.side-container{
   display: flex;
-  flex-grow: 1;
+  flex-direction: row;
+  overflow: auto;
+  flex: 1 1 0%;
 }
 
-.side-bar {
+.side-content{
+  flex: 1 1 0%;
+  overflow-x: auto;
   display: flex;
-  flex-grow: 1;
-}
-
-.drawer-main {
-  min-width: 64px;
-  max-width: 600px;
-  position: fixed;
-  top: 64px;
-}
-
-.content-container {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
 }
 
 .app-content {
-  flex-grow: 1;
   margin-left: 15%;
   margin-right: 15%;
 }
-
-// .home-button{
-//   display: flex;
-//   justify-content: space-between;
-//   vertical-align: middle;
-// }
 
 .site-title {
   margin: 20px;
