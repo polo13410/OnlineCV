@@ -8,6 +8,11 @@
         <div class="site-title">
           <h1 class="home-button-text">Paul PERA</h1>
         </div>
+        <span class="header-spacer"></span>
+        <button mat-button (click)="downloadPDF()">
+          <mat-icon>download</mat-icon>
+          version PDF
+        </button>
       </mat-toolbar-row>
     </mat-toolbar>
   </header>
@@ -38,13 +43,15 @@
           </mat-nav-list>
         </div>
         <div class="nav-footer">
-          <mat-toolbar color="primary">
-            
-            <button mat-icon-button class="social-button">
-              <mat-icon mat-list-icon>linkedin</mat-icon>
+          <mat-toolbar class="toolbar-footer">
+            <button mat-icon-button class="social-button" (click)="socialAction('linkedin')">
+              <img src="https://img.icons8.com/material/24/000000/linkedin--v1.png"/>
             </button>
-            <button mat-icon-button class="menu-button">
-              <mat-icon mat-list-icon>github</mat-icon>
+            <button mat-icon-button class="social-button" (click)="socialAction('github')">
+              <img src="https://img.icons8.com/material/24/000000/github.png"/>
+            </button>
+            <button mat-icon-button class="social-button" (click)="socialAction('angular')">
+              <mat-icon>code</mat-icon>
             </button>
           </mat-toolbar>
         </div>

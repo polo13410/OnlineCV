@@ -4,6 +4,10 @@
   flex-direction: column;
 }
 
+.header-spacer{
+  flex: 1 1 auto;
+}
+
 .side-container {
   display: flex;
   flex-direction: row;
@@ -23,17 +27,22 @@
   display: flex;
 }
 
+.app-content{
+  width:100%;
+  margin: 16px 15% 16px 15%;
+}
+
 .nav-socials {
   position: absolute;
   left: 15px;
   bottom: 38px;
 }
 
-// .nav-footer {
-//   position: fixed;
-//   bottom: 0;
-//   left: 0;
-// }
+.nav-footer {
+  justify-content: space-between;
+}
+
+
 
 .nav-filler {
   flex-grow: 1;
