@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core'
-import { GetJsonService } from '../get-json.service'
+import { Component, OnInit } from '@angular/core';
+import { Header } from 'src/assets/contentInterface';
+import { GetJsonService } from '../get-json.service';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.scss']
+  styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
-  education?: string | undefined
+  profile?: string | undefined;
+  header: Header | undefined;
 
-  constructor (private readonly json: GetJsonService) {}
+  constructor(private readonly json: GetJsonService) {}
 
-  ngOnInit (): void {
-    this.json.getProfile(0)?.subscribe(data =>  {
-      this.education = data;
+  ngOnInit(): void {
+    this.json.getProfile(0)?.subscribe((data) => {
+      this.profile = data;
+    });
+    this.json.getHeader(0)?.subscribe((data) => {
+      this.header = data;
     });
   }
 }

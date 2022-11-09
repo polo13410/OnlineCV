@@ -4,22 +4,39 @@
   flex-direction: column;
 }
 
-.side-container{
+.side-container {
   display: flex;
   flex-direction: row;
   overflow: auto;
   flex: 1 1 0%;
 }
 
-.side-content{
-  flex: 1 1 0%;
+.side-wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.side-content {
+  flex: 1;
   overflow-x: auto;
   display: flex;
 }
 
-.app-content {
-  margin-left: 15%;
-  margin-right: 15%;
+.nav-socials {
+  position: absolute;
+  left: 15px;
+  bottom: 38px;
+}
+
+// .nav-footer {
+//   position: fixed;
+//   bottom: 0;
+//   left: 0;
+// }
+
+.nav-filler {
+  flex-grow: 1;
 }
 
 .site-title {
@@ -29,3 +46,6 @@
   vertical-align: middle;
 }
 
+.active{
+  background-color: rgba(0, 0, 0, 0.04);
+}

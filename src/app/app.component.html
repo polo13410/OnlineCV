@@ -1,4 +1,4 @@
-<div class="root-app">
+<div class="root-app" #root>
   <header class="header-wrap">
     <mat-toolbar class="toolbar" color="primary">
       <mat-toolbar-row>
@@ -6,40 +6,54 @@
           <mat-icon class="menu-icon" (click)="side.toggle()">menu</mat-icon>
         </button>
         <div class="site-title">
-          <!-- <mat-icon>cake</mat-icon> -->
           <h1 class="home-button-text">Paul PERA</h1>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
   </header>
-    <mat-sidenav-container autosize class="side-container" hasBackdrop="false">
-
-      <mat-sidenav #side mode="side">
-        <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-          <mat-list-item [routerLink]="['/']" routerLinkActive="active"
-            ><mat-icon mat-list-icon>home</mat-icon
-            ><a>Accueil</a></mat-list-item
-          >
-          <mat-list-item [routerLink]="['/exp']" routerLinkActive="active"
-            ><mat-icon mat-list-icon>work</mat-icon
-            ><a>Experiences</a></mat-list-item
-          >
-          <mat-list-item [routerLink]="['/edu']" routerLinkActive="active"
-            ><mat-icon mat-list-icon>school</mat-icon
-            ><a>Formation</a></mat-list-item
-          >
-          <mat-list-item [routerLink]="['/skills']" routerLinkActive="active"
-            ><mat-icon mat-list-icon>code</mat-icon
-            ><a>Compétences</a></mat-list-item
-          >
-        </mat-nav-list>
-      </mat-sidenav>
-      <mat-sidenav-content class="side-content">
-        <div class="app-content">
-          <router-outlet></router-outlet>
+  <mat-sidenav-container autosize class="side-container" hasBackdrop="false" >
+    <mat-sidenav #side mode="side" opened>
+      <div class="side-wrapper">
+        <div class="nav-header">
+          <mat-toolbar>Menu</mat-toolbar>
         </div>
-      </mat-sidenav-content>
-
-    </mat-sidenav-container>
+        <div class="nav-filler">
+          <mat-nav-list>
+            <mat-list-item [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" name="home"
+              ><mat-icon mat-list-icon>home</mat-icon
+              ><a>Accueil</a></mat-list-item
+            >
+            <mat-list-item [routerLink]="['/exp']" routerLinkActive="active" name="exp"
+              ><mat-icon mat-list-icon>work</mat-icon
+              ><a>Experiences</a></mat-list-item
+            >
+            <mat-list-item [routerLink]="['/edu']" routerLinkActive="active" name="edu"
+              ><mat-icon mat-list-icon>school</mat-icon
+              ><a>Formation</a></mat-list-item
+            >
+            <mat-list-item [routerLink]="['/skills']" routerLinkActive="active" name="skills"
+              ><mat-icon mat-list-icon>code</mat-icon
+              ><a>Compétences</a></mat-list-item
+            >
+          </mat-nav-list>
+        </div>
+        <div class="nav-footer">
+          <mat-toolbar color="primary">
+            
+            <button mat-icon-button class="social-button">
+              <mat-icon mat-list-icon>linkedin</mat-icon>
+            </button>
+            <button mat-icon-button class="menu-button">
+              <mat-icon mat-list-icon>github</mat-icon>
+            </button>
+          </mat-toolbar>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="side-content">
+      <div class="app-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
