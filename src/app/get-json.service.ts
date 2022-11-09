@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CVDataContent } from 'src/assets/contentInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { catchError, map, of } from 'rxjs';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
