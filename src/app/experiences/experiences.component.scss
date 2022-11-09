@@ -3,10 +3,16 @@
   align-items: center;
 }
 
-.container{
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   height: 100%;
+}
+
+.toggle-accordeon-button {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
 }
