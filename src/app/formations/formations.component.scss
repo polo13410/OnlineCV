@@ -1,4 +1,16 @@
 .card {
     margin-top: 20px;
     margin-bottom: 20px;
+    // align-items: center;
+    width: 100%;
+    align-items: center;
+    
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
   }

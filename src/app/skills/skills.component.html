@@ -1,5 +1,8 @@
-<mat-card class="card" *ngFor="let skill of skills">
-    <mat-card-title color="primary">{{skill.lang}}</mat-card-title>
-    <mat-card-content color="primary">{{skill.time}} - {{skill.level}}</mat-card-content>
-    <app-bubble></app-bubble>
-</mat-card>
+<div class="container">
+  <mat-card class="card" *ngFor="let skill of skills">
+    <mat-card-title color="primary">{{ skill.lang }}</mat-card-title>
+    <mat-card-content color="primary"
+      >{{ skill.time }} - {{ skill.level }}</mat-card-content
+    >
+  </mat-card>
+</div>

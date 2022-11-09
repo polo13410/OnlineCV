@@ -10,8 +10,7 @@ export class RouteResolver implements Resolve<any> {
   }
 
   resolve() {
-    console.log('1 : route resolve begin');
-    return this.jsonService.getSkills();
+    return this.jsonService.getSkills(0);
     // return forkJoin(this.jsonService.getSkills(0),
     //   this.jsonService.getExp(0)
     //   )
