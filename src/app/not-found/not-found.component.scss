@@ -124,7 +124,17 @@ h1{
   font-family: "Montserrat", sans-serif;
   position: absolute;
   bottom:15vmin;
-  padding:3vmin 12vmin 3vmin 3vmin;
+  padding:3vmin;
   font-weight:600;
   color:#092532;
+}
+
+.go-home{
+  position: absolute;
+  bottom: 10vmin;
+  padding:3vmin;
+}
+
+button{
+  padding: 0px 10px 0px 10px;
 }
