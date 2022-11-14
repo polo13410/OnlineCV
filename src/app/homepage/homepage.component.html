@@ -14,16 +14,19 @@
           ><h3>{{ header?.address }}</h3></mat-list-item
         >
         <mat-list-item>
-          <h3 class="contact" (click)="contactAction('phone')">
+          <a class="contact" href="tel:+33660050426">
             {{ header?.phone }}
             <mat-icon class="contact-icon">open_in_new</mat-icon>
-          </h3>
+          </a>
         </mat-list-item>
         <mat-list-item>
-          <h3 class="contact" (click)="contactAction('mail')">
+          <a
+            class="contact"
+            href="mailto:paul.pera@viacesi.fr?subject=A propos de votre site..&body=Bonjour paul!"
+          >
             {{ header?.mail }}
             <mat-icon class="contact-icon">open_in_new</mat-icon>
-          </h3>
+          </a>
         </mat-list-item>
       </mat-list>
     </div>
