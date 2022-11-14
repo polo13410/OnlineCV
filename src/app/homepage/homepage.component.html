@@ -18,13 +18,11 @@
           <mat-icon>open_in_new</mat-icon>
         </button>
       </mat-list-item>
-      <mat-list-item>
-        <h3>
+      <mat-list-item >
+        <h3 class="contact" (click)="contactAction('mail')">
           {{ header?.mail }}
         </h3>
-        <button mat-icon-button class="contact-button" (click)="contactAction('mail')">
-          <mat-icon>open_in_new</mat-icon>
-        </button>
+        <mat-icon class="contact" (click)="contactAction('mail')">open_in_new</mat-icon>
       </mat-list-item>
     </mat-list>
   </div>

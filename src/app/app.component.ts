@@ -3,7 +3,8 @@ import { GetJsonService } from './get-json.service';
 import { Header } from 'src/assets/contentInterface';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GetPdfService } from './get-pdf.service';
+import { GetPdfService } from './get-pdf.service'; 
+import PackageJson from '../../package-lock.json';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit {
       return;
     } else if (direction == 'angular') {
       this.snackBar?.open(
-        'Développé avec le framework Angular v14.2.0',
+        'Framework Angular en version ' + PackageJson.dependencies['@angular/core'].version,
         'OK'
       );
       return;
