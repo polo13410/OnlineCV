@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
       return;
     } else if (direction == 'angular') {
       this.snackBar?.open(
-        'Développé avec le framework Angular v14.2.0',
+        'Développé avec le framework Angular v14.2.4',
         'OK'
       );
       return;
