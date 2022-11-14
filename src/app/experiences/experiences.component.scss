@@ -1,18 +1,24 @@
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
   align-items: center;
 }
 
-.container {
+.container{
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
 }
 
-.toggle-accordeon-button {
-  position: absolute;
-  bottom: 32px;
-  right: 32px;
+mat-card-footer{
+  text-align: right;
+  margin-right: 15px;
 }
+
+// .toggle-accordeon-button {
+//   position: absolute;
+//   bottom: 32px;
+//   right: 32px;
+// }

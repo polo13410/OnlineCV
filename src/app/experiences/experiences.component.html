@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-accordion #accordion="matAccordion" class="example-headers-align" multi>
+  <!-- <mat-accordion #accordion="matAccordion" class="example-headers-align" multi>
     <mat-expansion-panel *ngFor="let exp of experiences">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -14,13 +14,26 @@
         <p>{{ exp.dfrom }} / {{ exp.to }}</p>
       </mat-action-row>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion> -->
+
+  <mat-card class="card" *ngFor="let exp of experiences">
+    <mat-card-title color="primary">{{ exp.title }}</mat-card-title>
+    <mat-card-subtitle
+      >{{ exp.company }} - {{ exp.location }}</mat-card-subtitle
+    >
+    <mat-card-content color="primary">
+      <p *ngFor="let desc of exp.descriptions">{{ desc }}</p></mat-card-content
+    >
+    <mat-card-footer
+      ><p>{{ exp.dfrom }} / {{ exp.to }}</p></mat-card-footer
+    >
+  </mat-card>
 </div>
-<button
+<!-- <button
   class="toggle-accordeon-button"
   (click)="toggleAccordeon()"
   mat-fab
   color="primary"
 >
   <mat-icon aria-label="left">{{ accordeonToggleIcon }}</mat-icon>
-</button>
+</button> -->
