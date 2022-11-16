@@ -24,35 +24,39 @@
         </div>
         <div class="nav-filler">
           <mat-nav-list>
-            <mat-list-item
+            <a
               [routerLink]="['/']"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               name="home"
-              ><mat-icon mat-list-icon>home</mat-icon
-              ><a>Accueil</a></mat-list-item
             >
-            <mat-list-item
-              [routerLink]="['/exp']"
-              routerLinkActive="active"
-              name="exp"
-              ><mat-icon mat-list-icon>work</mat-icon
-              ><a>Experiences</a></mat-list-item
-            >
-            <mat-list-item
-              [routerLink]="['/edu']"
-              routerLinkActive="active"
-              name="edu"
-              ><mat-icon mat-list-icon>school</mat-icon
-              ><a>Formation</a></mat-list-item
-            >
-            <mat-list-item
+              <mat-list-item
+                ><mat-icon mat-list-icon>home</mat-icon
+                ><a>Accueil</a></mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/exp']" routerLinkActive="active" name="exp">
+              <mat-list-item
+                ><mat-icon mat-list-icon>work</mat-icon
+                >Experiences</mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/edu']" routerLinkActive="active" name="edu">
+              <mat-list-item
+                ><mat-icon mat-list-icon>school</mat-icon
+                >Formation</mat-list-item
+              >
+            </a>
+            <a
               [routerLink]="['/skills']"
               routerLinkActive="active"
               name="skills"
-              ><mat-icon mat-list-icon>code</mat-icon
-              ><a>Compétences</a></mat-list-item
             >
+              <mat-list-item
+                ><mat-icon mat-list-icon>code</mat-icon>
+                Compétences
+              </mat-list-item>
+            </a>
           </mat-nav-list>
         </div>
         <div class="nav-footer">
@@ -63,9 +67,10 @@
               href="https://www.linkedin.com/in/paulpera/"
               target="_blank"
             >
-              <img
+              <!-- <img
                 src="https://img.icons8.com/material/24/000000/linkedin--v1.png"
-              />
+              /> -->
+              <i class="devicon-linkedin-plain"></i>
             </a>
             <a
               mat-icon-button
@@ -73,14 +78,15 @@
               href="https://github.com/polo13410"
               target="_blank"
             >
-              <img src="https://img.icons8.com/material/24/000000/github.png" />
-          </a>
+              <!-- <img src="https://img.icons8.com/material/24/000000/github.png" /> -->
+              <i class="devicon-github-original"></i>
+            </a>
             <button
               mat-icon-button
               class="social-button"
               (click)="popAngular()"
             >
-              <mat-icon>code</mat-icon>
+              <i class="devicon-angularjs-plain"></i>
             </button>
           </mat-toolbar>
         </div>
