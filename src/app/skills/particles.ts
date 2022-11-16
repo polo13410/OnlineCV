@@ -1,116 +1,111 @@
 export class Particle {
-  public x
-  public y
-  public velocity = {
-    x: (Math.random() - 0.5) * 2,
-    y: (Math.random() - 0.5) * 2
-  }
 
-  public radius
-  public mass
-  public opacity = 0
-  public text
-  public r
-  public g
-  public b
-  public canvas: any
-  public c: any
-  public mousePos: { x: number, y: number } = {
-    x: 0,
-    y: 0
-  }
+//   function proceed(){
+    
+//   }
 
-  constructor (x: number, y: number, radius: number, rgb: { r: any, g: any, b: any }, canvas: any, c: any) {
-    this.x = x
-    this.y = y
-    this.velocity = {
-      x: (Math.random() - 0.5) * 0.1,
-      y: (Math.random() - 0.5) * 0.1
-    }
-    this.radius = radius
-    this.text = 'text'
-    this.mass = 1
-    this.opacity = 0
-    this.r = rgb.r
-    this.g = rgb.g
-    this.b = rgb.b
-    this.canvas = canvas
-    this.c = c
-  }
 
-  update (particles: string | any[]) {
-    this.draw()
+//   planck.testbed('CollisionProcessing', function(testbed) {
+//   var pl = planck, Vec2 = pl.Vec2;
+//   var world = pl.World(Vec2(0, -10));
 
-    for (let i = 0; i < particles.length; i++) {
-      const otherParticle = particles[i]
-      if (this.x === otherParticle.x) continue
+//   // Ground body
+//   world.createBody().createFixture(pl.Edge(Vec2(-50.0, 0.0), Vec2(50.0, 0.0)));
 
-      if (this.distance(this.x, this.y, otherParticle.x, otherParticle.y) - this.radius * 2 < 0) {
-        const res = {
-          x: this.velocity.x - otherParticle.velocity.x,
-          y: this.velocity.y - otherParticle.velocity.y
-        }
+//   var xLo = -5.0, xHi = 5.0;
+//   var yLo = 2.0, yHi = 35.0;
 
-        if (res.x * (otherParticle.x - this.x) + res.y * (otherParticle.y - this.y) >= 0) {
-          const m1 = this.mass
-          const m2 = otherParticle.mass
-          const theta = -Math.atan2(otherParticle.y - this.y, otherParticle.x - this.x)
+//   // Small triangle
+//   var body1 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body1.createFixture(pl.Polygon([Vec2(-1.0, 0.0), Vec2(1.0, 0.0), Vec2(0.0, 2.0)]), 1.0);
 
-          const rotatedVelocity1 = this.rotateVelocities(this.velocity, theta)
-          const rotatedVelocity2 = this.rotateVelocities(otherParticle.velocity, theta)
+//   // Large triangle (recycle definitions)
+//   var body2 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body2.createFixture(pl.Polygon([Vec2(-1.0, 0.0), Vec2(1.0, 0.0), Vec2(0.0, 2.0)]), 1.0);
 
-          const swapVelocity1 = { x: rotatedVelocity1.x * (m1 - m2) / (m1 + m2) + rotatedVelocity2.x * 2 * m2 / (m1 + m2), y: rotatedVelocity1.y }
-          const swapVelocity2 = { x: rotatedVelocity2.x * (m1 - m2) / (m1 + m2) + rotatedVelocity1.x * 2 * m2 / (m1 + m2), y: rotatedVelocity2.y }
+//   // Small box
+//   var body3 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body3.createFixture(pl.Box(1.0, 0.5), 1.0);
 
-          const u1 = this.rotateVelocities(swapVelocity1, -theta)
-          const u2 = this.rotateVelocities(swapVelocity2, -theta)
+//   // Large box (recycle definitions)
+//   var body4 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body4.createFixture(pl.Box(2.0, 1.0), 1.0);
 
-          this.velocity.x = u1.x
-          this.velocity.y = u1.y
-          otherParticle.velocity.x = u2.x
-          otherParticle.velocity.y = u2.y
-        }
-      }
-    }
+//   // Small circle
+//   var body5 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body5.createFixture(pl.Circle(1.0), 1.0);
 
-    if (this.distance(this.x, this.y, this.mousePos.x, this.mousePos.y) - this.radius * 2 < 100 && this.opacity <= 0.2) {
-      this.opacity += 0.01
-    } else if (this.opacity > 0) {
-      this.opacity -= 0.01
-    }
+//   // Large circle
+//   var body6 = world.createDynamicBody(Vec2(pl.Math.random(xLo, xHi), pl.Math.random(yLo, yHi)));
+//   body6.createFixture(pl.Circle(2.0), 1.0);
 
-    if (this.x + this.radius >= this.canvas.width || this.x - this.radius <= 0) { this.velocity.x = -this.velocity.x }
+//   var points = [];
 
-    if (this.y + this.radius >= this.canvas.height || this.y - this.radius <= 0) { this.velocity.y = -this.velocity.y }
+//   world.on('pre-solve', function(contact, oldManifold) {
+//     var manifold = contact.getManifold();
 
-    this.x += this.velocity.x
-    this.y += this.velocity.y
-  }
+//     if (manifold.pointCount == 0) {
+//       return;
+//     }
 
-  draw () {
-    this.c.beginPath()
-    this.c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    this.c.strokeStyle = `rgba(${this.r}, ${this.g}, ${this.b}, 1)`
-    this.c.stroke()
-    this.c.text = 'test'
-    // this.c.text = this.text;
-    this.c.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity}`
-    this.c.fill()
-    this.c.closePath()
-  }
+//     var fixtureA = contact.getFixtureA();
+//     var fixtureB = contact.getFixtureB();
 
-  rotateVelocities (velocity: { x: any, y: any }, theta: number) {
-    const rotatedVelocity = {
-      x: velocity.x * Math.cos(theta) - velocity.y * Math.sin(theta),
-      y: velocity.x * Math.sin(theta) + velocity.y * Math.cos(theta)
-    }
-    return rotatedVelocity
-  }
+//     var worldManifold = contact.getWorldManifold();
 
-  distance (x1: number, y1: number, x2: number, y2: number) {
-    const xDist = x2 - x1
-    const yDist = y2 - y1
+//     for (var i = 0; i < manifold.pointCount; ++i) {
+//       var cp = {};
+//       cp.fixtureA = fixtureA;
+//       cp.fixtureB = fixtureB;
+//       cp.position = worldManifold.points[i];
+//       cp.normal = worldManifold.normal;
+//       // cp.state = state2[i];
+//       cp.normalImpulse = manifold.points[i].normalImpulse;
+//       cp.tangentImpulse = manifold.points[i].tangentImpulse;
+//       cp.separation = worldManifold.separations[i];
+//       points.push(cp);
+//     }
+//   });
 
-    return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
-  }
+//   var bomb = null;
+//   var MAX_NUKE = 6;
+
+//   testbed.step = function() {
+
+//     // We are going to destroy some bodies according to contact
+//     // points. We must buffer the bodies that should be destroyed
+//     // because they may belong to multiple contact points.
+//     var nuke = [];
+
+//     // Traverse the contact results. Destroy bodies that
+//     // are touching heavier bodies.
+//     for (var i = 0; i < points.length && nuke.length < MAX_NUKE; ++i) {
+//       var point = points[i];
+
+//       var body1 = point.fixtureA.getBody();
+//       var body2 = point.fixtureB.getBody();
+//       var mass1 = body1.getMass();
+//       var mass2 = body2.getMass();
+
+//       if (mass1 > 0.0 && mass2 > 0.0) {
+//         if (mass2 > mass1) {
+//           nuke.push(body1);
+//         } else {
+//           nuke.push(body2);
+//         }
+//       }
+//     }
+
+//     for (var i = 0; i < nuke.length; i++) {
+//       var b = nuke[i];
+//       if (b != bomb) {
+//         world.destroyBody(b);
+//       }
+//     }
+
+//     points.length = 0;
+//   };
+
+//   return world;
+// });
 }
