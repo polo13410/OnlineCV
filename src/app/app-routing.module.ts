@@ -6,6 +6,7 @@ import { ExperiencesComponent } from './experiences/experiences.component';
 import { SkillsComponent } from './skills/skills.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouteResolver } from './resolvers/route.resolver';
+import { BubbleComponent } from './bubble/bubble.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
       skills: RouteResolver
     }
   },
+  { path: 'bubble', component: BubbleComponent},
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

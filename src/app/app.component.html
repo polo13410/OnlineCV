@@ -16,7 +16,7 @@
       </mat-toolbar-row>
     </mat-toolbar>
   </header>
-  <mat-sidenav-container autosize class="side-container" hasBackdrop="false" >
+  <mat-sidenav-container autosize class="side-container" hasBackdrop="false">
     <mat-sidenav #side mode="side" opened>
       <div class="side-wrapper">
         <div class="nav-header">
@@ -24,42 +24,80 @@
         </div>
         <div class="nav-filler">
           <mat-nav-list>
-            <mat-list-item [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" name="home"
-              ><mat-icon mat-list-icon>home</mat-icon
-              ><a>Accueil</a></mat-list-item
+            <a
+              [routerLink]="['/']"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              name="home"
             >
-            <mat-list-item [routerLink]="['/exp']" routerLinkActive="active" name="exp"
-              ><mat-icon mat-list-icon>work</mat-icon
-              ><a>Experiences</a></mat-list-item
+              <mat-list-item
+                ><mat-icon mat-list-icon>home</mat-icon
+                ><a>Accueil</a></mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/exp']" routerLinkActive="active" name="exp">
+              <mat-list-item
+                ><mat-icon mat-list-icon>work</mat-icon
+                >Experiences</mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/edu']" routerLinkActive="active" name="edu">
+              <mat-list-item
+                ><mat-icon mat-list-icon>school</mat-icon
+                >Formation</mat-list-item
+              >
+            </a>
+            <a
+              [routerLink]="['/skills']"
+              routerLinkActive="active"
+              name="skills"
             >
-            <mat-list-item [routerLink]="['/edu']" routerLinkActive="active" name="edu"
-              ><mat-icon mat-list-icon>school</mat-icon
-              ><a>Formation</a></mat-list-item
-            >
-            <mat-list-item [routerLink]="['/skills']" routerLinkActive="active" name="skills"
-              ><mat-icon mat-list-icon>code</mat-icon
-              ><a>Compétences</a></mat-list-item
-            >
+              <mat-list-item
+                ><mat-icon mat-list-icon>code</mat-icon>
+                Compétences
+              </mat-list-item>
+            </a>
           </mat-nav-list>
         </div>
         <div class="nav-footer">
           <mat-toolbar class="toolbar-footer">
-            <button mat-icon-button class="social-button" (click)="socialAction('linkedin')">
-              <img src="https://img.icons8.com/material/24/000000/linkedin--v1.png"/>
-            </button>
-            <button mat-icon-button class="social-button" (click)="socialAction('github')">
-              <img src="https://img.icons8.com/material/24/000000/github.png"/>
-            </button>
-            <button mat-icon-button class="social-button" (click)="socialAction('angular')">
-              <mat-icon>code</mat-icon>
+            <a
+              mat-icon-button
+              class="social-button"
+              href="https://www.linkedin.com/in/paulpera/"
+              target="_blank"
+            >
+              <!-- <img
+                src="https://img.icons8.com/material/24/000000/linkedin--v1.png"
+              /> -->
+              <i class="devicon-linkedin-plain"></i>
+            </a>
+            <a
+              mat-icon-button
+              class="social-button"
+              href="https://github.com/polo13410"
+              target="_blank"
+            >
+              <!-- <img src="https://img.icons8.com/material/24/000000/github.png" /> -->
+              <i class="devicon-github-original"></i>
+            </a>
+            <button
+              mat-icon-button
+              class="social-button"
+              (click)="popAngular()"
+            >
+              <i class="devicon-angularjs-plain"></i>
             </button>
           </mat-toolbar>
         </div>
       </div>
     </mat-sidenav>
     <mat-sidenav-content class="side-content">
-      <div class="app-content">
-        <router-outlet></router-outlet>
+      <div
+        class="app-content"
+        [@routerAnimations]="prepareRouteTransition(outlet)"
+      >
+        <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
