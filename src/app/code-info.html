@@ -1,13 +1,15 @@
 <div style="display: flex; flex-direction: column">
   <span style="text-align: center"
     >{{core}}
-    <span style="color: orange"> {{pjson.dependencies['@angular/core']}}</span>
-    {{gen}} <span style="color: orange">{{genV}}</span>
+    <span style="color: orange">
+      {{pjson.dependencies['@angular/core'].version}}</span
+    >
+    {{gen}} <span style="color: rgb(255, 171, 135)">{{genV}}</span>
   </span>
   <span style="text-align: center"
     >{{material}}
     <span style="color: orange">
-      {{pjson.dependencies['@angular/material']}}</span
+      {{pjson.dependencies['@angular/material'].version}}</span
     >
   </span>
 </div>

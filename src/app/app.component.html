@@ -1,91 +1,104 @@
 <div class="root-app" #root>
-  <header>
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Online CV</span>
-      <span class="header-spacer"></span>
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="menu"
-        aria-label="Voir plus..."
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="downloadPDF()">
-          <mat-icon>download</mat-icon>
-          <span>Version PDF</span>
+  <header class="header-wrap">
+    <mat-toolbar class="toolbar" color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button class="menu-button">
+          <mat-icon class="menu-icon" (click)="side.toggle()">menu</mat-icon>
         </button>
-      </mat-menu>
+        <div class="site-title">
+          <h1 class="home-button-text">Paul PERA</h1>
+        </div>
+        <span class="header-spacer"></span>
+        <button mat-button (click)="downloadPDF()">
+          <mat-icon>download</mat-icon>
+          version PDF
+        </button>
+      </mat-toolbar-row>
     </mat-toolbar>
   </header>
-  <mat-drawer-container autosize class="side-container" hasBackdrop="false">
-    <mat-drawer #drawer mode="side" opened>
+  <mat-sidenav-container autosize class="side-container" hasBackdrop="false">
+    <mat-sidenav #side mode="side" opened>
       <div class="side-wrapper">
-        <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-          <a [routerLink]="['/']" name="home">
-            <mat-list-item
+        <div class="nav-header">
+          <mat-toolbar>Menu</mat-toolbar>
+        </div>
+        <div class="nav-filler">
+          <mat-nav-list>
+            <a
+              [routerLink]="['/']"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              ><mat-icon class="item-align" mat-list-icon>home</mat-icon>
-              <span class="item-align"> Accueil </span>
-            </mat-list-item>
-          </a>
-          <a [routerLink]="['/experiences']" name="exp">
-            <mat-list-item routerLinkActive="active"
-              ><mat-icon class="item-align" mat-list-icon>work</mat-icon>
-              <span class="item-align"> Experiences </span>
-            </mat-list-item>
-          </a>
-          <a [routerLink]="['/education']" name="edu">
-            <mat-list-item routerLinkActive="active"
-              ><mat-icon class="item-align" mat-list-icon>school</mat-icon>
-              <span class="item-align"> Formation </span>
-            </mat-list-item>
-          </a>
-          <a [routerLink]="['/skills']" name="skills">
-            <mat-list-item routerLinkActive="active"
-              ><mat-icon class="item-align" mat-list-icon>code</mat-icon>
-              <span class="item-align"> Compétences </span>
-            </mat-list-item>
-          </a>
-          <a [routerLink]="['/passions']" name="passions">
-            <mat-list-item routerLinkActive="active"
-              ><mat-icon class="item-align" mat-list-icon>favorite</mat-icon>
-              <span class="item-align"> Passions </span>
-            </mat-list-item>
-          </a>
-        </mat-nav-list>
-        <mat-toolbar>
-          <a
-            mat-icon-button
-            class="social-button"
-            href="https://www.linkedin.com/in/paulpera/"
-            target="_blank"
-          >
-            <i class="devicon-linkedin-plain"></i>
-          </a>
-          <a
-            mat-icon-button
-            class="social-button"
-            href="https://github.com/polo13410"
-            target="_blank"
-          >
-            <i class="devicon-github-original"></i>
-          </a>
-          <button mat-icon-button class="social-button" (click)="popAngular()">
-            <i class="devicon-angularjs-plain"></i>
-          </button>
-        </mat-toolbar>
+              name="home"
+            >
+              <mat-list-item
+                ><mat-icon mat-list-icon>home</mat-icon
+                ><a>Accueil</a></mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/exp']" routerLinkActive="active" name="exp">
+              <mat-list-item
+                ><mat-icon mat-list-icon>work</mat-icon
+                >Experiences</mat-list-item
+              >
+            </a>
+            <a [routerLink]="['/edu']" routerLinkActive="active" name="edu">
+              <mat-list-item
+                ><mat-icon mat-list-icon>school</mat-icon
+                >Formation</mat-list-item
+              >
+            </a>
+            <a
+              [routerLink]="['/skills']"
+              routerLinkActive="active"
+              name="skills"
+            >
+              <mat-list-item
+                ><mat-icon mat-list-icon>code</mat-icon>
+                Compétences
+              </mat-list-item>
+            </a>
+          </mat-nav-list>
+        </div>
+        <div class="nav-footer">
+          <mat-toolbar class="toolbar-footer">
+            <a
+              mat-icon-button
+              class="social-button"
+              href="https://www.linkedin.com/in/paulpera/"
+              target="_blank"
+            >
+              <!-- <img
+                src="https://img.icons8.com/material/24/000000/linkedin--v1.png"
+              /> -->
+              <i class="devicon-linkedin-plain"></i>
+            </a>
+            <a
+              mat-icon-button
+              class="social-button"
+              href="https://github.com/polo13410"
+              target="_blank"
+            >
+              <!-- <img src="https://img.icons8.com/material/24/000000/github.png" /> -->
+              <i class="devicon-github-original"></i>
+            </a>
+            <button
+              mat-icon-button
+              class="social-button"
+              (click)="popAngular()"
+            >
+              <i class="devicon-angularjs-plain"></i>
+            </button>
+          </mat-toolbar>
+        </div>
       </div>
-    </mat-drawer>
-    <mat-drawer-content class="side-content">
-      <div class="app-content">
-        <router-outlet></router-outlet>
+    </mat-sidenav>
+    <mat-sidenav-content class="side-content">
+      <div
+        class="app-content"
+        [@routerAnimations]="prepareRouteTransition(outlet)"
+      >
+        <router-outlet #outlet="outlet"></router-outlet>
       </div>
-    </mat-drawer-content>
-  </mat-drawer-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

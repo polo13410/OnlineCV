@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GetJsonService } from '../services/get-json.service';
-import { Experience } from 'src/assets/data/contentInterface';
+import { GetJsonService } from '../get-json.service';
+import { Experience } from 'src/assets/contentInterface';
 import { MatAccordion } from '@angular/material/expansion';
+// import { MatAccordion } from '@angular/material';
 
 @Component({
   selector: 'app-experiences',
