@@ -1,294 +1,270 @@
 [
-    {
-        "language": "french",
-        "header": {
-            "name": "Paul",
-            "surname": "Pera",
-            "title": "Fullstack developper",
-            "address": "Place Chauderon 36, 1003 Lausanne, CH",
-            "phone": "+33 6 60 05 04 26",
-            "mail": "paul.pera@viacesi.fr"
-        },
-        "details": {
-            "birth": "24 décembre 1997",
-            "licenses": [
-                "Permis de conduire",
-                "Permis bateau",
-                "Brevet de secourisme"
-            ]
-        },
-        "skills": [
-            {
-                "lang": "C#",
-                "time": "2 années",
-                "level": "projets professionnels: autonome"
-            },
-            {
-                "lang": "Java",
-                "time": "2 années",
-                "level": "projets professionnels & personnels: niveau avancé"
-            },
-            {
-                "lang": "HTML CSS",
-                "time": "1.5 année",
-                "level": "projets professionnels & personnels: autonome"
-            },
-            {
-                "lang": "JavaScript",
-                "time": "1.5 année",
-                "level": "projets professionnels & personnels: bonnes bases"
-            },
-            {
-                "lang": "AngularJS",
-                "time": "1 année",
-                "level": "projets professionnels & personnels: bonnes bases"
-            },
-            {
-                "lang": "ReactJS",
-                "time": "0.5 année",
-                "level": "projets personnels: bases"
-            },
-            {
-                "lang": "Méthodes agile",
-                "time": "3.5 années",
-                "level": "projets professionnels & personnels: quotidien"
-            }
-        ],
-        "softskills": [
-            "Esprit d'équipe",
-            "flexibilité et adaptation",
-            "autonomie",
-            "anglais: professionnel"
-        ],
-        "passions": [
-            {
-                "sport": [
-                    "Handball",
-                    "ski",
-                    "randonnée",
-                    "skateboard",
-                    "escalade"
-                ],
-                "other": [
-                    "Espace",
-                    "science",
-                    "nouvelles technologies",
-                    "montage photo/vidéo",
-                    "drones"
-                ]
-            }
-        ],
-        "profile": "Développeur fullstack jeune et motivé avec 2 ans d’experience professionnelle. Plusieurs projets logiciels terminés qui ont permis l’optimisation et une meilleures efficacité d’applications pour differentes entreprises dans la tech. A la recherche d’une entreprise innovante pour pouvoir progresser ensemble et utiliser mes connaissances en développement et dans l’informatique.",
-        "experiences": [
-            {
-                "title": "Ingénieur d’étude et développement",
-                "company": "Metafactory",
-                "location": "Paris, France",
-                "dfrom": "Septembre 2020",
-                "to": "Mai 2022",
-                "descriptions": [
-                    "Plusieurs projet en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant a l’utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interractions",
-                    "Création d’une interface web avec une API REST et le framework .net afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité"
-                ]
-            },
-            {
-                "title": "Ingénieur d’étude et développement & chef de projet (stage)",
-                "company": "Monext",
-                "location": "Aix en Provence, France",
-                "dfrom": "Janvier 2020",
-                "to": "Juillet 2020",
-                "descriptions": [
-                    "Migration d’une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l’interface utilisateur."
-                ]
-            },
-            {
-                "title": "Ingénieur d’étude et développement (stage)",
-                "company": "Thales Alenia Space",
-                "location": "Stuttgart, Allemagne",
-                "dfrom": "Septembre 2018",
-                "to": "Fevrier 2019",
-                "descriptions": [
-                    "Création et intégration d’un plugin dans un programme Java  RCP permettant a l’utilisateur d’enregistrer et visualiser ses données experimentales grâce a une interface simple"
-                ]
-            },
-            {
-                "title": "Ingénieur d’étude et développement (stage)",
-                "company": "Cosmos Consulting",
-                "location": "Aix en Provence, France",
-                "dfrom": "Janvier 2018",
-                "to": "Avril 2018",
-                "descriptions": [
-                    "Creation d’un logiciel java pour la modification de propriété HTML, CSS et JS d’un serveur de Business Intelligence, permettant a l’utilisateur de customiser facilement l’interface"
-                ]
-            }
-        ],
-        "educations": [
-            {
-                "title": "Diplôme d’ingénieur en informatique",
-                "school": "CESI",
-                "location": "Aix en Provence, France",
-                "dfrom": "2017",
-                "to": "2020",
-                "descriptions": [
-                    "Développement logiciel & data-science"
-                ]
-            },
-            {
-                "title": "DUT technicien supérieur",
-                "school": "IUT Savoie Mont-Blanc",
-                "location": "Annecy, France",
-                "dfrom": "2015",
-                "to": "2017",
-                "descriptions": [
-                    "Mesure physique, option énergies renouvelables"
-                ]
-            }
-        ]
+  {
+    "language": "french",
+    "header": {
+      "name": "Paul",
+      "surname": "Pera",
+      "title": "Fullstack developper",
+      "address": "Place Chauderon 36, 1003 Lausanne, CH",
+      "phone": "+33 6 60 05 04 26",
+      "mail": "paul.pera@viacesi.fr"
     },
-    {
-        "language": "english",
-        "header": {
-            "name": "Paul",
-            "surname": "Pera",
-            "title": "Fullstack developper",
-            "address": "Place Chauderon 36, 1003 Lausanne, CH",
-            "phone": "+33 6 60 05 04 26",
-            "mail": "paul.pera@viacesi.fr"
-        },
-        "details": {
-            "birth": "24th december 1997",
-            "licenses": [
-                "Driving license",
-                "Boat license",
-                "Secourism degree"
-            ]
-        },
-        "skills": [
-            {
-                "lang": "C#",
-                "time": "2 years",
-                "level": "professional projects: autonomous"
-            },
-            {
-                "lang": "Java",
-                "time": "2 years",
-                "level": "professional & personal projects: good level"
-            },
-            {
-                "lang": "HTML CSS",
-                "time": "1.5 year",
-                "level": "professional & personal projects: autonomous"
-            },
-            {
-                "lang": "JavaScript",
-                "time": "1.5 année",
-                "level": "professional & personal projects: good knowledge"
-            },
-            {
-                "lang": "AngularJS",
-                "time": "1 year",
-                "level": "professional & personal projects: good knowledge"
-            },
-            {
-                "lang": "ReactJS",
-                "time": "0.5 year",
-                "level": "personal projects: basics"
-            },
-            {
-                "lang": "Agile",
-                "time": "3.5 year",
-                "level": "professional  & personal projects: daily work"
-            }
-        ],
-        "softskills": [
-            "Team spirit",
-            "flexibility and adaption",
-            "autonomy",
-            "English: professional"
-        ],
-        "passions": [
-            {
-                "sport": [
-                    "Handball",
-                    "skiing",
-                    "hiking",
-                    "skateboarding",
-                    "climbing"
-                ],
-                "other": [
-                    "Space",
-                    "science",
-                    "new technologies",
-                    "picture/movie editing",
-                    "drones"
-                ]
-            }
-        ],
-        "profile": "Young and motivated full stack developer with 2 years of professional experience. Many software projects achieved that lead to optimisation and augmentation of the efficiency of the applications for various technology companies. Seeking an innovating company to apply my coding knowledge and progress together. ",
-        "experiences": [
-            {
-                "title": "Study and development engineer",
-                "company": "Metafactory",
-                "location": "Paris, France",
-                "dfrom": "September 2020",
-                "to": "May 2022",
-                "descriptions": [
-                    "Many projects using C# and a Microsoft SQL database for a trading and shipping software, allowing final user to navigate quicker and create new interactions in existing apps",
-                    "Creation of a web interface using a REST API and .net framework to dissociate a trading application from its servers in order to facilitate its maintenance and increase its security"
-                ]
-            },
-            {
-                "title": "Study and development engineer & project manager (internship)",
-                "company": "Monext",
-                "location": "Aix en Provence, France",
-                "dfrom": "January 2020",
-                "to": "July 2020",
-                "descriptions": [
-                    "Migration of a virtual electronic payment terminal application using Angular for security standards in the payment industry, rehabilitating and modernizing the user interface"
-                ]
-            },
-            {
-                "title": "Study and development engineer (internship)",
-                "company": "Thales Alenia Space",
-                "location": "Stuttgart, Germany",
-                "dfrom": "September 2018",
-                "to": "February 2019",
-                "descriptions": [
-                    "Creation and integration of a plugin in a RCP Java program allowing users to visualize all the experiment data in a single page"
-                ]
-            },
-            {
-                "title": "Study and development engineer (internship)",
-                "company": "Cosmos Consulting",
-                "location": "Aix en Provence, France",
-                "dfrom": "January 2018",
-                "to": "April 2018",
-                "descriptions": [
-                    "Creating a java program interface for the modification of the HTML, CSS and JS properties of a server in BI, allowing a user to make  seamless customizations"
-                ]
-            }
-        ],
-        "educations": [
-            {
-                "title": "IT Engineering diploma",
-                "school": "CESI",
-                "location": "Aix en Provence, France",
-                "dfrom": "2017",
-                "to": "2020",
-                "descriptions": [
-                    "Software development & Data Science"
-                ]
-            },
-            {
-                "title": "2-years university degree",
-                "school": "IUT Savoie Mont-Blanc",
-                "location": "Annecy, France",
-                "dfrom": "2015",
-                "to": "2017",
-                "descriptions": [
-                    "Applied physics, renewable energy option"
-                ]
-            }
+    "details": {
+      "birth": "24 décembre 1997",
+      "licenses": [
+        "Permis de conduire",
+        "Permis bateau",
+        "Brevet de secourisme"
+      ]
+    },
+    "skills": [
+      {
+        "lang": "C#",
+        "time": "2 années",
+        "level": "projets professionnels: autonome"
+      },
+      {
+        "lang": "Java",
+        "time": "2 années",
+        "level": "projets professionnels & personnels: niveau avancé"
+      },
+      {
+        "lang": "HTML CSS",
+        "time": "1.5 année",
+        "level": "projets professionnels & personnels: autonome"
+      },
+      {
+        "lang": "JavaScript",
+        "time": "1.5 année",
+        "level": "projets professionnels & personnels: bonnes bases"
+      },
+      {
+        "lang": "AngularJS",
+        "time": "1 année",
+        "level": "projets professionnels & personnels: bonnes bases"
+      },
+      {
+        "lang": "ReactJS",
+        "time": "0.5 année",
+        "level": "projets personnels: bases"
+      },
+      {
+        "lang": "Méthodes agile",
+        "time": "3.5 années",
+        "level": "projets professionnels & personnels: quotidien"
+      }
+    ],
+    "softskills": [
+      "Esprit d'équipe",
+      "flexibilité et adaptation",
+      "autonomie",
+      "anglais: professionnel"
+    ],
+    "passions": [
+      { "name": "Handball", "type": "sport" },
+      { "name": "Ski", "type": "sport" },
+      { "name": "Randonnée", "type": "sport" },
+      { "name": "Skateboard", "type": "sport" },
+      { "name": "Escalade", "type": "sport" },
+      { "name": "Espace", "type": "other" },
+      { "name": "Science", "type": "other" },
+      { "name": "Nouvelles technologies", "type": "other" },
+      { "name": "Montage photo/vidéo", "type": "other" },
+      { "name": "Drones", "type": "other" }
+    ],
+    "profile": "Développeur fullstack jeune et motivé avec 2 ans d’experience professionnelle. Plusieurs projets logiciels terminés qui ont permis l’optimisation et une meilleures efficacité d’applications pour differentes entreprises dans la tech. A la recherche d’une entreprise innovante pour pouvoir progresser ensemble et utiliser mes connaissances en développement et dans l’informatique.",
+    "experiences": [
+      {
+        "title": "Ingénieur d’étude et développement",
+        "company": "Metafactory",
+        "location": "Paris, France",
+        "dfrom": "Septembre 2020",
+        "to": "Mai 2022",
+        "descriptions": [
+          "Plusieurs projet en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant a l’utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interractions",
+          "Création d’une interface web avec une API REST et le framework .net afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité"
         ]
-    }
+      },
+      {
+        "title": "Ingénieur d’étude et développement & chef de projet (stage)",
+        "company": "Monext",
+        "location": "Aix en Provence, France",
+        "dfrom": "Janvier 2020",
+        "to": "Juillet 2020",
+        "descriptions": [
+          "Migration d’une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l’interface utilisateur."
+        ]
+      },
+      {
+        "title": "Ingénieur d’étude et développement (stage)",
+        "company": "Thales Alenia Space",
+        "location": "Stuttgart, Allemagne",
+        "dfrom": "Septembre 2018",
+        "to": "Fevrier 2019",
+        "descriptions": [
+          "Création et intégration d’un plugin dans un programme Java  RCP permettant a l’utilisateur d’enregistrer et visualiser ses données experimentales grâce a une interface simple"
+        ]
+      },
+      {
+        "title": "Ingénieur d’étude et développement (stage)",
+        "company": "Cosmos Consulting",
+        "location": "Aix en Provence, France",
+        "dfrom": "Janvier 2018",
+        "to": "Avril 2018",
+        "descriptions": [
+          "Creation d’un logiciel java pour la modification de propriété HTML, CSS et JS d’un serveur de Business Intelligence, permettant a l’utilisateur de customiser facilement l’interface"
+        ]
+      }
+    ],
+    "educations": [
+      {
+        "title": "Diplôme d’ingénieur en informatique",
+        "school": "CESI",
+        "location": "Aix en Provence, France",
+        "dfrom": "2017",
+        "to": "2020",
+        "descriptions": ["Développement logiciel & data-science"]
+      },
+      {
+        "title": "DUT technicien supérieur",
+        "school": "IUT Savoie Mont-Blanc",
+        "location": "Annecy, France",
+        "dfrom": "2015",
+        "to": "2017",
+        "descriptions": ["Mesure physique, option énergies renouvelables"]
+      }
+    ]
+  },
+  {
+    "language": "english",
+    "header": {
+      "name": "Paul",
+      "surname": "Pera",
+      "title": "Fullstack developper",
+      "address": "Place Chauderon 36, 1003 Lausanne, CH",
+      "phone": "+33 6 60 05 04 26",
+      "mail": "paul.pera@viacesi.fr"
+    },
+    "details": {
+      "birth": "24th december 1997",
+      "licenses": ["Driving license", "Boat license", "Secourism degree"]
+    },
+    "skills": [
+      {
+        "lang": "C#",
+        "time": "2 years",
+        "level": "professional projects: autonomous"
+      },
+      {
+        "lang": "Java",
+        "time": "2 years",
+        "level": "professional & personal projects: good level"
+      },
+      {
+        "lang": "HTML CSS",
+        "time": "1.5 year",
+        "level": "professional & personal projects: autonomous"
+      },
+      {
+        "lang": "JavaScript",
+        "time": "1.5 année",
+        "level": "professional & personal projects: good knowledge"
+      },
+      {
+        "lang": "AngularJS",
+        "time": "1 year",
+        "level": "professional & personal projects: good knowledge"
+      },
+      {
+        "lang": "ReactJS",
+        "time": "0.5 year",
+        "level": "personal projects: basics"
+      },
+      {
+        "lang": "Agile",
+        "time": "3.5 year",
+        "level": "professional  & personal projects: daily work"
+      }
+    ],
+    "softskills": [
+      "Team spirit",
+      "flexibility and adaption",
+      "autonomy",
+      "English: professional"
+    ],
+    "passions": [
+      { "name": "Handball", "type": "sport" },
+      { "name": "Skiing", "type": "sport" },
+      { "name": "Hiking", "type": "sport" },
+      { "name": "Skateboarding", "type": "sport" },
+      { "name": "Climbing", "type": "sport" },
+      { "name": "Space", "type": "other" },
+      { "name": "Science", "type": "other" },
+      { "name": "New technologies", "type": "other" },
+      { "name": "Picture/movie editing", "type": "other" },
+      { "name": "Drones", "type": "other" }
+    ],
+    "profile": "Young and motivated full stack developer with 2 years of professional experience. Many software projects achieved that lead to optimisation and augmentation of the efficiency of the applications for various technology companies. Seeking an innovating company to apply my coding knowledge and progress together. ",
+    "experiences": [
+      {
+        "title": "Study and development engineer",
+        "company": "Metafactory",
+        "location": "Paris, France",
+        "dfrom": "September 2020",
+        "to": "May 2022",
+        "descriptions": [
+          "Many projects using C# and a Microsoft SQL database for a trading and shipping software, allowing final user to navigate quicker and create new interactions in existing apps",
+          "Creation of a web interface using a REST API and .net framework to dissociate a trading application from its servers in order to facilitate its maintenance and increase its security"
+        ]
+      },
+      {
+        "title": "Study and development engineer & project manager (internship)",
+        "company": "Monext",
+        "location": "Aix en Provence, France",
+        "dfrom": "January 2020",
+        "to": "July 2020",
+        "descriptions": [
+          "Migration of a virtual electronic payment terminal application using Angular for security standards in the payment industry, rehabilitating and modernizing the user interface"
+        ]
+      },
+      {
+        "title": "Study and development engineer (internship)",
+        "company": "Thales Alenia Space",
+        "location": "Stuttgart, Germany",
+        "dfrom": "September 2018",
+        "to": "February 2019",
+        "descriptions": [
+          "Creation and integration of a plugin in a RCP Java program allowing users to visualize all the experiment data in a single page"
+        ]
+      },
+      {
+        "title": "Study and development engineer (internship)",
+        "company": "Cosmos Consulting",
+        "location": "Aix en Provence, France",
+        "dfrom": "January 2018",
+        "to": "April 2018",
+        "descriptions": [
+          "Creating a java program interface for the modification of the HTML, CSS and JS properties of a server in BI, allowing a user to make  seamless customizations"
+        ]
+      }
+    ],
+    "educations": [
+      {
+        "title": "IT Engineering diploma",
+        "school": "CESI",
+        "location": "Aix en Provence, France",
+        "dfrom": "2017",
+        "to": "2020",
+        "descriptions": ["Software development & Data Science"]
+      },
+      {
+        "title": "2-years university degree",
+        "school": "IUT Savoie Mont-Blanc",
+        "location": "Annecy, France",
+        "dfrom": "2015",
+        "to": "2017",
+        "descriptions": ["Applied physics, renewable energy option"]
+      }
+    ]
+  }
 ]

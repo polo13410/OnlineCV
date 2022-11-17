@@ -21,15 +21,4 @@ export class HomepageComponent implements OnInit {
       this.header = data;
     });
   }
-
-  contactAction(type: string = 'phone') {
-    if (type == 'phone') {
-      location.href = 'tel:+33660050426';
-      return;
-    } else if (type == 'mail') {
-      location.href =
-        "mailto:paul.pera@viacesi.fr?subject=A propos de votre site..&body=Bonjour paul!\n\n";
-      return;
-    }
-  }
 }

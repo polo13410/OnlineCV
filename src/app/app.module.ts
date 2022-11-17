@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +28,7 @@ import { BubbleComponent } from './bubble/bubble.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PassionsComponent } from './passions/passions.component';
 
 @NgModule({
   declarations: [
@@ -37,11 +40,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ProfileComponent,
     HomepageComponent,
     NotFoundComponent,
+    PassionsComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule,
     MatSliderModule,
     MatToolbarModule,
     MatCardModule,
@@ -54,6 +59,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatListModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatGridListModule,
     AppRoutingModule,
   ],
   providers: [],

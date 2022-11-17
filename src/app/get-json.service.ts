@@ -58,7 +58,7 @@ export class GetJsonService {
   getSkills(language: number = 0) {
     return this.dataObservable?.pipe(
       map((data) => {
-        return data[language].skills;
+        return {skill: data[language].skills, soft: data[language].softskills};
       })
     );
     // return this.cvData[language]?.skills
@@ -71,4 +71,13 @@ export class GetJsonService {
       })
     );
   }
+
+  getPassions(language: number) {
+    return this.dataObservable?.pipe(
+      map((data) => {
+        return data[language].passions;
+      })
+    );
+  }
+
 }

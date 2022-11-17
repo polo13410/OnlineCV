@@ -1,13 +1,27 @@
+.content {
+  padding: 16px;
+}
+
+.content > mat-card {
+  margin-bottom: 16px;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+.card-container{
+  width: 200px;
+}
+
 .card {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    align-items: center;
-  }
-  
-  .container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-  }
+  margin: 20px;
+  // padding-bottom: 0;
+  width: 100%;
+  align-items: center;
+  transition: all 0.05s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
