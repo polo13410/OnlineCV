@@ -1,17 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { GetJsonService } from './services/get-json.service';
-import { Header } from 'src/assets/data/contentInterface';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { GetPdfService } from './services/get-pdf.service';
-import * as PackageJson from '../../package.json';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { GetJsonService } from './get-json.service';
+import { Header } from 'src/assets/contentInterface';
+import { Router, RouterOutlet } from '@angular/router';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { GetPdfService } from './get-pdf.service';
+import PackageJson from '../../package-lock.json';
+import { animate, query, style, transition, trigger } from '@angular/animations';
+
+
+const fade = [
+  query(':self', 
+    [
+      style({ opacity: 0 })
+    ], 
+    { optional: true }
+  ),
+
+  query(':self',
+    [
+      style({ opacity: 0 }),
+      animate('.3s', style({ opacity: 1 }))
+    ], 
+    { optional: true }
+  )
+];
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('routerAnimations', [
+      transition('* => *', fade)
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
-  title = 'online-cv';
+  @ViewChild('root') root: ElementRef | undefined;
+  title = 'Paul PERA';
+
   header?: Header;
 
   constructor(
@@ -34,22 +61,29 @@ export class AppComponent implements OnInit {
     });
   }
 
-  popAngular() {
-    this.snackBar?.openFromComponent(CodeInfoComponent, {
-      duration: 5000,
-    });
-    return;
+  popAngular() { 
+      this.snackBar?.openFromComponent(CodeInfoComponent, {
+        duration: 5000,
+      });
+      return;
+    
   }
+
+  prepareRouteTransition(outlet: RouterOutlet) {
+    const animation = outlet.activatedRouteData['animation'] || {};
+    return animation['value'] || null;
+  }
+
 }
 
 @Component({
   selector: 'code-info',
-  templateUrl: './code-info.html',
+  templateUrl: 'code-info.html',
 })
 export class CodeInfoComponent {
   pjson = PackageJson;
   core = `Framework Angular version `;
   gen = ` / projet généré en `;
-  genV = `15.0.0`;
+  genV = `14.2.4`;
   material = `Material Angular version `;
 }

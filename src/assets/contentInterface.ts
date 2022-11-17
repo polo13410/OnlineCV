@@ -31,8 +31,8 @@ export interface Skill {
 }
 
 export interface Passion {
-  name: string
-  type: string
+  sport: string[]
+  other: string[]
 }
 
 export interface Experience {
