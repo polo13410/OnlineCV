@@ -22,6 +22,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { EducationComponent } from './education/education.component';
 import { ExperiencesComponent } from './experiences/experiences.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     BrowserAnimationsModule,
     AppRoutingModule,
     MatGridListModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

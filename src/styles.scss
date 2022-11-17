@@ -13,7 +13,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $online-cv-primary: mat.define-palette(mat.$blue-grey-palette);
-$online-cv-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$online-cv-accent: mat.define-palette(mat.$deep-orange-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $online-cv-warn: mat.define-palette(mat.$red-palette);

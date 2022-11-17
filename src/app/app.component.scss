@@ -1,72 +1,70 @@
 .root-app {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .header-spacer{
-    flex: 1 1 auto;
-  }
-  
-  .side-container {
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-    flex: 1 1 0%;
-  }
-  
-  .side-wrapper{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .side-content {
-    flex: 1;
-    overflow-x: auto;
-    display: flex;
-  }
-  
-  .app-content{
-    width:100%;
-    margin: 16px 15% 16px 15%;
-  }
-  
-  .nav-socials {
-    position: absolute;
-    left: 15px;
-    bottom: 38px;
-  }
-  
-  .nav-footer {
-    justify-content: space-between;
-  }
-  
-  
-  
-  .nav-filler {
-    flex-grow: 1;
-  }
-  
-  .site-title {
-    margin: 20px;
-    display: flex;
-    justify-content: space-between;
-    vertical-align: middle;
-  }
-  
-  .active{
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-  
-  i {
-    font-size: large;
-  }
-  
-  ::ng-deep .card {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    align-items: center;
-  }
-  
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.side-container {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  flex: 1 1 0%;
+}
+
+.side-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-nav-list {
+  flex-grow: 1;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.social-button{
+  font-size: large;
+  text-align: center;
+}
+
+.side-content {
+  flex: 1;
+  overflow-x: auto;
+  display: flex;
+}
+
+.app-content {
+  width: 100%;
+  margin: 0px 15%;
+}
+
+i, .item-align {
+  vertical-align: middle;
+}
+
+::ng-deep .card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  // width: 100%;
+}
+
+::ng-deep mat-card-title {
+  font-size: x-large;
+}
+
+::ng-deep mat-card-footer {
+  padding: 16px 16px;
+  font-size: small;
+}
+
+::ng-deep a {
+  text-decoration: none;
+  color: hsl(206deg 100% 40%);
+}
