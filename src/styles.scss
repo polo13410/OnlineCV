@@ -1,11 +1,7 @@
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
-
-@use "@material/card";
-@use "@material/button/styles";
-
-@include card.core-styles;
+@use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -13,82 +9,31 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-//Cretaing Custom palette
-$my-palette-primary: (
-  50: #819ca9,
-  100: #819ca9,
-  200: #819ca9,
-  300: #819ca9,
-  400: #819ca9,
-  500: #819ca9,
-  600: #546e7a,
-  700: #546e7a,
-  800: #29434e,
-  // ... continues to 900
-  contrast:
-    (
-      50: rgba(black, 0.87),
-      100: rgba(black, 0.87),
-      200: rgba(black, 0.87),
-      300: white,
-      // ... continues to 900
-    ),
-);
-
-$my-palette-secondary: (
-  50: #fffffb,
-  100: #d7ccc8,
-  200: #a69b97,
-  // ... continues to 900
-  contrast:
-    (
-      50: rgba(black, 0.87),
-      100: rgba(black, 0.87),
-      200: rgba(black, 0.87),
-      300: white,
-      // ... continues to 900
-    ),
-);
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$OnlineCV-primary: mat.define-palette(mat.$teal-palette, 100, 50, 200);
-$OnlineCV-accent: mat.define-palette(mat.$brown-palette, 100, 50, 200);
-$OnlineCV-warn: mat.define-palette(mat.$red-palette);
+$online-cv-primary: mat.define-palette(mat.$indigo-palette);
+$online-cv-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
-$my-app-primary: mat.define-palette(mat.$indigo-palette);
-$my-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$my-app-warn: mat.define-palette(mat.$red-palette);
-
-$custom-primary: mat.define-palette($my-palette-primary, 600, 200, 800);
-$custom-accent: mat.define-palette($my-palette-secondary, 100, 50, 200);
-$custom-warn: mat.define-palette(mat.$red-palette);
+// The warn palette is optional (defaults to red).
+$online-cv-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$OnlineCV-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $custom-primary,
-      accent: $custom-accent,
-      warn: $OnlineCV-warn,
-    ),
+$online-cv-theme: mat.define-light-theme((
+  color: (
+    primary: $online-cv-primary,
+    accent: $online-cv-accent,
+    warn: $online-cv-warn,
   )
-);
+));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($OnlineCV-theme);
+@include mat.all-component-themes($online-cv-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
