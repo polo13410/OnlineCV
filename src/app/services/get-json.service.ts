@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CVDataContent } from 'src/assets/contentInterface';
+import { CVDataContent } from 'src/assets/data/contentInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs';
@@ -12,15 +12,10 @@ export class GetJsonService {
   private dataObservable: Observable<CVDataContent[]> | undefined;
 
   constructor(private readonly http: HttpClient) {
-    console.log('0 : Fetching data from json');
     this.dataObservable = this.http.get<CVDataContent[]>(
-      '/assets/content.json'
+      '/assets/data/content.json'
     );
-    // .subscribe((cvData: CVDataContent[]) => {
-    //   this.cvData = cvData
-    // });
 
-    console.log('0 : LOADED from json', this.cvData);
   }
 
   getCVData(language: number) {
@@ -58,7 +53,7 @@ export class GetJsonService {
   getSkills(language: number = 0) {
     return this.dataObservable?.pipe(
       map((data) => {
-        return data[language].skills;
+        return {skill: data[language].skills, soft: data[language].softskills};
       })
     );
     // return this.cvData[language]?.skills
@@ -71,4 +66,13 @@ export class GetJsonService {
       })
     );
   }
+
+  getPassions(language: number) {
+    return this.dataObservable?.pipe(
+      map((data) => {
+        return data[language].passions;
+      })
+    );
+  }
+
 }
