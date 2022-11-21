@@ -21,8 +21,8 @@
       </mat-menu>
     </mat-toolbar>
   </header>
-  <mat-drawer-container autosize class="side-container" hasBackdrop="false">
-    <mat-drawer #drawer mode="side" opened>
+  <mat-drawer-container autosize class="side-container" hasBackdrop="{{hasDrop}}">
+    <mat-drawer #drawer [mode]="mdm" opened>
       <div class="side-wrapper">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>

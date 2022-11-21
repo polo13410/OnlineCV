@@ -29,7 +29,7 @@ mat-nav-list {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.social-button{
+.social-button {
   font-size: large;
   text-align: center;
 }
@@ -42,10 +42,22 @@ mat-nav-list {
 
 .app-content {
   width: 100%;
-  margin: 0px 15%;
 }
 
-i, .item-align {
+@media screen and (max-width: 959px) {
+  .app-content {
+    margin: 0px 10px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .app-content {
+    margin: 0px 15%;
+  }
+}
+
+i,
+.item-align {
   vertical-align: middle;
 }
 
