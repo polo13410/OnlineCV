@@ -73,49 +73,53 @@
       { "name": "Drones", "type": "other" }
     ],
     "profile": "Développeur fullstack jeune et motivé avec 2 ans d’experience professionnelle. Plusieurs projets logiciels terminés qui ont permis l’optimisation et une meilleures efficacité d’applications pour differentes entreprises dans la tech. A la recherche d’une entreprise innovante pour pouvoir progresser ensemble et utiliser mes connaissances en développement et dans l’informatique.",
-    "experiences": [
-      {
-        "title": "Ingénieur d’étude et développement",
-        "company": "Metafactory",
-        "location": "Paris, France",
-        "dfrom": "Septembre 2020",
-        "to": "Mai 2022",
-        "descriptions": [
-          "Plusieurs projet en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant a l’utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interractions",
-          "Création d’une interface web avec une API REST et le framework .net afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité"
-        ]
-      },
-      {
-        "title": "Ingénieur d’étude et développement & chef de projet (stage)",
-        "company": "Monext",
-        "location": "Aix en Provence, France",
-        "dfrom": "Janvier 2020",
-        "to": "Juillet 2020",
-        "descriptions": [
-          "Migration d’une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l’interface utilisateur."
-        ]
-      },
-      {
-        "title": "Ingénieur d’étude et développement (stage)",
-        "company": "Thales Alenia Space",
-        "location": "Stuttgart, Allemagne",
-        "dfrom": "Septembre 2018",
-        "to": "Fevrier 2019",
-        "descriptions": [
-          "Création et intégration d’un plugin dans un programme Java  RCP permettant a l’utilisateur d’enregistrer et visualiser ses données experimentales grâce a une interface simple"
-        ]
-      },
-      {
-        "title": "Ingénieur d’étude et développement (stage)",
-        "company": "Cosmos Consulting",
-        "location": "Aix en Provence, France",
-        "dfrom": "Janvier 2018",
-        "to": "Avril 2018",
-        "descriptions": [
-          "Creation d’un logiciel java pour la modification de propriété HTML, CSS et JS d’un serveur de Business Intelligence, permettant a l’utilisateur de customiser facilement l’interface"
-        ]
-      }
-    ],
+    "experiences": {
+      "pro": [
+        {
+          "title": "Ingénieur d’étude et développement",
+          "company": "Metafactory",
+          "location": "Paris, France",
+          "dfrom": "Septembre 2020",
+          "to": "Mai 2022",
+          "descriptions": [
+            "Plusieurs projet en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant a l’utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interractions",
+            "Création d’une interface web avec une API REST et le framework .net afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité"
+          ]
+        }
+      ],
+      "stage": [
+        {
+          "title": "Ingénieur d’étude et développement & chef de projet (stage)",
+          "company": "Monext",
+          "location": "Aix en Provence, France",
+          "dfrom": "Janvier 2020",
+          "to": "Juillet 2020",
+          "descriptions": [
+            "Migration d’une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l’interface utilisateur."
+          ]
+        },
+        {
+          "title": "Ingénieur d’étude et développement (stage)",
+          "company": "Thales Alenia Space",
+          "location": "Stuttgart, Allemagne",
+          "dfrom": "Septembre 2018",
+          "to": "Fevrier 2019",
+          "descriptions": [
+            "Création et intégration d’un plugin dans un programme Java  RCP permettant a l’utilisateur d’enregistrer et visualiser ses données experimentales grâce a une interface simple"
+          ]
+        },
+        {
+          "title": "Ingénieur d’étude et développement (stage)",
+          "company": "Cosmos Consulting",
+          "location": "Aix en Provence, France",
+          "dfrom": "Janvier 2018",
+          "to": "Avril 2018",
+          "descriptions": [
+            "Creation d’un logiciel java pour la modification de propriété HTML, CSS et JS d’un serveur de Business Intelligence, permettant a l’utilisateur de customiser facilement l’interface"
+          ]
+        }
+      ]
+    },
     "educations": [
       {
         "title": "Diplôme d’ingénieur en informatique",

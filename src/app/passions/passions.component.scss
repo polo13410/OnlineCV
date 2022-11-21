@@ -1,18 +1,30 @@
+.content {
+  padding: 16px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
 .card {
-    margin: 20px;
-    padding-bottom: 0;
-    width: 100%;
+    margin: 10px;
+    width: 300px;
     align-items: center;
+    padding: 10px;
     transition: all .05s ease-in-out; 
+  }
+
+  @media screen and (max-width: 300px) {
+    .card {
+      width: 98%;
+    }
+  }
+
+  mat-card-header{
+    padding: 0;
   }
   
   .card:hover {
     transform: scale(1.01); 
-  }
-
-  h1{
-    padding-left: 10px;
-    margin-bottom: 5px;
   }
 
 //   .container{

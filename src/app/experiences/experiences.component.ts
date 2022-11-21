@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetJsonService } from '../services/get-json.service';
-import { Experience } from 'src/assets/data/contentInterface';
+import { Experiences } from 'src/assets/data/contentInterface';
 import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
@@ -10,7 +10,7 @@ import { MatAccordion } from '@angular/material/expansion';
 })
 export class ExperiencesComponent implements OnInit {
   @ViewChild('accordion',{static:true}) accordion: MatAccordion | undefined
-  experiences?: Experience[] = []
+  experiences?: Experiences |undefined
   accordeonToggleIcon?: string |undefined = "unfold_more";
   constructor (private readonly json: GetJsonService) {}
 
