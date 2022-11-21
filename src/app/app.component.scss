@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.header-spacer{
+.header-spacer {
   flex: 1 1 auto;
 }
 
@@ -15,10 +15,23 @@
   flex: 1 1 0%;
 }
 
-.side-wrapper{
+.side-wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+mat-nav-list {
+  flex-grow: 1;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.social-button {
+  font-size: large;
+  text-align: center;
 }
 
 .side-content {
@@ -27,38 +40,43 @@
   display: flex;
 }
 
-.app-content{
-  width:100%;
-  margin: 16px 15% 16px 15%;
+.app-content {
+  width: 100%;
 }
 
-.nav-socials {
-  position: absolute;
-  left: 15px;
-  bottom: 38px;
+@media screen and (max-width: 959px) {
+  .app-content {
+    margin: 0px 10px;
+  }
 }
 
-.nav-footer {
-  justify-content: space-between;
+@media screen and (min-width: 960px) {
+  .app-content {
+    margin: 0px 15%;
+  }
 }
 
-
-
-.nav-filler {
-  flex-grow: 1;
-}
-
-.site-title {
-  margin: 20px;
-  display: flex;
-  justify-content: space-between;
+i,
+.item-align {
   vertical-align: middle;
 }
 
-.active{
-  background-color: rgba(0, 0, 0, 0.04);
+::ng-deep .card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  // width: 100%;
 }
 
-i {
-  font-size: large;
+::ng-deep mat-card-title {
+  font-size: x-large;
+}
+
+::ng-deep mat-card-footer {
+  padding: 16px 16px;
+  font-size: small;
+}
+
+::ng-deep a {
+  text-decoration: none;
+  color: hsl(206deg 100% 40%);
 }

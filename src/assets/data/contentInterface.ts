@@ -6,7 +6,7 @@ export interface CVDataContent {
   softskills: string[]
   passions: Passion[]
   profile: string
-  experiences?: Experience[]
+  experiences?: Experiences
   educations?: Education[]
 }
 
@@ -31,8 +31,13 @@ export interface Skill {
 }
 
 export interface Passion {
-  sport: string[]
-  other: string[]
+  name: string
+  type: string
+}
+
+export interface Experiences {
+  pro: Experience[]
+  stage: Experience[]
 }
 
 export interface Experience {
