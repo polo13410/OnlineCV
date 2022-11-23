@@ -15,7 +15,7 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="downloadPDF()">
-          <mat-icon>download</mat-icon>
+          <mat-icon  color="accent">download</mat-icon>
           <span>Version PDF</span>
         </button>
       </mat-menu>
@@ -54,12 +54,12 @@
           </a>
           <a [routerLink]="['/passions']" name="passions">
             <mat-list-item routerLinkActive="active"
-              ><mat-icon class="item-align" mat-list-icon>favorite</mat-icon>
+              ><mat-icon  class="item-align" mat-list-icon>favorite</mat-icon>
               <span class="item-align"> Passions </span>
             </mat-list-item>
           </a>
         </mat-nav-list>
-        <mat-toolbar>
+        <mat-toolbar  color="accent">
           <a
             mat-icon-button
             class="social-button"
