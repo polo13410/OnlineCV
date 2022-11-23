@@ -1,16 +1,18 @@
-<h2>Compétences techniques</h2>
-<mat-divider></mat-divider>
-<div class="content">
-  <mat-card class="card" *ngFor="let skill of skills">
-    <mat-card-title>{{ skill.lang }}</mat-card-title>
-    <mat-card-subtitle>{{ skill.time }}</mat-card-subtitle>
-    <mat-card-content color="primary">{{ skill.level }}</mat-card-content>
-  </mat-card>
-</div>
-<h2>Soft skills</h2>
-<mat-divider></mat-divider>
-<div class="content">
-  <mat-card class="card" *ngFor="let soft of softs">
-    <mat-card-title>{{ soft }}</mat-card-title>
-  </mat-card>
+<div class="container">
+  <h2>Compétences techniques</h2>
+  <mat-divider></mat-divider>
+  <div class="content">
+    <mat-card class="card" *ngFor="let skill of skills">
+      <mat-card-title>{{ skill.lang }}</mat-card-title>
+      <mat-card-subtitle>{{ skill.time }}</mat-card-subtitle>
+      <mat-card-content class="skill-level">{{ skill.level }}</mat-card-content>
+    </mat-card>
+  </div>
+  <h2>Soft skills</h2>
+  <mat-divider></mat-divider>
+  <div class="content">
+    <mat-card class="card" *ngFor="let soft of softs">
+      <mat-card-title>{{ soft }}</mat-card-title>
+    </mat-card>
+  </div>
 </div>
