@@ -1,24 +1,23 @@
 <div class="container-center">
   <div class="container">
-    <img class="logo" src="./assets/pictures/profileMini.jpg" />
+    <img class="logo" src="/assets/pictures/profileMini.jpg" />
     <div class="informations mat-typography">
       <!-- <p>{{ profile }}</p> -->
       <h1>{{ header?.name }} {{ header?.surname }}</h1>
       <h3>{{ header?.title }}</h3>
       <br />
-      <span class="address">
+      <span>
         <p>
           {{ header?.address }}
         </p>
-        <p>
-          <a class="contact" href="tel:+33660050426">
+        <p class="contact">
+          <a href="tel:+33660050426">
             {{ header?.phone }}
             <mat-icon class="contact-icon">open_in_new</mat-icon>
           </a>
         </p>
-        <p>
+        <p class="contact">
           <a
-            class="contact"
             href="mailto:paul.pera@viacesi.fr?subject=A propos de votre site..&body=Bonjour Paul!"
           >
             {{ header?.mail }}

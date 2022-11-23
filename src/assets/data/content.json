@@ -56,9 +56,11 @@
     ],
     "softskills": [
       "Esprit d'équipe",
-      "flexibilité et adaptation",
-      "autonomie",
-      "anglais: professionnel"
+      "Flexibilité et adaptation",
+      "Autonomie",
+      "Recherche d'améliorations",
+      "Curiosité",
+      "Anglais professionnel"
     ],
     "passions": [
       { "name": "Handball", "type": "sport" },
@@ -89,7 +91,7 @@
       ],
       "stage": [
         {
-          "title": "Ingénieur d’étude et développement & chef de projet (stage)",
+          "title": "Ingénieur d’étude et développement & chef de projet",
           "company": "Monext",
           "location": "Aix en Provence, France",
           "dfrom": "Janvier 2020",
@@ -99,7 +101,7 @@
           ]
         },
         {
-          "title": "Ingénieur d’étude et développement (stage)",
+          "title": "Ingénieur d’étude et développement",
           "company": "Thales Alenia Space",
           "location": "Stuttgart, Allemagne",
           "dfrom": "Septembre 2018",
@@ -109,7 +111,7 @@
           ]
         },
         {
-          "title": "Ingénieur d’étude et développement (stage)",
+          "title": "Ingénieur d’étude et développement",
           "company": "Cosmos Consulting",
           "location": "Aix en Provence, France",
           "dfrom": "Janvier 2018",
@@ -192,9 +194,10 @@
     ],
     "softskills": [
       "Team spirit",
-      "flexibility and adaption",
-      "autonomy",
-      "English: professional"
+      "Flexibility and adaption",
+      "Autonomy",
+      "English: professional",
+      ""
     ],
     "passions": [
       { "name": "Handball", "type": "sport" },

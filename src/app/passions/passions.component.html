@@ -1,28 +1,30 @@
-<h2>Sports</h2>
-<mat-divider></mat-divider>
-<div class="content">
-  <mat-card class="card" *ngFor="let sport of sports">
-    <mat-card-header>
-      <mat-card-title>{{ sport }}</mat-card-title>
-    </mat-card-header>
-    <!-- <img
+<div class="container">
+  <h2>Sports</h2>
+  <mat-divider></mat-divider>
+  <div class="content">
+    <mat-card class="card" *ngFor="let sport of sports">
+      <mat-card-header>
+        <mat-card-title>{{ sport }}</mat-card-title>
+      </mat-card-header>
+      <!-- <img
       mat-card-image
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
       alt="Photo of a Shiba Inu"
     /> -->
-  </mat-card>
-</div>
-<h2>Autres</h2>
-<mat-divider></mat-divider>
-<div class="content">
-  <mat-card appearance="outlined" class="card" *ngFor="let other of others">
-    <mat-card-header>
-      <mat-card-title>{{ other }}</mat-card-title>
-    </mat-card-header>
-    <!-- <img
+    </mat-card>
+  </div>
+  <h2>Autres</h2>
+  <mat-divider></mat-divider>
+  <div class="content">
+    <mat-card class="card" *ngFor="let other of others">
+      <mat-card-header>
+        <mat-card-title>{{ other }}</mat-card-title>
+      </mat-card-header>
+      <!-- <img
       mat-card-image
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
       alt="Photo of a Shiba Inu"
     /> -->
-  </mat-card>
+    </mat-card>
+  </div>
 </div>
