@@ -15,13 +15,17 @@
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="downloadPDF()">
-          <mat-icon  color="accent">download</mat-icon>
+          <mat-icon color="accent">download</mat-icon>
           <span>Version PDF</span>
         </button>
       </mat-menu>
     </mat-toolbar>
   </header>
-  <mat-drawer-container autosize class="side-container" hasBackdrop="{{hasDrop}}">
+  <mat-drawer-container
+    autosize
+    class="side-container"
+    hasBackdrop="{{ hasDrop }}"
+  >
     <mat-drawer #drawer [mode]="mdm" opened>
       <div class="side-wrapper">
         <mat-toolbar>Menu</mat-toolbar>
@@ -54,12 +58,12 @@
           </a>
           <a [routerLink]="['/passions']" name="passions">
             <mat-list-item routerLinkActive="active"
-              ><mat-icon  class="item-align" mat-list-icon>favorite</mat-icon>
+              ><mat-icon class="item-align" mat-list-icon>favorite</mat-icon>
               <span class="item-align"> Passions </span>
             </mat-list-item>
           </a>
         </mat-nav-list>
-        <mat-toolbar  color="accent">
+        <mat-toolbar color="accent">
           <a
             mat-icon-button
             class="social-button"
