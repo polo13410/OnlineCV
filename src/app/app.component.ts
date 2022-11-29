@@ -45,9 +45,13 @@ export class AppComponent implements OnInit {
 
   downloadPDF() {
     this.pdf.downloadFile().subscribe((blob: Blob): void => {
+      const dlButton = document.createElement('a');
       const file = new Blob([blob], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      window.open(fileURL, '_blank', 'width=1000, height=800');
+      // const fileURL = URL.createObjectURL(file);
+      // window.open(fileURL, '_blank');
+      dlButton.href = URL.createObjectURL(file); 
+      dlButton.setAttribute("download","CV_PaulPERA.pdf"); // Added Line 
+      dlButton.click();
     });
   }
 
