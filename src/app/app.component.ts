@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
       // const fileURL = URL.createObjectURL(file);
       // window.open(fileURL, '_blank');
       dlButton.href = URL.createObjectURL(file); 
-      dlButton.setAttribute("download","CV_PaulPERA.pdf"); // Added Line 
+      dlButton.setAttribute("download","CV_PaulPERA.pdf");
       dlButton.click();
     });
   }
