@@ -2,7 +2,7 @@ export interface CVDataContent {
   language: string
   header: Header
   details: Details
-  skills: Skill[]
+  skillCategories: SkillCategory[]
   softskills: string[]
   passions: Passion[]
   profile: string
@@ -28,6 +28,11 @@ export interface Skill {
   lang: string
   time: string
   level: string
+}
+
+export interface SkillCategory {
+  name: string
+  skills: Skill[]
 }
 
 export interface Passion {

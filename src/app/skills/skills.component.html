@@ -1,12 +1,18 @@
 <div class="container">
-  <h2>Compétences techniques</h2>
+  <h2>Tech skills</h2>
   <mat-divider></mat-divider>
-  <div class="content">
-    <mat-card class="card" *ngFor="let skill of skills">
-      <mat-card-title>{{ skill.lang }}</mat-card-title>
-      <mat-card-subtitle>{{ skill.time }}</mat-card-subtitle>
-      <mat-card-content class="skill-level">{{ skill.level }}</mat-card-content>
-    </mat-card>
+  <div class="skills" *ngFor="let category of skillCategories">
+    <h3>{{category.name}}</h3>
+    <mat-divider></mat-divider>
+    <div class="content">
+      <mat-card class="card" *ngFor="let skill of category.skills">
+        <mat-card-title>{{ skill.lang }}</mat-card-title>
+        <mat-card-subtitle>{{ skill.time }}</mat-card-subtitle>
+        <mat-card-content class="skill-level">{{
+          skill.level
+        }}</mat-card-content>
+      </mat-card>
+    </div>
   </div>
   <h2>Soft skills</h2>
   <mat-divider></mat-divider>
