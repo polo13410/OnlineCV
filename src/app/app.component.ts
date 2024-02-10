@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
   popAngular() {
     this.snackBar?.openFromComponent(CodeInfoComponent, {
-      duration: 5000,
+      duration: 7000,
     });
     return;
   }
