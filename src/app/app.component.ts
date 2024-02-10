@@ -19,14 +19,14 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-     if( window.innerWidth < 960){
+    if (window.innerWidth < 960) {
       this.hasDrop = true;
       this.mdm = 'over';
-     } else {
+    } else {
       this.hasDrop = false;
       this.mdm = 'side';
 
-     }
+    }
   }
 
   constructor(
@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
       const file = new Blob([blob], { type: 'application/pdf' });
       // const fileURL = URL.createObjectURL(file);
       // window.open(fileURL, '_blank');
-      dlButton.href = URL.createObjectURL(file); 
-      dlButton.setAttribute("download","CV_PaulPERA.pdf");
+      dlButton.href = URL.createObjectURL(file);
+      dlButton.setAttribute("download", "CV_PaulPERA.pdf");
       dlButton.click();
     });
   }
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
     return;
   }
 
-  getScreenSize() {}
+  getScreenSize() { }
 }
 
 @Component({
@@ -71,8 +71,7 @@ export class AppComponent implements OnInit {
 })
 export class CodeInfoComponent {
   pjson = PackageJson;
-  core = `Framework Angular version `;
-  gen = ` / projet généré en `;
-  genV = `15.0.0`;
-  material = `Material Angular version `;
+  core = `Angular version `;
+  node = `Node deployment version`;
+  nodev = `20.11.0`;
 }
