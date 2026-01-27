@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,6 +31,7 @@ import { LanguageService, SupportedLanguage } from './services/language.service'
     MatButtonModule,
     MatMenuModule,
     MatListModule,
+    MatDividerModule,
     TranslateModule,
   ],
 })
@@ -96,12 +98,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleLanguage(): void {
-    this.languageService.toggleLanguage();
-  }
-
-  getLanguageLabel(): string {
-    return this.currentLang === 'fr' ? 'EN' : 'FR';
+  setLanguage(lang: SupportedLanguage): void {
+    if (lang !== this.currentLang) {
+      this.languageService.setLanguage(lang);
+    }
   }
 
   popAngular() {
@@ -110,6 +110,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     return;
   }
+
 
   getScreenSize() { }
 }

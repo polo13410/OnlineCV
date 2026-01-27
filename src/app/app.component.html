@@ -8,19 +8,29 @@
       <span class="header-spacer"></span>
       <button
         mat-icon-button
-        (click)="toggleLanguage()"
-        [attr.aria-label]="'LANGUAGE.SWITCH' | translate"
-      >
-        <span class="language-label">{{ getLanguageLabel() }}</span>
-      </button>
-      <button
-        mat-icon-button
         [matMenuTriggerFor]="menu"
         [attr.aria-label]="'APP.MENU' | translate"
       >
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          (click)="setLanguage('fr')"
+          [class.selected]="currentLang === 'fr'"
+        >
+          <mat-icon>{{ currentLang === "fr" ? "check" : "" }}</mat-icon>
+          <span>🇫🇷 Français</span>
+        </button>
+        <button
+          mat-menu-item
+          (click)="setLanguage('en')"
+          [class.selected]="currentLang === 'en'"
+        >
+          <mat-icon>{{ currentLang === "en" ? "check" : "" }}</mat-icon>
+          <span>🇬🇧 English</span>
+        </button>
+        <mat-divider></mat-divider>
         <button mat-menu-item (click)="downloadPDF()">
           <mat-icon color="accent">download</mat-icon>
           <span>{{ "APP.VERSION_PDF" | translate }}</span>
