@@ -57,31 +57,41 @@
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               ><mat-icon class="item-align" mat-list-icon>home</mat-icon>
-              <span class="item-align"> Accueil </span>
+              <span class="item-align">{{
+                "NAV.MENU_TITLE.HOME" | translate
+              }}</span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/experiences']" name="exp">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>work</mat-icon>
-              <span class="item-align"> Experiences </span>
+              <span class="item-align">{{
+                "NAV.MENU_TITLE.EXPERIENCES" | translate
+              }}</span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/education']" name="edu">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>school</mat-icon>
-              <span class="item-align"> Formation </span>
+              <span class="item-align">{{
+                "NAV.MENU_TITLE.EDUCATION" | translate
+              }}</span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/skills']" name="skills">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>code</mat-icon>
-              <span class="item-align"> Compétences </span>
+              <span class="item-align">{{
+                "NAV.MENU_TITLE.SKILLS" | translate
+              }}</span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/passions']" name="passions">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>favorite</mat-icon>
-              <span class="item-align"> Passions </span>
+              <span class="item-align">{{
+                "NAV.MENU_TITLE.PASSIONS" | translate
+              }}</span>
             </mat-list-item>
           </a>
         </mat-nav-list>
@@ -93,11 +103,7 @@
           >
             <i class="devicon-linkedin-plain"></i>
           </button>
-          <button
-            mat-icon-button
-            class="social-button"
-            (click)="openGitHub()"
-          >
+          <button mat-icon-button class="social-button" (click)="openGitHub()">
             <i class="devicon-github-original"></i>
           </button>
           <button mat-icon-button class="social-button" (click)="popAngular()">

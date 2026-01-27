@@ -1,15 +1,22 @@
 {
   "APP": {
-    "TITLE": "Online CV",
+    "TITLE": "Paul PERA",
     "MENU": "Menu",
     "VERSION_PDF": "Version PDF"
   },
   "NAV": {
     "HOME": "Accueil",
-    "EXPERIENCES": "Experiences",
+    "EXPERIENCES": "Expériences",
     "EDUCATION": "Formation",
     "SKILLS": "Compétences",
-    "PASSIONS": "Passions"
+    "PASSIONS": "Passions",
+    "MENU_TITLE": {
+      "HOME": "Accueil",
+      "EXPERIENCES": "Expériences",
+      "EDUCATION": "Formation",
+      "SKILLS": "Compétences",
+      "PASSIONS": "Passions"
+    }
   },
   "EXPERIENCES": {
     "TITLE": "Experiences professionnelles",
@@ -27,7 +34,7 @@
     "OTHERS": "Autres"
   },
   "ERROR": {
-    "NOT_FOUND": "Uh Oh! Page not found!",
+    "NOT_FOUND": "Uh Oh! 404!",
     "BACK_HOME": "Retour a l'accueil"
   },
   "CODE_INFO": {

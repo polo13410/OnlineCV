@@ -1,6 +1,6 @@
 {
   "APP": {
-    "TITLE": "Online CV",
+    "TITLE": "Paul PERA",
     "MENU": "Menu",
     "VERSION_PDF": "PDF Version"
   },
@@ -9,7 +9,14 @@
     "EXPERIENCES": "Experiences",
     "EDUCATION": "Education",
     "SKILLS": "Skills",
-    "PASSIONS": "Passions"
+    "PASSIONS": "Passions",
+    "MENU_TITLE": {
+      "HOME": "Home",
+      "EXPERIENCES": "Experiences",
+      "EDUCATION": "Education",
+      "SKILLS": "Skills",
+      "PASSIONS": "Passions"
+    }
   },
   "EXPERIENCES": {
     "TITLE": "Professional experiences",
