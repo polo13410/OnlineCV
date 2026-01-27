@@ -16,32 +16,77 @@ export const content: CVDataContent[] = [
     },
     skillCategories: [
       {
-        name: 'Frameworks & Langages',
+        name: 'Langages de programmation & scripting',
         skills: [
           {
-            lang: 'NodeJS (JS, TS)',
-            time: '5 années',
-            level: 'projets professionnels & personnels: avancé',
+            lang: 'TypeScript (& JavaScript)',
+            time: '6 années',
+            level: 'projets professionnels & personnels : niveau avancé',
           },
           {
-            lang: 'VueJS, React',
+            lang: 'C#',
             time: '3 années',
-            level: 'projets professionnels & personnels: avancé',
+            level: 'projets professionnels : bon niveau',
           },
           {
-            lang: 'POO C#, Java',
+            lang: 'Java',
             time: '3 années',
-            level: 'projets professionnels & personnels: avancé',
+            level: 'projets professionnels & personnels : bon niveau',
           },
           {
             lang: 'Python',
-            time: '3 années',
-            level: 'projets professionnels: bon niveau',
+            time: '4 années',
+            level: 'projets professionnels & personnels : niveau intermédiaire',
           },
           {
             lang: 'PHP',
             time: '1 année',
-            level: 'projets professionnels: bases',
+            level: 'projets professionnels : bonnes bases',
+          },
+          {
+            lang: 'HTML / CSS',
+            time: '5 années',
+            level: 'projets professionnels & personnels : bon niveau',
+          },
+        ],
+      },
+      {
+        name: 'Frameworks & librairies',
+        skills: [
+          {
+            lang: 'Node.js',
+            time: '5 années',
+            level: 'projets professionnels & personnels : niveau avancé',
+          },
+          {
+            lang: '.NET',
+            time: '2 années',
+            level: 'projets professionnels : niveau intermédiaire',
+          },
+          {
+            lang: 'Spring',
+            time: '1 année',
+            level: 'projets personnels : débutant',
+          },
+          {
+            lang: 'Vue.js',
+            time: '3 années',
+            level: 'projets professionnels : niveau intermédiaire',
+          },
+          {
+            lang: 'Angular',
+            time: '1 année',
+            level: 'projets professionnels & personnels : bonnes bases',
+          },
+          {
+            lang: 'React',
+            time: '3 années',
+            level: 'projets professionnels & personnels : niveau intermédiaire',
+          },
+          {
+            lang: 'Laravel',
+            time: '1 année',
+            level: 'projets professionnels : débutant',
           },
         ],
       },
@@ -49,33 +94,67 @@ export const content: CVDataContent[] = [
         name: 'DevOps & Cloud',
         skills: [
           {
-            lang: 'DevOps',
-            time: '3 années',
-            level: 'projets professionnels & personnels: avancé'
+            lang: 'CI/CD (GitHub Actions, CircleCI, SeedCI)',
+            time: '4 années',
+            level: 'projets professionnels : bon niveau',
           },
           {
-            lang: 'Cloud AWS, Google',
-            time: '4 années',
-            level: 'projets professionnels & personnels: avancé',
+            lang: 'Terraform (IaC)',
+            time: '2 années',
+            level: 'projets professionnels : bon niveau',
+          },
+          {
+            lang: 'Docker',
+            time: '2 années',
+            level: 'projets professionnels & personnels : niveau intermédiaire',
+          },
+          {
+            lang: 'AWS',
+            time: '3 années',
+            level: 'projets professionnels : niveau avancé',
+          },
+          {
+            lang: 'Google Cloud / Firebase',
+            time: '1 année',
+            level: 'projets personnels : bases',
+          },
+          {
+            lang: 'Netlify',
+            time: '1 année',
+            level: 'projets personnels : bases',
           },
         ],
       },
       {
-        name: 'Méthodes',
+        name: 'Méthodes & pratiques',
         skills: [
           {
-            lang: 'Agile',
+            lang: 'Méthodes Agile',
             time: '5 années',
-            level: 'projets professionnels & personnels: quotidien',
+            level: 'projets professionnels & personnels : pratique quotidienne',
           },
-        ]
-      }
+          {
+            lang: 'Tests & qualité logicielle',
+            time: '4 années',
+            level: 'tests unitaires, intégration, contrôle qualité',
+          },
+          {
+            lang: 'Architecture applicative',
+            time: '4 années',
+            level: 'applications modulaires, scalables et maintenables',
+          },
+        ],
+      },
     ],
     softskills: [
-      "Esprit d'équipe",
-      'Flexibilité et adaptation',
+      'Esprit d\'équipe',
+      'Communication claire et collaborative',
       'Autonomie',
-      'Anglais: professionnel',
+      'Flexibilité et capacité d\'adaptation',
+      'Recherche continue d\'amélioration',
+      'Curiosité technique et fonctionnelle',
+      'Sens des responsabilités',
+      'Anglais : niveau professionnel',
     ],
     passions: [
       { name: 'Handball', type: 'sport' },
@@ -112,8 +191,6 @@ export const content: CVDataContent[] = [
           dfrom: 'Janvier 2023',
           to: 'Octobre 2024',
           descriptions: [
-            'Optimisation d\'une application en C# .net, accélérant la navigation utilisateur et réduisant les temps de réponse de l\'interface.',
-            'Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service.',
             'Conception d\'outils autour des paiements (PSP, remboursements, réconciliations, lutte contre la fraude), permettant une meilleure fiabilité des flux financiers et une réduction significative des chargebacks.',
             'Développement d\'un link shortener paramétrable avec statistiques, améliorant l\'efficacité des A/B tests et l\'exploitation des données marketing.',
             'Création d\'un système de contrôle des commandes, réduisant les tentatives de fraude et sécurisant le parcours d\'achat.',
@@ -127,8 +204,8 @@ export const content: CVDataContent[] = [
           dfrom: 'Septembre 2020',
           to: 'Mai 2022',
           descriptions: [
-            'Plusieurs projets en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant à l\'utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interactions.',
-            'Création d\'une interface web avec une API REST et le framework .NET afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité.',
+            "Optimisation d\'une application en C# .net, accélérant la navigation utilisateur et réduisant les temps de réponse de l\'interface.",
+            "Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service."
           ],
         },
       ],
@@ -204,32 +281,77 @@ export const content: CVDataContent[] = [
     },
     skillCategories: [
       {
-        name: 'Frameworks & Languages',
+        name: 'Programming & Scripting Languages',
         skills: [
           {
-            lang: 'NodeJS (JS, TS)',
-            time: '5 years',
-            level: 'professional & personal projects: advanced',
+            lang: 'TypeScript (& JavaScript)',
+            time: '6 years',
+            level: 'professional & personal projects: advanced level',
           },
           {
-            lang: 'VueJS, React',
-            time: '3 years',
-            level: 'professional & personal projects: advanced',
-          },
-          {
-            lang: 'OOP C#, Java',
-            time: '3 years',
-            level: 'professional & personal projects: advanced',
-          },
-          {
-            lang: 'Python',
+            lang: 'C#',
             time: '3 years',
             level: 'professional projects: good level',
           },
           {
+            lang: 'Java',
+            time: '3 years',
+            level: 'professional & personal projects: good level',
+          },
+          {
+            lang: 'Python',
+            time: '4 years',
+            level: 'professional & personal projects: intermediate level',
+          },
+          {
             lang: 'PHP',
             time: '1 year',
-            level: 'professional projects: basics',
+            level: 'professional projects: solid foundations',
+          },
+          {
+            lang: 'HTML / CSS',
+            time: '5 years',
+            level: 'professional & personal projects: good level',
+          },
+        ],
+      },
+      {
+        name: 'Frameworks & Libraries',
+        skills: [
+          {
+            lang: 'Node.js',
+            time: '5 years',
+            level: 'professional & personal projects: advanced level',
+          },
+          {
+            lang: '.NET',
+            time: '2 years',
+            level: 'professional projects: intermediate level',
+          },
+          {
+            lang: 'Spring',
+            time: '1 year',
+            level: 'personal projects: beginner',
+          },
+          {
+            lang: 'Vue.js',
+            time: '3 years',
+            level: 'professional projects: intermediate level',
+          },
+          {
+            lang: 'Angular',
+            time: '1 year',
+            level: 'professional & personal projects: solid foundations',
+          },
+          {
+            lang: 'React',
+            time: '3 years',
+            level: 'professional & personal projects: intermediate level',
+          },
+          {
+            lang: 'Laravel',
+            time: '1 year',
+            level: 'professional projects: beginner',
           },
         ],
       },
@@ -237,32 +359,66 @@ export const content: CVDataContent[] = [
         name: 'DevOps & Cloud',
         skills: [
           {
-            lang: 'DevOps',
-            time: '3 years',
-            level: 'professional & personal projects: advanced',
+            lang: 'CI/CD (GitHub Actions, CircleCI, SeedCI)',
+            time: '4 years',
+            level: 'professional projects: good level',
           },
           {
-            lang: 'Cloud (AWS, Google)',
-            time: '4 years',
-            level: 'professional & personal projects: advanced',
+            lang: 'Terraform (IaC)',
+            time: '2 years',
+            level: 'professional projects: good level',
+          },
+          {
+            lang: 'Docker',
+            time: '2 years',
+            level: 'professional & personal projects: intermediate level',
+          },
+          {
+            lang: 'AWS',
+            time: '3 years',
+            level: 'professional projects: advanced level',
+          },
+          {
+            lang: 'Google Cloud / Firebase',
+            time: '1 year',
+            level: 'personal projects: basic level',
+          },
+          {
+            lang: 'Netlify',
+            time: '1 year',
+            level: 'personal projects: basic level',
           },
         ],
       },
       {
-        name: 'Methods',
+        name: 'Methods & Practices',
         skills: [
           {
-            lang: 'Agile',
+            lang: 'Agile methodologies',
             time: '5 years',
             level: 'professional & personal projects: daily practice',
+          },
+          {
+            lang: 'Testing & Software Quality',
+            time: '4 years',
+            level: 'unit testing, integration testing, quality control',
+          },
+          {
+            lang: 'Application Architecture',
+            time: '4 years',
+            level: 'modular, scalable and maintainable applications',
           },
         ],
       },
     ],
     softskills: [
       'Team spirit',
-      'Flexibility and adaptability',
+      'Clear and collaborative communication',
       'Autonomy',
+      'Flexibility and adaptability',
+      'Continuous improvement mindset',
+      'Technical and functional curiosity',
+      'Sense of responsibility',
       'English: professional proficiency',
     ],
     passions: [
@@ -288,9 +444,9 @@ export const content: CVDataContent[] = [
           dfrom: 'October 2024',
           to: 'Present',
           descriptions: [
-            'Development of a real estate back-office for data entry and processing, as well as a full-stack AI conversational agent for real estate data analysis based on proprietary datasets.',
-            'Stack: React, Node.js, PostgreSQL, Docker, authentication, usage tracking, subscription and payment management.',
-            'AI: prompt engineering, MCP patterns, RAG, agent-based systems, contextualized financial analyses.',
+            'Development of a real estate back office for data entry and processing, and a fullstack AI conversational agent for real estate analysis of owner data.',
+            'Stack: React, Node.js, PostgreSQL, Docker, authentication, usage tracking, subscription/payment management.',
+            'AI: prompt engineering, MCP patterns, RAG, agentic systems, contextualized analyses for finance.',
           ],
         },
         {
@@ -300,12 +456,10 @@ export const content: CVDataContent[] = [
           dfrom: 'January 2023',
           to: 'October 2024',
           descriptions: [
-            'Optimization of a C# .NET application, improving user navigation speed and reducing UI response times.',
-            'Development of a REST API and a web interface in .NET, decoupling the front-end from servers, improving security, maintainability and reducing service interruptions.',
-            'Design of payment-related tools (PSPs, refunds, reconciliations, fraud prevention), increasing financial flow reliability and significantly reducing chargebacks.',
-            'Development of a configurable link shortener with analytics, improving A/B testing efficiency and marketing data usage.',
-            'Creation of an order control system, reducing fraud attempts and securing the purchasing flow.',
-            'Internal training sessions on software development fundamentals, enabling non-technical team members to upskill.',
+            'Design of tools around payments (PSP, refunds, reconciliations, fraud prevention), enabling better reliability of financial flows and a significant reduction in chargebacks.',
+            'Development of a configurable link shortener with statistics, improving the efficiency of A/B tests and the exploitation of marketing data.',
+            'Creation of an order control system, reducing fraud attempts and securing the purchasing process.',
+            'Internal training in the basics of development, facilitating the upskilling of non-technical staff.',
           ],
         },
         {
@@ -315,8 +469,8 @@ export const content: CVDataContent[] = [
           dfrom: 'September 2020',
           to: 'May 2022',
           descriptions: [
-            'Multiple C# and Microsoft SQL projects for a trading & shipping software, providing faster navigation, new features and improved user interactions.',
-            'Creation of a web interface with a REST API using the .NET framework to decouple a trading application from its servers, improving maintainability and security.',
+            'Optimization of a C# .net application, accelerating user navigation and reducing interface response times.',
+            'Development of a REST API and a web interface in .NET, separating the front-end from the servers, which improved security, facilitated maintenance and reduced service interruptions.',
           ],
         },
       ],
@@ -355,7 +509,7 @@ export const content: CVDataContent[] = [
     },
     educations: [
       {
-        title: 'Master’s Degree in Computer Engineering',
+        title: 'Master\'s Degree in Computer Engineering',
         school: 'CESI',
         location: 'Aix-en-Provence, France',
         dfrom: '2017',
