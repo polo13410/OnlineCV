@@ -86,22 +86,20 @@
           </a>
         </mat-nav-list>
         <mat-toolbar color="accent">
-          <a
+          <button
             mat-icon-button
             class="social-button"
-            href="https://www.linkedin.com/in/paulpera/"
-            target="_blank"
+            (click)="openLinkedIn()"
           >
             <i class="devicon-linkedin-plain"></i>
-          </a>
-          <a
+          </button>
+          <button
             mat-icon-button
             class="social-button"
-            href="https://github.com/polo13410"
-            target="_blank"
+            (click)="openGitHub()"
           >
             <i class="devicon-github-original"></i>
-          </a>
+          </button>
           <button mat-icon-button class="social-button" (click)="popAngular()">
             <i class="devicon-angularjs-plain"></i>
           </button>

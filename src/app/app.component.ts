@@ -104,6 +104,14 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  openLinkedIn(): void {
+    window.open('https://www.linkedin.com/in/paulpera/', '_blank');
+  }
+
+  openGitHub(): void {
+    window.open('https://github.com/polo13410', '_blank');
+  }
+
   popAngular() {
     this.snackBar?.openFromComponent(CodeInfoComponent, {
       duration: 7000,
