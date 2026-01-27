@@ -50,7 +50,6 @@ mat-nav-list {
   @media screen and (max-width: 959px) {
     margin: 0px 10px;
   }
-
 }
 
 // @media screen and (min-width: 960px) {
@@ -86,11 +85,24 @@ i,
   color: hsl(206deg 100% 40%);
 }
 
-::ng-deep h2{
+::ng-deep h2 {
   // color: #ff6e40;
   font-weight: normal;
 }
 
-.devicon-linkedin-plain, .devicon-github-original, .devicon-angularjs-plain {
+.devicon-linkedin-plain,
+.devicon-github-original,
+.devicon-angularjs-plain {
   color: white;
+}
+
+// Remove rounded corners from sidebar
+::ng-deep mat-drawer {
+  border-radius: 0 !important;
+}
+
+// Style the Menu toolbar to be gray
+.side-wrapper mat-toolbar:first-child {
+  background-color: #e0e0e0;
+  color: rgba(0, 0, 0, 0.87);
 }
