@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { TranslateModule } from '@ngx-translate/core';
 import { GetJsonService } from '../services/get-json.service';
 import { Experiences } from 'src/assets/data/contentInterface';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './experiences.component.html',
   styleUrl: './experiences.component.scss',
   standalone: true,
-  imports: [CommonModule, MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule]
+  imports: [CommonModule, MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, TranslateModule]
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
   @ViewChild('accordion') accordion: MatAccordion | undefined
@@ -25,7 +26,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
   constructor (private readonly json: GetJsonService) {}
 
   ngOnInit (): void {
-    this.json.getExp(0)?.pipe(
+    this.json.getExp()?.pipe(
       takeUntil(this.destroy$)
     ).subscribe(data =>  {
       this.experiences = data;

@@ -1,0 +1,40 @@
+{
+  "APP": {
+    "TITLE": "Online CV",
+    "MENU": "Menu",
+    "VERSION_PDF": "PDF Version"
+  },
+  "NAV": {
+    "HOME": "Home",
+    "EXPERIENCES": "Experiences",
+    "EDUCATION": "Education",
+    "SKILLS": "Skills",
+    "PASSIONS": "Passions"
+  },
+  "EXPERIENCES": {
+    "TITLE": "Professional experiences",
+    "INTERNSHIPS": "Internships"
+  },
+  "EDUCATION": {
+    "TITLE": "Education"
+  },
+  "SKILLS": {
+    "TECH": "Tech skills",
+    "SOFT": "Soft skills"
+  },
+  "PASSIONS": {
+    "SPORTS": "Sports",
+    "OTHERS": "Others"
+  },
+  "ERROR": {
+    "NOT_FOUND": "Uh Oh! Page not found!",
+    "BACK_HOME": "Back to home"
+  },
+  "CODE_INFO": {
+    "ANGULAR_VERSION": "Angular version",
+    "NODE_VERSION": "Node deployment version"
+  },
+  "LANGUAGE": {
+    "SWITCH": "Switch language"
+  }
+}

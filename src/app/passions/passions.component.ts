@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { TranslateModule } from '@ngx-translate/core';
 import { Passion } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './passions.component.html',
   styleUrl: './passions.component.scss',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatDividerModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatDividerModule, TranslateModule],
 })
 export class PassionsComponent implements OnInit, OnDestroy {
 
@@ -24,10 +25,12 @@ export class PassionsComponent implements OnInit, OnDestroy {
   constructor(private readonly json: GetJsonService) { }
 
   ngOnInit(): void {
-    this.json.getPassions(0)?.pipe(
+    this.json.getPassions()?.pipe(
       takeUntil(this.destroy$)
     ).subscribe((data) => {
-      data.forEach(element => {
+      this.sports = [];
+      this.others = [];
+      data.forEach((element: Passion) => {
         if(element.type == "sport"){
           this.sports.push(element.name)
         } else {

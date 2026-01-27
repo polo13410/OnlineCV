@@ -4,19 +4,26 @@
       <button mat-icon-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Online CV</span>
+      <span>{{ 'APP.TITLE' | translate }}</span>
       <span class="header-spacer"></span>
       <button
         mat-icon-button
+        (click)="toggleLanguage()"
+        [attr.aria-label]="'LANGUAGE.SWITCH' | translate"
+      >
+        <span class="language-label">{{ getLanguageLabel() }}</span>
+      </button>
+      <button
+        mat-icon-button
         [matMenuTriggerFor]="menu"
-        aria-label="Voir plus..."
+        [attr.aria-label]="'APP.MENU' | translate"
       >
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="downloadPDF()">
           <mat-icon color="accent">download</mat-icon>
-          <span>Version PDF</span>
+          <span>{{ 'APP.VERSION_PDF' | translate }}</span>
         </button>
       </mat-menu>
     </mat-toolbar>
@@ -33,38 +40,38 @@
       style="border-right: 1px solid #e0e0e0"
     >
       <div class="side-wrapper">
-        <mat-toolbar>Menu</mat-toolbar>
+        <mat-toolbar>{{ 'APP.MENU' | translate }}</mat-toolbar>
         <mat-nav-list>
           <a [routerLink]="['/']" name="home">
             <mat-list-item
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               ><mat-icon class="item-align" mat-list-icon>home</mat-icon>
-              <span class="item-align"> Accueil </span>
+              <span class="item-align"> {{ 'NAV.HOME' | translate }} </span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/experiences']" name="exp">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>work</mat-icon>
-              <span class="item-align"> Experiences </span>
+              <span class="item-align"> {{ 'NAV.EXPERIENCES' | translate }} </span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/education']" name="edu">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>school</mat-icon>
-              <span class="item-align"> Formation </span>
+              <span class="item-align"> {{ 'NAV.EDUCATION' | translate }} </span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/skills']" name="skills">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>code</mat-icon>
-              <span class="item-align"> Compétences </span>
+              <span class="item-align"> {{ 'NAV.SKILLS' | translate }} </span>
             </mat-list-item>
           </a>
           <a [routerLink]="['/passions']" name="passions">
             <mat-list-item routerLinkActive="active"
               ><mat-icon class="item-align" mat-list-icon>favorite</mat-icon>
-              <span class="item-align"> Passions </span>
+              <span class="item-align"> {{ 'NAV.PASSIONS' | translate }} </span>
             </mat-list-item>
           </a>
         </mat-nav-list>

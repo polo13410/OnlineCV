@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class GetPdfService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  downloadFile(): Observable<Blob> {
-    return this.httpClient.get('assets/data/pdfVersion.pdf', {
+  downloadFile(language: 'fr' | 'en' = 'fr'): Observable<Blob> {
+    return this.httpClient.get(`assets/data/pdfVersion-${language}.pdf`, {
       responseType: 'blob',
     });
   }

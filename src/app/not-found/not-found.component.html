@@ -26,9 +26,9 @@
       </div>
     </div>
     <h1 class="second-four">4</h1>
-    <p class="wrong-para">Uh Oh! Page not found!</p>
+    <p class="wrong-para">{{ 'ERROR.NOT_FOUND' | translate }}</p>
     <div class="go-home" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-      <button mat-raised-button color="primary">Retour a l'accueil</button>
+      <button mat-raised-button color="primary">{{ 'ERROR.BACK_HOME' | translate }}</button>
     </div>
   </div>
   

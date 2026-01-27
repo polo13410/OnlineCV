@@ -1,10 +1,10 @@
 <div class="container">
-  <h2>Experiences professionnelles</h2>
+  <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
   <mat-divider></mat-divider>
   <mat-card class="card" *ngFor="let exp of experiences?.pro">
     <mat-card-header>
       <mat-card-title >{{ exp.title }}</mat-card-title>
-      <mat-card-subtitle 
+      <mat-card-subtitle
         >{{ exp.company }} - {{ exp.location }}
       </mat-card-subtitle>
     </mat-card-header>
@@ -21,7 +21,7 @@
     </mat-card-footer>
   </mat-card>
 
-  <h2>Stages</h2>
+  <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
   <mat-divider></mat-divider>
   <mat-card class="card" *ngFor="let exp of experiences?.stage">
     <mat-card-header>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CVDataContent } from 'src/assets/data/contentInterface';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { map } from 'rxjs';
-import { content } from '../../assets/data/content'
+import { content } from '../../assets/data/content';
+import { LanguageService } from './language.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,87 +13,122 @@ export class GetJsonService {
   protected cvData: CVDataContent[] = [];
   private dataObservable: Observable<CVDataContent[]> | undefined;
 
-  constructor(private readonly http: HttpClient) {
-    // this.dataObservable = this.http.get<CVDataContent[]>(
-    //   '/assets/data/content.json'
-    // );
-    // this.cvData = content
-
-    // You can choose to use the data directly or fetch it using HttpClient
-    // If you want to fetch using HttpClient (e.g., for remote data), uncomment the next line:
-    this.dataObservable = this.http.get<CVDataContent[]>('/assets/data/content.json');
-
-    // If you want to use the data directly (from the TypeScript file), uncomment the next line:
+  constructor(
+    private readonly http: HttpClient,
+    private readonly languageService: LanguageService
+  ) {
+    // Using local content data (can switch to HTTP if needed)
     this.dataObservable = of(content);
-
-    // If you want to combine local and remote data, you can merge the observables:
-    // this.dataObservable = this.http.get<CVDataContent[]>('/assets/data/content.json').pipe(
-    //   catchError(() => of(content))
-    // );
-
   }
 
-  getCVData(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language];
-      })
+  /**
+   * Helper method to get current language index from LanguageService
+   */
+  private getCurrentLanguageIndex(): number {
+    return this.languageService.getCurrentLanguageIndex();
+  }
+
+  /**
+   * Get CV data for current language (reactive to language changes)
+   */
+  getCVData(): Observable<CVDataContent> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()])
+        )
+      )
     );
   }
 
-  getExp(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].experiences;
-      })
+  /**
+   * Get experiences for current language (reactive to language changes)
+   */
+  getExp(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].experiences)
+        )
+      )
     );
   }
 
-  getEdu(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].educations;
-      })
+  /**
+   * Get education for current language (reactive to language changes)
+   */
+  getEdu(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].educations)
+        )
+      )
     );
   }
 
-  getHeader(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].header;
-      })
+  /**
+   * Get header for current language (reactive to language changes)
+   */
+  getHeader(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].header)
+        )
+      )
     );
   }
 
-  getSkills(language: number = 0) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].skillCategories;
-      })
+  /**
+   * Get skills for current language (reactive to language changes)
+   */
+  getSkills(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].skillCategories)
+        )
+      )
     );
   }
 
-  getSoftSkills(language: number = 0) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].softskills;
-      })
+  /**
+   * Get soft skills for current language (reactive to language changes)
+   */
+  getSoftSkills(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].softskills)
+        )
+      )
     );
   }
 
-  getProfile(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].profile;
-      })
+  /**
+   * Get profile for current language (reactive to language changes)
+   */
+  getProfile(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].profile)
+        )
+      )
     );
   }
 
-  getPassions(language: number) {
-    return this.dataObservable?.pipe(
-      map((data) => {
-        return data[language].passions;
-      })
+  /**
+   * Get passions for current language (reactive to language changes)
+   */
+  getPassions(): Observable<any> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].passions)
+        )
+      )
     );
   }
 

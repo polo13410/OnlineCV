@@ -5,138 +5,68 @@ export const content: CVDataContent[] = [
     header: {
       name: 'Paul',
       surname: 'Pera',
-      title: 'Fullstack developper',
-      address: 'Chemin de primerose 25, Lausanne 1007',
+      title: 'Développeur fullstack',
+      address: 'Chemin des épinettes 36, 1007 Lausanne, CH',
       phone: '+41 76 699 42 12',
       mail: 'paul.pera@viacesi.fr',
     },
     details: {
-      birth: '24 décembre 1997',
+      birth: '27 ans',
       licenses: ['Permis de conduire', 'Permis bateau', 'Brevet de secourisme'],
     },
     skillCategories: [
       {
-        name: 'Langages de programmation & script',
+        name: 'Frameworks & Langages',
         skills: [
           {
-            lang: 'Javascript/typescript',
+            lang: 'NodeJS (JS, TS)',
+            time: '5 années',
+            level: 'projets professionnels & personnels: avancé',
+          },
+          {
+            lang: 'VueJS, React',
             time: '3 années',
-            level: 'projets professionnels & personnels: niveau avancé',
+            level: 'projets professionnels & personnels: avancé',
           },
           {
-            lang: 'C#',
-            time: '2 années',
-            level: 'projets professionnels: bon niveau',
-          },
-          {
-            lang: 'Java',
-            time: '2 années',
-            level: 'projets professionnels & personnels: bon niveau',
+            lang: 'POO C#, Java',
+            time: '3 années',
+            level: 'projets professionnels & personnels: avancé',
           },
           {
             lang: 'Python',
-            time: '2 années',
-            level: 'projets professionnels & personnels: niveau intermediaire',
+            time: '3 années',
+            level: 'projets professionnels: bon niveau',
           },
           {
             lang: 'PHP',
             time: '1 année',
-            level: 'projets professionnels: bonnes bases',
-          },
-          {
-            lang: 'HTML CSS',
-            time: '2 années',
-            level: 'projets professionnels & personnels: bon niveau',
-          }
-        ],
-      },
-      {
-        name: 'Frameworks',
-        skills: [
-          {
-            lang: 'NodeJS',
-            time: '2 années',
-            level: 'projets professionnels & personnels: niveau avancé'
-          },
-          {
-            lang: '.net',
-            time: '1.5 année',
-            level: 'projets professionnels: intermediaire'
-          },
-          {
-            lang: 'spring',
-            time: '0.5 année',
-            level: 'projets personnels: débutant'
-          },
-          {
-            lang: 'VueJS',
-            time: '1.5 année',
-            level: 'projets professionnels: niveau intermediaire',
-          },
-          {
-            lang: 'AngularJS',
-            time: '1 année',
-            level: 'projets professionnels & personnels: bonnes bases',
-          },
-          {
-            lang: 'ReactJS',
-            time: '0.5 année',
-            level: 'projets personnels: bases',
-          },
-          {
-            lang: 'Laravel',
-            time: '0.5 année',
-            level: 'projets professionnels: débutant'
+            level: 'projets professionnels: bases',
           },
         ],
       },
       {
-        name: 'DevOps',
+        name: 'DevOps & Cloud',
         skills: [
           {
-            lang: 'SeedCI',
-            level: 'projets professionnels: bon niveau',
-            time: '1.5 année',
+            lang: 'DevOps',
+            time: '3 années',
+            level: 'projets professionnels & personnels: avancé'
           },
           {
-            lang: 'CircleCI',
-            level: 'projets professionnels: bon niveau',
-            time: '1.5 année',
-          },
-          {
-            lang: 'github actions',
-            level: 'projets professionnels: bon niveau',
-            time: '1.5 année',
-          },
-          {
-            lang: 'Terraform (IaC)',
-            level: 'projets professionnels: bon niveau',
-            time: '1.5 année',
-          },
-          {
-            lang: 'Netlify',
-            level: 'projets personnels: bases',
-            time: '0.5 année',
+            lang: 'Cloud AWS, Google',
+            time: '4 années',
+            level: 'projets professionnels & personnels: avancé',
           },
         ],
       },
       {
-        name: 'Environements & méthodes',
+        name: 'Méthodes',
         skills: [
           {
-            lang: 'Méthodes agile',
+            lang: 'Agile',
             time: '5 années',
             level: 'projets professionnels & personnels: quotidien',
-          },
-          {
-            lang: 'AWS',
-            time: '1.5 année',
-            level: 'projets professionnels: quotidien',
-          },
-          {
-            lang: 'Google Firebase',
-            time: '0.5 année',
-            level: 'projets personnels: quotidien',
           },
         ]
       }
@@ -145,9 +75,7 @@ export const content: CVDataContent[] = [
       "Esprit d'équipe",
       'Flexibilité et adaptation',
       'Autonomie',
-      "Recherche d'améliorations",
-      'Curiosité',
-      'Anglais professionnel',
+      'Anglais: professionnel',
     ],
     passions: [
       { name: 'Handball', type: 'sport' },
@@ -162,20 +90,34 @@ export const content: CVDataContent[] = [
       { name: 'Drones', type: 'other' },
     ],
     profile:
-      'Développeur fullstack jeune et motivé avec 2 ans d\'experience professionnelle. Plusieurs projets logiciels terminés qui ont permis l\'optimisation et une meilleures efficacité d\'applications pour differentes entreprises dans la tech. A la recherche d\'une entreprise innovante pour pouvoir progresser ensemble et utiliser mes connaissances en développement et dans l\'informatique.',
+      'Ingénieur full-stack orienté produit, je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless). Je travaille beaucoup sur l\'intégration avancée de l\'IA (agents, MCP, RAG), avec une approche pragmatique : code propre, systèmes maintenables et valeur métier concrète.',
     experiences: {
       pro: [
         {
-          title: 'Ingénieur d\'étude et développement - fullstack & devops',
-          company: 'Propulse lab',
+          title: 'Fullstack dev, devops, solution architect',
+          company: 'Quanthome',
           location: 'Lausanne, Suisse',
-          dfrom: 'Janvier 2023',
+          dfrom: 'Octobre 2024',
           to: 'Aujourd\'hui',
           descriptions: [
-            "Plusieurs projets pour mener et maintenir l'applicatif de l'expertise transac au sein de propulse lab et développer les outils et les possibilités autour des sujets principaux : autorisations bancaires, paiements, remboursements, intégrations de prestataires de paiements, minimisation des chargebacks et automatisation de la réconciliation bancaire.",
-            "Sujets de la création et mise a disposition de la data sur l'ensemble des sujets de l'expertise transac",
-            "Création d'un outil de création de liens de redirections raccourci parametrables sur plusieurs criteres pour faciliter la mise en place des AB tests",
-            "Création d'un outil pour renforcer les verifications des commandes et éviter des potentielles fraudes lors du paiement des commandes",
+            'Développement d\'un back-office immobilier pour la saisie et le traitement de données, et d\'un agent conversationnel IA fullstack pour l\'analyse immobilière des données propriétaires.',
+            'Stack : React, Node.js, PostgreSQL, Docker, authentification, suivi d\'usage, gestion des abonnements/paiements.',
+            'IA : prompt engineering, MCP patterns, RAG, systèmes agentiques, analyses contextualisées pour la finance.',
+          ],
+        },
+        {
+          title: 'Fullstack dev, devops, solution architect',
+          company: 'Propulselab',
+          location: 'Lausanne, Suisse',
+          dfrom: 'Janvier 2023',
+          to: 'Octobre 2024',
+          descriptions: [
+            'Optimisation d\'une application en C# .net, accélérant la navigation utilisateur et réduisant les temps de réponse de l\'interface.',
+            'Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service.',
+            'Conception d\'outils autour des paiements (PSP, remboursements, réconciliations, lutte contre la fraude), permettant une meilleure fiabilité des flux financiers et une réduction significative des chargebacks.',
+            'Développement d\'un link shortener paramétrable avec statistiques, améliorant l\'efficacité des A/B tests et l\'exploitation des données marketing.',
+            'Création d\'un système de contrôle des commandes, réduisant les tentatives de fraude et sécurisant le parcours d\'achat.',
+            'Formations internes aux bases du développement, facilitant la montée en compétences des collaborateurs non techniques.',
           ],
         },
         {
@@ -185,8 +127,8 @@ export const content: CVDataContent[] = [
           dfrom: 'Septembre 2020',
           to: 'Mai 2022',
           descriptions: [
-            'Plusieurs projet en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant a l\'utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interractions',
-            'Création d\'une interface web avec une API REST et le framework .net afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité',
+            'Plusieurs projets en C# et Microsoft SQL pour un logiciel de trading & shipping, permettant à l\'utilisateur final une navigation optimisée et plus rapide et de nouvelles fonctionnalités et interactions.',
+            'Création d\'une interface web avec une API REST et le framework .NET afin de dissocier une application de trading de ses serveurs dans le but de faciliter la maintenance et améliorer la sécurité.',
           ],
         },
       ],
@@ -247,102 +189,81 @@ export const content: CVDataContent[] = [
     header: {
       name: 'Paul',
       surname: 'Pera',
-      title: 'Fullstack developper',
-      address: 'Chemin de primerose 25, Lausanne 1007',
+      title: 'Full-stack Developer',
+      address: 'Chemin des épinettes 36, 1007 Lausanne, Switzerland',
       phone: '+41 76 699 42 12',
       mail: 'paul.pera@viacesi.fr',
     },
     details: {
-      birth: '24th december 1997',
-      licenses: ['Driving license', 'Boat license', 'Secourism degree'],
+      birth: '27 years old',
+      licenses: [
+        'Driving license',
+        'Boat license',
+        'First aid certificate',
+      ],
     },
     skillCategories: [
       {
-        name: 'Programming & scripting languages',
+        name: 'Frameworks & Languages',
         skills: [
           {
-            lang: 'HTML CSS',
+            lang: 'NodeJS (JS, TS)',
+            time: '5 years',
+            level: 'professional & personal projects: advanced',
+          },
+          {
+            lang: 'VueJS, React',
             time: '3 years',
-            level: 'professional & personal projects: daily work',
+            level: 'professional & personal projects: advanced',
           },
           {
-            lang: 'VueJS',
-            level: 'professional: daily work',
-            time: '1.5 year',
-          },
-          {
-            lang: 'Typescript',
-            level: 'professional & personal projects: daily work',
-            time: '2 years',
+            lang: 'OOP C#, Java',
+            time: '3 years',
+            level: 'professional & personal projects: advanced',
           },
           {
             lang: 'Python',
-            level: 'professional projects: autonomous',
-            time: '2 years',
+            time: '3 years',
+            level: 'professional projects: good level',
           },
           {
-            lang: 'C#',
-            time: '2 years',
-            level: 'professional projects: autonomous',
-          },
-          {
-            lang: 'Java',
-            time: '2 years',
-            level: 'professional & personal projects: good level',
-          },
-          {
-            lang: 'JavaScript',
-            time: '1.5 année',
-            level: 'professional & personal projects: good knowledge',
-          },
-          {
-            lang: 'Angular',
+            lang: 'PHP',
             time: '1 year',
-            level: 'professional & personal projects: good knowledge',
+            level: 'professional projects: basics',
           },
-          {
-            lang: 'ReactJS',
-            time: '0.5 year',
-            level: 'personal projects: basics',
-          }
         ],
       },
       {
-        name: 'DevOps',
+        name: 'DevOps & Cloud',
         skills: [
           {
-            lang: 'CI (circleCI, SeedCI, github actions)',
-            level: 'professional projects: daily work',
-            time: '1.5 year',
+            lang: 'DevOps',
+            time: '3 years',
+            level: 'professional & personal projects: advanced',
           },
           {
-            lang: 'IaC terraform',
-            level: 'professional projects: daily work',
-            time: '1.5 year',
+            lang: 'Cloud (AWS, Google)',
+            time: '4 years',
+            level: 'professional & personal projects: advanced',
           },
         ],
       },
       {
-        name: 'Environements and methods',
+        name: 'Methods',
         skills: [
           {
             lang: 'Agile',
-            time: '3.5 year',
-            level: 'professional & personal projects: daily work',
+            time: '5 years',
+            level: 'professional & personal projects: daily practice',
           },
-          {
-            lang: 'AWS',
-            level: 'professional projects: daily work',
-            time: '1.5 year',
-          },
-        ]
-      }
+        ],
+      },
     ],
     softskills: [
       'Team spirit',
-      'Flexibility and adaption',
+      'Flexibility and adaptability',
       'Autonomy',
-      'English: professional',
+      'English: professional proficiency',
     ],
     passions: [
       { name: 'Handball', type: 'sport' },
@@ -353,76 +274,104 @@ export const content: CVDataContent[] = [
       { name: 'Space', type: 'other' },
       { name: 'Science', type: 'other' },
       { name: 'New technologies', type: 'other' },
-      { name: 'Picture/movie editing', type: 'other' },
+      { name: 'Photo/Video editing', type: 'other' },
       { name: 'Drones', type: 'other' },
     ],
     profile:
-      'Young and motivated full stack developer with 2 years of professional experience. Many software projects achieved that lead to optimisation and augmentation of the efficiency of the applications for various technology companies. Seeking an innovating company to apply my coding knowledge and progress together. ',
+      'Product-oriented full-stack engineer, I design, develop and deploy modern, scalable web applications, with strong expertise in React, Node.js, PostgreSQL, Docker and cloud architectures (AWS, serverless). I work extensively on advanced AI integration (agents, MCP, RAG), with a pragmatic approach: clean code, maintainable systems and concrete business value.',
     experiences: {
       pro: [
         {
-          title: 'Study and development engineer',
+          title: 'Full-stack Developer, DevOps, Solution Architect',
+          company: 'Quanthome',
+          location: 'Lausanne, Switzerland',
+          dfrom: 'October 2024',
+          to: 'Present',
+          descriptions: [
+            'Development of a real estate back-office for data entry and processing, as well as a full-stack AI conversational agent for real estate data analysis based on proprietary datasets.',
+            'Stack: React, Node.js, PostgreSQL, Docker, authentication, usage tracking, subscription and payment management.',
+            'AI: prompt engineering, MCP patterns, RAG, agent-based systems, contextualized financial analyses.',
+          ],
+        },
+        {
+          title: 'Full-stack Developer, DevOps, Solution Architect',
+          company: 'Propulselab',
+          location: 'Lausanne, Switzerland',
+          dfrom: 'January 2023',
+          to: 'October 2024',
+          descriptions: [
+            'Optimization of a C# .NET application, improving user navigation speed and reducing UI response times.',
+            'Development of a REST API and a web interface in .NET, decoupling the front-end from servers, improving security, maintainability and reducing service interruptions.',
+            'Design of payment-related tools (PSPs, refunds, reconciliations, fraud prevention), increasing financial flow reliability and significantly reducing chargebacks.',
+            'Development of a configurable link shortener with analytics, improving A/B testing efficiency and marketing data usage.',
+            'Creation of an order control system, reducing fraud attempts and securing the purchasing flow.',
+            'Internal training sessions on software development fundamentals, enabling non-technical team members to upskill.',
+          ],
+        },
+        {
+          title: 'Software Engineer',
           company: 'Metafactory',
           location: 'Paris, France',
           dfrom: 'September 2020',
           to: 'May 2022',
           descriptions: [
-            'Many projects using C# and a Microsoft SQL database for a trading and shipping software, allowing final user to navigate quicker and create new interactions in existing apps',
-            'Creation of a web interface using a REST API and .net framework to dissociate a trading application from its servers in order to facilitate its maintenance and increase its security',
+            'Multiple C# and Microsoft SQL projects for a trading & shipping software, providing faster navigation, new features and improved user interactions.',
+            'Creation of a web interface with a REST API using the .NET framework to decouple a trading application from its servers, improving maintainability and security.',
           ],
         },
       ],
       stage: [
         {
-          title:
-            'Study and development engineer & project manager (internship)',
+          title: 'Software Engineer & Project Manager',
           company: 'Monext',
-          location: 'Aix en Provence, France',
+          location: 'Aix-en-Provence, France',
           dfrom: 'January 2020',
           to: 'July 2020',
           descriptions: [
-            'Migration of a virtual electronic payment terminal application using Angular for security standards in the payment industry, rehabilitating and modernizing the user interface',
+            'Migration of a virtual electronic payment terminal application to Angular to meet PCI-DSS security standards, modernizing and redesigning the user interface.',
           ],
         },
         {
-          title: 'Study and development engineer (internship)',
+          title: 'Software Engineer',
           company: 'Thales Alenia Space',
           location: 'Stuttgart, Germany',
           dfrom: 'September 2018',
           to: 'February 2019',
           descriptions: [
-            'Creation and integration of a plugin in a RCP Java program allowing users to visualize all the experiment data in a single page',
+            'Creation and integration of a plugin in a Java RCP application allowing users to record and visualize experimental data through a simple interface.',
           ],
         },
         {
-          title: 'Study and development engineer (internship)',
+          title: 'Software Engineer',
           company: 'Cosmos Consulting',
-          location: 'Aix en Provence, France',
+          location: 'Aix-en-Provence, France',
           dfrom: 'January 2018',
           to: 'April 2018',
           descriptions: [
-            'Creating a java program interface for the modification of the HTML, CSS and JS properties of a server in BI, allowing a user to make  seamless customizations',
+            'Development of a Java application to modify HTML, CSS and JS properties of a Business Intelligence server, enabling easy interface customization.',
           ],
         },
       ],
     },
     educations: [
       {
-        title: 'IT Engineering diploma',
+        title: 'Master’s Degree in Computer Engineering',
         school: 'CESI',
-        location: 'Aix en Provence, France',
+        location: 'Aix-en-Provence, France',
         dfrom: '2017',
         to: '2020',
-        descriptions: ['Software development & Data Science'],
+        descriptions: ['Software development & data science'],
       },
       {
-        title: '2-years university degree',
+        title: 'Associate Degree (DUT)',
         school: 'IUT Savoie Mont-Blanc',
         location: 'Annecy, France',
         dfrom: '2015',
         to: '2017',
-        descriptions: ['Applied physics, renewable energy option'],
+        descriptions: [
+          'Physical measurements, renewable energy specialization',
+        ],
       },
     ],
-  },
+  }
 ];

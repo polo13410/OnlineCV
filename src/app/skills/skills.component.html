@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Tech skills</h2>
+  <h2>{{ 'SKILLS.TECH' | translate }}</h2>
   <mat-divider></mat-divider>
   <div class="skills" *ngFor="let category of skillCategories">
     <h3>{{category.name}}</h3>
@@ -14,7 +14,7 @@
       </mat-card>
     </div>
   </div>
-  <h2>Soft skills</h2>
+  <h2>{{ 'SKILLS.SOFT' | translate }}</h2>
   <mat-divider></mat-divider>
   <div class="content">
     <mat-card class="card" *ngFor="let soft of softs">

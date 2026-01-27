@@ -1,18 +1,20 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule, MatDrawerMode } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GetJsonService } from './services/get-json.service';
-import { Header } from 'src/assets/data/contentInterface';
-import { GetPdfService } from './services/get-pdf.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
+import { Header } from 'src/assets/data/contentInterface';
 import * as PackageJson from '../../package.json';
+import { GetJsonService } from './services/get-json.service';
+import { GetPdfService } from './services/get-pdf.service';
+import { LanguageService, SupportedLanguage } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +30,7 @@ import * as PackageJson from '../../package.json';
     MatButtonModule,
     MatMenuModule,
     MatListModule,
+    TranslateModule,
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
@@ -35,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
   header?: Header;
   hasDrop = false;
   mdm: MatDrawerMode = 'side';
+  currentLang: SupportedLanguage = 'fr';
   private destroy$ = new Subject<void>();
 
   @HostListener('window:resize')
@@ -52,16 +56,25 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private readonly json: GetJsonService,
     private readonly pdf: GetPdfService,
+    private readonly languageService: LanguageService,
     private snackBar: MatSnackBar
   ) {
     this.onResize()
   }
 
   ngOnInit(): void {
-    this.json.getHeader(0)?.pipe(
+    // Subscribe to header data (now reactive to language changes)
+    this.json.getHeader()?.pipe(
       takeUntil(this.destroy$)
     ).subscribe((data) => {
       this.header = data;
+    });
+
+    // Subscribe to language changes for UI updates
+    this.languageService.currentLanguage$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((lang) => {
+      this.currentLang = lang;
     });
   }
 
@@ -71,15 +84,24 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   downloadPDF() {
-    this.pdf.downloadFile().pipe(
+    this.pdf.downloadFile(this.currentLang).pipe(
       takeUntil(this.destroy$)
     ).subscribe((blob: Blob): void => {
       const dlButton = document.createElement('a');
       const file = new Blob([blob], { type: 'application/pdf' });
       dlButton.href = URL.createObjectURL(file);
-      dlButton.setAttribute("download", "CV_PaulPERA.pdf");
+      const langSuffix = this.currentLang === 'fr' ? 'FR' : 'EN';
+      dlButton.setAttribute("download", `CV_PaulPERA_${langSuffix}.pdf`);
       dlButton.click();
     });
+  }
+
+  toggleLanguage(): void {
+    this.languageService.toggleLanguage();
+  }
+
+  getLanguageLabel(): string {
+    return this.currentLang === 'fr' ? 'EN' : 'FR';
   }
 
   popAngular() {
@@ -96,11 +118,9 @@ export class AppComponent implements OnInit, OnDestroy {
   selector: 'code-info',
   templateUrl: './code-info.html',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, TranslateModule],
 })
 export class CodeInfoComponent {
   pjson = PackageJson;
-  core = `Angular version `;
-  node = `Node deployment version`;
-  nodev = `20.11.0`;
+  nodeVersion = '24.x';
 }
