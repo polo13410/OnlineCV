@@ -1,0 +1,94 @@
+// ============================================================
+// TERMINAL/OBSERVATORY MIXINS
+// ============================================================
+
+@mixin terminal-window($with-header: true) {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  position: relative;
+  overflow: hidden;
+
+  @if $with-header {
+    &::before {
+      content: '';
+      display: block;
+      height: 30px;
+      background: var(--color-bg-elevated);
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+  }
+}
+
+@mixin terminal-dots() {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &.dot-red    { background: var(--terminal-dot-red); }
+    &.dot-yellow { background: var(--terminal-dot-yellow); }
+    &.dot-green  { background: var(--terminal-dot-green); }
+  }
+}
+
+@mixin glow-text($color: var(--color-accent-primary)) {
+  color: $color;
+  text-shadow: 0 0 8px currentColor;
+}
+
+@mixin hover-lift() {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
+  }
+}
+
+@mixin mobile() {
+  @media screen and (max-width: 768px) { @content; }
+}
+
+@mixin tablet() {
+  @media screen and (max-width: 1024px) { @content; }
+}
+
+@mixin page-container() {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6);
+
+  @include mobile() {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+@mixin section-header() {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+
+  h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent-primary);
+    margin: 0;
+    text-transform: lowercase;
+
+    &::before {
+      content: '>_ ';
+      opacity: 0.7;
+      font-weight: 400;
+    }
+  }
+}

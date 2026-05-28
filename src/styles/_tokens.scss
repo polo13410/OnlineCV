@@ -1,0 +1,91 @@
+// ============================================================
+// TERMINAL/OBSERVATORY DESIGN TOKENS
+// ============================================================
+
+@mixin apply-tokens() {
+  // --- Base palette (dark theme default) ---
+  --color-bg-base:          #070b14;
+  --color-bg-surface:       #0f1629;
+  --color-bg-elevated:      #162035;
+  --color-bg-overlay:       #1c2a45;
+
+  // --- Accent colors ---
+  --color-accent-primary:   #00e5ff;
+  --color-accent-secondary: #00ff88;
+  --color-accent-tertiary:  #7c5cbf;
+
+  // --- Text ---
+  --color-text-primary:     #e2ecf5;
+  --color-text-secondary:   #7a9bbf;
+  --color-text-muted:       #3d5a7a;
+  --color-text-accent:      var(--color-accent-primary);
+
+  // --- Borders ---
+  --color-border:           #1e3050;
+  --color-border-accent:    rgba(0, 229, 255, 0.3);
+
+  // --- Glow effects ---
+  --glow-primary:   0 0 8px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.15);
+  --glow-secondary: 0 0 8px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.15);
+  --glow-subtle:    0 0 4px rgba(0, 229, 255, 0.2);
+
+  // --- Typography ---
+  --font-mono:        'Martian Mono', 'Courier New', monospace;
+  --font-size-xs:     0.65rem;
+  --font-size-sm:     0.75rem;
+  --font-size-base:   0.875rem;
+  --font-size-md:     1rem;
+  --font-size-lg:     1.2rem;
+  --font-size-xl:     1.6rem;
+  --font-size-2xl:    2rem;
+  --font-size-3xl:    2.8rem;
+  --line-height-tight: 1.3;
+  --line-height-base:  1.65;
+
+  // --- Spacing scale ---
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+
+  // --- Layout ---
+  --sidebar-width:      256px;
+  --header-height:      52px;
+  --content-max-width:  860px;
+  --border-radius-sm:   3px;
+  --border-radius-md:   6px;
+  --border-radius-lg:   10px;
+
+  // --- Transitions ---
+  --transition-fast:   0.12s ease;
+  --transition-base:   0.22s ease;
+  --transition-slow:   0.4s ease;
+
+  // --- Terminal chrome dots ---
+  --terminal-dot-red:    #ff5f57;
+  --terminal-dot-yellow: #febc2e;
+  --terminal-dot-green:  #28c840;
+  --terminal-prompt:     var(--color-accent-primary);
+}
+
+@mixin apply-light-tokens() {
+  --color-bg-base:          #f0f4f8;
+  --color-bg-surface:       #ffffff;
+  --color-bg-elevated:      #e4eaf2;
+  --color-bg-overlay:       #d8e2ef;
+  --color-accent-primary:   #0077aa;
+  --color-accent-secondary: #00885a;
+  --color-accent-tertiary:  #6644aa;
+  --color-text-primary:     #0d1b2a;
+  --color-text-secondary:   #4a6280;
+  --color-text-muted:       #8fa8bf;
+  --color-border:           #c5d5e5;
+  --color-border-accent:    rgba(0, 119, 170, 0.3);
+  --glow-primary:           0 2px 8px rgba(0, 119, 170, 0.2);
+  --glow-secondary:         0 2px 8px rgba(0, 136, 90, 0.2);
+  --glow-subtle:            0 1px 4px rgba(0, 119, 170, 0.15);
+}

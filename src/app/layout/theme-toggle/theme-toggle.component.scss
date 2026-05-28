@@ -1,0 +1,26 @@
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-size: 14px;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-subtle);
+  }
+}
+
+.icon {
+  line-height: 1;
+  display: block;
+}

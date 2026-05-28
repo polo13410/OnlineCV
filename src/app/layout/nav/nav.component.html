@@ -1,0 +1,71 @@
+<nav class="nav" [class.open]="isOpen" [class.mobile]="isMobile">
+
+  <!-- Terminal window chrome -->
+  <div class="nav-chrome">
+    <div class="terminal-dots">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+    </div>
+    <span class="chrome-label">paul&#64;portfolio:~$</span>
+  </div>
+
+  <!-- Identity -->
+  @if (header()) {
+    <div class="nav-identity">
+      <div class="nav-name">{{ header()!.name }}&nbsp;<span class="nav-surname">{{ header()!.surname }}</span></div>
+      <div class="nav-subtitle">{{ header()!.title }}</div>
+    </div>
+  }
+
+  <!-- Navigation links -->
+  <ul class="nav-links">
+    @for (link of navLinks; track link.path) {
+      <li>
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: link.exact }"
+          (click)="isMobile && navToggle.emit()"
+        >
+          <span class="link-prompt">›</span>
+          <span class="link-label">{{ link.label | translate }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="nav-spacer"></div>
+
+  <!-- Language toggle -->
+  <div class="nav-lang">
+    <button
+      class="lang-btn"
+      [class.active]="currentLang() === 'fr'"
+      (click)="onLangClick('fr')"
+    >FR</button>
+    <span class="lang-sep">/</span>
+    <button
+      class="lang-btn"
+      [class.active]="currentLang() === 'en'"
+      (click)="onLangClick('en')"
+    >EN</button>
+  </div>
+
+  <!-- Footer actions -->
+  <div class="nav-footer">
+    <button class="nav-action" (click)="downloadPDF()">
+      <span class="action-icon">↓</span>
+      <span>CV.pdf</span>
+    </button>
+    <div class="nav-social">
+      <button class="social-btn" (click)="openLinkedIn()" title="LinkedIn">
+        <i class="devicon-linkedin-plain"></i>
+      </button>
+      <button class="social-btn" (click)="openGitHub()" title="GitHub">
+        <i class="devicon-github-original"></i>
+      </button>
+    </div>
+  </div>
+
+</nav>

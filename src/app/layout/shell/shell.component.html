@@ -1,0 +1,29 @@
+<div class="shell" [class.mobile]="isMobile()" [class.nav-open]="isMobileNavOpen()">
+
+  <app-nav
+    [isMobile]="isMobile()"
+    [isOpen]="!isMobile() || isMobileNavOpen()"
+    (navToggle)="toggleNav()"
+  />
+
+  <div class="shell-content" (click)="isMobile() && isMobileNavOpen() && closeNav()">
+    <header class="shell-topbar">
+      @if (isMobile()) {
+        <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">
+          <span [class.open]="isMobileNavOpen()"></span>
+          <span [class.open]="isMobileNavOpen()"></span>
+          <span [class.open]="isMobileNavOpen()"></span>
+        </button>
+      }
+      <app-theme-toggle />
+    </header>
+
+    <main class="shell-main">
+      <router-outlet />
+    </main>
+  </div>
+
+  @if (isMobile() && isMobileNavOpen()) {
+    <div class="nav-backdrop" (click)="closeNav()"></div>
+  }
+</div>

@@ -1,32 +1,152 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use './styles/tokens' as t;
+@use './styles/mixins' as m;
+@use '@angular/cdk/overlay-prebuilt.css';
 
-// Include base Material styles
-@include mat.core();
-
-// Create a custom color theme using your color #c1d3db
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
-  ),
-));
-
-@include mat.all-component-themes($light-theme);
-
-// Override primary color with your custom color
+// ---- Apply tokens ----
 :root {
-  --mat-toolbar-container-background-color: #c1d3db;
-  --mat-toolbar-container-text-color: rgba(0, 0, 0, 0.87);
-  --mdc-filled-button-container-color: #c1d3db;
-  --mdc-filled-button-label-text-color: rgba(0, 0, 0, 0.87);
-  --mdc-text-button-label-text-color: #c1d3db;
-  --mat-sidenav-container-background-color: #fafafa;
+  @include t.apply-tokens();
 }
 
-/* You can add global styles to this file, and also import other style files */
+[data-theme='light'] {
+  @include t.apply-tokens();
+  @include t.apply-light-tokens();
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// ---- Reset ----
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  background-image:
+    radial-gradient(ellipse at 50% -10%, rgba(0, 229, 255, 0.05) 0%, transparent 55%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.022) 2px,
+      rgba(0, 0, 0, 0.022) 4px
+    );
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ---- Typography ----
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4);
+  line-height: var(--line-height-tight);
+}
+
+p { margin: 0 0 var(--space-4); }
+
+a {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+
+  &:hover { text-shadow: var(--glow-subtle); }
+}
+
+button {
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+
+// ---- Terminal dots utility ----
+.terminal-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    &.dot-red    { background: var(--terminal-dot-red); }
+    &.dot-yellow { background: var(--terminal-dot-yellow); }
+    &.dot-green  { background: var(--terminal-dot-green); }
+  }
+}
+
+// ---- Scroll reveal ----
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+  &.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+  &.revealed { opacity: 1; transform: translateX(0); }
+}
+
+.stagger-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
+    transform 0.4s ease calc(var(--stagger-index, 0) * 70ms);
+
+  &.revealed { opacity: 1; transform: translateY(0); }
+}
+
+// ---- Custom cursor ----
+body.custom-cursor-active * { cursor: none !important; }
+
+// ---- Keyframe animations ----
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes glitch {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
+  20%  { clip-path: inset(92% 0 1%  0); transform: translate(4px, 0);  }
+  40%  { clip-path: inset(43% 0 1%  0); transform: translate(-2px, 0); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px, 0);  }
+  80%  { clip-path: inset(54% 0 7%  0); transform: translate(-1px, 0); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(0);       }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes terminalEntry {
+  from { opacity: 0; transform: scaleY(0.6); filter: brightness(2); }
+  to   { opacity: 1; transform: scaleY(1);   filter: brightness(1); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: cursorBlink 1s step-end infinite;
+  color: var(--color-accent-primary);
+
+  &.hidden { display: none; }
+}

@@ -1,0 +1,32 @@
+@if (panel.isOpen()) {
+  <div class="debug-panel">
+    <div class="debug-header">
+      <div class="debug-chrome">
+        <span class="dot dot-red" (click)="panel.isOpen.set(false)" style="cursor:pointer"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <span class="debug-title">&gt;_ color.debugger</span>
+      <button class="debug-close" (click)="panel.isOpen.set(false)">×</button>
+    </div>
+
+    <div class="debug-body">
+      @for (ctrl of colorControls; track ctrl.property) {
+        <div class="color-row">
+          <label class="color-label">{{ ctrl.label }}</label>
+          <input
+            type="color"
+            [value]="getColor(ctrl.property)"
+            (input)="onColorChange(ctrl.property, $event)"
+            class="color-input"
+          />
+          <span class="color-value">{{ getColor(ctrl.property) }}</span>
+        </div>
+      }
+
+      <button class="debug-reset" (click)="panel.resetColors()">
+        &gt;_ reset to defaults
+      </button>
+    </div>
+  </div>
+}
