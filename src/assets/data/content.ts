@@ -114,9 +114,9 @@ export const content: CVDataContent[] = [
             level: 'projets professionnels : niveau avancé',
           },
           {
-            lang: 'Google Cloud / Firebase',
-            time: '1 année',
-            level: 'projets personnels : bases',
+            lang: 'Google Cloud Platform',
+            time: '2 années',
+            level: 'projets professionnels : niveau avancé',
           },
           {
             lang: 'Netlify',
@@ -145,13 +145,33 @@ export const content: CVDataContent[] = [
           },
         ],
       },
+      {
+        name: 'Intelligence Artificielle & IA Agentique',
+        skills: [
+          {
+            lang: 'MCP (Model Context Protocol)',
+            time: '1 année',
+            level: 'projets professionnels : niveau avancé',
+          },
+          {
+            lang: 'RAG (Retrieval-Augmented Generation)',
+            time: '1 année',
+            level: 'projets professionnels : bon niveau',
+          },
+          {
+            lang: 'IA Agentique',
+            time: '1 année',
+            level: 'projets professionnels : bon niveau',
+          },
+        ],
+      },
     ],
     softskills: [
-      'Esprit d\'équipe',
+      "Esprit d'équipe",
       'Communication claire et collaborative',
       'Autonomie',
-      'Flexibilité et capacité d\'adaptation',
-      'Recherche continue d\'amélioration',
+      "Flexibilité et capacité d'adaptation",
+      "Recherche continue d'amélioration",
       'Curiosité technique et fonctionnelle',
       'Sens des responsabilités',
       'Anglais : niveau professionnel',
@@ -169,19 +189,31 @@ export const content: CVDataContent[] = [
       { name: 'Drones', type: 'other' },
     ],
     profile:
-      'Ingénieur full-stack orienté produit, je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless). Je travaille beaucoup sur l\'intégration avancée de l\'IA (agents, MCP, RAG), avec une approche pragmatique : code propre, systèmes maintenables et valeur métier concrète.',
+      "Ingénieur full-stack orienté produit, je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless). Je travaille beaucoup sur l'intégration avancée de l'IA (agents, MCP, RAG), avec une approche pragmatique : code propre, systèmes maintenables et valeur métier concrète.",
     experiences: {
       pro: [
         {
-          title: 'Fullstack dev, devops, solution architect',
+          title: 'Technical Lead & Full Stack Engineer',
           company: 'Quanthome',
           location: 'Lausanne, Suisse',
           dfrom: 'Octobre 2024',
-          to: 'Aujourd\'hui',
+          to: "Aujourd'hui",
           descriptions: [
-            'Développement d\'un back-office immobilier pour la saisie et le traitement de données, et d\'un agent conversationnel IA fullstack pour l\'analyse immobilière des données propriétaires.',
-            'Stack : React, Node.js, PostgreSQL, Docker, authentification, suivi d\'usage, gestion des abonnements/paiements.',
-            'IA : prompt engineering, MCP patterns, RAG, systèmes agentiques, analyses contextualisées pour la finance.',
+            "Architecture et mise en place d'environnements cloud sur Google Cloud Platform (Cloud Run, Cloud SQL, CI/CD, IAM, networking).",
+            "Migration et modernisation d'applications vers une architecture cloud centralisée.",
+            "Conception et développement d'applications full stack en TypeScript, Node.js et PostgreSQL.",
+            'Mise en place de pipelines CI/CD automatisés avec GitHub Actions pour industrialiser les déploiements.',
+            "Développement d'une plateforme de chat agentique spécialisée dans l'analyse de données immobilières.",
+            "Intégration de modèles frontier AI et conception d'un serveur MCP interne.",
+            "Création d'un système d'authentification unifié partagé entre plusieurs applications et services internes.",
+            "Développement d'outils internes de documentation et de structuration des connaissances basés sur des technologies RAG.",
+            "Création d'outils CLI pour améliorer les workflows de développement et la productivité des équipes.",
+            "Structuration d'un écosystème technique Google Cloud à partir d'une infrastructure initialement inexistante.",
+            "Définition des choix d'architecture logicielle et des standards techniques des projets.",
+            'Coordination technique et délégation de tâches sur plusieurs projets applicatifs.',
+            "Mise en place de pratiques visant à améliorer la robustesse, la maintenabilité et l'automatisation des systèmes.",
+            "Forte autonomie sur le pilotage technique des projets, de la conception jusqu'au déploiement en production.",
+            "Contribution à l'amélioration des processus de développement et de la qualité logicielle au sein de l'entreprise.",
           ],
         },
         {
@@ -191,60 +223,60 @@ export const content: CVDataContent[] = [
           dfrom: 'Janvier 2023',
           to: 'Octobre 2024',
           descriptions: [
-            'Conception d\'outils autour des paiements (PSP, remboursements, réconciliations, lutte contre la fraude), permettant une meilleure fiabilité des flux financiers et une réduction significative des chargebacks.',
-            'Développement d\'un link shortener paramétrable avec statistiques, améliorant l\'efficacité des A/B tests et l\'exploitation des données marketing.',
-            'Création d\'un système de contrôle des commandes, réduisant les tentatives de fraude et sécurisant le parcours d\'achat.',
+            "Conception d'outils autour des paiements (PSP, remboursements, réconciliations, lutte contre la fraude), permettant une meilleure fiabilité des flux financiers et une réduction significative des chargebacks.",
+            "Développement d'un link shortener paramétrable avec statistiques, améliorant l'efficacité des A/B tests et l'exploitation des données marketing.",
+            "Création d'un système de contrôle des commandes, réduisant les tentatives de fraude et sécurisant le parcours d'achat.",
             'Formations internes aux bases du développement, facilitant la montée en compétences des collaborateurs non techniques.',
           ],
         },
         {
-          title: 'Ingénieur d\'étude et développement',
+          title: "Ingénieur d'étude et développement",
           company: 'Metafactory',
           location: 'Paris, France',
           dfrom: 'Septembre 2020',
           to: 'Mai 2022',
           descriptions: [
             "Optimisation d\'une application en C# .net, accélérant la navigation utilisateur et réduisant les temps de réponse de l\'interface.",
-            "Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service."
+            "Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service.",
           ],
         },
       ],
       stage: [
         {
-          title: 'Ingénieur d\'étude et développement & chef de projet',
+          title: "Ingénieur d'étude et développement & chef de projet",
           company: 'Monext',
           location: 'Aix en Provence, France',
           dfrom: 'Janvier 2020',
           to: 'Juillet 2020',
           descriptions: [
-            'Migration d\'une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l\'interface utilisateur.',
+            "Migration d'une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l'interface utilisateur.",
           ],
         },
         {
-          title: 'Ingénieur d\'étude et développement',
+          title: "Ingénieur d'étude et développement",
           company: 'Thales Alenia Space',
           location: 'Stuttgart, Allemagne',
           dfrom: 'Septembre 2018',
           to: 'Fevrier 2019',
           descriptions: [
-            'Création et intégration d\'un plugin dans un programme Java  RCP permettant a l\'utilisateur d\'enregistrer et visualiser ses données experimentales grâce a une interface simple',
+            "Création et intégration d'un plugin dans un programme Java  RCP permettant a l'utilisateur d'enregistrer et visualiser ses données experimentales grâce a une interface simple",
           ],
         },
         {
-          title: 'Ingénieur d\'étude et développement',
+          title: "Ingénieur d'étude et développement",
           company: 'Cosmos Consulting',
           location: 'Aix en Provence, France',
           dfrom: 'Janvier 2018',
           to: 'Avril 2018',
           descriptions: [
-            'Creation d\'un logiciel java pour la modification de propriété HTML, CSS et JS d\'un serveur de Business Intelligence, permettant a l\'utilisateur de customiser facilement l\'interface',
+            "Creation d'un logiciel java pour la modification de propriété HTML, CSS et JS d'un serveur de Business Intelligence, permettant a l'utilisateur de customiser facilement l'interface",
           ],
         },
       ],
     },
     educations: [
       {
-        title: 'Diplôme d\'ingénieur en informatique',
+        title: "Diplôme d'ingénieur en informatique",
         school: 'CESI',
         location: 'Aix en Provence, France',
         dfrom: '2017',
@@ -273,11 +305,7 @@ export const content: CVDataContent[] = [
     },
     details: {
       birth: '27 years old',
-      licenses: [
-        'Driving license',
-        'Boat license',
-        'First aid certificate',
-      ],
+      licenses: ['Driving license', 'Boat license', 'First aid certificate'],
     },
     skillCategories: [
       {
@@ -379,9 +407,9 @@ export const content: CVDataContent[] = [
             level: 'professional projects: advanced level',
           },
           {
-            lang: 'Google Cloud / Firebase',
-            time: '1 year',
-            level: 'personal projects: basic level',
+            lang: 'Google Cloud Platform',
+            time: '2 years',
+            level: 'professional projects: advanced level',
           },
           {
             lang: 'Netlify',
@@ -407,6 +435,26 @@ export const content: CVDataContent[] = [
             lang: 'Application Architecture',
             time: '4 years',
             level: 'modular, scalable and maintainable applications',
+          },
+        ],
+      },
+      {
+        name: 'Artificial Intelligence & Agentic AI',
+        skills: [
+          {
+            lang: 'MCP (Model Context Protocol)',
+            time: '1 year',
+            level: 'professional projects: advanced level',
+          },
+          {
+            lang: 'RAG (Retrieval-Augmented Generation)',
+            time: '1 year',
+            level: 'professional projects: good level',
+          },
+          {
+            lang: 'Agentic AI',
+            time: '1 year',
+            level: 'professional projects: good level',
           },
         ],
       },
@@ -438,15 +486,27 @@ export const content: CVDataContent[] = [
     experiences: {
       pro: [
         {
-          title: 'Full-stack Developer, DevOps, Solution Architect',
+          title: 'Technical Lead & Full Stack Engineer',
           company: 'Quanthome',
           location: 'Lausanne, Switzerland',
           dfrom: 'October 2024',
           to: 'Present',
           descriptions: [
-            'Development of a real estate back office for data entry and processing, and a fullstack AI conversational agent for real estate analysis of owner data.',
-            'Stack: React, Node.js, PostgreSQL, Docker, authentication, usage tracking, subscription/payment management.',
-            'AI: prompt engineering, MCP patterns, RAG, agentic systems, contextualized analyses for finance.',
+            'Architecture and setup of cloud environments on Google Cloud Platform (Cloud Run, Cloud SQL, CI/CD, IAM, networking).',
+            'Migration and modernization of applications towards a centralized cloud architecture.',
+            'Design and development of full stack applications using TypeScript, Node.js, and PostgreSQL.',
+            'Implementation of automated CI/CD pipelines with GitHub Actions to industrialize deployments.',
+            'Development of an agentic chat platform specialized in real estate data analysis.',
+            'Integration of frontier AI models and design of an internal MCP server.',
+            'Creation of a unified authentication system shared across multiple applications and internal services.',
+            'Development of internal documentation and knowledge structuring tools based on RAG technologies.',
+            'Creation of CLI tools to improve development workflows and team productivity.',
+            'Structuring of a Google Cloud technical ecosystem from scratch (initially non-existent infrastructure).',
+            'Definition of software architecture choices and technical standards for projects.',
+            'Technical coordination and task delegation across multiple application projects.',
+            'Implementation of practices aimed at improving system robustness, maintainability, and automation.',
+            'Strong autonomy in technical project management, from design to production deployment.',
+            'Contribution to improving development processes and software quality within the company.',
           ],
         },
         {
@@ -509,7 +569,7 @@ export const content: CVDataContent[] = [
     },
     educations: [
       {
-        title: 'Master\'s Degree in Computer Engineering',
+        title: "Master's Degree in Computer Engineering",
         school: 'CESI',
         location: 'Aix-en-Provence, France',
         dfrom: '2017',
@@ -527,5 +587,5 @@ export const content: CVDataContent[] = [
         ],
       },
     ],
-  }
+  },
 ];
