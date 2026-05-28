@@ -1,58 +1,25 @@
+// src/app/homepage/homepage.component.scss
 @use '../../styles/mixins' as m;
 
 .hero-container {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-6) var(--space-8);
-  animation: fadeInUp 0.5s ease;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  animation: fadeInUp 0.4s ease;
 
-  @include m.mobile() {
-    padding: var(--space-4);
-  }
+  @include m.mobile() { padding: var(--space-5) var(--space-4); }
 }
 
-// Terminal chrome bar
-.hero-chrome {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-bottom: none;
-  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
-}
-
-.terminal-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-
-    &.dot-red    { background: var(--terminal-dot-red); }
-    &.dot-yellow { background: var(--terminal-dot-yellow); }
-    &.dot-green  { background: var(--terminal-dot-green); }
-  }
-}
-
-.chrome-label {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-}
-
-// Hero body
 .hero-body {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 160px 1fr;
   gap: var(--space-6);
   align-items: start;
-  background: var(--color-bg-surface);
+  background: white;
   border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
   padding: var(--space-6);
+  box-shadow: 0 1px 4px rgba(80, 60, 20, 0.06);
 
   @include m.mobile() {
     grid-template-columns: 1fr;
@@ -61,47 +28,25 @@
   }
 }
 
-.hero-photo-col {
-  display: flex;
-  justify-content: center;
-}
-
-.photo-frame {
-  position: relative;
-  width: 160px;
-  height: 160px;
-
-  @include m.mobile() {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-  }
-}
+.hero-photo-col { display: flex; justify-content: center; }
 
 .hero-photo {
-  width: 100%;
-  height: 100%;
+  width: 140px;
+  height: 170px;
   object-fit: cover;
   border-radius: var(--border-radius-md);
-  border: 1px solid var(--color-border-accent);
+  border: 1px solid var(--color-border);
   display: block;
-  position: relative;
-  z-index: 1;
-}
 
-.photo-glow {
-  position: absolute;
-  inset: -4px;
-  border-radius: var(--border-radius-lg);
-  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.12), transparent 70%);
-  z-index: 0;
+  @include m.mobile() { width: 100px; height: 120px; }
 }
 
 .hero-greeting {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-text-muted);
   margin: 0 0 var(--space-2);
-  letter-spacing: 0.04em;
 }
 
 .hero-name {
@@ -109,13 +54,11 @@
   font-weight: 700;
   margin: 0 0 var(--space-2);
   line-height: 1.1;
-  letter-spacing: -0.01em;
   color: var(--color-text-primary);
 }
 
 .hero-surname {
   color: var(--color-accent-primary);
-  text-shadow: var(--glow-subtle);
 }
 
 .hero-title {
@@ -124,14 +67,9 @@
   color: var(--color-text-secondary);
   margin: 0 0 var(--space-5);
   min-height: 1.4em;
-  letter-spacing: 0.02em;
 }
 
-.hero-meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
+.hero-meta { display: flex; flex-direction: column; gap: var(--space-1); }
 
 .meta-row {
   display: flex;
@@ -142,32 +80,23 @@
 
 .meta-key {
   color: var(--color-text-muted);
-  min-width: 64px;
+  min-width: 60px;
   font-size: var(--font-size-xs);
   letter-spacing: 0.04em;
 }
 
-.meta-sep {
-  color: var(--color-accent-primary);
-  opacity: 0.6;
-}
+.meta-sep { color: var(--color-accent-primary); opacity: 0.6; }
+.meta-val { color: var(--color-text-secondary); word-break: break-word; }
 
-.meta-val {
-  color: var(--color-text-secondary);
-  word-break: break-word;
-}
-
-// Profile section
 .hero-profile {
-  background: var(--color-bg-surface);
+  background: white;
   border: 1px solid var(--color-border);
   border-top: none;
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
   padding: var(--space-5) var(--space-6);
+  box-shadow: 0 1px 4px rgba(80, 60, 20, 0.06);
 
-  @include m.mobile() {
-    padding: var(--space-4);
-  }
+  @include m.mobile() { padding: var(--space-4); }
 }
 
 .profile-prompt {
@@ -175,6 +104,7 @@
   color: var(--color-accent-secondary);
   margin-bottom: var(--space-3);
   letter-spacing: 0.04em;
+  font-family: var(--font-mono);
 }
 
 .profile-text {
@@ -182,4 +112,9 @@
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
   margin: 0;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

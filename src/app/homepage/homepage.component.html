@@ -1,28 +1,14 @@
+<!-- src/app/homepage/homepage.component.html -->
 <div class="hero-container">
-
-  <!-- Terminal chrome -->
-  <div class="hero-chrome">
-    <div class="terminal-dots">
-      <span class="dot dot-red"></span>
-      <span class="dot dot-yellow"></span>
-      <span class="dot dot-green"></span>
-    </div>
-    <span class="chrome-label">portfolio.exe — running</span>
-  </div>
 
   @if (header()) {
     <div class="hero-body">
-      <!-- Photo -->
       <div class="hero-photo-col">
-        <div class="photo-frame">
-          <img class="hero-photo" src="assets/pictures/profileMini.jpg" [alt]="header()!.name" />
-          <div class="photo-glow"></div>
-        </div>
+        <img class="hero-photo" src="assets/pictures/profileMini.jpg" [alt]="header()!.name" />
       </div>
 
-      <!-- Info -->
       <div class="hero-info-col">
-        <p class="hero-greeting">&gt;_ Hello, I am</p>
+        <p class="hero-greeting">Hello, I am</p>
         <h1 class="hero-name">
           {{ header()!.name }}&nbsp;<span class="hero-surname">{{ header()!.surname }}</span>
         </h1>
@@ -51,10 +37,9 @@
     </div>
   }
 
-  <!-- Profile -->
   @if (profile()) {
     <div class="hero-profile" appScrollReveal="reveal">
-      <div class="profile-prompt">&gt;_ cat profile.txt</div>
+      <p class="profile-prompt">&gt;_ cat profile.txt</p>
       <p class="profile-text">{{ profile() }}</p>
     </div>
   }
