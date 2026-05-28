@@ -1,45 +1,71 @@
-<div class="container">
-  <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <mat-card class="card" *ngFor="let exp of experiences?.pro">
-    <mat-card-header>
-      <mat-card-title >{{ exp.title }}</mat-card-title>
-      <mat-card-subtitle
-        >{{ exp.company }} - {{ exp.location }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngFor="let desc of exp.descriptions">
-      <p>
-        <mat-icon color="accent" class="bullet">lens</mat-icon>
-        {{ desc }}
-      </p>
-    </div>
-    </mat-card-content>
-    <mat-card-footer align="end">
-      {{ exp.dfrom }} / {{ exp.to }}
-    </mat-card-footer>
-  </mat-card>
+<div class="page-container">
 
-  <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <mat-card class="card" *ngFor="let exp of experiences?.stage">
-    <mat-card-header>
-      <mat-card-title>{{ exp.title }}</mat-card-title>
-      <mat-card-subtitle
-        >{{ exp.company }} - {{ exp.location }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngFor="let desc of exp.descriptions">
-        <p>
-          <mat-icon color="accent" class="bullet">lens</mat-icon>
-          {{ desc }}
-        </p>
+  <div class="section-header">
+    <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
+  </div>
+
+  <div class="exp-list">
+    @for (exp of experiences?.pro; track exp.company; let i = $index) {
+      <div class="exp-card" appScrollReveal="stagger-reveal" [staggerIndex]="i">
+        <div class="card-chrome">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="card-path">{{ exp.company }}/{{ exp.title }}</span>
+          <button class="card-toggle" (click)="togglePro(i)">
+            {{ openPro.has(i) ? '−' : '+' }}
+          </button>
+        </div>
+        <div class="card-header" (click)="togglePro(i)">
+          <div class="card-title">{{ exp.title }}</div>
+          <div class="card-subtitle">{{ exp.company }} — {{ exp.location }}</div>
+          <div class="card-date">{{ exp.dfrom }} → {{ exp.to }}</div>
+        </div>
+        <div class="card-body" [class.open]="openPro.has(i)">
+          <ul class="card-descriptions">
+            @for (desc of exp.descriptions; track desc) {
+              <li><span class="bullet">›</span> {{ desc }}</li>
+            }
+          </ul>
+        </div>
       </div>
-    </mat-card-content>
-    <mat-card-footer align="end">
-      {{ exp.dfrom }} / {{ exp.to }}
-    </mat-card-footer>
-  </mat-card>
+    }
+  </div>
+
+  <div class="section-header section-header--secondary">
+    <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
+  </div>
+
+  <div class="exp-list">
+    @for (exp of experiences?.stage; track exp.company; let i = $index) {
+      <div class="exp-card" appScrollReveal="stagger-reveal" [staggerIndex]="i">
+        <div class="card-chrome">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="card-path">{{ exp.company }}/{{ exp.title }}</span>
+          <button class="card-toggle" (click)="toggleStage(i)">
+            {{ openStage.has(i) ? '−' : '+' }}
+          </button>
+        </div>
+        <div class="card-header" (click)="toggleStage(i)">
+          <div class="card-title">{{ exp.title }}</div>
+          <div class="card-subtitle">{{ exp.company }} — {{ exp.location }}</div>
+          <div class="card-date">{{ exp.dfrom }} → {{ exp.to }}</div>
+        </div>
+        <div class="card-body" [class.open]="openStage.has(i)">
+          <ul class="card-descriptions">
+            @for (desc of exp.descriptions; track desc) {
+              <li><span class="bullet">›</span> {{ desc }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    }
+  </div>
+
 </div>

@@ -1,24 +1,40 @@
-<div class="container">
-  <h2>{{ 'SKILLS.TECH' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <div class="skills" *ngFor="let category of skillCategories">
-    <h3>{{category.name}}</h3>
-    <mat-divider></mat-divider>
-    <div class="content">
-      <mat-card class="card" *ngFor="let skill of category.skills">
-        <mat-card-title>{{ skill.lang }}</mat-card-title>
-        <mat-card-subtitle>{{ skill.time }}</mat-card-subtitle>
-        <mat-card-content class="skill-level">{{
-          skill.level
-        }}</mat-card-content>
-      </mat-card>
+<div class="page-container">
+
+  <div class="section-header">
+    <h2>{{ 'SKILLS.TECH' | translate }}</h2>
+  </div>
+
+  @for (category of skillCategories; track category.name; let ci = $index) {
+    <div class="skill-directory" appScrollReveal="stagger-reveal" [staggerIndex]="ci">
+      <div class="directory-header">
+        <span class="dir-icon">▸</span>
+        <span class="dir-name">{{ category.name }}</span>
+        <span class="dir-count">{{ category.skills.length }}</span>
+      </div>
+      <div class="skill-tags">
+        @for (skill of category.skills; track skill.lang) {
+          <div
+            class="skill-tag"
+            [attr.data-level]="getLevelClass(skill.level)"
+            [title]="skill.level"
+          >
+            <span class="tag-name">{{ skill.lang }}</span>
+            <span class="tag-meta">{{ skill.time }}</span>
+            <span class="tag-level">{{ skill.level }}</span>
+          </div>
+        }
+      </div>
     </div>
+  }
+
+  <div class="section-header section-header--soft">
+    <h2>{{ 'SKILLS.SOFT' | translate }}</h2>
   </div>
-  <h2>{{ 'SKILLS.SOFT' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <div class="content">
-    <mat-card class="card" *ngFor="let soft of softs">
-      <mat-card-title>{{ soft }}</mat-card-title>
-    </mat-card>
+
+  <div class="soft-tags">
+    @for (soft of softs; track soft; let si = $index) {
+      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si">{{ soft }}</span>
+    }
   </div>
+
 </div>

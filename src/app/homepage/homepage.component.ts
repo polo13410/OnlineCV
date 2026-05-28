@@ -1,35 +1,43 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
+import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
-import { Subject, takeUntil } from 'rxjs';
+import { TypewriterService } from '../services/typewriter.service';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, ScrollRevealDirective],
 })
 export class HomepageComponent implements OnInit, OnDestroy {
-  profile?: string | undefined;
-  header: Header | undefined;
-  private destroy$ = new Subject<void>();
+  header = signal<Header | null>(null);
+  profile = signal<string>('');
+  displayedTitle = signal('');
+  isTypingDone = signal(false);
 
-  constructor(private readonly json: GetJsonService) {}
+  private readonly json = inject(GetJsonService);
+  private readonly typewriter = inject(TypewriterService);
+  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.json.getProfile()?.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data) => {
-      this.profile = data;
+    this.json.getHeader().pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.header.set(data);
+      this.isTypingDone.set(false);
+      this.typewriter.type(data.title, 55).pipe(
+        takeUntil(this.destroy$)
+      ).subscribe({
+        next: v => this.displayedTitle.set(v),
+        complete: () => this.isTypingDone.set(true),
+      });
     });
-    this.json.getHeader()?.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data) => {
-      this.header = data;
+
+    this.json.getProfile().pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.profile.set(data);
     });
   }
 

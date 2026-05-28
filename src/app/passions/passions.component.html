@@ -1,30 +1,27 @@
-<div class="container">
-  <h2>{{ 'PASSIONS.SPORTS' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <div class="content">
-    <mat-card class="card" *ngFor="let sport of sports">
-      <mat-card-header>
-        <mat-card-title>{{ sport }}</mat-card-title>
-      </mat-card-header>
-      <!-- <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    /> -->
-    </mat-card>
+<div class="page-container">
+
+  <div class="section-header">
+    <h2>{{ 'PASSIONS.SPORTS' | translate }}</h2>
   </div>
-  <h2>{{ 'PASSIONS.OTHERS' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <div class="content">
-    <mat-card class="card" *ngFor="let other of others">
-      <mat-card-header>
-        <mat-card-title>{{ other }}</mat-card-title>
-      </mat-card-header>
-      <!-- <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    /> -->
-    </mat-card>
+  <div class="passion-grid">
+    @for (sport of sports; track sport; let i = $index) {
+      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
+        <span class="passion-glyph">◈</span>
+        <span class="passion-name">{{ sport }}</span>
+      </div>
+    }
   </div>
+
+  <div class="section-header section-header--other">
+    <h2>{{ 'PASSIONS.OTHERS' | translate }}</h2>
+  </div>
+  <div class="passion-grid">
+    @for (other of others; track other; let i = $index) {
+      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
+        <span class="passion-glyph">◉</span>
+        <span class="passion-name">{{ other }}</span>
+      </div>
+    }
+  </div>
+
 </div>

@@ -1,35 +1,64 @@
-.content {
-  // padding: 16px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+@use '../../styles/mixins' as m;
+
+.page-container {
+  @include m.page-container();
 }
 
-.card {
-  margin: 10px;
-  padding: 10px;
-  width: 300px;
-  align-items: center;
-  text-align: center;
-  transition: all 0.05s ease-in-out;
-  @media screen and (max-width: 659px) {
-    margin: 10px 0px 10px 0px;
-    width: 100%
+.section-header {
+  @include m.section-header();
+
+  &--other {
+    margin-top: var(--space-8);
   }
 }
 
-mat-card-header {
-  padding: 0;
-  vertical-align: center;
+.passion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+
+  @include m.mobile() {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-2);
+  }
 }
 
-.card:hover {
-  transform: scale(1.01);
+.passion-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-surface);
+  text-align: center;
+  cursor: default;
+  transition: all var(--transition-base);
+
+  &:hover {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+    background: var(--color-bg-elevated);
+
+    .passion-glyph {
+      text-shadow: 0 0 12px currentColor;
+    }
+  }
 }
 
-//   .container{
-//     display: flex;
-//     align-items: center;
-//     flex-direction: column;
-//     height: 100%;
-//   }
+.passion-glyph {
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  line-height: 1;
+  transition: text-shadow var(--transition-base);
+}
+
+.passion-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}

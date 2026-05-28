@@ -1,34 +1,13 @@
-<div class="container">
-    <h1 class="first-four">4</h1>
-    <div class="cog-wheel1">
-      <div class="cog1">
-        <div class="top"></div>
-        <div class="down"></div>
-        <div class="left-top"></div>
-        <div class="left-down"></div>
-        <div class="right-top"></div>
-        <div class="right-down"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-      </div>
-    </div>
-  
-    <div class="cog-wheel2">
-      <div class="cog2">
-        <div class="top"></div>
-        <div class="down"></div>
-        <div class="left-top"></div>
-        <div class="left-down"></div>
-        <div class="right-top"></div>
-        <div class="right-down"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-      </div>
-    </div>
-    <h1 class="second-four">4</h1>
-    <p class="wrong-para">{{ 'ERROR.NOT_FOUND' | translate }}</p>
-    <div class="go-home" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-      <button mat-raised-button color="primary">{{ 'ERROR.BACK_HOME' | translate }}</button>
-    </div>
+<div class="error-container">
+  <div class="error-code">
+    <span class="digit">4</span>
+    <span class="digit glitch" data-text="0">0</span>
+    <span class="digit">4</span>
   </div>
-  
+
+  <div class="error-lines">
+    <p class="err-line">&gt;_ ERROR: route not found</p>
+    <p class="err-line err-dim">&gt;_ process exited with code 404</p>
+    <p class="err-line">&gt;_ try: <a routerLink="/">cd ~</a></p>
+  </div>
+</div>

@@ -1,34 +1,27 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { TranslateModule } from '@ngx-translate/core';
-import { GetJsonService } from '../services/get-json.service';
-import { Experiences } from 'src/assets/data/contentInterface';
+import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { Subject, takeUntil } from 'rxjs';
+import { Experiences } from 'src/assets/data/contentInterface';
+import { GetJsonService } from '../services/get-json.service';
 
 @Component({
   selector: 'app-experiences',
   templateUrl: './experiences.component.html',
   styleUrl: './experiences.component.scss',
   standalone: true,
-  imports: [CommonModule, MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, TranslateModule]
+  imports: [CommonModule, TranslateModule, ScrollRevealDirective],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
-  @ViewChild('accordion') accordion: MatAccordion | undefined
-  experiences?: Experiences |undefined
-  accordeonToggleIcon?: string |undefined = "unfold_more";
-  private destroy$ = new Subject<void>();
+  experiences?: Experiences;
+  openPro = new Set<number>();
+  openStage = new Set<number>();
+  private readonly json = inject(GetJsonService);
+  private readonly destroy$ = new Subject<void>();
 
-  constructor (private readonly json: GetJsonService) {}
-
-  ngOnInit (): void {
-    this.json.getExp()?.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(data =>  {
+  ngOnInit(): void {
+    this.json.getExp().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.experiences = data;
     });
   }
@@ -38,14 +31,11 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  toggleAccordeon(){
-    if(this.accordeonToggleIcon == "unfold_more"){
-      this.accordeonToggleIcon = "unfold_less";
-      this.accordion?.openAll()
-    } else{
-      this.accordeonToggleIcon = "unfold_more";
-      this.accordion?.closeAll()
-    }
+  togglePro(i: number): void {
+    this.openPro.has(i) ? this.openPro.delete(i) : this.openPro.add(i);
   }
 
+  toggleStage(i: number): void {
+    this.openStage.has(i) ? this.openStage.delete(i) : this.openStage.add(i);
+  }
 }

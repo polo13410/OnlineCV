@@ -1,41 +1,62 @@
-<div class="container-center">
-  <div class="profile-wrapper">
-    <div class="container">
-      <img class="logo" src="/assets/pictures/profileMini.jpg" />
-      <div class="chat-bubble-container mobile-only" *ngIf="profile">
-        <div class="chat-bubble">
-          <p>{{ profile }}</p>
+<div class="hero-container">
+
+  <!-- Terminal chrome -->
+  <div class="hero-chrome">
+    <div class="terminal-dots">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+    </div>
+    <span class="chrome-label">portfolio.exe — running</span>
+  </div>
+
+  @if (header()) {
+    <div class="hero-body">
+      <!-- Photo -->
+      <div class="hero-photo-col">
+        <div class="photo-frame">
+          <img class="hero-photo" src="assets/pictures/profileMini.jpg" [alt]="header()!.name" />
+          <div class="photo-glow"></div>
         </div>
       </div>
-      <div class="informations mat-typography">
-        <h1>{{ header?.name }} {{ header?.surname }}</h1>
-        <h3>{{ header?.title }}</h3>
-        <br />
-        <span>
-          <p>
-            {{ header?.address }}
-          </p>
-          <p class="contact">
-            <a href="tel:+33660050426">
-              {{ header?.phone }}
-              <mat-icon class="contact-icon">open_in_new</mat-icon>
-            </a>
-          </p>
-          <p class="contact">
-            <a
-              href="mailto:paul.pera@viacesi.fr?subject=A propos de votre site..&body=Bonjour Paul!"
-            >
-              {{ header?.mail }}
-              <mat-icon class="contact-icon">open_in_new</mat-icon>
-            </a>
-          </p>
-        </span>
+
+      <!-- Info -->
+      <div class="hero-info-col">
+        <p class="hero-greeting">&gt;_ Hello, I am</p>
+        <h1 class="hero-name">
+          {{ header()!.name }}&nbsp;<span class="hero-surname">{{ header()!.surname }}</span>
+        </h1>
+        <h2 class="hero-title">
+          {{ displayedTitle() }}<span class="cursor-blink" [class.hidden]="isTypingDone()">|</span>
+        </h2>
+
+        <div class="hero-meta">
+          <div class="meta-row">
+            <span class="meta-key">location</span>
+            <span class="meta-sep">:</span>
+            <span class="meta-val">{{ header()!.address }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">phone</span>
+            <span class="meta-sep">:</span>
+            <a class="meta-val" [href]="'tel:' + header()!.phone">{{ header()!.phone }}</a>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">mail</span>
+            <span class="meta-sep">:</span>
+            <a class="meta-val" [href]="'mailto:' + header()!.mail">{{ header()!.mail }}</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="chat-bubble-container desktop-only" *ngIf="profile">
-      <div class="chat-bubble">
-        <p>{{ profile }}</p>
-      </div>
+  }
+
+  <!-- Profile -->
+  @if (profile()) {
+    <div class="hero-profile" appScrollReveal="reveal">
+      <div class="profile-prompt">&gt;_ cat profile.txt</div>
+      <p class="profile-text">{{ profile() }}</p>
     </div>
-  </div>
+  }
+
 </div>

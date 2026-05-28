@@ -1,20 +1,41 @@
-<div class="container">
-  <h2>{{ 'EDUCATION.TITLE' | translate }}</h2>
-  <mat-divider></mat-divider>
-  <mat-card class="card" *ngFor="let exp of education">
-    <mat-card-header>
-      <mat-card-title color="primary">{{ exp.title }}</mat-card-title>
-      <mat-card-subtitle
-        >{{ exp.school }} - {{ exp.location }}</mat-card-subtitle
-      >
-    </mat-card-header>
-    <mat-card-content *ngFor="let desc of exp.descriptions">
-      <p>
-        {{ desc }}
-      </p>
-    </mat-card-content>
-    <mat-card-footer align="end"
-      >{{ exp.dfrom }} / {{ exp.to }}</mat-card-footer
-    >
-  </mat-card>
+<div class="page-container">
+
+  <div class="section-header">
+    <h2>{{ 'EDUCATION.TITLE' | translate }}</h2>
+  </div>
+
+  <div class="edu-list">
+    @for (edu of education; track edu.school; let i = $index) {
+      <div class="edu-card" appScrollReveal="stagger-reveal" [staggerIndex]="i">
+        <div class="card-chrome">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="card-path">{{ edu.school }}/{{ edu.title }}</span>
+          @if (edu.descriptions.length) {
+            <button class="card-toggle" (click)="toggle(i)">
+              {{ openItems.has(i) ? '−' : '+' }}
+            </button>
+          }
+        </div>
+        <div class="card-header" (click)="edu.descriptions.length && toggle(i)">
+          <div class="card-title">{{ edu.title }}</div>
+          <div class="card-subtitle">{{ edu.school }} — {{ edu.location }}</div>
+          <div class="card-date">{{ edu.dfrom }} → {{ edu.to }}</div>
+        </div>
+        @if (edu.descriptions.length) {
+          <div class="card-body" [class.open]="openItems.has(i)">
+            <ul class="card-descriptions">
+              @for (desc of edu.descriptions; track desc) {
+                <li><span class="bullet">›</span> {{ desc }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
 </div>

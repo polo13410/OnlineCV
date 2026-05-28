@@ -1,39 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { GetJsonService } from '../services/get-json.service';
-import { SkillCategory } from 'src/assets/data/contentInterface';
+import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { Subject, takeUntil } from 'rxjs';
+import { SkillCategory } from 'src/assets/data/contentInterface';
+import { GetJsonService } from '../services/get-json.service';
 
 @Component({
   selector: 'app-skills',
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatCardModule, MatDividerModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, ScrollRevealDirective],
 })
 export class SkillsComponent implements OnInit, OnDestroy {
   skillCategories?: SkillCategory[];
   softs?: string[];
-  title = 'SkillComponent';
-  gridColumns = 3;
-  private destroy$ = new Subject<void>();
-
-  constructor(private readonly json: GetJsonService) { }
+  private readonly json = inject(GetJsonService);
+  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.json.getSkills()?.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data) => {
+    this.json.getSkills().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.skillCategories = data;
     });
-    this.json.getSoftSkills()?.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((data) => {
+    this.json.getSoftSkills().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.softs = data;
     });
   }
@@ -41,5 +31,12 @@ export class SkillsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  getLevelClass(level: string): 'advanced' | 'intermediate' | 'beginner' {
+    const l = level.toLowerCase();
+    if (l.includes('avancé') || l.includes('advanced') || l.includes('expert')) return 'advanced';
+    if (l.includes('intermédiaire') || l.includes('intermediate') || l.includes('confirmé')) return 'intermediate';
+    return 'beginner';
   }
 }
