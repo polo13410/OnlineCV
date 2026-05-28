@@ -1,46 +1,47 @@
-// ============================================================
-// TERMINAL/OBSERVATORY MIXINS
-// ============================================================
+// src/styles/_mixins.scss
 
-@mixin terminal-window($with-header: true) {
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  position: relative;
-  overflow: hidden;
+// Section header: overline (9px uppercase) + bold title + hairline rule
+@mixin section-header() {
+  margin-bottom: var(--space-6);
 
-  @if $with-header {
-    &::before {
-      content: '';
-      display: block;
-      height: 30px;
-      background: var(--color-bg-elevated);
-      border-bottom: 1px solid var(--color-border);
-      flex-shrink: 0;
-    }
+  .section-overline {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-main);
+  }
+
+  h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-family: var(--font-main);
+    margin: 0;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--color-border);
+    margin-top: var(--space-3);
   }
 }
 
-@mixin terminal-dots() {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+@mixin page-container() {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6);
 
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-
-    &.dot-red    { background: var(--terminal-dot-red); }
-    &.dot-yellow { background: var(--terminal-dot-yellow); }
-    &.dot-green  { background: var(--terminal-dot-green); }
+  @include mobile() {
+    padding: var(--space-5) var(--space-4);
   }
 }
 
 @mixin glow-text($color: var(--color-accent-primary)) {
   color: $color;
-  text-shadow: 0 0 8px currentColor;
 }
 
 @mixin hover-lift() {
@@ -57,38 +58,4 @@
 
 @mixin tablet() {
   @media screen and (max-width: 1024px) { @content; }
-}
-
-@mixin page-container() {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: var(--space-7) var(--space-6);
-
-  @include mobile() {
-    padding: var(--space-5) var(--space-4);
-  }
-}
-
-@mixin section-header() {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-6);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--color-border);
-
-  h2 {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--color-accent-primary);
-    margin: 0;
-    text-transform: lowercase;
-
-    &::before {
-      content: '>_ ';
-      opacity: 0.7;
-      font-weight: 400;
-    }
-  }
 }
