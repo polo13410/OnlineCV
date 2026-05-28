@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Scroll v5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #faf8f5;
+    --surface: #f4f1eb;
+    --border:  #e5ddd1;
+    --muted:   #c4b49a;
+    --text:    #2d2416;
+    --sub:     #7a6a55;
+    --accent:  #b8935a;
+    --font:    'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+  }
+
+  .topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .overline   { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .page-title { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 1px; }
+  .hint       { font-size: 11px; color: var(--muted); }
+
+  /* Stage clips to viewport */
+  .stage-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Edge gradients fade the peeking cards into the background */
+  .stage-wrap::before,
+  .stage-wrap::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 80px;
+    z-index: 6; pointer-events: none;
+  }
+  .stage-wrap::before { top: 0;    background: linear-gradient(to bottom, var(--bg) 10%, transparent); }
+  .stage-wrap::after  { bottom: 0; background: linear-gradient(to top,   var(--bg) 10%, transparent); }
+
+  /* Cards: absolutely positioned, JS drives translateY */
+  .card-wrap {
+    position: absolute;
+    left: 24px;
+    right: 52px;
+    top: 0;
+    transform: translateY(2000px); /* hidden until JS runs */
+    transition:
+      transform 0.48s cubic-bezier(.4, 0, .2, 1),
+      opacity   0.4s  ease,
+      filter    0.4s  ease;
+    will-change: transform, opacity, filter;
+    /* Inactive defaults */
+    opacity: 0.4;
+    filter: blur(2.5px);
+  }
+  .card-wrap.active {
+    opacity: 1;
+    filter: blur(0px);
+  }
+
+  .exp-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    overflow: hidden;
+    transition: box-shadow .4s ease, border-color .4s ease;
+  }
+  .card-wrap.active .exp-card {
+    box-shadow: 0 8px 40px rgba(80,60,20,.13);
+    border-color: rgba(184,147,90,.4);
+  }
+
+  .card-header {
+    padding: 16px 20px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .card-header:hover .card-title { color: var(--accent); }
+  .card-company { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .card-title   { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; transition: color .2s; }
+  .card-meta    { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+  .card-loc     { font-size: 11px; color: var(--sub); }
+  .card-date    {
+    font-size: 11px; color: var(--muted); margin-left: auto;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 8px;
+  }
+
+  .card-body {
+    max-height: 0; overflow: hidden;
+    padding: 0 20px; opacity: 0;
+    transition: max-height .45s cubic-bezier(.4,0,.2,1), padding .3s ease, opacity .3s ease .05s;
+  }
+  .card-wrap.active .card-body {
+    max-height: 400px; padding: 16px 20px 20px; opacity: 1;
+  }
+  .card-body ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .card-body li { display: flex; gap: 10px; font-size: 13px; color: var(--sub); line-height: 1.55; }
+  .card-body li::before { content: '—'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+  .dots {
+    position: fixed; right: 14px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 7px; z-index: 20;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border); cursor: pointer;
+    transition: background .3s, transform .3s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.5); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="overline">Expériences</div>
+    <div class="page-title">Expériences professionnelles</div>
+  </div>
+  <div class="hint">scroll · arrow keys · click a card</div>
+</div>
+
+<div class="stage-wrap" id="stage">
+
+  <div class="card-wrap active" id="card-0">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(0)">
+        <div class="card-company">Quanthome · Lausanne, Suisse</div>
+        <div class="card-title">Technical Lead &amp; Full Stack Engineer</div>
+        <div class="card-meta"><span class="card-loc">Lausanne, Suisse</span><span class="card-date">Oct 2024 → Aujourd'hui</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Lead technique d'une équipe de 4 ingénieurs, pilotage des sprints et revues de code</li>
+        <li>Architecture et développement de la plateforme SaaS (React, Node.js, PostgreSQL)</li>
+        <li>Intégration de modèles IA pour l'analyse automatique de données immobilières</li>
+        <li>CI/CD GitHub Actions et infrastructure cloud AWS avec Terraform</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-1">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(1)">
+        <div class="card-company">Propulselab · Lausanne, Suisse</div>
+        <div class="card-title">Fullstack dev, DevOps, solution architect</div>
+        <div class="card-meta"><span class="card-loc">Lausanne, Suisse</span><span class="card-date">Jan 2023 → Oct 2024</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Conception et développement de solutions SaaS multi-clients de bout en bout</li>
+        <li>Architecture microservices, orchestration Docker, déploiement Kubernetes</li>
+        <li>Intégration d'agents IA (LangChain, RAG) dans des workflows métier</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-2">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(2)">
+        <div class="card-company">Metafactory · Paris, France</div>
+        <div class="card-title">Ingénieur d'étude et développement</div>
+        <div class="card-meta"><span class="card-loc">Paris, France</span><span class="card-date">Sept 2020 → Mai 2022</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Développement d'applications industrielles IoT avec Vue.js et Node.js</li>
+        <li>Intégration de flux de données temps-réel (MQTT, WebSocket)</li>
+        <li>Création de dashboards de supervision pour opérateurs en production</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-3">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(3)">
+        <div class="card-company">Monext · Aix-en-Provence, France</div>
+        <div class="card-title">Ingénieur d'étude et développement &amp; chef de projet</div>
+        <div class="card-meta"><span class="card-loc">Aix-en-Provence, France</span><span class="card-date">Jan 2020 → Juil 2020</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Développement d'une application web de gestion de projets internes</li>
+        <li>Spring Boot backend + Angular frontend</li>
+        <li>Mise en place de tests unitaires et d'intégration</li>
+      </ul></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="dots" id="dotsEl">
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+</div>
+
+<script>
+  const stage  = document.getElementById('stage');
+  const wraps  = Array.from(document.querySelectorAll('.card-wrap'));
+  const dots   = Array.from(document.querySelectorAll('.dot'));
+  const PEEK   = 72; // px visible at each edge for adjacent cards
+  let current  = 0;
+  let busy     = false;
+
+  function layout(animated) {
+    if (!animated) {
+      // Suppress transitions for instant repositioning (init / resize)
+      wraps.forEach(w => { w.style.transition = 'none'; });
+    }
+
+    const stageH  = stage.clientHeight;
+    const centre  = stageH / 2;
+    const activeH = wraps[current].offsetHeight;
+
+    wraps.forEach((wrap, i) => {
+      const offset = i - current;
+      let y;
+
+      switch (offset) {
+        case 0:
+          // Active: centred in stage
+          y = centre - activeH / 2;
+          wrap.style.visibility = 'visible';
+          break;
+        case -1:
+          // Previous: anchored to top edge, only PEEK px visible
+          // bottom edge = y + height = PEEK  →  y = PEEK - height
+          y = PEEK - wrap.offsetHeight;
+          wrap.style.visibility = 'visible';
+          break;
+        case 1:
+          // Next: anchored to bottom edge, only PEEK px visible
+          // top edge = stageH - PEEK
+          y = stageH - PEEK;
+          wrap.style.visibility = 'visible';
+          break;
+        default:
+          // Off-screen: above if offset < 0, below if offset > 0
+          y = offset < 0 ? -(wrap.offsetHeight + 100) : stageH + 100;
+          wrap.style.visibility = 'hidden';
+      }
+
+      wrap.style.transform = `translateY(${y}px)`;
+    });
+
+    if (!animated) {
+      requestAnimationFrame(() => {
+        wraps.forEach(w => { w.style.transition = ''; });
+      });
+    }
+  }
+
+  function goTo(index) {
+    if (index < 0 || index >= wraps.length || index === current) return;
+
+    wraps[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    wraps[current].classList.add('active');
+    dots[current].classList.add('active');
+
+    layout(true);
+    // Re-layout after the card body has finished expanding (~460ms)
+    setTimeout(() => layout(true), 470);
+  }
+
+  // Init: wait two frames so card heights are known
+  requestAnimationFrame(() => requestAnimationFrame(() => layout(false)));
+  window.addEventListener('resize', () => layout(false));
+
+  // Discrete wheel: 1 tick = 1 card
+  let wheelCooldown = false;
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    const discrete = e.deltaMode === 1 || Math.abs(e.deltaY) >= 80;
+    if (discrete) {
+      if (wheelCooldown) return;
+      wheelCooldown = true;
+      goTo(e.deltaY > 0 ? current + 1 : current - 1);
+      setTimeout(() => { wheelCooldown = false; }, 660);
+    } else {
+      // Trackpad: accumulate delta, fire on threshold
+      if (wheelCooldown) return;
+      if (Math.abs(e.deltaY) > 35) {
+        wheelCooldown = true;
+        goTo(e.deltaY > 0 ? current + 1 : current - 1);
+        setTimeout(() => { wheelCooldown = false; }, 700);
+      }
+    }
+  }, { passive: false });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); goTo(current - 1); }
+  });
+
+  // Touch
+  let ty0 = null;
+  stage.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (ty0 === null) return;
+    const dy = ty0 - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 40) goTo(dy > 0 ? current + 1 : current - 1);
+    ty0 = null;
+  }, { passive: true });
+</script>
+</body>
+</html>

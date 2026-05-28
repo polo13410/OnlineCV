@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Scroll v7</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #faf8f5;
+    --surface: #f4f1eb;
+    --border:  #e5ddd1;
+    --muted:   #c4b49a;
+    --text:    #2d2416;
+    --sub:     #7a6a55;
+    --accent:  #b8935a;
+    --font:    'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+  }
+
+  .topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .overline   { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .page-title { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 1px; }
+  .hint       { font-size: 11px; color: var(--muted); }
+
+  .stage-wrap {
+    flex: 1; position: relative; overflow: hidden;
+  }
+  .stage-wrap::before,
+  .stage-wrap::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 80px;
+    z-index: 6; pointer-events: none;
+  }
+  .stage-wrap::before { top: 0;    background: linear-gradient(to bottom, var(--bg) 15%, transparent); }
+  .stage-wrap::after  { bottom: 0; background: linear-gradient(to top,   var(--bg) 15%, transparent); }
+
+  .card-wrap {
+    position: absolute;
+    left: 24px; right: 52px; top: 0;
+    transform: translateY(2000px);
+    /* Snap animation: on by default */
+    transition:
+      transform 0.32s cubic-bezier(.4, 0, .2, 1),
+      opacity   0.28s ease,
+      filter    0.28s ease;
+    will-change: transform, opacity, filter;
+    opacity: 0.4;
+    filter: blur(2.5px);
+  }
+  /* During live drag: disable transform transition so cards follow instantly */
+  .stage-wrap.dragging .card-wrap {
+    transition:
+      opacity   0.15s ease,
+      filter    0.15s ease;
+  }
+  .card-wrap.active { opacity: 1; filter: blur(0px); }
+
+  .exp-card {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: white; overflow: hidden;
+    transition: box-shadow .32s ease, border-color .32s ease;
+  }
+  .card-wrap.active .exp-card {
+    box-shadow: 0 8px 40px rgba(80,60,20,.13);
+    border-color: rgba(184,147,90,.4);
+  }
+
+  .card-header {
+    padding: 16px 20px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .card-header:hover .card-title { color: var(--accent); }
+  .card-company { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .card-title   { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; transition: color .2s; }
+  .card-meta    { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+  .card-loc     { font-size: 11px; color: var(--sub); }
+  .card-date    {
+    font-size: 11px; color: var(--muted); margin-left: auto;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 8px;
+  }
+
+  .card-body {
+    max-height: 0; overflow: hidden; padding: 0 20px; opacity: 0;
+    transition: max-height .32s cubic-bezier(.4,0,.2,1), padding .28s ease, opacity .25s ease .03s;
+  }
+  .card-wrap.active .card-body { max-height: 400px; padding: 16px 20px 20px; opacity: 1; }
+  .card-body ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .card-body li { display: flex; gap: 10px; font-size: 13px; color: var(--sub); line-height: 1.55; }
+  .card-body li::before { content: '—'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+  .dots {
+    position: fixed; right: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 7px; z-index: 20;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border); cursor: pointer;
+    transition: background .25s, transform .25s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.5); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="overline">Expériences</div>
+    <div class="page-title">Expériences professionnelles</div>
+  </div>
+  <div class="hint">scroll · arrow keys · click a card</div>
+</div>
+
+<div class="stage-wrap" id="stage">
+  <div class="card-wrap active" id="card-0">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(0)">
+        <div class="card-company">Quanthome · Lausanne, Suisse</div>
+        <div class="card-title">Technical Lead &amp; Full Stack Engineer</div>
+        <div class="card-meta"><span class="card-loc">Lausanne, Suisse</span><span class="card-date">Oct 2024 → Aujourd'hui</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Lead technique d'une équipe de 4 ingénieurs, pilotage des sprints et revues de code</li>
+        <li>Architecture et développement de la plateforme SaaS (React, Node.js, PostgreSQL)</li>
+        <li>Intégration de modèles IA pour l'analyse automatique de données immobilières</li>
+        <li>CI/CD GitHub Actions et infrastructure cloud AWS avec Terraform</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-1">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(1)">
+        <div class="card-company">Propulselab · Lausanne, Suisse</div>
+        <div class="card-title">Fullstack dev, DevOps, solution architect</div>
+        <div class="card-meta"><span class="card-loc">Lausanne, Suisse</span><span class="card-date">Jan 2023 → Oct 2024</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Conception et développement de solutions SaaS multi-clients de bout en bout</li>
+        <li>Architecture microservices, orchestration Docker, déploiement Kubernetes</li>
+        <li>Intégration d'agents IA (LangChain, RAG) dans des workflows métier</li>
+        <li>Accompagnement client et définition des spécifications techniques</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-2">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(2)">
+        <div class="card-company">Metafactory · Paris, France</div>
+        <div class="card-title">Ingénieur d'étude et développement</div>
+        <div class="card-meta"><span class="card-loc">Paris, France</span><span class="card-date">Sept 2020 → Mai 2022</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Développement d'applications industrielles IoT avec Vue.js et Node.js</li>
+        <li>Intégration de flux de données temps-réel (MQTT, WebSocket)</li>
+        <li>Création de dashboards de supervision pour opérateurs en production</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="card-3">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(3)">
+        <div class="card-company">Monext · Aix-en-Provence, France</div>
+        <div class="card-title">Ingénieur d'étude et développement &amp; chef de projet</div>
+        <div class="card-meta"><span class="card-loc">Aix-en-Provence, France</span><span class="card-date">Jan 2020 → Juil 2020</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Développement d'une application web de gestion de projets internes</li>
+        <li>Spring Boot backend + Angular frontend</li>
+        <li>Mise en place de tests unitaires et d'intégration</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="dots" id="dotsEl">
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+</div>
+
+<script>
+  const stage  = document.getElementById('stage');
+  const wraps  = Array.from(document.querySelectorAll('.card-wrap'));
+  const dots   = Array.from(document.querySelectorAll('.dot'));
+
+  const PEEK             = 72;    // px peeking at each edge
+  const ADVANCE_THRESH   = 60;    // px of drag to commit to next card
+  const RESISTANCE       = 0.55;  // trackpad drag dampening (0=none, 1=direct)
+  const BOUNDARY_RES     = 0.12;  // extra resistance at first/last card
+  const SNAP_DELAY_MS    = 130;   // ms of silence before snap fires
+  const DISCRETE_COOLDOWN= 480;   // ms cooldown after discrete scroll
+
+  let current    = 0;
+  let drag       = 0;      // accumulated live drag in px
+  let basePositions = [];  // Y positions for current layout (no drag)
+  let snapTimer  = null;
+  let wheelBusy  = false;
+  let activeH    = 0;      // pre-measured expanded height of current card
+
+  // ── Measure expanded height (no visual flash) ──────────────────────────────
+  function measureExpandedHeight(wrap) {
+    const body = wrap.querySelector('.card-body');
+    body.style.transition = 'none';
+    body.style.maxHeight  = '9999px';
+    body.style.padding    = '16px 20px 20px';
+    body.style.opacity    = '1';
+    const h = wrap.offsetHeight;
+    body.style.maxHeight = '';
+    body.style.padding   = '';
+    body.style.opacity   = '';
+    requestAnimationFrame(() => { body.style.transition = ''; });
+    return h;
+  }
+
+  // ── Compute base Y positions for each card ─────────────────────────────────
+  function computeBasePositions(expandedH) {
+    const stageH = stage.clientHeight;
+    const centre = stageH / 2;
+    basePositions = wraps.map((wrap, i) => {
+      const offset = i - current;
+      switch (offset) {
+        case  0: return centre - expandedH / 2;
+        case -1: return PEEK - wrap.offsetHeight;
+        case  1: return stageH - PEEK;
+        default: return offset < 0
+          ? -(wrap.offsetHeight + 100)
+          :  (stageH + 100);
+      }
+    });
+  }
+
+  // ── Apply positions + optional drag shift ──────────────────────────────────
+  function applyPositions(dragShift = 0) {
+    wraps.forEach((wrap, i) => {
+      const offset = i - current;
+      const y = basePositions[i] - dragShift;
+      wrap.style.transform  = `translateY(${y}px)`;
+      wrap.style.visibility = Math.abs(offset) <= 1 ? 'visible' : 'hidden';
+    });
+  }
+
+  // ── Full snap-to layout (animated, recomputes everything) ──────────────────
+  function goTo(index, { animated = true } = {}) {
+    if (index < 0 || index >= wraps.length) return;
+    if (index === current && drag === 0 && animated) return;
+
+    const newH = measureExpandedHeight(wraps[index]);
+
+    if (!animated) wraps.forEach(w => { w.style.transition = 'none'; });
+
+    wraps[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    activeH = newH;
+    wraps[current].classList.add('active');
+    dots[current].classList.add('active');
+
+    computeBasePositions(newH);
+    drag = 0;
+
+    applyPositions(0);
+
+    if (!animated) {
+      requestAnimationFrame(() => wraps.forEach(w => { w.style.transition = ''; }));
+    }
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    goTo(0, { animated: false });
+  }));
+  window.addEventListener('resize', () => goTo(current, { animated: false }));
+
+  // ── Live drag (smooth / trackpad) ─────────────────────────────────────────
+  function onSmoothDelta(dy) {
+    // Elastic resistance at start/end boundaries
+    const atStart = current === 0             && dy < 0;
+    const atEnd   = current === wraps.length - 1 && dy > 0;
+    const res = (atStart || atEnd) ? BOUNDARY_RES : RESISTANCE;
+
+    drag += dy * res;
+
+    // Soft clamp: allow a bit of over-drag at boundaries, not unlimited
+    const maxOverDrag = 80;
+    if (atStart) drag = Math.max(drag, -maxOverDrag);
+    if (atEnd)   drag = Math.min(drag,  maxOverDrag);
+
+    stage.classList.add('dragging');
+    applyPositions(drag);
+
+    // Schedule snap after silence
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(snapFromDrag, SNAP_DELAY_MS);
+  }
+
+  function snapFromDrag() {
+    stage.classList.remove('dragging');
+    const next = drag >  ADVANCE_THRESH ? current - 1   // dragged down → prev
+               : drag < -ADVANCE_THRESH ? current + 1   // dragged up   → next
+               : current;                               // not far enough → stay
+    drag = 0;
+    goTo(Math.max(0, Math.min(wraps.length - 1, next)));
+  }
+
+  // ── Wheel event ────────────────────────────────────────────────────────────
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    const isDiscrete = e.deltaMode === 1 || Math.abs(e.deltaY) >= 100;
+
+    if (isDiscrete) {
+      // Mouse wheel: 1 tick → instant advance, ignore smooth drag state
+      clearTimeout(snapTimer);
+      drag = 0;
+      stage.classList.remove('dragging');
+      if (wheelBusy) return;
+      wheelBusy = true;
+      goTo(e.deltaY > 0 ? current + 1 : current - 1);
+      setTimeout(() => { wheelBusy = false; }, DISCRETE_COOLDOWN);
+    } else {
+      // Trackpad: live drag
+      if (wheelBusy) return;
+      onSmoothDelta(e.deltaY);
+    }
+  }, { passive: false });
+
+  // ── Keyboard ───────────────────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); goTo(current - 1); }
+  });
+
+  // ── Touch ──────────────────────────────────────────────────────────────────
+  let ty0 = null;
+  stage.addEventListener('touchstart', e => {
+    ty0 = e.touches[0].clientY;
+    stage.classList.add('dragging');
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', e => {
+    if (ty0 === null) return;
+    const dy = ty0 - e.touches[0].clientY;   // positive = scroll up
+    drag = dy * RESISTANCE;
+    const atStart = current === 0             && drag < 0;
+    const atEnd   = current === wraps.length - 1 && drag > 0;
+    if (atStart) drag = Math.max(drag, -80);
+    if (atEnd)   drag = Math.min(drag,  80);
+    applyPositions(drag);
+  }, { passive: true });
+
+  stage.addEventListener('touchend', e => {
+    stage.classList.remove('dragging');
+    snapFromDrag();
+    ty0 = null;
+  }, { passive: true });
+</script>
+</body>
+</html>

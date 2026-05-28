@@ -1,0 +1,185 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+  .ae-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 16px; }
+
+  /* Option A — Minimal White */
+  .ae-a {
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .ae-a:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .ae-a .ae-nav {
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px; color: #999;
+  }
+  .ae-a .ae-nav strong { color: #111; font-size: 12px; font-weight: 600; }
+  .ae-a .ae-links { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; }
+  .ae-a .ae-link { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #555; padding: 3px 16px; }
+  .ae-a .ae-link.act { color: #111; font-weight: 600; border-left: 2px solid #111; }
+  .ae-a .ae-content { padding: 16px; border-top: 1px solid #f0f0f0; }
+  .ae-a .ae-greeting { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 9px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .ae-a .ae-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: #111; line-height: 1.1; }
+  .ae-a .ae-name span { color: #555; font-weight: 300; }
+  .ae-a .ae-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #777; margin-top: 4px; }
+  .ae-a .ae-tag { display: inline-block; background: #f4f4f4; border-radius: 4px; padding: 2px 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; color: #555; margin-top: 8px; }
+
+  /* Option B — Warm Stone */
+  .ae-b {
+    background: #faf8f5;
+    border: 1px solid #e9e4dc;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(80,60,20,0.06);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .ae-b:hover { box-shadow: 0 4px 16px rgba(80,60,20,0.12); }
+  .ae-b .ae-nav {
+    background: #f4f1eb;
+    border-bottom: 1px solid #e9e4dc;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; color: #9e8f7a;
+  }
+  .ae-b .ae-nav strong { color: #2d2416; font-size: 12px; font-weight: 500; }
+  .ae-b .ae-links { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; }
+  .ae-b .ae-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #7a6a55; padding: 3px 16px; }
+  .ae-b .ae-link.act { color: #2d2416; font-weight: 500; border-left: 2px solid #b8935a; }
+  .ae-b .ae-content { padding: 16px; border-top: 1px solid #ece7de; }
+  .ae-b .ae-greeting { font-family: 'DM Sans', sans-serif; font-size: 9px; color: #b8a88a; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .ae-b .ae-name { font-family: 'DM Sans', sans-serif; font-size: 20px; font-weight: 700; color: #2d2416; line-height: 1.1; }
+  .ae-b .ae-name span { color: #b8935a; font-weight: 700; }
+  .ae-b .ae-title { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #9e8f7a; margin-top: 4px; }
+  .ae-b .ae-tag { display: inline-block; background: #f0ebe1; border-radius: 4px; padding: 2px 8px; font-family: 'DM Sans', sans-serif; font-size: 10px; color: #7a6a55; margin-top: 8px; border: 1px solid #e0d8ca; }
+
+  /* Option C — Editorial Quartz */
+  .ae-c {
+    background: #f7f8fa;
+    border: 1px solid #e2e6ed;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,20,60,0.05);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .ae-c:hover { box-shadow: 0 4px 16px rgba(0,20,60,0.1); }
+  .ae-c .ae-nav {
+    background: #f0f2f7;
+    border-bottom: 1px solid #e2e6ed;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 11px; color: #8896aa;
+  }
+  .ae-c .ae-nav strong { color: #0f1a2e; font-size: 12px; font-weight: 600; }
+  .ae-c .ae-links { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; }
+  .ae-c .ae-link { font-family: 'Instrument Sans', sans-serif; font-size: 11px; color: #5a6e8a; padding: 3px 16px; }
+  .ae-c .ae-link.act { color: #0f1a2e; font-weight: 600; border-left: 2px solid #3b7dd8; }
+  .ae-c .ae-content { padding: 16px; border-top: 1px solid #e8ecf2; }
+  .ae-c .ae-greeting { font-family: 'Instrument Sans', sans-serif; font-size: 9px; color: #9aabbc; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .ae-c .ae-name { font-size: 20px; font-weight: 400; color: #0f1a2e; line-height: 1.1; }
+  .ae-c .ae-name .serif { font-family: 'Instrument Serif', serif; font-style: italic; color: #3b7dd8; }
+  .ae-c .ae-name .sans { font-family: 'Instrument Sans', sans-serif; font-weight: 600; }
+  .ae-c .ae-title { font-family: 'Instrument Sans', sans-serif; font-size: 11px; color: #6a7e96; margin-top: 4px; }
+  .ae-c .ae-tag { display: inline-block; background: #eaeff8; border-radius: 4px; padding: 2px 8px; font-family: 'Instrument Sans', sans-serif; font-size: 10px; color: #4a6080; margin-top: 8px; border: 1px solid #d4ddef; }
+
+  .ae-label { text-align: center; font-size: 11px; font-weight: 600; margin-top: 8px; color: #555; letter-spacing: 0.04em; text-transform: uppercase; }
+  .ae-desc { text-align: center; font-size: 11px; color: #888; margin-top: 2px; }
+  .nav-dots { display: flex; gap: 5px; }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+</style>
+
+<h2>Aesthetic direction</h2>
+<p class="subtitle">Three takes on "clean quartz" — pick the one that feels most like what you have in mind, or describe what's missing</p>
+
+<div class="ae-cards">
+
+  <!-- Option A -->
+  <div>
+    <div class="ae-a option" data-choice="a" onclick="toggleSelect(this)">
+      <div class="ae-a ae-nav">
+        <div class="nav-dots"><span class="nav-dot dot-r"></span><span class="nav-dot dot-y"></span><span class="nav-dot dot-g"></span></div>
+        <strong>Paul Pera</strong>
+        <span style="margin-left:auto">◑</span>
+      </div>
+      <div class="ae-a ae-links">
+        <div class="ae-link act">accueil</div>
+        <div class="ae-link">expériences</div>
+        <div class="ae-link">compétences</div>
+      </div>
+      <div class="ae-a ae-content">
+        <div class="ae-greeting">Hello, I am</div>
+        <div class="ae-name">Paul <span>Pera</span></div>
+        <div class="ae-title">Développeur fullstack</div>
+        <div class="ae-tag">Lausanne, CH</div>
+      </div>
+    </div>
+    <div class="ae-label">A — Pure White</div>
+    <div class="ae-desc">Plus Jakarta Sans · no colour accents<br>borders + shadows only</div>
+  </div>
+
+  <!-- Option B -->
+  <div>
+    <div class="ae-b option" data-choice="b" onclick="toggleSelect(this)">
+      <div class="ae-b ae-nav">
+        <div class="nav-dots"><span class="nav-dot dot-r"></span><span class="nav-dot dot-y"></span><span class="nav-dot dot-g"></span></div>
+        <strong>Paul Pera</strong>
+        <span style="margin-left:auto">◑</span>
+      </div>
+      <div class="ae-b ae-links">
+        <div class="ae-link act">accueil</div>
+        <div class="ae-link">expériences</div>
+        <div class="ae-link">compétences</div>
+      </div>
+      <div class="ae-b ae-content">
+        <div class="ae-greeting">Hello, I am</div>
+        <div class="ae-name">Paul <span>Pera</span></div>
+        <div class="ae-title">Développeur fullstack</div>
+        <div class="ae-tag">Lausanne, CH</div>
+      </div>
+    </div>
+    <div class="ae-label">B — Warm Stone</div>
+    <div class="ae-desc">DM Sans · amber accent<br>warm off-white tint</div>
+  </div>
+
+  <!-- Option C -->
+  <div>
+    <div class="ae-c option" data-choice="c" onclick="toggleSelect(this)">
+      <div class="ae-c ae-nav">
+        <div class="nav-dots"><span class="nav-dot dot-r"></span><span class="nav-dot dot-y"></span><span class="nav-dot dot-g"></span></div>
+        <strong>Paul Pera</strong>
+        <span style="margin-left:auto">◑</span>
+      </div>
+      <div class="ae-c ae-links">
+        <div class="ae-link act">accueil</div>
+        <div class="ae-link">expériences</div>
+        <div class="ae-link">compétences</div>
+      </div>
+      <div class="ae-c ae-content">
+        <div class="ae-greeting">Hello, I am</div>
+        <div class="ae-name"><span class="sans">Paul</span> <span class="serif">Pera</span></div>
+        <div class="ae-title">Développeur fullstack</div>
+        <div class="ae-tag">Lausanne, CH</div>
+      </div>
+    </div>
+    <div class="ae-label">C — Editorial Blue-Grey</div>
+    <div class="ae-desc">Instrument Sans + Serif italic · blue accent<br>cool off-white base</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px">You can also describe what's off — too warm? Too editorial? Not enough contrast? I'll iterate.</p>

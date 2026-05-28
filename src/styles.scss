@@ -1,18 +1,17 @@
+// src/styles.scss
 @use './styles/tokens' as t;
 @use './styles/mixins' as m;
 @use '@angular/cdk/overlay-prebuilt.css';
 
-// ---- Apply tokens ----
 :root {
-  @include t.apply-tokens();
+  @include t.apply-tokens(); // light by default
 }
 
-[data-theme='light'] {
+[data-theme='dark'] {
   @include t.apply-tokens();
-  @include t.apply-light-tokens();
+  @include t.apply-dark-tokens();
 }
 
-// ---- Reset ----
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
@@ -23,27 +22,17 @@ html, body {
 
 body {
   background-color: var(--color-bg-base);
-  background-image:
-    radial-gradient(ellipse at 50% -10%, rgba(0, 229, 255, 0.05) 0%, transparent 55%),
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.022) 2px,
-      rgba(0, 0, 0, 0.022) 4px
-    );
   color: var(--color-text-primary);
-  font-family: var(--font-mono);
+  font-family: var(--font-main);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// ---- Typography ----
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-mono);
-  font-weight: 600;
+  font-family: var(--font-main);
+  font-weight: 700;
   color: var(--color-text-primary);
   margin: 0 0 var(--space-4);
   line-height: var(--line-height-tight);
@@ -54,72 +43,38 @@ p { margin: 0 0 var(--space-4); }
 a {
   color: var(--color-accent-primary);
   text-decoration: none;
-  transition: color var(--transition-fast), text-shadow var(--transition-fast);
-
-  &:hover { text-shadow: var(--glow-subtle); }
+  transition: opacity var(--transition-fast);
+  &:hover { opacity: 0.8; }
 }
 
-button {
-  font-family: var(--font-mono);
-  cursor: pointer;
-}
+button { font-family: var(--font-main); cursor: pointer; }
 
-// ---- Terminal dots utility ----
-.terminal-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-
-    &.dot-red    { background: var(--terminal-dot-red); }
-    &.dot-yellow { background: var(--terminal-dot-yellow); }
-    &.dot-green  { background: var(--terminal-dot-green); }
-  }
-}
-
-// ---- Scroll reveal ----
+// Scroll reveal
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 0; transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-
-  &.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  &.revealed { opacity: 1; transform: translateY(0); }
 }
-
 .reveal-left {
-  opacity: 0;
-  transform: translateX(-20px);
+  opacity: 0; transform: translateX(-20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-
   &.revealed { opacity: 1; transform: translateX(0); }
 }
-
 .stagger-reveal {
-  opacity: 0;
-  transform: translateY(14px);
+  opacity: 0; transform: translateY(14px);
   transition:
     opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
     transform 0.4s ease calc(var(--stagger-index, 0) * 70ms);
-
   &.revealed { opacity: 1; transform: translateY(0); }
 }
 
-// ---- Custom cursor ----
 body.custom-cursor-active * { cursor: none !important; }
 
-// ---- Keyframe animations ----
+// Keyframes (kept for easter egg pages)
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
-
 @keyframes glitch {
   0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
   20%  { clip-path: inset(92% 0 1%  0); transform: translate(4px, 0);  }
@@ -128,25 +83,11 @@ body.custom-cursor-active * { cursor: none !important; }
   80%  { clip-path: inset(54% 0 7%  0); transform: translate(-1px, 0); }
   100% { clip-path: inset(58% 0 43% 0); transform: translate(0);       }
 }
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-
-@keyframes terminalEntry {
-  from { opacity: 0; transform: scaleY(0.6); filter: brightness(2); }
-  to   { opacity: 1; transform: scaleY(1);   filter: brightness(1); }
-}
-
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
-
 .cursor-blink {
   animation: cursorBlink 1s step-end infinite;
-  color: var(--color-accent-primary);
-
   &.hidden { display: none; }
 }

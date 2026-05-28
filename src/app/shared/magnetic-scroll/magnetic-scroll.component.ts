@@ -20,7 +20,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   @ViewChildren('cardEl') cardRefs!: QueryList<ElementRef<HTMLElement>>;
   @ViewChildren('dotEl')  dotRefs!:  QueryList<ElementRef<HTMLElement>>;
 
-  activeIdx   = 0;
+  activeIdx   = -1;  // -1 so first render(0) triggers the active class toggle on card 0
   progress    = 0;
 
   private readonly PEEK    = 72;    // px visible for adjacent cards

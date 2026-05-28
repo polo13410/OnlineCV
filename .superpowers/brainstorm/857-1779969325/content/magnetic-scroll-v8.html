@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Scroll v8</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #faf8f5; --surface: #f4f1eb; --border: #e5ddd1;
+    --muted: #c4b49a; --text: #2d2416; --sub: #7a6a55;
+    --accent: #b8935a; --font: 'DM Sans', sans-serif;
+  }
+  body {
+    font-family: var(--font); background: var(--bg); color: var(--text);
+    height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+    user-select: none;
+  }
+  .topbar {
+    padding: 12px 24px; border-bottom: 1px solid var(--border);
+    background: var(--surface); display: flex; align-items: center;
+    justify-content: space-between; flex-shrink: 0;
+  }
+  .overline   { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .page-title { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 1px; }
+  .hint       { font-size: 11px; color: var(--muted); }
+  .stage {
+    flex: 1; position: relative; overflow: hidden;
+  }
+  /* Edge fades */
+  .stage::before, .stage::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 80px;
+    z-index: 6; pointer-events: none;
+  }
+  .stage::before { top: 0;    background: linear-gradient(to bottom, var(--bg) 15%, transparent); }
+  .stage::after  { bottom: 0; background: linear-gradient(to top,   var(--bg) 15%, transparent); }
+
+  /* Cards: no CSS transitions on transform/opacity/filter — all driven by rAF */
+  .card-wrap {
+    position: absolute; left: 24px; right: 52px; top: 0;
+    transform: translateY(2000px);
+    will-change: transform, opacity, filter;
+  }
+  .exp-card {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: white; overflow: hidden;
+    transition: box-shadow .35s ease, border-color .35s ease;
+  }
+  .card-wrap.active .exp-card {
+    box-shadow: 0 8px 40px rgba(80,60,20,.13);
+    border-color: rgba(184,147,90,.4);
+  }
+  .card-header {
+    padding: 16px 20px 14px; background: var(--surface);
+    border-bottom: 1px solid var(--border); cursor: pointer;
+  }
+  .card-header:hover .card-title { color: var(--accent); }
+  .card-company { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .card-title   { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; transition: color .2s; }
+  .card-meta    { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+  .card-loc     { font-size: 11px; color: var(--sub); }
+  .card-date    { font-size: 11px; color: var(--muted); margin-left: auto; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; }
+  /* Body: CSS transition OK here — driven independently from body open/close */
+  .card-body {
+    max-height: 0; overflow: hidden; padding: 0 20px; opacity: 0;
+    transition: max-height .32s cubic-bezier(.4,0,.2,1), padding .28s ease, opacity .25s ease .03s;
+  }
+  .card-wrap.active .card-body { max-height: 400px; padding: 16px 20px 20px; opacity: 1; }
+  .card-body ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .card-body li { display: flex; gap: 10px; font-size: 13px; color: var(--sub); line-height: 1.55; }
+  .card-body li::before { content: '—'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .dots {
+    position: fixed; right: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 7px; z-index: 20;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background .25s, transform .25s; }
+  .dot.active { background: var(--accent); transform: scale(1.5); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="overline">Expériences</div><div class="page-title">Expériences professionnelles</div></div>
+  <div class="hint">scroll · arrow keys · click a card</div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="card-wrap active" id="card-0">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(0)">
+        <div class="card-company">Quanthome · Lausanne, Suisse</div>
+        <div class="card-title">Technical Lead &amp; Full Stack Engineer</div>
+        <div class="card-meta"><span class="card-loc">Lausanne</span><span class="card-date">Oct 2024 → Aujourd'hui</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Lead technique d'une équipe de 4 ingénieurs, pilotage des sprints</li>
+        <li>Architecture SaaS immobilière (React, Node.js, PostgreSQL)</li>
+        <li>Intégration de modèles IA pour l'analyse de données immobilières</li>
+        <li>CI/CD GitHub Actions et infrastructure cloud AWS / Terraform</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="card-wrap" id="card-1">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(1)">
+        <div class="card-company">Propulselab · Lausanne, Suisse</div>
+        <div class="card-title">Fullstack dev, DevOps, solution architect</div>
+        <div class="card-meta"><span class="card-loc">Lausanne</span><span class="card-date">Jan 2023 → Oct 2024</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Développement de solutions SaaS multi-clients de bout en bout</li>
+        <li>Architecture microservices, Docker, Kubernetes</li>
+        <li>Intégration d'agents IA (LangChain, RAG) dans des workflows métier</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="card-wrap" id="card-2">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(2)">
+        <div class="card-company">Metafactory · Paris, France</div>
+        <div class="card-title">Ingénieur d'étude et développement</div>
+        <div class="card-meta"><span class="card-loc">Paris</span><span class="card-date">Sept 2020 → Mai 2022</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Applications industrielles IoT — Vue.js et Node.js</li>
+        <li>Flux de données temps-réel (MQTT, WebSocket)</li>
+        <li>Dashboards de supervision pour opérateurs en production</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="card-wrap" id="card-3">
+    <div class="exp-card">
+      <div class="card-header" onclick="goTo(3)">
+        <div class="card-company">Monext · Aix-en-Provence</div>
+        <div class="card-title">Ingénieur d'étude et développement &amp; chef de projet</div>
+        <div class="card-meta"><span class="card-loc">Aix-en-Provence</span><span class="card-date">Jan 2020 → Juil 2020</span></div>
+      </div>
+      <div class="card-body"><ul>
+        <li>Application web de gestion de projets internes</li>
+        <li>Spring Boot backend + Angular frontend</li>
+        <li>Tests unitaires et d'intégration</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="dots">
+  <div class="dot active" onclick="goTo(0)"></div>
+  <div class="dot" onclick="goTo(1)"></div>
+  <div class="dot" onclick="goTo(2)"></div>
+  <div class="dot" onclick="goTo(3)"></div>
+</div>
+
+<script>
+const stage  = document.getElementById('stage');
+const wraps  = Array.from(document.querySelectorAll('.card-wrap'));
+const dots   = Array.from(document.querySelectorAll('.dot'));
+const N      = wraps.length;
+const PEEK   = 72;       // px visible for adjacent cards at edges
+
+// Pre-measured heights for each card (expanded and collapsed)
+const expH = [];   // body open
+const colH = [];   // body closed (header only)
+
+function measureHeights() {
+  wraps.forEach((wrap, i) => {
+    const body = wrap.querySelector('.card-body');
+    // Collapsed
+    body.style.cssText = 'transition:none!important;max-height:0!important;padding:0 20px!important;opacity:0!important;';
+    colH[i] = wrap.offsetHeight;
+    // Expanded
+    body.style.cssText = 'transition:none!important;max-height:9999px!important;padding:16px 20px 20px!important;opacity:1!important;';
+    expH[i] = wrap.offsetHeight;
+    // Restore CSS class control
+    body.style.cssText = '';
+  });
+}
+
+// ── scroll progress ────────────────────────────────────────────────────────
+let progress  = 0;     // float [0, N-1] — the single source of truth
+let activeIdx = 0;     // which card has .active class
+let raf       = null;
+
+function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+
+function render(p) {
+  const stageH  = stage.clientHeight;
+  const centre  = stageH / 2;
+  const nearest = Math.max(0, Math.min(N - 1, Math.round(p)));
+
+  // Toggle active card when nearest changes
+  if (nearest !== activeIdx) {
+    wraps[activeIdx].classList.remove('active');
+    dots[activeIdx].classList.remove('active');
+    activeIdx = nearest;
+    wraps[activeIdx].classList.add('active');
+    dots[activeIdx].classList.add('active');
+  }
+
+  const ah = expH[nearest];  // active card's expanded height
+
+  wraps.forEach((wrap, i) => {
+    const offset    = i - p;          // continuous offset from centre (0=centre, ±1=edge)
+    const absOffset = Math.abs(offset);
+
+    if (absOffset > 1.6) {
+      wrap.style.visibility = 'hidden';
+      return;
+    }
+    wrap.style.visibility = 'visible';
+
+    // ── Y position ──────────────────────────────────────────────────────────
+    // offset=0  → card centred
+    // offset=-1 → card at top peek (only PEEK px visible from top)
+    // offset=+1 → card at bottom peek (only PEEK px visible from bottom)
+    const centreY = centre - ah / 2;
+    const topY    = PEEK - colH[i];   // bottom edge at y=PEEK
+    const botY    = stageH - PEEK;    // top edge at y=stageH-PEEK
+
+    let y;
+    if (offset <= 0) {
+      // Travelling from centre upward to top-peek
+      y = lerp(centreY, topY, -offset);
+    } else {
+      // Travelling from centre downward to bottom-peek
+      y = lerp(centreY, botY, offset);
+    }
+
+    // ── Visual properties — all interpolated by distance from centre ─────────
+    const t       = Math.min(absOffset, 1);
+    const opacity = lerp(1,    0.38,  t);
+    const blurPx  = lerp(0,    2.5,   t);
+    const scale   = lerp(1,    0.97,  t);
+
+    wrap.style.transform = `translateY(${y}px) scale(${scale})`;
+    wrap.style.opacity   = opacity;
+    wrap.style.filter    = `blur(${blurPx}px)`;
+  });
+}
+
+// ── Spring snap ─────────────────────────────────────────────────────────────
+const SPRING = 0.16;   // stiffness — higher = snappier
+
+function springToTarget(target) {
+  if (raf) cancelAnimationFrame(raf);
+  function step() {
+    const diff = target - progress;
+    if (Math.abs(diff) < 0.003) { progress = target; render(progress); return; }
+    progress += diff * SPRING;
+    render(progress);
+    raf = requestAnimationFrame(step);
+  }
+  raf = requestAnimationFrame(step);
+}
+
+function snapNearest() {
+  springToTarget(Math.max(0, Math.min(N - 1, Math.round(progress))));
+}
+
+function goTo(index) {
+  springToTarget(Math.max(0, Math.min(N - 1, index)));
+}
+
+// ── Initialise ───────────────────────────────────────────────────────────────
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  measureHeights();
+  render(0);
+}));
+window.addEventListener('resize', () => { measureHeights(); render(progress); });
+
+// ── Wheel ────────────────────────────────────────────────────────────────────
+const TRAVEL     = 160;  // px of smooth scroll = 1 card
+const OVER_DRAG  = 0.15; // max over-drag past first/last (in card units)
+let snapTimer    = null;
+let discreteBusy = false;
+
+function clampProgress(p) {
+  // Hard clamp with a small elastic over-drag at the boundaries
+  if (p < 0)     return Math.max(-OVER_DRAG, p * 0.3);
+  if (p > N - 1) return Math.min(N - 1 + OVER_DRAG, (N - 1) + (p - (N - 1)) * 0.3);
+  return p;
+}
+
+stage.addEventListener('wheel', e => {
+  e.preventDefault();
+
+  const isDiscrete = e.deltaMode === 1 || Math.abs(e.deltaY) >= 100;
+
+  if (isDiscrete) {
+    // Mouse wheel: one tick = one card, ignore until animation settles
+    if (discreteBusy) return;
+    discreteBusy = true;
+    const dir = e.deltaY > 0 ? 1 : -1;
+    goTo(Math.round(progress) + dir);
+    setTimeout(() => { discreteBusy = false; }, 450);
+    return;
+  }
+
+  // Trackpad: continuous drag
+  if (raf) { cancelAnimationFrame(raf); raf = null; }
+  progress = clampProgress(progress + e.deltaY / TRAVEL);
+  render(progress);
+
+  clearTimeout(snapTimer);
+  snapTimer = setTimeout(snapNearest, 120);
+}, { passive: false });
+
+// ── Touch ────────────────────────────────────────────────────────────────────
+let touchStart   = null;  // { y, progress }
+
+stage.addEventListener('touchstart', e => {
+  if (raf) { cancelAnimationFrame(raf); raf = null; }
+  touchStart = { y: e.touches[0].clientY, progress };
+}, { passive: true });
+
+stage.addEventListener('touchmove', e => {
+  if (!touchStart) return;
+  // Finger up (clientY decreases) → advance to next card → progress increases
+  const dy    = touchStart.y - e.touches[0].clientY;  // positive = swipe up = advance
+  const delta = dy / TRAVEL;
+  progress = clampProgress(touchStart.progress + delta);
+  render(progress);
+}, { passive: true });
+
+stage.addEventListener('touchend', () => {
+  touchStart = null;
+  snapNearest();
+}, { passive: true });
+
+// ── Keyboard ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); goTo(Math.round(progress) + 1); }
+  if (e.key === 'ArrowUp')   { e.preventDefault(); goTo(Math.round(progress) - 1); }
+});
+</script>
+</body>
+</html>
