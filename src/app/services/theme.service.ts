@@ -26,12 +26,12 @@ export class ThemeService {
 
   private loadTheme(): Theme {
     const stored = localStorage.getItem(this.STORAGE_KEY) as Theme | null;
-    return stored === 'light' ? 'light' : 'dark';
+    return stored === 'dark' ? 'dark' : 'light';
   }
 
   private applyTheme(theme: Theme): void {
-    if (theme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
