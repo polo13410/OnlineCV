@@ -1,9 +1,13 @@
 <!-- src/app/shared/magnetic-scroll/magnetic-scroll.component.html -->
 
-<!-- Cross-fading section headers — stacked, only active one visible -->
+<!-- Push-transition section headers — old slides up out, new slides up in -->
 <div class="ms-header-wrap">
   @for (section of sections; track section.title; let i = $index) {
-    <div class="ms-section-header" [class.active]="i === activeSection()">
+    <div
+      class="ms-section-header"
+      [class.active]="i === activeSection()"
+      [class.behind]="i < activeSection()"
+    >
       <p class="section-overline">{{ section.overline }}</p>
       <h2>{{ section.title }}</h2>
     </div>

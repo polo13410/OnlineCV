@@ -14,22 +14,23 @@
   position: relative;
   height: 90px;
   flex-shrink: 0;
-  padding: var(--space-5) var(--space-6) 0;
   max-width: var(--content-max-width);
   margin: 0 auto;
   width: 100%;
-
-  @include m.mobile() {
-    padding: var(--space-4) var(--space-4) 0;
-  }
+  overflow: hidden; // clip headers sliding in/out
 }
 
+// Headers stack absolutely. Default state = below (waiting to slide up in).
+// .active = at rest (visible). .behind = slid up and out the top.
 .ms-section-header {
   @include m.section-header();
   position: absolute;
   inset: var(--space-5) var(--space-6) 0;
+  transform: translateY(110%);
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition:
+    transform 0.5s cubic-bezier(.65, 0, .35, 1),
+    opacity   0.35s ease;
   pointer-events: none;
 
   @include m.mobile() {
@@ -37,8 +38,14 @@
   }
 
   &.active {
+    transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
+  }
+
+  &.behind {
+    transform: translateY(-110%);
+    opacity: 0;
   }
 }
 

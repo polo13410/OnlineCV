@@ -43,24 +43,35 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
 
   private ngZone = inject(NgZone);
 
+  private viewReady = false;
+
   ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.attachEvents();
     this.flatten();
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      this.measureAllHeights();
-      this.render(0);
-      this.attachEvents();
-    }));
+    this.scheduleMeasureAndRender();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['sections'] && !changes['sections'].firstChange) {
-      this.flatten();
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        this.measureAllHeights();
-        this.progress = Math.max(0, Math.min(this.flatItems.length - 1, this.progress));
-        this.render(this.progress);
-      }));
+    if (!changes['sections']) return;
+    this.flatten();
+    if (this.viewReady) {
+      this.scheduleMeasureAndRender();
     }
+    // If the view isn't ready yet, ngAfterViewInit will run scheduleMeasureAndRender
+    // once `flatItems` has propagated through Angular's @for binding.
+  }
+
+  // Waits two rAF frames so the template's @for has rendered the new card DOM,
+  // then measures heights and positions cards. Safe to call repeatedly.
+  private scheduleMeasureAndRender(): void {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!this.stageRef || this.flatItems.length === 0) return;
+      this.measureAllHeights();
+      const max = Math.max(0, this.flatItems.length - 1);
+      this.progress = Math.max(0, Math.min(max, this.progress));
+      this.render(this.progress);
+    }));
   }
 
   ngOnDestroy(): void {
