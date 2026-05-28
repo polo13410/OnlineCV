@@ -62,3 +62,12 @@ export interface Education {
   to: string
   descriptions: string[]
 }
+
+export interface MagneticScrollItem {
+  title:        string;
+  organisation: string; // company name or school name
+  location:     string;
+  dateFrom:     string;
+  dateTo:       string;
+  descriptions: string[];
+}

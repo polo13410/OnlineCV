@@ -1,0 +1,160 @@
+// src/app/shared/magnetic-scroll/magnetic-scroll.component.scss
+:host {
+  display: block;
+  position: relative;
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+.ms-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+// Edge fades — softly clip peeking cards
+.ms-fade {
+  position: absolute;
+  left: 0; right: 52px; // leave room for dots
+  height: 80px;
+  z-index: 6;
+  pointer-events: none;
+
+  &--top {
+    top: 0;
+    background: linear-gradient(to bottom, var(--color-bg-base) 15%, transparent);
+  }
+  &--bottom {
+    bottom: 0;
+    background: linear-gradient(to top, var(--color-bg-base) 15%, transparent);
+  }
+}
+
+// Card wrappers: absolutely positioned, all driven by JS
+.ms-card-wrap {
+  position: absolute;
+  left: 24px;
+  right: 52px;
+  top: 0;
+  transform: translateY(2000px); // hidden until JS runs
+  will-change: transform, opacity, filter;
+}
+
+// Card chrome
+.ms-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: white;
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.ms-card-wrap.ms-active .ms-card {
+  box-shadow: 0 8px 40px rgba(80, 60, 20, 0.13);
+  border-color: var(--color-border-accent);
+}
+
+// Header — always visible, click to focus
+.ms-header {
+  padding: 16px 20px 14px;
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover { background: var(--color-bg-elevated); }
+}
+
+.ms-overline {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-1);
+}
+
+.ms-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+  line-height: 1.2;
+}
+
+.ms-meta { display: flex; align-items: center; }
+
+.ms-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: 2px var(--space-2);
+}
+
+// Body: collapses/expands via CSS transition (independent from position tracking)
+.ms-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  opacity: 0;
+  transition:
+    max-height 0.35s cubic-bezier(.4, 0, .2, 1),
+    padding    0.28s ease,
+    opacity    0.25s ease 0.03s;
+}
+
+.ms-card-wrap.ms-active .ms-body {
+  max-height: 400px;
+  padding: 16px 20px 20px;
+  opacity: 1;
+}
+
+.ms-body ul {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ms-body li {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+
+  &::before {
+    content: '—';
+    color: var(--color-accent-primary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+}
+
+// Progress dots
+.ms-dots {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  z-index: 10;
+}
+
+.ms-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+
+  &--active {
+    background: var(--color-accent-primary);
+    transform: scale(1.5);
+  }
+}

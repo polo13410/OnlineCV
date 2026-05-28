@@ -1,0 +1,37 @@
+<!-- src/app/shared/magnetic-scroll/magnetic-scroll.component.html -->
+<div class="ms-stage" #stageEl>
+
+  <!-- Edge fades -->
+  <div class="ms-fade ms-fade--top"></div>
+  <div class="ms-fade ms-fade--bottom"></div>
+
+  <!-- Cards -->
+  @for (item of items; track item.title; let i = $index) {
+    <div class="ms-card-wrap" #cardEl>
+      <div class="ms-card">
+        <div class="ms-header" (click)="goTo(i)">
+          <p class="ms-overline">{{ item.organisation }} · {{ item.location }}</p>
+          <h3 class="ms-title">{{ item.title }}</h3>
+          <div class="ms-meta">
+            <span class="ms-date">{{ item.dateFrom }} → {{ item.dateTo }}</span>
+          </div>
+        </div>
+        <div class="ms-body">
+          <ul>
+            @for (desc of item.descriptions; track desc) {
+              <li>{{ desc }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
+
+<!-- Progress dots -->
+<div class="ms-dots">
+  @for (item of items; track item.title; let i = $index) {
+    <div class="ms-dot" #dotEl (click)="goTo(i)"></div>
+  }
+</div>
