@@ -19,6 +19,8 @@
     }
   },
   "EXPERIENCES": {
+    "OVERLINE": "Expériences",
+    "STAGES_OVERLINE": "Stages",
     "TITLE": "Experiences professionnelles",
     "INTERNSHIPS": "Stages"
   },

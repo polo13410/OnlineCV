@@ -1,71 +1,22 @@
-<div class="page-container">
-
-  <div class="section-header">
-    <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
-  </div>
-
-  <div class="exp-list">
-    @for (exp of experiences?.pro; track exp.company; let i = $index) {
-      <div class="exp-card" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <div class="card-chrome">
-          <div class="terminal-dots">
-            <span class="dot dot-red"></span>
-            <span class="dot dot-yellow"></span>
-            <span class="dot dot-green"></span>
-          </div>
-          <span class="card-path">{{ exp.company }}/{{ exp.title }}</span>
-          <button class="card-toggle" (click)="togglePro(i)">
-            {{ openPro.has(i) ? '−' : '+' }}
-          </button>
-        </div>
-        <div class="card-header" (click)="togglePro(i)">
-          <div class="card-title">{{ exp.title }}</div>
-          <div class="card-subtitle">{{ exp.company }} — {{ exp.location }}</div>
-          <div class="card-date">{{ exp.dfrom }} → {{ exp.to }}</div>
-        </div>
-        <div class="card-body" [class.open]="openPro.has(i)">
-          <ul class="card-descriptions">
-            @for (desc of exp.descriptions; track desc) {
-              <li><span class="bullet">›</span> {{ desc }}</li>
-            }
-          </ul>
-        </div>
-      </div>
+<!-- src/app/experiences/experiences.component.html -->
+<div class="exp-page">
+  <div class="exp-section">
+    <div class="section-header">
+      <p class="section-overline">{{ 'EXPERIENCES.OVERLINE' | translate }}</p>
+      <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
+    </div>
+    @if (proItems().length) {
+      <app-magnetic-scroll [items]="proItems()" />
     }
   </div>
 
-  <div class="section-header section-header--secondary">
-    <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
-  </div>
-
-  <div class="exp-list">
-    @for (exp of experiences?.stage; track exp.company; let i = $index) {
-      <div class="exp-card" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <div class="card-chrome">
-          <div class="terminal-dots">
-            <span class="dot dot-red"></span>
-            <span class="dot dot-yellow"></span>
-            <span class="dot dot-green"></span>
-          </div>
-          <span class="card-path">{{ exp.company }}/{{ exp.title }}</span>
-          <button class="card-toggle" (click)="toggleStage(i)">
-            {{ openStage.has(i) ? '−' : '+' }}
-          </button>
-        </div>
-        <div class="card-header" (click)="toggleStage(i)">
-          <div class="card-title">{{ exp.title }}</div>
-          <div class="card-subtitle">{{ exp.company }} — {{ exp.location }}</div>
-          <div class="card-date">{{ exp.dfrom }} → {{ exp.to }}</div>
-        </div>
-        <div class="card-body" [class.open]="openStage.has(i)">
-          <ul class="card-descriptions">
-            @for (desc of exp.descriptions; track desc) {
-              <li><span class="bullet">›</span> {{ desc }}</li>
-            }
-          </ul>
-        </div>
-      </div>
+  <div class="exp-section">
+    <div class="section-header">
+      <p class="section-overline">{{ 'EXPERIENCES.STAGES_OVERLINE' | translate }}</p>
+      <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
+    </div>
+    @if (stageItems().length) {
+      <app-magnetic-scroll [items]="stageItems()" />
     }
   </div>
-
 </div>
