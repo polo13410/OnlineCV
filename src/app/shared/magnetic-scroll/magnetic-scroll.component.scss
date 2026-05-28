@@ -139,22 +139,9 @@
   padding: 2px var(--space-2);
 }
 
-// Body — expands to full content (1500px ceiling — never hit in practice)
+// Body — always fully visible (no expand/collapse animation)
 .ms-body {
-  max-height: 0;
-  overflow: hidden;
-  padding: 0 20px;
-  opacity: 0;
-  transition:
-    max-height 0.4s cubic-bezier(.4, 0, .2, 1),
-    padding    0.28s ease,
-    opacity    0.25s ease 0.03s;
-}
-
-.ms-card-wrap.ms-active .ms-body {
-  max-height: 1500px;
   padding: 16px 20px 20px;
-  opacity: 1;
 }
 
 .ms-body ul {

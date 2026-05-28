@@ -27,14 +27,13 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   // Flattened items across all sections — used in the template
   flatItems: MagneticScrollItem[] = [];
 
-  private readonly PEEK    = 72;
+  private readonly PEEK    = 150;
   private readonly TRAVEL  = 160;
   private readonly SPRING  = 0.16;
   private readonly SNAP_MS = 120;
   private readonly MAX_OVR = 0.15;
 
-  private expandedH:  number[] = [];
-  private collapsedH: number[] = [];
+  private heights: number[] = [];
   private raf:        number | null = null;
   private snapTimer:  ReturnType<typeof setTimeout> | null = null;
   private wheelBusy   = false;
@@ -108,30 +107,11 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     return a + (b - a) * Math.max(0, Math.min(1, t));
   }
 
+  // Cards no longer collapse/expand — each card has a single, stable height.
   private measureAllHeights(): void {
-    const cards = this.cards();
-    cards.forEach((card, i) => {
-      const body = card.querySelector<HTMLElement>('.ms-body')!;
-      body.style.cssText = 'transition:none!important;max-height:0!important;padding:0 20px!important;opacity:0!important;';
-      this.collapsedH[i] = card.offsetHeight;
-      body.style.cssText = 'transition:none!important;max-height:9999px!important;padding:16px 20px 20px!important;opacity:1!important;';
-      this.expandedH[i]  = card.offsetHeight;
-      body.style.cssText = '';
+    this.cards().forEach((card, i) => {
+      this.heights[i] = card.offsetHeight;
     });
-  }
-
-  private measureExpandedHeight(card: HTMLElement): number {
-    const body = card.querySelector<HTMLElement>('.ms-body')!;
-    body.style.transition = 'none';
-    body.style.maxHeight  = '9999px';
-    body.style.padding    = '16px 20px 20px';
-    body.style.opacity    = '1';
-    const h = card.offsetHeight;
-    body.style.maxHeight = '';
-    body.style.padding   = '';
-    body.style.opacity   = '';
-    requestAnimationFrame(() => { body.style.transition = ''; });
-    return h;
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -157,7 +137,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       }
     }
 
-    const ah = this.expandedH[nearest] ?? 200;
+    const ah = this.heights[nearest] ?? 200;
 
     cards.forEach((card, i) => {
       const offset    = i - p;
@@ -170,15 +150,18 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       card.style.visibility = 'visible';
 
       const centreY = centre - ah / 2;
-      const topY    = this.PEEK - (this.collapsedH[i] ?? 80);
+      const topY    = this.PEEK - (this.heights[i] ?? 80);
       const botY    = stageH - this.PEEK;
       const y       = offset <= 0
         ? this.lerp(centreY, topY, -offset)
         : this.lerp(centreY, botY, offset);
 
+      // Active card on top so it stays in front of peeking neighbours during the overlap.
+      card.style.zIndex = String(100 - Math.round(absOffset * 10));
+
       const t       = Math.min(absOffset, 1);
-      const opacity = this.lerp(1, 0.38, t);
-      const blurPx  = this.lerp(0, 2.5, t);
+      const opacity = this.lerp(1, 0.65, t);
+      const blurPx  = this.lerp(0, 1.5, t);
       const scale   = this.lerp(1, 0.97, t);
 
       card.style.transform = `translateY(${y}px) scale(${scale})`;
@@ -190,9 +173,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   // ── Navigation ────────────────────────────────────────────────────────────
 
   goTo(index: number): void {
-    const cards = this.cards();
-    index = Math.max(0, Math.min(cards.length - 1, index));
-    this.expandedH[index] = this.measureExpandedHeight(cards[index]);
+    index = Math.max(0, Math.min(this.flatItems.length - 1, index));
     this.springTo(index);
   }
 
