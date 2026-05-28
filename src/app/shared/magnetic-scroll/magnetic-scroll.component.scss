@@ -1,21 +1,57 @@
 // src/app/shared/magnetic-scroll/magnetic-scroll.component.scss
+@use '../../../styles/mixins' as m;
+
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: calc(100vh - var(--header-height));
   overflow: hidden;
 }
 
-.ms-stage {
+// Section header — cross-fades when active section changes
+.ms-header-wrap {
+  position: relative;
+  height: 90px;
+  flex-shrink: 0;
+  padding: var(--space-5) var(--space-6) 0;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+
+  @include m.mobile() {
+    padding: var(--space-4) var(--space-4) 0;
+  }
+}
+
+.ms-section-header {
+  @include m.section-header();
   position: absolute;
-  inset: 0;
+  inset: var(--space-5) var(--space-6) 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+
+  @include m.mobile() {
+    inset: var(--space-4) var(--space-4) 0;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.ms-stage {
+  flex: 1;
+  position: relative;
   overflow: hidden;
 }
 
 // Edge fades — softly clip peeking cards
 .ms-fade {
   position: absolute;
-  left: 0; right: 52px; // leave room for dots
+  left: 0; right: 0;
   height: 80px;
   z-index: 6;
   pointer-events: none;
@@ -30,18 +66,26 @@
   }
 }
 
-// Card wrappers: absolutely positioned, all driven by JS
+// Card wraps: span full stage width, padded; inner .ms-card constrained to content-max-width
 .ms-card-wrap {
   position: absolute;
-  left: 24px;
-  right: 52px;
+  left: 0;
+  right: 52px;          // reserve space for the dot column
   top: 0;
-  transform: translateY(2000px); // hidden until JS runs
+  padding: 0 var(--space-6);
+  transform: translateY(2000px);
   will-change: transform, opacity, filter;
+
+  @include m.mobile() {
+    right: 14px;
+    padding: 0 var(--space-4);
+  }
 }
 
-// Card chrome
+// Card itself — constrained width, centered within the wrap
 .ms-card {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
   background: white;
@@ -54,15 +98,11 @@
   border-color: var(--color-border-accent);
 }
 
-// Header — always visible, click to focus
+// Header — informational, no longer clickable
 .ms-header {
   padding: 16px 20px 14px;
   background: var(--color-bg-surface);
   border-bottom: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: background var(--transition-fast);
-
-  &:hover { background: var(--color-bg-elevated); }
 }
 
 .ms-overline {
@@ -92,20 +132,20 @@
   padding: 2px var(--space-2);
 }
 
-// Body: collapses/expands via CSS transition (independent from position tracking)
+// Body — expands to full content (1500px ceiling — never hit in practice)
 .ms-body {
   max-height: 0;
   overflow: hidden;
   padding: 0 20px;
   opacity: 0;
   transition:
-    max-height 0.35s cubic-bezier(.4, 0, .2, 1),
+    max-height 0.4s cubic-bezier(.4, 0, .2, 1),
     padding    0.28s ease,
     opacity    0.25s ease 0.03s;
 }
 
 .ms-card-wrap.ms-active .ms-body {
-  max-height: 400px;
+  max-height: 1500px;
   padding: 16px 20px 20px;
   opacity: 1;
 }
@@ -133,7 +173,7 @@
   }
 }
 
-// Progress dots
+// Progress dots — always at right edge of stage
 .ms-dots {
   position: absolute;
   right: 14px;
@@ -143,6 +183,10 @@
   flex-direction: column;
   gap: 7px;
   z-index: 10;
+
+  @include m.mobile() {
+    display: none;  // hide on mobile (touch handles nav)
+  }
 }
 
 .ms-dot {

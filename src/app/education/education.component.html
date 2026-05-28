@@ -1,10 +1,2 @@
 <!-- src/app/education/education.component.html -->
-<div class="edu-page">
-  <div class="section-header">
-    <p class="section-overline">{{ 'EDUCATION.OVERLINE' | translate }}</p>
-    <h2>{{ 'EDUCATION.TITLE' | translate }}</h2>
-  </div>
-  @if (items().length) {
-    <app-magnetic-scroll [items]="items()" />
-  }
-</div>
+<app-magnetic-scroll [sections]="sections()" />

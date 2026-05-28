@@ -1,10 +1,10 @@
 // src/app/shared/magnetic-scroll/magnetic-scroll.component.ts
 import {
   AfterViewInit, Component, ElementRef, inject, Input,
-  NgZone, OnChanges, OnDestroy, QueryList, SimpleChanges, ViewChild, ViewChildren,
+  NgZone, OnChanges, OnDestroy, QueryList, signal, SimpleChanges, ViewChild, ViewChildren,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagneticScrollItem } from 'src/assets/data/contentInterface';
+import { MagneticScrollItem, MagneticScrollSection } from 'src/assets/data/contentInterface';
 
 @Component({
   selector: 'app-magnetic-scroll',
@@ -14,20 +14,24 @@ import { MagneticScrollItem } from 'src/assets/data/contentInterface';
   imports: [CommonModule],
 })
 export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() items: MagneticScrollItem[] = [];
+  @Input() sections: MagneticScrollSection[] = [];
 
   @ViewChild('stageEl')  stageRef!:  ElementRef<HTMLElement>;
   @ViewChildren('cardEl') cardRefs!: QueryList<ElementRef<HTMLElement>>;
   @ViewChildren('dotEl')  dotRefs!:  QueryList<ElementRef<HTMLElement>>;
 
-  activeIdx   = -1;  // -1 so first render(0) triggers the active class toggle on card 0
-  progress    = 0;
+  activeIdx     = -1;  // -1 so first render(0) applies .ms-active to card 0
+  activeSection = signal(0);
+  progress      = 0;
 
-  private readonly PEEK    = 72;    // px visible for adjacent cards
-  private readonly TRAVEL  = 160;   // px of scroll = 1 card advance
-  private readonly SPRING  = 0.16;  // snap stiffness
-  private readonly SNAP_MS = 120;   // ms of silence → snap fires
-  private readonly MAX_OVR = 0.15;  // card-units of over-drag allowed
+  // Flattened items across all sections — used in the template
+  flatItems: MagneticScrollItem[] = [];
+
+  private readonly PEEK    = 72;
+  private readonly TRAVEL  = 160;
+  private readonly SPRING  = 0.16;
+  private readonly SNAP_MS = 120;
+  private readonly MAX_OVR = 0.15;
 
   private expandedH:  number[] = [];
   private collapsedH: number[] = [];
@@ -40,6 +44,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   private ngZone = inject(NgZone);
 
   ngAfterViewInit(): void {
+    this.flatten();
     requestAnimationFrame(() => requestAnimationFrame(() => {
       this.measureAllHeights();
       this.render(0);
@@ -48,10 +53,11 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['items'] && !changes['items'].firstChange) {
+    if (changes['sections'] && !changes['sections'].firstChange) {
+      this.flatten();
       requestAnimationFrame(() => requestAnimationFrame(() => {
         this.measureAllHeights();
-        this.progress = Math.max(0, Math.min(this.items.length - 1, this.progress));
+        this.progress = Math.max(0, Math.min(this.flatItems.length - 1, this.progress));
         this.render(this.progress);
       }));
     }
@@ -65,6 +71,20 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
 
   // ── Helpers ───────────────────────────────────────────────────────────────
 
+  private flatten(): void {
+    this.flatItems = this.sections.flatMap(s => s.items);
+  }
+
+  // Map a flat item index to its section index
+  private sectionForIndex(idx: number): number {
+    let count = 0;
+    for (let i = 0; i < this.sections.length; i++) {
+      count += this.sections[i].items.length;
+      if (idx < count) return i;
+    }
+    return Math.max(0, this.sections.length - 1);
+  }
+
   private cards(): HTMLElement[] {
     return this.cardRefs.toArray().map(r => r.nativeElement);
   }
@@ -77,7 +97,6 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     return a + (b - a) * Math.max(0, Math.min(1, t));
   }
 
-  // Measure all cards' collapsed + expanded heights in one pass (no visual flash)
   private measureAllHeights(): void {
     const cards = this.cards();
     cards.forEach((card, i) => {
@@ -90,7 +109,6 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     });
   }
 
-  // Measure one card's expanded height before a goTo (captures current content)
   private measureExpandedHeight(card: HTMLElement): number {
     const body = card.querySelector<HTMLElement>('.ms-body')!;
     body.style.transition = 'none';
@@ -114,13 +132,18 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     const centre  = stageH / 2;
     const nearest = Math.max(0, Math.min(cards.length - 1, Math.round(p)));
 
-    // Toggle active class and expand body (CSS transition handles animation)
     if (nearest !== this.activeIdx) {
       cards[this.activeIdx]?.classList.remove('ms-active');
       this.dots()[this.activeIdx]?.classList.remove('ms-dot--active');
       this.activeIdx = nearest;
       cards[this.activeIdx]?.classList.add('ms-active');
       this.dots()[this.activeIdx]?.classList.add('ms-dot--active');
+
+      // Update active section when crossing a section boundary
+      const newSection = this.sectionForIndex(this.activeIdx);
+      if (newSection !== this.activeSection()) {
+        this.activeSection.set(newSection);
+      }
     }
 
     const ah = this.expandedH[nearest] ?? 200;
@@ -135,7 +158,6 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       }
       card.style.visibility = 'visible';
 
-      // Y: lerp between centre, top-peek, and bottom-peek
       const centreY = centre - ah / 2;
       const topY    = this.PEEK - (this.collapsedH[i] ?? 80);
       const botY    = stageH - this.PEEK;
@@ -159,7 +181,6 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   goTo(index: number): void {
     const cards = this.cards();
     index = Math.max(0, Math.min(cards.length - 1, index));
-    // Pre-measure expanded height so the card is positioned correctly from frame 1
     this.expandedH[index] = this.measureExpandedHeight(cards[index]);
     this.springTo(index);
   }
@@ -181,12 +202,12 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   }
 
   private snapNearest(): void {
-    const max = this.items.length - 1;
+    const max = this.flatItems.length - 1;
     this.springTo(Math.max(0, Math.min(max, Math.round(this.progress))));
   }
 
   private clamp(p: number): number {
-    const max = this.items.length - 1;
+    const max = this.flatItems.length - 1;
     if (p < 0)   return Math.max(-this.MAX_OVR, p * 0.3);
     if (p > max) return Math.min(max + this.MAX_OVR, max + (p - max) * 0.3);
     return p;
@@ -224,7 +245,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
 
       const onTouchMove = (e: TouchEvent) => {
         if (!this.touchStart) return;
-        const dy = this.touchStart.y - e.touches[0].clientY; // positive = swipe up = advance
+        const dy = this.touchStart.y - e.touches[0].clientY;
         this.progress = this.clamp(this.touchStart.progress + dy / this.TRAVEL);
         this.render(this.progress);
       };

@@ -1,15 +1,26 @@
 <!-- src/app/shared/magnetic-scroll/magnetic-scroll.component.html -->
+
+<!-- Cross-fading section headers — stacked, only active one visible -->
+<div class="ms-header-wrap">
+  @for (section of sections; track section.title; let i = $index) {
+    <div class="ms-section-header" [class.active]="i === activeSection()">
+      <p class="section-overline">{{ section.overline }}</p>
+      <h2>{{ section.title }}</h2>
+    </div>
+  }
+</div>
+
 <div class="ms-stage" #stageEl>
 
   <!-- Edge fades -->
   <div class="ms-fade ms-fade--top"></div>
   <div class="ms-fade ms-fade--bottom"></div>
 
-  <!-- Cards -->
-  @for (item of items; track item.title; let i = $index) {
+  <!-- Cards (flattened across all sections) -->
+  @for (item of flatItems; track item.title; let i = $index) {
     <div class="ms-card-wrap" #cardEl>
       <div class="ms-card">
-        <div class="ms-header" (click)="goTo(i)">
+        <div class="ms-header">
           <p class="ms-overline">{{ item.organisation }} · {{ item.location }}</p>
           <h3 class="ms-title">{{ item.title }}</h3>
           <div class="ms-meta">
@@ -31,7 +42,7 @@
 
 <!-- Progress dots -->
 <div class="ms-dots">
-  @for (item of items; track item.title; let i = $index) {
+  @for (item of flatItems; track item.title; let i = $index) {
     <div class="ms-dot" #dotEl (click)="goTo(i)"></div>
   }
 </div>

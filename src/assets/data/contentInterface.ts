@@ -71,3 +71,9 @@ export interface MagneticScrollItem {
   dateTo:       string;
   descriptions: string[];
 }
+
+export interface MagneticScrollSection {
+  overline: string;
+  title:    string;
+  items:    MagneticScrollItem[];
+}

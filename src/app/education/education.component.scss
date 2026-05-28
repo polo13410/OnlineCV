@@ -1,16 +1,2 @@
 // src/app/education/education.component.scss
-@use '../../styles/mixins' as m;
-
-.edu-page {
-  display: flex;
-  flex-direction: column;
-}
-
-.section-header {
-  @include m.section-header();
-  padding: var(--space-5) var(--space-6) 0;
-
-  @include m.mobile() {
-    padding: var(--space-4) var(--space-4) 0;
-  }
-}
+:host { display: block; }

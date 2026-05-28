@@ -1,7 +1,8 @@
+// src/app/experiences/experiences.component.ts
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
-import { Experience, MagneticScrollItem } from 'src/assets/data/contentInterface';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject, combineLatest, takeUntil } from 'rxjs';
+import { Experience, MagneticScrollItem, MagneticScrollSection } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
 import { MagneticScrollComponent } from '../shared/magnetic-scroll/magnetic-scroll.component';
 
@@ -10,38 +11,45 @@ import { MagneticScrollComponent } from '../shared/magnetic-scroll/magnetic-scro
   templateUrl: './experiences.component.html',
   styleUrl: './experiences.component.scss',
   standalone: true,
-  imports: [TranslateModule, MagneticScrollComponent],
+  imports: [MagneticScrollComponent],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
-  proItems   = signal<MagneticScrollItem[]>([]);
-  stageItems = signal<MagneticScrollItem[]>([]);
+  sections = signal<MagneticScrollSection[]>([]);
 
-  private readonly json     = inject(GetJsonService);
-  private readonly destroy$ = new Subject<void>();
+  private readonly json      = inject(GetJsonService);
+  private readonly translate = inject(TranslateService);
+  private readonly destroy$  = new Subject<void>();
 
   ngOnInit(): void {
-    this.json.getExp().pipe(takeUntil(this.destroy$)).subscribe(data => {
-      this.proItems.set(data.pro.map((e: Experience) => ({
-        title:        e.title,
-        organisation: e.company,
-        location:     e.location,
-        dateFrom:     e.dfrom,
-        dateTo:       e.to,
-        descriptions: e.descriptions,
-      })));
-      this.stageItems.set(data.stage.map((e: Experience) => ({
-        title:        e.title,
-        organisation: e.company,
-        location:     e.location,
-        dateFrom:     e.dfrom,
-        dateTo:       e.to,
-        descriptions: e.descriptions,
-      })));
+    combineLatest([
+      this.json.getExp(),
+      this.translate.stream('EXPERIENCES.OVERLINE'),
+      this.translate.stream('EXPERIENCES.TITLE'),
+      this.translate.stream('EXPERIENCES.STAGES_OVERLINE'),
+      this.translate.stream('EXPERIENCES.INTERNSHIPS'),
+    ]).pipe(takeUntil(this.destroy$)).subscribe(([data, proOverline, proTitle, stageOverline, stageTitle]) => {
+      const proItems   = (data.pro   as Experience[]).map(this.toItem);
+      const stageItems = (data.stage as Experience[]).map(this.toItem);
+      this.sections.set([
+        { overline: proOverline,   title: proTitle,   items: proItems   },
+        { overline: stageOverline, title: stageTitle, items: stageItems },
+      ]);
     });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private toItem(e: Experience): MagneticScrollItem {
+    return {
+      title:        e.title,
+      organisation: e.company,
+      location:     e.location,
+      dateFrom:     e.dfrom,
+      dateTo:       e.to,
+      descriptions: e.descriptions,
+    };
   }
 }
