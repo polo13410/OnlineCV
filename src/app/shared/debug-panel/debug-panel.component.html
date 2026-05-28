@@ -1,12 +1,7 @@
 @if (panel.isOpen()) {
   <div class="debug-panel">
     <div class="debug-header">
-      <div class="debug-chrome">
-        <span class="dot dot-red" (click)="panel.isOpen.set(false)" style="cursor:pointer"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-      </div>
-      <span class="debug-title">&gt;_ color.debugger</span>
+      <span class="debug-title">colour debugger</span>
       <button class="debug-close" (click)="panel.isOpen.set(false)">×</button>
     </div>
 
@@ -24,9 +19,7 @@
         </div>
       }
 
-      <button class="debug-reset" (click)="panel.resetColors()">
-        &gt;_ reset to defaults
-      </button>
+      <button class="debug-reset" (click)="panel.resetColors()">reset to defaults</button>
     </div>
   </div>
 }

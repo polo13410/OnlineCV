@@ -1,48 +1,33 @@
+// src/app/shared/debug-panel/debug-panel.component.scss
 .debug-panel {
   position: fixed;
   bottom: var(--space-5);
   right: var(--space-5);
   width: 290px;
   background: var(--color-bg-overlay);
-  border: 1px solid var(--color-border-accent);
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
-  box-shadow: var(--glow-primary), 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(80, 60, 20, 0.18);
   z-index: 10000;
   font-size: var(--font-size-sm);
-  animation: terminalEntry 0.2s ease;
+  font-family: var(--font-main);
 }
 
 .debug-header {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--color-border);
   background: var(--color-bg-elevated);
   border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
 }
 
-.debug-chrome {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-
-  .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-
-    &.dot-red    { background: var(--terminal-dot-red); }
-    &.dot-yellow { background: var(--terminal-dot-yellow); }
-    &.dot-green  { background: var(--terminal-dot-green); }
-  }
-}
-
 .debug-title {
-  flex: 1;
-  color: var(--color-accent-primary);
   font-size: var(--font-size-xs);
+  font-weight: 600;
   letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
 }
 
 .debug-close {
@@ -54,13 +39,10 @@
   line-height: 1;
   padding: 0 2px;
   transition: color var(--transition-fast);
-
   &:hover { color: var(--color-text-primary); }
 }
 
-.debug-body {
-  padding: var(--space-3);
-}
+.debug-body { padding: var(--space-3) var(--space-4); }
 
 .color-row {
   display: grid;
@@ -70,20 +52,15 @@
   margin-bottom: var(--space-2);
 }
 
-.color-label {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
-}
+.color-label { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
 
 .color-input {
-  width: 30px;
-  height: 22px;
+  width: 30px; height: 22px;
   border: 1px solid var(--color-border);
   background: none;
   cursor: pointer;
   border-radius: var(--border-radius-sm);
   padding: 1px;
-
   &:hover { border-color: var(--color-accent-primary); }
 }
 
@@ -103,14 +80,10 @@
   cursor: pointer;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--border-radius-sm);
-  font-family: var(--font-mono);
+  font-family: var(--font-main);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   transition: all var(--transition-fast);
   text-align: left;
-
-  &:hover {
-    border-color: var(--color-accent-primary);
-    color: var(--color-accent-primary);
-  }
+  &:hover { border-color: var(--color-accent-primary); color: var(--color-accent-primary); }
 }
