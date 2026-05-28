@@ -29,10 +29,14 @@
     "TITLE": "Formations"
   },
   "SKILLS": {
+    "OVERLINE": "Compétences",
+    "SOFT_OVERLINE": "Savoir-être",
     "TECH": "Tech skills",
     "SOFT": "Soft skills"
   },
   "PASSIONS": {
+    "SPORTS_OVERLINE": "Sports",
+    "OTHERS_OVERLINE": "Autres",
     "SPORTS": "Sports",
     "OTHERS": "Autres"
   },

@@ -29,10 +29,14 @@
     "TITLE": "Education"
   },
   "SKILLS": {
+    "OVERLINE": "Skills",
+    "SOFT_OVERLINE": "Soft skills",
     "TECH": "Tech skills",
     "SOFT": "Soft skills"
   },
   "PASSIONS": {
+    "SPORTS_OVERLINE": "Sports",
+    "OTHERS_OVERLINE": "Other",
     "SPORTS": "Sports",
     "OTHERS": "Others"
   },

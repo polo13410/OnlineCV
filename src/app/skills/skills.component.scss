@@ -1,21 +1,14 @@
+// src/app/skills/skills.component.scss
 @use '../../styles/mixins' as m;
 
-.page-container {
-  @include m.page-container();
-}
+.page-container { @include m.page-container(); }
 
 .section-header {
   @include m.section-header();
-
-  &--soft {
-    margin-top: var(--space-8);
-  }
+  &--soft { margin-top: var(--space-8); }
 }
 
-// Category directory
-.skill-directory {
-  margin-bottom: var(--space-5);
-}
+.skill-directory { margin-bottom: var(--space-5); }
 
 .directory-header {
   display: flex;
@@ -26,18 +19,11 @@
   border-left: 2px solid var(--color-accent-primary);
 }
 
-.dir-icon {
-  color: var(--color-accent-primary);
-  font-size: var(--font-size-sm);
-  opacity: 0.7;
-}
-
 .dir-name {
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-primary);
-  letter-spacing: 0.03em;
-  text-transform: lowercase;
+  letter-spacing: 0.01em;
 }
 
 .dir-count {
@@ -50,7 +36,6 @@
   margin-left: auto;
 }
 
-// Skill tags
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
@@ -58,43 +43,24 @@
 }
 
 .skill-tag {
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 2px;
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
-  background: var(--color-bg-surface);
-  cursor: default;
-  transition: all var(--transition-base);
+  background: white;
   min-width: 80px;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+  cursor: default;
 
   &:hover {
-    border-color: var(--color-border-accent);
-    box-shadow: var(--glow-subtle);
     transform: translateY(-1px);
-
-    .tag-level {
-      max-height: 20px;
-      opacity: 1;
-    }
+    box-shadow: var(--glow-subtle);
   }
 
-  &[data-level='advanced'] {
-    &:hover {
-      border-color: var(--color-accent-primary);
-      box-shadow: var(--glow-primary);
-    }
-  }
-
-  &[data-level='intermediate'] {
-    &:hover {
-      border-color: var(--color-accent-secondary);
-      box-shadow: var(--glow-secondary);
-    }
-  }
+  &[data-level='advanced']:hover     { border-color: var(--color-accent-primary); box-shadow: var(--glow-primary); }
+  &[data-level='intermediate']:hover { border-color: var(--color-accent-secondary); box-shadow: var(--glow-secondary); }
 }
 
 .tag-name {
@@ -110,22 +76,14 @@
   white-space: nowrap;
 }
 
+// Always visible (mobile fix — no hover needed)
 .tag-level {
   font-size: var(--font-size-xs);
-  color: var(--color-accent-secondary);
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.2s ease, opacity 0.2s ease;
+  color: var(--color-text-muted);
   white-space: nowrap;
 }
 
-// Soft tags
-.soft-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
+.soft-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
 .soft-tag {
   display: inline-block;
@@ -135,11 +93,8 @@
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  transition: all var(--transition-fast);
   cursor: default;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
 
-  &:hover {
-    border-color: var(--color-accent-tertiary);
-    color: var(--color-text-primary);
-  }
+  &:hover { border-color: var(--color-accent-primary); color: var(--color-text-primary); }
 }
