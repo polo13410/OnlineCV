@@ -1,82 +1,84 @@
 // src/styles/_tokens.scss
 @mixin apply-tokens() {
-  // Light theme — warm stone (default)
-  --color-bg-base:          #faf8f5;
-  --color-bg-surface:       #f4f1eb;
-  --color-bg-elevated:      #e9e4dc;
-  --color-bg-overlay:       #e0d8cd;
+  // Light theme — steel blue (from CV palette, same brightness structure as warm stone)
+  --color-bg-base: #f8fbfc;
+  --color-bg-surface: #eff6f7;
+  --color-bg-elevated: #dce8eb;
+  --color-bg-overlay: #cfdde1;
 
-  --color-accent-primary:   #b8935a;
-  --color-accent-secondary: #8a6e40;
-  --color-accent-tertiary:  #6644aa;
+  --color-accent-primary: #3b7a85;
+  --color-accent-secondary: #2a6470;
+  --color-accent-tertiary: #1c4e58;
 
-  --color-text-primary:     #2d2416;
-  --color-text-secondary:   #7a6a55;
-  --color-text-muted:       #c4b49a;
-  --color-text-accent:      var(--color-accent-primary);
+  --color-text-primary: #10282e;
+  --color-text-secondary: #4a6a70;
+  --color-text-muted: #8fb5bc;
+  --color-text-accent: var(--color-accent-primary);
 
-  --color-border:           #e5ddd1;
-  --color-border-accent:    rgba(184, 147, 90, 0.3);
+  --color-border: #d5e6e9;
+  --color-border-accent: rgba(59, 122, 133, 0.3);
 
-  // Warm ambient shadows (replaces cyan glow in light)
-  --glow-primary:   0 4px 16px rgba(184, 147, 90, 0.25);
-  --glow-secondary: 0 4px 16px rgba(138, 110, 64, 0.2);
-  --glow-subtle:    0 2px 8px  rgba(184, 147, 90, 0.15);
+  // Cool blue-teal ambient shadows
+  --glow-primary: 0 4px 16px rgba(59, 122, 133, 0.25);
+  --glow-secondary: 0 4px 16px rgba(42, 100, 112, 0.2);
+  --glow-subtle: 0 2px 8px rgba(59, 122, 133, 0.15);
 
-  --font-main:        'DM Sans', system-ui, sans-serif;
-  --font-mono:        'Martian Mono', 'Courier New', monospace;
-  --font-size-xs:     0.65rem;
-  --font-size-sm:     0.75rem;
-  --font-size-base:   0.875rem;
-  --font-size-md:     1rem;
-  --font-size-lg:     1.125rem;
-  --font-size-xl:     1.5rem;
-  --font-size-2xl:    2rem;
-  --font-size-3xl:    2.8rem;
+  --font-main: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Martian Mono", "Courier New", monospace;
+  --font-size-xs: 0.65rem;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.8rem;
   --line-height-tight: 1.3;
-  --line-height-base:  1.65;
+  --line-height-base: 1.65;
 
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  24px;
-  --space-6:  32px;
-  --space-7:  48px;
-  --space-8:  64px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
 
-  --sidebar-width:     256px;
-  --header-height:     52px;
+  --sidebar-width: 256px;
+  --header-height: 52px;
   --content-max-width: 860px;
-  --border-radius-sm:  3px;
-  --border-radius-md:  6px;
-  --border-radius-lg:  10px;
+  --border-radius-sm: 3px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
 
-  --transition-fast:  0.12s ease;
-  --transition-base:  0.22s ease;
-  --transition-slow:  0.4s ease;
+  --transition-fast: 0.12s ease;
+  --transition-base: 0.22s ease;
+  --transition-slow: 0.4s ease;
 
   // Terminal chrome dots (kept for easter eggs)
-  --terminal-dot-red:    #ff5f57;
+  --terminal-dot-red: #ff5f57;
   --terminal-dot-yellow: #febc2e;
-  --terminal-dot-green:  #28c840;
-  --terminal-prompt:     var(--color-accent-primary);
+  --terminal-dot-green: #28c840;
+  --terminal-prompt: var(--color-accent-primary);
 }
 
 @mixin apply-dark-tokens() {
-  --color-bg-base:          #070b14;
-  --color-bg-surface:       #0f1629;
-  --color-bg-elevated:      #162035;
-  --color-bg-overlay:       #1c2a45;
-  --color-accent-primary:   #00e5ff;
+  --color-bg-base: #070b14;
+  --color-bg-surface: #0f1629;
+  --color-bg-elevated: #162035;
+  --color-bg-overlay: #1c2a45;
+  --color-accent-primary: #00e5ff;
   --color-accent-secondary: #00ff88;
-  --color-accent-tertiary:  #7c5cbf;
-  --color-text-primary:     #e2ecf5;
-  --color-text-secondary:   #7a9bbf;
-  --color-text-muted:       #3d5a7a;
-  --color-border:           #1e3050;
-  --color-border-accent:    rgba(0, 229, 255, 0.3);
-  --glow-primary:   0 0 8px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.15);
-  --glow-secondary: 0 0 8px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.15);
-  --glow-subtle:    0 0 4px rgba(0, 229, 255, 0.2);
+  --color-accent-tertiary: #7c5cbf;
+  --color-text-primary: #e2ecf5;
+  --color-text-secondary: #7a9bbf;
+  --color-text-muted: #3d5a7a;
+  --color-border: #1e3050;
+  --color-border-accent: rgba(0, 229, 255, 0.3);
+  --glow-primary:
+    0 0 8px rgba(0, 229, 255, 0.4), 0 0 20px rgba(0, 229, 255, 0.15);
+  --glow-secondary:
+    0 0 8px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.15);
+  --glow-subtle: 0 0 4px rgba(0, 229, 255, 0.2);
 }

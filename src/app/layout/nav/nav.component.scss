@@ -65,12 +65,12 @@
 
     &:hover {
       color: var(--color-text-primary);
-      background: rgba(184, 147, 90, 0.06);
+      background: color-mix(in srgb, var(--color-accent-primary) 6%, transparent);
     }
     &.active {
       color: var(--color-accent-primary);
       border-left-color: var(--color-accent-primary);
-      background: rgba(184, 147, 90, 0.08);
+      background: color-mix(in srgb, var(--color-accent-primary) 8%, transparent);
     }
   }
 }
