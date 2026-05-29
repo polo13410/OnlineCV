@@ -19,7 +19,7 @@
     z-index: 50;
     transform: translateX(-100%);
     transition: transform var(--transition-base);
-    box-shadow: 4px 0 24px rgba(80, 60, 20, 0.12);
+    box-shadow: 4px 0 24px rgba(16, 40, 46, 0.12);
     &.open { transform: translateX(0); }
   }
 }
