@@ -12,7 +12,7 @@
 
   --color-text-primary: #10282e;
   --color-text-secondary: #4a6a70;
-  --color-text-muted: #8fb5bc;
+  --color-text-muted: #83b1b9;
   --color-text-accent: var(--color-accent-primary);
 
   --color-border: #d5e6e9;
@@ -64,23 +64,25 @@
 }
 
 @mixin apply-dark-tokens() {
-  --color-bg-base:          #0d1e22;
-  --color-bg-surface:       #152a2f;
-  --color-bg-elevated:      #1c3840;
-  --color-bg-overlay:       #243e46;
+  --color-bg-base: #0d1e22;
+  --color-bg-surface: #152a2f;
+  --color-bg-elevated: #1c3840;
+  --color-bg-overlay: #243e46;
 
-  --color-accent-primary:   #4fa8b5;
+  --color-accent-primary: #4fa8b5;
   --color-accent-secondary: #3d8f9c;
-  --color-accent-tertiary:  #2d6b78;
+  --color-accent-tertiary: #2d6b78;
 
-  --color-text-primary:     #e0eef1;
-  --color-text-secondary:   #7aaab2;
-  --color-text-muted:       #3d6a72;
+  --color-text-primary: #e0eef1;
+  --color-text-secondary: #7aaab2;
+  --color-text-muted: #3d6a72;
 
-  --color-border:           #1e3c44;
-  --color-border-accent:    rgba(79, 168, 181, 0.3);
+  --color-border: #1e3c44;
+  --color-border-accent: rgba(79, 168, 181, 0.3);
 
-  --glow-primary:   0 0 8px rgba(79, 168, 181, 0.35), 0 0 20px rgba(79, 168, 181, 0.12);
-  --glow-secondary: 0 0 8px rgba(61, 143, 156, 0.35), 0 0 20px rgba(61, 143, 156, 0.12);
-  --glow-subtle:    0 0 4px rgba(79, 168, 181, 0.2);
+  --glow-primary:
+    0 0 8px rgba(79, 168, 181, 0.35), 0 0 20px rgba(79, 168, 181, 0.12);
+  --glow-secondary:
+    0 0 8px rgba(61, 143, 156, 0.35), 0 0 20px rgba(61, 143, 156, 0.12);
+  --glow-subtle: 0 0 4px rgba(79, 168, 181, 0.2);
 }
