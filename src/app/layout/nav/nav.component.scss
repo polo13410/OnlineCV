@@ -75,14 +75,17 @@
   }
 }
 
-.link-prompt {
+.link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  flex-shrink: 0;
   color: var(--color-accent-primary);
   opacity: 0.5;
-  font-size: var(--font-size-lg);
-  line-height: 1;
-  width: 10px;
-  flex-shrink: 0;
   transition: opacity var(--transition-fast);
+
+  svg { width: 14px; height: 14px; }
 
   a:hover &, a.active & { opacity: 1; }
 }

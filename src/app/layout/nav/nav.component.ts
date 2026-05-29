@@ -31,11 +31,11 @@ export class NavComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
 
   navLinks = [
-    { path: '/', label: 'NAV.MENU_TITLE.HOME', exact: true },
-    { path: '/experiences', label: 'NAV.MENU_TITLE.EXPERIENCES', exact: false },
-    { path: '/education', label: 'NAV.MENU_TITLE.EDUCATION', exact: false },
-    { path: '/skills', label: 'NAV.MENU_TITLE.SKILLS', exact: false },
-    { path: '/passions', label: 'NAV.MENU_TITLE.PASSIONS', exact: false },
+    { path: '/',            label: 'NAV.MENU_TITLE.HOME',        exact: true,  icon: 'home'       },
+    { path: '/experiences', label: 'NAV.MENU_TITLE.EXPERIENCES', exact: false, icon: 'briefcase'  },
+    { path: '/education',   label: 'NAV.MENU_TITLE.EDUCATION',   exact: false, icon: 'graduation' },
+    { path: '/skills',      label: 'NAV.MENU_TITLE.SKILLS',      exact: false, icon: 'code'       },
+    { path: '/passions',    label: 'NAV.MENU_TITLE.PASSIONS',    exact: false, icon: 'heart'      },
   ];
 
   ngOnInit(): void {
