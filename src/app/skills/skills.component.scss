@@ -8,7 +8,10 @@
   &--soft { margin-top: var(--space-8); }
 }
 
-.skill-directory { margin-bottom: var(--space-5); }
+.skill-directory {
+  margin-bottom: var(--space-5);
+  &.stagger-reveal { transform: none; }
+}
 
 .directory-header {
   display: flex;
@@ -94,7 +97,14 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   cursor: default;
-  transition: border-color var(--transition-fast), color var(--transition-fast);
+  // opacity included here so it's present both before AND after .revealed is added
+  // (CSS transitions use the post-change transition value — if opacity wasn't here it would snap)
+  transition:
+    opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+
+  &.stagger-reveal { transform: none; } // kill the translateY slide, fade only
 
   &:hover { border-color: var(--color-accent-primary); color: var(--color-text-primary); }
 }

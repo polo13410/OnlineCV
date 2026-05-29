@@ -28,7 +28,14 @@
   background: white;
   text-align: center;
   cursor: default;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+  // opacity included here so it's present both before AND after .revealed is added
+  transition:
+    opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+
+  &.stagger-reveal { transform: none; } // kill the translateY slide, fade only
 
   &:hover {
     border-color: var(--color-accent-primary);
