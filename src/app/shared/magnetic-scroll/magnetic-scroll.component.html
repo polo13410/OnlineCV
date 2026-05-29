@@ -1,76 +1,108 @@
 <!-- src/app/shared/magnetic-scroll/magnetic-scroll.component.html -->
 
-<!-- Single sticky header. Titles stack here; the active one is visible.
-     overflow:visible + large entering translateY makes the new title appear to
-     rise up from the card area below before settling in the header. -->
-<div class="ms-header-wrap">
-  @for (section of sections; track section.title; let i = $index) {
-    <div
-      class="ms-section-header"
-      [class.active]="i === activeSection()"
-    >
-      <p class="section-overline">{{ section.overline }}</p>
-      <h2>{{ section.title }}</h2>
-    </div>
-  }
-</div>
+@if (isMobile()) {
 
-<div class="ms-stage" #stageEl>
+  <!-- Mobile: normal vertical scroll, scroll-driven fade+blur+scale per card -->
+  <div class="ms-mobile" #mobileScrollEl>
+    @for (section of sections; track section.title) {
+      <div class="ms-mobile-section">
 
-  <!-- Edge fades -->
-  <div class="ms-fade ms-fade--top"></div>
-  <div class="ms-fade ms-fade--bottom"></div>
+        <div class="ms-mobile-section-header">
+          <p class="section-overline">{{ section.overline }}</p>
+          <h2>{{ section.title }}</h2>
+        </div>
 
-  <!-- Scroll hint arrows -->
-  @if (canScrollUp()) {
-    <button class="ms-arrow ms-arrow--up" (click)="goPrev()" aria-label="Précédent">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
-      </svg>
-    </button>
-  }
-  @if (canScrollDown()) {
-    <button class="ms-arrow ms-arrow--down" (click)="goNext()" aria-label="Suivant">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </button>
-  }
+        @for (item of section.items; track item.title) {
+          <div class="ms-mobile-card-wrap" #mobileCardEl>
+            <div class="ms-card">
+              <div class="ms-header">
+                <p class="ms-overline">{{ item.organisation }} · {{ item.location }}</p>
+                <h3 class="ms-title">{{ item.title }}</h3>
+                <div class="ms-meta">
+                  <span class="ms-date">{{ item.dateFrom }} → {{ item.dateTo }}</span>
+                </div>
+              </div>
+              <div class="ms-body">
+                <ul>
+                  @for (desc of item.descriptions; track desc) {
+                    <li>{{ desc }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        }
 
-  <!-- Cards -->
-  @for (item of flatItems; track item.title; let i = $index) {
-    <div class="ms-card-wrap" #cardEl>
-      <div class="ms-card">
-        <div class="ms-header">
-          <p class="ms-overline">{{ item.organisation }} · {{ item.location }}</p>
-          <h3 class="ms-title">{{ item.title }}</h3>
-          <div class="ms-meta">
-            <span class="ms-date">{{ item.dateFrom }} → {{ item.dateTo }}</span>
+      </div>
+    }
+  </div>
+
+} @else {
+
+  <!-- Desktop: snapping card stack -->
+  <div class="ms-header-wrap">
+    @for (section of sections; track section.title; let i = $index) {
+      <div class="ms-section-header" [class.active]="i === activeSection()">
+        <p class="section-overline">{{ section.overline }}</p>
+        <h2>{{ section.title }}</h2>
+      </div>
+    }
+  </div>
+
+  <div class="ms-stage" #stageEl>
+
+    <div class="ms-fade ms-fade--top"></div>
+    <div class="ms-fade ms-fade--bottom"></div>
+
+    @if (canScrollUp()) {
+      <button class="ms-arrow ms-arrow--up" (click)="goPrev()" aria-label="Précédent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+      </button>
+    }
+    @if (canScrollDown()) {
+      <button class="ms-arrow ms-arrow--down" (click)="goNext()" aria-label="Suivant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+    }
+
+    @for (item of flatItems; track item.title; let i = $index) {
+      <div class="ms-card-wrap" #cardEl>
+        <div class="ms-card">
+          <div class="ms-header">
+            <p class="ms-overline">{{ item.organisation }} · {{ item.location }}</p>
+            <h3 class="ms-title">{{ item.title }}</h3>
+            <div class="ms-meta">
+              <span class="ms-date">{{ item.dateFrom }} → {{ item.dateTo }}</span>
+            </div>
+          </div>
+          <div class="ms-body">
+            <ul>
+              @for (desc of item.descriptions; track desc) {
+                <li>{{ desc }}</li>
+              }
+            </ul>
           </div>
         </div>
-        <div class="ms-body">
-          <ul>
-            @for (desc of item.descriptions; track desc) {
-              <li>{{ desc }}</li>
-            }
-          </ul>
-        </div>
       </div>
-    </div>
-  }
-
-</div>
-
-<!-- Progress dots with section separators -->
-<div class="ms-dots">
-  @for (item of flatItems; track item.title; let i = $index) {
-    @if (isSectionStart(i)) {
-      <div
-        class="ms-dot-separator"
-        [class.ms-dot-separator--active]="activeSection() === sectionForIndex(i)"
-        [attr.data-label]="sections[sectionForIndex(i)]?.overline"
-      ></div>
     }
-    <div class="ms-dot" #dotEl (click)="goTo(i)"></div>
-  }
-</div>
+
+  </div>
+
+  <div class="ms-dots">
+    @for (item of flatItems; track item.title; let i = $index) {
+      @if (isSectionStart(i)) {
+        <div
+          class="ms-dot-separator"
+          [class.ms-dot-separator--active]="activeSection() === sectionForIndex(i)"
+          [attr.data-label]="sections[sectionForIndex(i)]?.overline"
+        ></div>
+      }
+      <div class="ms-dot" #dotEl (click)="goTo(i)"></div>
+    }
+  </div>
+
+}

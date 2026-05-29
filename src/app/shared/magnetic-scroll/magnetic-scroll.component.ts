@@ -1,10 +1,24 @@
 // src/app/shared/magnetic-scroll/magnetic-scroll.component.ts
-import {
-  AfterViewInit, Component, ElementRef, inject, Input,
-  NgZone, OnChanges, OnDestroy, QueryList, signal, SimpleChanges, ViewChild, ViewChildren,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagneticScrollItem, MagneticScrollSection } from 'src/assets/data/contentInterface';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  QueryList,
+  signal,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import {
+  MagneticScrollItem,
+  MagneticScrollSection,
+} from 'src/assets/data/contentInterface';
 
 @Component({
   selector: 'app-magnetic-scroll',
@@ -13,86 +27,102 @@ import { MagneticScrollItem, MagneticScrollSection } from 'src/assets/data/conte
   standalone: true,
   imports: [CommonModule],
 })
-export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class MagneticScrollComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input() sections: MagneticScrollSection[] = [];
 
-  @ViewChild('stageEl')   stageRef!: ElementRef<HTMLElement>;
+  // Desktop refs
+  @ViewChild('stageEl') stageRef?: ElementRef<HTMLElement>;
   @ViewChildren('cardEl') cardRefs!: QueryList<ElementRef<HTMLElement>>;
-  @ViewChildren('dotEl')  dotRefs!:  QueryList<ElementRef<HTMLElement>>;
+  @ViewChildren('dotEl') dotRefs!: QueryList<ElementRef<HTMLElement>>;
 
-  activeIdx     = -1;  // -1 so first render(0) applies .ms-active to card 0
+  // Mobile refs
+  @ViewChild('mobileScrollEl') mobileScrollRef?: ElementRef<HTMLElement>;
+  @ViewChildren('mobileCardEl') mobileCardRefs!: QueryList<
+    ElementRef<HTMLElement>
+  >;
+
+  activeIdx = -1;
   activeSection = signal(0);
-  canScrollUp   = signal(false);
+  canScrollUp = signal(false);
   canScrollDown = signal(false);
-  progress      = 0;
+  progress = 0;
 
-  // Flattened items across all sections — used in the template
   flatItems: MagneticScrollItem[] = [];
 
-  private readonly PEEK         = 150;
-  private readonly TRAVEL       = 160;
+  // Set before first render so the template @if is correct immediately
+  readonly isMobile = signal(
+    typeof window !== 'undefined'
+      ? window.matchMedia('(max-width: 768px)').matches
+      : false,
+  );
+
+  private readonly PEEK = 150;
+  private readonly TRAVEL = 160;
   private readonly TOUCH_TRAVEL = 320;
-  private readonly SPRING       = 0.16;
+  private readonly SPRING = 0.05; // ease-out speed — higher = faster snap
   private readonly SNAP_MS = 120;
   private readonly MAX_OVR = 0.15;
 
   private heights: number[] = [];
-  private raf:        number | null = null;
-  private snapTimer:  ReturnType<typeof setTimeout> | null = null;
-  private wheelBusy   = false;
+  private raf: number | null = null;
+  private snapTimer: ReturnType<typeof setTimeout> | null = null;
+  private wheelBusy = false;
   private touchStart: { y: number; progress: number } | null = null;
-  private cleanups:   (() => void)[] = [];
+  private cleanups: (() => void)[] = [];
 
   private ngZone = inject(NgZone);
-
   private viewReady = false;
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    this.attachEvents();
     this.flatten();
-    this.scheduleMeasureAndRender();
+
+    if (!this.isMobile()) {
+      this.attachEvents();
+      this.scheduleMeasureAndRender();
+    }
+
+    if (typeof window !== 'undefined') {
+      const mq = window.matchMedia('(max-width: 768px)');
+      const onMqChange = (e: MediaQueryListEvent) => {
+        this.ngZone.run(() => this.isMobile.set(e.matches));
+      };
+      mq.addEventListener('change', onMqChange);
+      this.cleanups.push(() => mq.removeEventListener('change', onMqChange));
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['sections']) return;
     this.flatten();
-    if (this.viewReady) {
+    if (!this.viewReady) return;
+    if (!this.isMobile()) {
       this.scheduleMeasureAndRender();
     }
-    // If the view isn't ready yet, ngAfterViewInit will run scheduleMeasureAndRender
-    // once `flatItems` has propagated through Angular's @for binding.
-  }
-
-  // Waits two rAF frames so the template's @for has rendered the new card DOM,
-  // then measures heights and positions cards. Safe to call repeatedly.
-  private scheduleMeasureAndRender(): void {
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (!this.stageRef || this.flatItems.length === 0) return;
-      this.measureAllHeights();
-      const max = Math.max(0, this.flatItems.length - 1);
-      this.progress = Math.max(0, Math.min(max, this.progress));
-      this.render(this.progress);
-    }));
   }
 
   ngOnDestroy(): void {
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.snapTimer) clearTimeout(this.snapTimer);
-    this.cleanups.forEach(fn => fn());
+    this.cleanups.forEach((fn) => fn());
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────
 
+  private scheduleDoubleRaf(fn: () => void): void {
+    requestAnimationFrame(() => requestAnimationFrame(fn));
+  }
+
   private flatten(): void {
-    this.flatItems = this.sections.flatMap(s => s.items);
+    this.flatItems = this.sections.flatMap((s) => s.items);
   }
 
   isSectionStart(i: number): boolean {
     return i === 0 || this.sectionForIndex(i) !== this.sectionForIndex(i - 1);
   }
 
-  // Map a flat item index to its section index
   sectionForIndex(idx: number): number {
     let count = 0;
     for (let i = 0; i < this.sections.length; i++) {
@@ -102,46 +132,53 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     return Math.max(0, this.sections.length - 1);
   }
 
-  private cards(): HTMLElement[] {
-    return this.cardRefs.toArray().map(r => r.nativeElement);
-  }
-
-  private dots(): HTMLElement[] {
-    return this.dotRefs.toArray().map(r => r.nativeElement);
-  }
-
   private lerp(a: number, b: number, t: number): number {
     return a + (b - a) * Math.max(0, Math.min(1, t));
   }
 
-  // Cards no longer collapse/expand — each card has a single, stable height.
+  // ── Desktop ───────────────────────────────────────────────────────────────
+
+  private desktopCards(): HTMLElement[] {
+    return this.cardRefs?.toArray().map((r) => r.nativeElement) ?? [];
+  }
+
+  private desktopDots(): HTMLElement[] {
+    return this.dotRefs?.toArray().map((r) => r.nativeElement) ?? [];
+  }
+
   private measureAllHeights(): void {
-    this.cards().forEach((card, i) => {
+    this.desktopCards().forEach((card, i) => {
       this.heights[i] = card.offsetHeight;
     });
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  private scheduleMeasureAndRender(): void {
+    this.scheduleDoubleRaf(() => {
+      if (!this.stageRef || this.flatItems.length === 0) return;
+      this.measureAllHeights();
+      const max = Math.max(0, this.flatItems.length - 1);
+      this.progress = Math.max(0, Math.min(max, this.progress));
+      this.render(this.progress);
+    });
+  }
 
   private render(p: number): void {
-    const stage   = this.stageRef.nativeElement;
-    const cards   = this.cards();
-    const stageH  = stage.clientHeight;
-    const centre  = stageH / 2;
+    const stage = this.stageRef!.nativeElement;
+    const cards = this.desktopCards();
+    const stageH = stage.clientHeight;
+    const centre = stageH / 2;
     const nearest = Math.max(0, Math.min(cards.length - 1, Math.round(p)));
 
     if (nearest !== this.activeIdx) {
       cards[this.activeIdx]?.classList.remove('ms-active');
-      this.dots()[this.activeIdx]?.classList.remove('ms-dot--active');
+      this.desktopDots()[this.activeIdx]?.classList.remove('ms-dot--active');
       this.activeIdx = nearest;
       cards[this.activeIdx]?.classList.add('ms-active');
-      this.dots()[this.activeIdx]?.classList.add('ms-dot--active');
+      this.desktopDots()[this.activeIdx]?.classList.add('ms-dot--active');
 
-      // Update active section when crossing a section boundary
       const newSection = this.sectionForIndex(this.activeIdx);
-      if (newSection !== this.activeSection()) {
+      if (newSection !== this.activeSection())
         this.activeSection.set(newSection);
-      }
 
       this.canScrollUp.set(nearest > 0);
       this.canScrollDown.set(nearest < this.flatItems.length - 1);
@@ -153,42 +190,41 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       const offset    = i - p;
       const absOffset = Math.abs(offset);
 
-      if (absOffset > 1.6) {
-        card.style.visibility = 'hidden';
-        return;
-      }
+      if (absOffset > 2.4) { card.style.visibility = 'hidden'; return; }
       card.style.visibility = 'visible';
 
       const centreY = centre - ah / 2;
-      const topY    = this.PEEK - (this.heights[i] ?? 80);
-      const botY    = stageH - this.PEEK;
-      const y       = offset <= 0
-        ? this.lerp(centreY, topY, -offset)
-        : this.lerp(centreY, botY, offset);
+      const topPeek = this.PEEK - (this.heights[i] ?? 80);  // peek position top edge
+      const botPeek = stageH - this.PEEK;                    // peek position bottom edge
+      const topExit = -(this.heights[i] ?? 200);             // fully off-screen top
+      const botExit = stageH;                                 // fully off-screen bottom
 
-      // Active card on top so it stays in front of peeking neighbours during the overlap.
+      // 0→1: centre to peek; 1→2: peek to off-screen (slide-away)
+      const y = offset <= 0
+        ? (offset >= -1 ? this.lerp(centreY, topPeek, -offset) : this.lerp(topPeek, topExit, -offset - 1))
+        : (offset <=  1 ? this.lerp(centreY, botPeek,  offset) : this.lerp(botPeek, botExit,  offset - 1));
+
       card.style.zIndex = String(100 - Math.round(absOffset * 10));
 
-      const t       = Math.min(absOffset, 1);
-      const opacity = this.lerp(1, 0.65, t);
-      const blurPx  = this.lerp(0, 1.5, t);
-      const scale   = this.lerp(1, 0.97, t);
-
-      card.style.transform = `translateY(${y}px) scale(${scale})`;
-      card.style.opacity   = String(opacity);
-      card.style.filter    = `blur(${blurPx}px)`;
+      const t     = Math.min(absOffset, 1);
+      const exitT = Math.max(0, absOffset - 1);              // 0 at peek, →1 as card exits
+      card.style.transform = `translateY(${y}px) scale(${this.lerp(1, 0.97, t)})`;
+      card.style.opacity   = String(this.lerp(this.lerp(1, 0.65, t), 0, exitT));
+      card.style.filter    = `blur(${this.lerp(0, 1.5, t)}px)`;
     });
   }
-
-  // ── Navigation ────────────────────────────────────────────────────────────
 
   goTo(index: number): void {
     index = Math.max(0, Math.min(this.flatItems.length - 1, index));
     this.springTo(index);
   }
 
-  goPrev(): void { this.goTo(Math.round(this.progress) - 1); }
-  goNext(): void { this.goTo(Math.round(this.progress) + 1); }
+  goPrev(): void {
+    this.goTo(Math.round(this.progress) - 1);
+  }
+  goNext(): void {
+    this.goTo(Math.round(this.progress) + 1);
+  }
 
   private springTo(target: number): void {
     if (this.raf) cancelAnimationFrame(this.raf);
@@ -213,18 +249,16 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
 
   private clamp(p: number): number {
     const max = this.flatItems.length - 1;
-    if (p < 0)   return Math.max(-this.MAX_OVR, p * 0.3);
+    if (p < 0) return Math.max(-this.MAX_OVR, p * 0.3);
     if (p > max) return Math.min(max + this.MAX_OVR, max + (p - max) * 0.3);
     return p;
   }
 
-  // ── Events ────────────────────────────────────────────────────────────────
-
   private attachEvents(): void {
-    const el = this.stageRef.nativeElement;
+    const el = this.stageRef?.nativeElement;
+    if (!el) return;
 
     this.ngZone.runOutsideAngular(() => {
-
       const onWheel = (e: WheelEvent) => {
         e.preventDefault();
         const discrete = e.deltaMode === 1 || Math.abs(e.deltaY) >= 100;
@@ -233,9 +267,14 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
           this.wheelBusy = true;
           const dir = e.deltaY > 0 ? 1 : -1;
           this.ngZone.run(() => this.goTo(Math.round(this.progress) + dir));
-          setTimeout(() => { this.wheelBusy = false; }, 450);
+          setTimeout(() => {
+            this.wheelBusy = false;
+          }, 50);
         } else {
-          if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; }
+          if (this.raf) {
+            cancelAnimationFrame(this.raf);
+            this.raf = null;
+          }
           this.progress = this.clamp(this.progress + e.deltaY / this.TRAVEL);
           this.render(this.progress);
           if (this.snapTimer) clearTimeout(this.snapTimer);
@@ -244,7 +283,10 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       };
 
       const onTouchStart = (e: TouchEvent) => {
-        if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; }
+        if (this.raf) {
+          cancelAnimationFrame(this.raf);
+          this.raf = null;
+        }
         this.touchStart = { y: e.touches[0].clientY, progress: this.progress };
       };
 
@@ -252,7 +294,9 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
         e.preventDefault();
         if (!this.touchStart) return;
         const dy = this.touchStart.y - e.touches[0].clientY;
-        this.progress = this.clamp(this.touchStart.progress + dy / this.TOUCH_TRAVEL);
+        this.progress = this.clamp(
+          this.touchStart.progress + dy / this.TOUCH_TRAVEL,
+        );
         this.render(this.progress);
       };
 
@@ -272,6 +316,68 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
         () => el.removeEventListener('touchmove', onTouchMove),
         () => el.removeEventListener('touchend', onTouchEnd),
       );
+    });
+  }
+
+  // ── Mobile ────────────────────────────────────────────────────────────────
+
+  private attachMobileEvents(): void {
+    const scrollEl = this.mobileScrollRef?.nativeElement;
+    if (!scrollEl) return;
+
+    this.ngZone.runOutsideAngular(() => {
+      const onScroll = () => {
+        if (this.raf) cancelAnimationFrame(this.raf);
+        this.raf = requestAnimationFrame(() => this.renderMobile());
+      };
+      scrollEl.addEventListener('scroll', onScroll, { passive: true });
+      this.cleanups.push(() =>
+        scrollEl.removeEventListener('scroll', onScroll),
+      );
+    });
+  }
+
+  private renderMobile(): void {
+    const scrollEl = this.mobileScrollRef?.nativeElement;
+    const cards =
+      this.mobileCardRefs?.toArray().map((r) => r.nativeElement) ?? [];
+    if (!scrollEl || !cards.length) return;
+
+    const viewH = scrollEl.clientHeight;
+    const rawCentre = scrollEl.scrollTop + viewH / 2;
+
+    // Clamp to [firstCardCentre, lastCardCentre] so end cards are never blurred
+    // just because the user can't scroll further to bring them to the midpoint.
+    const firstCentre = cards[0].offsetTop + cards[0].offsetHeight / 2;
+    const lastCentre =
+      cards[cards.length - 1].offsetTop +
+      cards[cards.length - 1].offsetHeight / 2;
+    const centre = Math.max(firstCentre, Math.min(lastCentre, rawCentre));
+
+    let closestDist = Infinity;
+    let closestIdx = 0;
+
+    cards.forEach((card, i) => {
+      const cardCentre = card.offsetTop + card.offsetHeight / 2;
+      const dist = Math.abs(cardCentre - centre);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestIdx = i;
+      }
+    });
+
+    const newSection = this.sectionForIndex(closestIdx);
+    if (newSection !== this.activeSection()) {
+      this.ngZone.run(() => this.activeSection.set(newSection));
+    }
+
+    cards.forEach((card) => {
+      const cardCentre = card.offsetTop + card.offsetHeight / 2;
+      const t = Math.min(Math.abs(cardCentre - centre) / (viewH * 0.55), 1);
+
+      card.style.opacity = String(this.lerp(1, 0.5, t));
+      card.style.filter = `blur(${this.lerp(0, 2.5, t)}px)`;
+      card.style.transform = `scale(${this.lerp(1, 0.96, t)})`;
     });
   }
 }

@@ -242,6 +242,43 @@
   }
 }
 
+// ── Mobile ────────────────────────────────────────────────────────────────
+
+.ms-mobile {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar { display: none; }
+  scrollbar-width: none;
+}
+
+.ms-mobile-section {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+
+  & + & { padding-top: var(--space-3); }
+}
+
+.ms-mobile-section-header {
+  @include m.section-header();
+  position: sticky;
+  top: 0;
+  background: var(--color-bg-base);
+  z-index: 5;
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.ms-mobile-card-wrap {
+  margin-bottom: var(--space-4);
+  will-change: opacity, filter, transform;
+  transform-origin: center top;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+// ── Desktop dot separators ─────────────────────────────────────────────────
+
 // Thin bar between dot groups — marks a section boundary and labels the new section
 .ms-dot-separator {
   position: relative;
