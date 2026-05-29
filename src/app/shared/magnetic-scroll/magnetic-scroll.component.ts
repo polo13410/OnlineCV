@@ -29,9 +29,10 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
   // Flattened items across all sections — used in the template
   flatItems: MagneticScrollItem[] = [];
 
-  private readonly PEEK    = 150;
-  private readonly TRAVEL  = 160;
-  private readonly SPRING  = 0.16;
+  private readonly PEEK         = 150;
+  private readonly TRAVEL       = 160;
+  private readonly TOUCH_TRAVEL = 320;
+  private readonly SPRING       = 0.16;
   private readonly SNAP_MS = 120;
   private readonly MAX_OVR = 0.15;
 
@@ -248,9 +249,10 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       };
 
       const onTouchMove = (e: TouchEvent) => {
+        e.preventDefault();
         if (!this.touchStart) return;
         const dy = this.touchStart.y - e.touches[0].clientY;
-        this.progress = this.clamp(this.touchStart.progress + dy / this.TRAVEL);
+        this.progress = this.clamp(this.touchStart.progress + dy / this.TOUCH_TRAVEL);
         this.render(this.progress);
       };
 
@@ -261,7 +263,7 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
 
       el.addEventListener('wheel', onWheel, { passive: false });
       el.addEventListener('touchstart', onTouchStart, { passive: true });
-      el.addEventListener('touchmove', onTouchMove, { passive: true });
+      el.addEventListener('touchmove', onTouchMove, { passive: false });
       el.addEventListener('touchend', onTouchEnd, { passive: true });
 
       this.cleanups.push(
