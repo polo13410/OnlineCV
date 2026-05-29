@@ -1,19 +1,25 @@
 <!-- src/app/homepage/homepage.component.html -->
 <div class="hero-container">
-
   @if (header()) {
     <div class="hero-body">
       <div class="hero-photo-col">
-        <img class="hero-photo" src="assets/pictures/profileMini.jpg" [alt]="header()!.name" />
+        <img
+          class="hero-photo"
+          src="assets/pictures/profileMini.jpg"
+          [alt]="header()!.name"
+        />
       </div>
 
       <div class="hero-info-col">
         <p class="hero-greeting">Hello, I am</p>
         <h1 class="hero-name">
-          {{ header()!.name }}&nbsp;<span class="hero-surname">{{ header()!.surname }}</span>
+          {{ header()!.name }}&nbsp;<span class="hero-surname">{{
+            header()!.surname
+          }}</span>
         </h1>
         <h2 class="hero-title">
-          {{ displayedTitle() }}<span class="cursor-blink" [class.hidden]="isTypingDone()">|</span>
+          {{ displayedTitle()
+          }}<span class="cursor-blink" [class.hidden]="isTypingDone()">|</span>
         </h2>
 
         <div class="hero-meta">
@@ -25,12 +31,16 @@
           <div class="meta-row">
             <span class="meta-key">phone</span>
             <span class="meta-sep">:</span>
-            <a class="meta-val" [href]="'tel:' + header()!.phone">{{ header()!.phone }}</a>
+            <a class="meta-val" [href]="'tel:' + header()!.phone">{{
+              header()!.phone
+            }}</a>
           </div>
           <div class="meta-row">
             <span class="meta-key">mail</span>
             <span class="meta-sep">:</span>
-            <a class="meta-val" [href]="'mailto:' + header()!.mail">{{ header()!.mail }}</a>
+            <a class="meta-val" [href]="'mailto:' + header()!.mail">{{
+              header()!.mail
+            }}</a>
           </div>
         </div>
       </div>
@@ -39,9 +49,7 @@
 
   @if (profile()) {
     <div class="hero-profile" appScrollReveal="reveal">
-      <p class="profile-prompt">&gt;_ cat profile.txt</p>
       <p class="profile-text">{{ profile() }}</p>
     </div>
   }
-
 </div>

@@ -9,46 +9,6 @@
   overflow: hidden;
 }
 
-// Section header — cross-fades when active section changes
-.ms-header-wrap {
-  position: relative;
-  height: 90px;
-  flex-shrink: 0;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  width: 100%;
-  overflow: hidden; // clip headers sliding in/out
-}
-
-// Headers stack absolutely. Default state = below (waiting to slide up in).
-// .active = at rest (visible). .behind = slid up and out the top.
-.ms-section-header {
-  @include m.section-header();
-  position: absolute;
-  inset: var(--space-5) var(--space-6) 0;
-  transform: translateY(110%);
-  opacity: 0;
-  transition:
-    transform 0.5s cubic-bezier(.65, 0, .35, 1),
-    opacity   0.35s ease;
-  pointer-events: none;
-
-  @include m.mobile() {
-    inset: var(--space-4) var(--space-4) 0;
-  }
-
-  &.active {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  &.behind {
-    transform: translateY(-110%);
-    opacity: 0;
-  }
-}
-
 .ms-stage {
   flex: 1;
   position: relative;
@@ -103,6 +63,43 @@
 .ms-card-wrap.ms-active .ms-card {
   box-shadow: 0 8px 40px rgba(80, 60, 20, 0.13);
   border-color: var(--color-border-accent);
+}
+
+// Single sticky header above the stage — full width so its children can mirror
+// the exact same centering reference as the card-wrap below.
+.ms-header-wrap {
+  position: relative;
+  height: 90px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+// Titles stack absolutely — pure opacity crossfade.
+// left:0 / right:52px mirrors the card-wrap; max-width + margin:auto then
+// centers the text with the same logic as .ms-card inside the card-wrap.
+.ms-section-header {
+  @include m.section-header();
+  position: absolute;
+  top: var(--space-5);
+  bottom: 0;
+  left: 0;
+  right: 52px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+
+  @include m.mobile() {
+    right: 14px;
+    padding: 0 var(--space-4);
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 // Header — informational, no longer clickable
@@ -167,6 +164,47 @@
   }
 }
 
+// Scroll-hint arrows — appear at stage edges when more cards exist above/below
+.ms-arrow {
+  position: absolute;
+  // Center over the card area (card-wrap reserves 52px on the right for dots)
+  left: calc(50% - 26px);
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  animation: ms-arrow-in 0.2s ease;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+
+  svg { width: 14px; height: 14px; }
+
+  &:hover {
+    color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    transform: translateX(-50%) scale(1.12);
+  }
+
+  &--up   { top: 12px; }
+  &--down { bottom: 12px; }
+
+  @include m.mobile() {
+    left: calc(50% - 7px); // center of (100% - 14px) card area
+  }
+}
+
+@keyframes ms-arrow-in {
+  from { opacity: 0; transform: translateX(-50%) scale(0.85); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
 // Progress dots — always at right edge of stage
 .ms-dots {
   position: absolute;
@@ -194,5 +232,43 @@
   &--active {
     background: var(--color-accent-primary);
     transform: scale(1.5);
+  }
+}
+
+// Thin bar between dot groups — marks a section boundary and labels the new section
+.ms-dot-separator {
+  position: relative;
+  width: 14px;
+  height: 1px;
+  background: var(--color-border);
+  margin: 4px 0;
+  transition: background 0.25s;
+
+  // Label floats to the left of the bar
+  &::after {
+    content: attr(data-label);
+    position: absolute;
+    right: calc(100% + 7px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 6.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    transition: color 0.25s;
+  }
+
+  &--active {
+    background: var(--color-accent-primary);
+
+    &::after {
+      color: var(--color-accent-primary);
+    }
+  }
+
+  @include m.mobile() {
+    display: none;
   }
 }

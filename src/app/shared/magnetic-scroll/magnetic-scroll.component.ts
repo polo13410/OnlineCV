@@ -16,12 +16,14 @@ import { MagneticScrollItem, MagneticScrollSection } from 'src/assets/data/conte
 export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() sections: MagneticScrollSection[] = [];
 
-  @ViewChild('stageEl')  stageRef!:  ElementRef<HTMLElement>;
+  @ViewChild('stageEl')   stageRef!: ElementRef<HTMLElement>;
   @ViewChildren('cardEl') cardRefs!: QueryList<ElementRef<HTMLElement>>;
   @ViewChildren('dotEl')  dotRefs!:  QueryList<ElementRef<HTMLElement>>;
 
   activeIdx     = -1;  // -1 so first render(0) applies .ms-active to card 0
   activeSection = signal(0);
+  canScrollUp   = signal(false);
+  canScrollDown = signal(false);
   progress      = 0;
 
   // Flattened items across all sections — used in the template
@@ -85,8 +87,12 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     this.flatItems = this.sections.flatMap(s => s.items);
   }
 
+  isSectionStart(i: number): boolean {
+    return i === 0 || this.sectionForIndex(i) !== this.sectionForIndex(i - 1);
+  }
+
   // Map a flat item index to its section index
-  private sectionForIndex(idx: number): number {
+  sectionForIndex(idx: number): number {
     let count = 0;
     for (let i = 0; i < this.sections.length; i++) {
       count += this.sections[i].items.length;
@@ -135,6 +141,9 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
       if (newSection !== this.activeSection()) {
         this.activeSection.set(newSection);
       }
+
+      this.canScrollUp.set(nearest > 0);
+      this.canScrollDown.set(nearest < this.flatItems.length - 1);
     }
 
     const ah = this.heights[nearest] ?? 200;
@@ -176,6 +185,9 @@ export class MagneticScrollComponent implements AfterViewInit, OnChanges, OnDest
     index = Math.max(0, Math.min(this.flatItems.length - 1, index));
     this.springTo(index);
   }
+
+  goPrev(): void { this.goTo(Math.round(this.progress) - 1); }
+  goNext(): void { this.goTo(Math.round(this.progress) + 1); }
 
   private springTo(target: number): void {
     if (this.raf) cancelAnimationFrame(this.raf);
