@@ -8,7 +8,7 @@ export const content: CVDataContent[] = [
       title: 'Développeur fullstack',
       address: 'Chemin des épinettes 36, 1007 Lausanne, CH',
       phone: '+41 76 699 42 12',
-      mail: 'paul.pera@viacesi.fr',
+      mail: 'contact@paulpera.ch',
     },
     details: {
       birth: '27 ans',
@@ -189,7 +189,7 @@ export const content: CVDataContent[] = [
       { name: 'Drones', type: 'other' },
     ],
     profile:
-      "Ingénieur full-stack orienté produit, je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless). Je travaille beaucoup sur l'intégration avancée de l'IA (agents, MCP, RAG), avec une approche pragmatique : code propre, systèmes maintenables et valeur métier concrète.",
+      "Développeur full-stack orienté produit, je suis capable de prendre en charge l'ensemble d'un projet, de l'architecture cloud jusqu'à la mise en production. Je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless), et une forte appétence pour l'automatisation et les systèmes IA modernes (agents, MCP, RAG). Mon approche reste pragmatique : code propre, systèmes maintenables et valeur métier concrète.",
     experiences: {
       pro: [
         {
@@ -301,7 +301,7 @@ export const content: CVDataContent[] = [
       title: 'Full-stack Developer',
       address: 'Chemin des épinettes 36, 1007 Lausanne, Switzerland',
       phone: '+41 76 699 42 12',
-      mail: 'paul.pera@viacesi.fr',
+      mail: 'contact@paulpera.ch',
     },
     details: {
       birth: '27 years old',
@@ -482,7 +482,7 @@ export const content: CVDataContent[] = [
       { name: 'Drones', type: 'other' },
     ],
     profile:
-      'Product-oriented full-stack engineer, I design, develop and deploy modern, scalable web applications, with strong expertise in React, Node.js, PostgreSQL, Docker and cloud architectures (AWS, serverless). I work extensively on advanced AI integration (agents, MCP, RAG), with a pragmatic approach: clean code, maintainable systems and concrete business value.',
+      'Product-oriented full-stack developer, I can take ownership of an entire project, from cloud architecture to production deployment. I design, develop and deploy modern, scalable web applications, with strong expertise in React, Node.js, PostgreSQL, Docker and cloud architectures (AWS, serverless), and a strong appetite for automation and modern AI systems (agents, MCP, RAG). My approach stays pragmatic: clean code, maintainable systems and concrete business value.',
     experiences: {
       pro: [
         {
