@@ -1,0 +1,31 @@
+<div class="range-selector">
+  @for (range of ranges; track range.value) {
+    <button
+      class="range-btn"
+      [class.range-btn--active]="selectedRange() === range.value"
+      (click)="selectRange(range.value)"
+    >
+      {{ range.label }}
+    </button>
+  }
+</div>
+
+@if (status() === 'loading') {
+  <div class="spotify-skeleton"></div>
+}
+
+@if (status() === 'loaded' && embedUrl()) {
+  <iframe
+    [src]="embedUrl()"
+    width="100%"
+    height="152"
+    frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"
+    class="spotify-embed"
+  ></iframe>
+}
+
+@if (status() === 'error') {
+  <div class="spotify-error">Spotify indisponible</div>
+}

@@ -1,0 +1,68 @@
+@use '../../../styles/mixins' as m;
+
+.range-selector {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.range-btn {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+
+  &--active {
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+  }
+
+  &:hover:not(.range-btn--active) {
+    border-color: var(--color-text-muted);
+    color: var(--color-text-primary);
+  }
+}
+
+.spotify-skeleton {
+  width: 100%;
+  height: 152px;
+  border-radius: var(--border-radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-surface) 25%,
+    var(--color-bg-elevated) 50%,
+    var(--color-bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border: 1px solid var(--color-border);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.spotify-embed {
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.spotify-error {
+  height: 152px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

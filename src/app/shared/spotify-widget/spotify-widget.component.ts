@@ -18,7 +18,8 @@ export interface SpotifyTrack {
   selector: 'app-spotify-widget',
   standalone: true,
   imports: [CommonModule],
-  template: '',
+  templateUrl: './spotify-widget.component.html',
+  styleUrl: './spotify-widget.component.scss',
 })
 export class SpotifyWidgetComponent implements OnInit {
   readonly ranges: { label: string; value: TimeRange }[] = [
