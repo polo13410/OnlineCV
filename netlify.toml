@@ -1,0 +1,11 @@
+[build]
+  command = "ng build"
+  publish = "dist/online-cv/browser"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
