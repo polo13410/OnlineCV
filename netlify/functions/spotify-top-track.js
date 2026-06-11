@@ -4,6 +4,14 @@ exports.handler = async (event) => {
     'Content-Type': 'application/json',
   };
 
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: { ...CORS_HEADERS, 'Access-Control-Allow-Methods': 'GET' },
+      body: '',
+    };
+  }
+
   const validRanges = ['short_term', 'medium_term', 'long_term'];
   const timeRange = event.queryStringParameters?.time_range ?? 'short_term';
 
@@ -17,60 +25,76 @@ exports.handler = async (event) => {
 
   const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } = process.env;
 
-  const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
-    },
-    body: new URLSearchParams({
-      grant_type: 'refresh_token',
-      refresh_token: SPOTIFY_REFRESH_TOKEN,
-    }),
-  });
-
-  if (!tokenRes.ok) {
+  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET || !SPOTIFY_REFRESH_TOKEN) {
     return {
-      statusCode: 502,
+      statusCode: 500,
       headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Token refresh failed' }),
+      body: JSON.stringify({ error: 'Server misconfiguration' }),
     };
   }
 
-  const { access_token } = await tokenRes.json();
+  try {
+    const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: SPOTIFY_REFRESH_TOKEN,
+      }),
+    });
 
-  const tracksRes = await fetch(
-    `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=1`,
-    { headers: { Authorization: `Bearer ${access_token}` } }
-  );
+    if (!tokenRes.ok) {
+      return {
+        statusCode: 502,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Token refresh failed' }),
+      };
+    }
 
-  if (!tracksRes.ok) {
+    const { access_token } = await tokenRes.json();
+
+    const tracksRes = await fetch(
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=1`,
+      { headers: { Authorization: `Bearer ${access_token}` } }
+    );
+
+    if (!tracksRes.ok) {
+      return {
+        statusCode: 502,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Spotify API error' }),
+      };
+    }
+
+    const data = await tracksRes.json();
+
+    if (!data.items?.length) {
+      return {
+        statusCode: 404,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'No tracks found' }),
+      };
+    }
+
+    const item = data.items[0];
     return {
-      statusCode: 502,
+      statusCode: 200,
       headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Spotify API error' }),
+      body: JSON.stringify({
+        id: item.id,
+        name: item.name,
+        artist: item.artists[0].name,
+        albumCover: item.album.images[0]?.url ?? '',
+      }),
+    };
+  } catch {
+    return {
+      statusCode: 500,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Internal server error' }),
     };
   }
-
-  const data = await tracksRes.json();
-
-  if (!data.items?.length) {
-    return {
-      statusCode: 404,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'No tracks found' }),
-    };
-  }
-
-  const item = data.items[0];
-  return {
-    statusCode: 200,
-    headers: CORS_HEADERS,
-    body: JSON.stringify({
-      id: item.id,
-      name: item.name,
-      artist: item.artists[0].name,
-      albumCover: item.album.images[0]?.url ?? '',
-    }),
-  };
 };
