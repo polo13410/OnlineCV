@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, switchMap } from 'rxjs';
@@ -17,7 +16,6 @@ export interface SpotifyTrack {
 @Component({
   selector: 'app-spotify-widget',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
 })
