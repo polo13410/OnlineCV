@@ -2,6 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subject, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export type TimeRange = 'short_term' | 'medium_term' | 'long_term';
 
@@ -32,20 +34,19 @@ export class SpotifyWidgetComponent implements OnInit {
 
   private readonly http = inject(HttpClient);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly rangeChange$ = new Subject<TimeRange>();
 
-  ngOnInit(): void {
-    this.fetchTopTrack(this.selectedRange());
-  }
-
-  selectRange(range: TimeRange): void {
-    this.selectedRange.set(range);
-    this.fetchTopTrack(range);
-  }
-
-  private fetchTopTrack(range: TimeRange): void {
-    this.status.set('loading');
-    this.http
-      .get<SpotifyTrack>(`/.netlify/functions/spotify-top-track?time_range=${range}`)
+  constructor() {
+    this.rangeChange$
+      .pipe(
+        switchMap((range) => {
+          this.status.set('loading');
+          return this.http.get<SpotifyTrack>(
+            `/.netlify/functions/spotify-top-track?time_range=${range}`
+          );
+        }),
+        takeUntilDestroyed()
+      )
       .subscribe({
         next: (data) => {
           this.track.set(data);
@@ -62,5 +63,14 @@ export class SpotifyWidgetComponent implements OnInit {
           this.status.set('error');
         },
       });
+  }
+
+  ngOnInit(): void {
+    this.rangeChange$.next('short_term');
+  }
+
+  selectRange(range: TimeRange): void {
+    this.selectedRange.set(range);
+    this.rangeChange$.next(range);
   }
 }

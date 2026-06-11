@@ -48,6 +48,13 @@ describe('SpotifyWidgetComponent', () => {
     expect(component.track()).toEqual(mockTrack);
   });
 
+  it('should set embedUrl on success', () => {
+    httpMock
+      .expectOne('/.netlify/functions/spotify-top-track?time_range=short_term')
+      .flush(mockTrack);
+    expect(component.embedUrl()).not.toBeNull();
+  });
+
   it('should set status error and null track on HTTP error', () => {
     httpMock
       .expectOne('/.netlify/functions/spotify-top-track?time_range=short_term')
