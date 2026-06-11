@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type TimeRange = 'short_term' | 'medium_term' | 'long_term';
 
@@ -16,14 +17,15 @@ export interface SpotifyTrack {
 @Component({
   selector: 'app-spotify-widget',
   standalone: true,
+  imports: [TranslateModule],
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
 })
 export class SpotifyWidgetComponent implements OnInit {
-  readonly ranges: { label: string; value: TimeRange }[] = [
-    { label: '4 semaines', value: 'short_term' },
-    { label: '6 mois', value: 'medium_term' },
-    { label: 'Tout le temps', value: 'long_term' },
+  readonly ranges: { labelKey: string; value: TimeRange }[] = [
+    { labelKey: 'PASSIONS.SPOTIFY_WEEK', value: 'short_term' },
+    { labelKey: 'PASSIONS.SPOTIFY_MONTH', value: 'medium_term' },
+    { labelKey: 'PASSIONS.SPOTIFY_ALL', value: 'long_term' },
   ];
 
   selectedRange = signal<TimeRange>('short_term');

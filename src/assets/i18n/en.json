@@ -38,7 +38,12 @@
     "SPORTS_OVERLINE": "Sports",
     "OTHERS_OVERLINE": "Other",
     "SPORTS": "Sports",
-    "OTHERS": "Others"
+    "OTHERS": "Others",
+    "SPOTIFY_OVERLINE": "Music",
+    "SPOTIFY_TITLE": "My current music",
+    "SPOTIFY_WEEK": "This week",
+    "SPOTIFY_MONTH": "This month",
+    "SPOTIFY_ALL": "All time"
   },
   "ERROR": {
     "NOT_FOUND": "Uh Oh! Page not found!",

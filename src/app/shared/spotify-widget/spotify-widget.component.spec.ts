@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HttpTestingController } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { SpotifyWidgetComponent } from './spotify-widget.component';
 
 describe('SpotifyWidgetComponent', () => {
@@ -18,7 +19,7 @@ describe('SpotifyWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpotifyWidgetComponent],
+      imports: [SpotifyWidgetComponent, TranslateModule.forRoot()],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 

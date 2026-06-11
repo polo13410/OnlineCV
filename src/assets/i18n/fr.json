@@ -38,7 +38,12 @@
     "SPORTS_OVERLINE": "Sports",
     "OTHERS_OVERLINE": "Autres",
     "SPORTS": "Sports",
-    "OTHERS": "Autres"
+    "OTHERS": "Autres",
+    "SPOTIFY_OVERLINE": "Musique",
+    "SPOTIFY_TITLE": "Ma musique du moment",
+    "SPOTIFY_WEEK": "Cette semaine",
+    "SPOTIFY_MONTH": "Ce mois-ci",
+    "SPOTIFY_ALL": "Depuis toujours"
   },
   "ERROR": {
     "NOT_FOUND": "Uh Oh! 404!",
