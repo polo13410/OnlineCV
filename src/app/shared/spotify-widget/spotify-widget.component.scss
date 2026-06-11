@@ -1,4 +1,4 @@
-@use '../../../styles/mixins' as m;
+@use "../../../styles/mixins" as m;
 
 .range-selector {
   display: flex;
@@ -16,7 +16,9 @@
   font-size: var(--font-size-sm);
   font-family: var(--font-main);
   cursor: pointer;
-  transition: border-color var(--transition-base), color var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    color var(--transition-base);
 
   &--active {
     border-color: var(--color-accent-primary);
@@ -41,12 +43,15 @@
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border: 1px solid var(--color-border);
 }
 
 @keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .spotify-embed {

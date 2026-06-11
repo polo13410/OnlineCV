@@ -10,22 +10,28 @@
   }
 </div>
 
-@if (status() === 'loading') {
+@if (status() === "loading") {
   <div class="spotify-skeleton"></div>
 }
 
-@if (status() === 'loaded' && embedUrl()) {
+@if (status() === "loaded" && embedUrl()) {
   <iframe
     [src]="embedUrl()"
     width="100%"
     height="100"
     frameborder="0"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    allow="
+      autoplay;
+      clipboard-write;
+      encrypted-media;
+      fullscreen;
+      picture-in-picture;
+    "
     loading="lazy"
     class="spotify-embed"
   ></iframe>
 }
 
-@if (status() === 'error') {
+@if (status() === "error") {
   <div class="spotify-error">Spotify indisponible</div>
 }
