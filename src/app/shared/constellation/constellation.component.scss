@@ -327,6 +327,7 @@
   position: relative;
   animation: constellation-float 5.5s ease-in-out infinite;
   animation-delay: calc(var(--float-delay) * -1.3s);
+  transition: transform 0.3s ease;
 }
 
 @keyframes constellation-float {
@@ -347,6 +348,7 @@
 @media (max-width: 768px) {
   .constellation {
     height: max(560px, 78vh);
+    height: max(560px, 78svh);
   }
 
   .tile {
@@ -363,13 +365,14 @@
     transform: translateX(-50%);
   }
 
+  // container-type: size piège position:fixed → absolute assumé (ancré au conteneur)
   .detail-backdrop {
-    position: fixed;
+    position: absolute;
     background: rgba(0, 0, 0, 0.35);
   }
 
   .detail-panel {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
@@ -402,5 +405,9 @@
   .bubble-wrap,
   .preview-ghost {
     transition-duration: 0.01s;
+  }
+
+  .detail-panel {
+    animation-duration: 0.01s;
   }
 }
