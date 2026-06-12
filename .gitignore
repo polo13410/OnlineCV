@@ -46,3 +46,6 @@ Thumbs.db
 
 # Brainstorming sessions
 .superpowers/
+
+# Local Netlify folder
+.netlify
