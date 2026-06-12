@@ -43,7 +43,11 @@
     "SPOTIFY_TITLE": "Ma musique du moment",
     "SPOTIFY_WEEK": "Cette semaine",
     "SPOTIFY_MONTH": "Ce mois-ci",
-    "SPOTIFY_ALL": "Depuis toujours"
+    "SPOTIFY_ALL": "Depuis toujours",
+    "SPOTIFY_LIKED": "♥ Dernier like",
+    "SPOTIFY_ERROR": "Spotify indisponible",
+    "SPOTIFY_PLAY": "Écouter",
+    "SPOTIFY_CLOSE": "Fermer le lecteur"
   },
   "ERROR": {
     "NOT_FOUND": "Uh Oh! 404!",
