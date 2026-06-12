@@ -164,6 +164,35 @@ describe('SpotifyWidgetComponent', () => {
       .flush(mockTrack);
   });
 
+  it('should serve cached track without HTTP call when returning to a visited range', () => {
+    flushInitialRequest();
+    component.selectRange('medium_term');
+    httpMock
+      .expectOne('/.netlify/functions/spotify-top-track?time_range=medium_term')
+      .flush({ ...mockTrack, id: 'other' });
+
+    component.selectRange('short_term');
+    httpMock.expectNone(
+      '/.netlify/functions/spotify-top-track?time_range=short_term'
+    );
+    expect(component.status()).toBe('loaded');
+    expect(component.track()?.id).toBe('track123');
+  });
+
+  it('should not cache errors and retry the range on next selection', () => {
+    flushInitialRequest();
+    component.selectRange('medium_term');
+    httpMock
+      .expectOne('/.netlify/functions/spotify-top-track?time_range=medium_term')
+      .error(new ErrorEvent('Network error'));
+
+    component.selectRange('medium_term');
+    httpMock
+      .expectOne('/.netlify/functions/spotify-top-track?time_range=medium_term')
+      .flush(mockTrack);
+    expect(component.status()).toBe('loaded');
+  });
+
   it('should show translated error state', () => {
     httpMock
       .expectOne('/.netlify/functions/spotify-top-track?time_range=short_term')

@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, switchMap } from 'rxjs';
+import { catchError, EMPTY, of, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -57,6 +57,7 @@ export class SpotifyWidgetComponent implements OnInit, OnDestroy {
   private readonly http = inject(HttpClient);
   private readonly embed = inject(SpotifyEmbedService);
   private readonly rangeChange$ = new Subject<TrackSelection>();
+  private readonly trackCache = new Map<TrackSelection, SpotifyTrack>();
   private controller: SpotifyEmbedController | null = null;
 
   @ViewChild('embedHost')
@@ -73,22 +74,31 @@ export class SpotifyWidgetComponent implements OnInit, OnDestroy {
     this.rangeChange$
       .pipe(
         switchMap((range) => {
+          const cached = this.trackCache.get(range);
+          if (cached) {
+            return of(cached);
+          }
           this.status.set('loading');
-          return this.http.get<SpotifyTrack>(
-            `/.netlify/functions/spotify-top-track?time_range=${range}`
-          );
+          return this.http
+            .get<SpotifyTrack>(
+              `/.netlify/functions/spotify-top-track?time_range=${range}`
+            )
+            .pipe(
+              // Catch inside switchMap so one failed request
+              // doesn't terminate the whole range stream
+              catchError(() => {
+                this.track.set(null);
+                this.status.set('error');
+                return EMPTY;
+              })
+            );
         }),
         takeUntilDestroyed()
       )
-      .subscribe({
-        next: (data) => {
-          this.track.set(data);
-          this.status.set('loaded');
-        },
-        error: () => {
-          this.track.set(null);
-          this.status.set('error');
-        },
+      .subscribe((data) => {
+        this.trackCache.set(this.selectedRange(), data);
+        this.track.set(data);
+        this.status.set('loaded');
       });
   }
 
