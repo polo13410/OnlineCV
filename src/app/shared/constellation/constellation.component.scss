@@ -1,0 +1,95 @@
+.constellation {
+  position: relative;
+  container-type: size;
+  height: clamp(480px, 72vh, 680px);
+  width: 100%;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  line {
+    stroke: var(--color-border);
+    stroke-width: 1px;
+    transition: opacity var(--transition-slow);
+  }
+}
+
+// Positionnement : --x / --y en % du conteneur via unités container-query.
+// Seul transform est animé (équivalent FLIP sans mesure JS).
+.tile-group {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(
+    calc(var(--x) * 1cqw - 50%),
+    calc(var(--y) * 1cqh - 50%)
+  );
+  transition: transform 0.55s cubic-bezier(0.3, 0.8, 0.3, 1),
+    opacity var(--transition-slow),
+    filter var(--transition-slow);
+}
+
+.tile {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  box-shadow: var(--glow-subtle);
+  transform: rotate(calc(var(--rot) * 1deg));
+  transition: transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+  white-space: nowrap;
+}
+
+.tile-count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-mono);
+}
+
+.tile-group:hover .tile,
+.tile:focus-visible {
+  transform: rotate(0deg) scale(1.06);
+  border-color: var(--color-accent-primary);
+  box-shadow: var(--glow-primary);
+}
+
+.preview-ghost {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--border-radius-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  filter: blur(2.5px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, transform 0.35s ease;
+}
+
+.tile-group:hover .preview-ghost {
+  opacity: 0.55;
+  transform: translate(calc(-50% + var(--px) * 1px), calc(-50% + var(--py) * 1px))
+    rotate(calc(var(--prot) * 1deg));
+}

@@ -34,6 +34,10 @@
     "TECH": "Tech skills",
     "SOFT": "Soft skills"
   },
+  "CONSTELLATION": {
+    "BACK": "← back",
+    "CLOSE": "close"
+  },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
     "OTHERS_OVERLINE": "Other",

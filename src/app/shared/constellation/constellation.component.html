@@ -1,0 +1,51 @@
+<div
+  class="constellation"
+  [class.is-deployed]="state().kind !== 'rest'"
+  [class.is-detail]="state().kind === 'detail'"
+>
+  <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    @if (state().kind === 'rest') {
+      @for (line of restLines(); track $index) {
+        <line
+          [attr.x1]="line.x1" [attr.y1]="line.y1"
+          [attr.x2]="line.x2" [attr.y2]="line.y2"
+          vector-effect="non-scaling-stroke"
+        />
+      }
+    }
+  </svg>
+
+  @for (category of categories(); track category.id; let i = $index) {
+    <div
+      class="tile-group"
+      [class.is-active]="isActive(category.id)"
+      [class.is-periphery]="state().kind !== 'rest' && !isActive(category.id)"
+      [style.--x]="categorySlot(i).x"
+      [style.--y]="categorySlot(i).y"
+      [style.--rot]="categorySlot(i).rotation"
+      [style.--float-delay]="i"
+    >
+      @if (state().kind === 'rest') {
+        @for (preview of previewCards(category); track preview.id; let pi = $index) {
+          <span
+            class="preview-ghost"
+            aria-hidden="true"
+            [style.--px]="previewOffsets()[pi].x"
+            [style.--py]="previewOffsets()[pi].y"
+            [style.--prot]="previewOffsets()[pi].rotation"
+          >{{ preview.title }}</span>
+        }
+      }
+      <button
+        class="tile"
+        type="button"
+        (click)="openCategory(category.id)"
+        [disabled]="isActive(category.id)"
+        [attr.aria-expanded]="isActive(category.id)"
+      >
+        <span class="tile-label">{{ category.label }}</span>
+        <span class="tile-count">{{ category.cards.length }}</span>
+      </button>
+    </div>
+  }
+</div>
