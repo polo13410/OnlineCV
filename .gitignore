@@ -43,3 +43,6 @@ Thumbs.db
 
 # Environment variables
 .env
+
+# Brainstorming sessions
+.superpowers/
