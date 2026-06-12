@@ -93,6 +93,17 @@ describe('ConstellationComponent', () => {
       component.openCategory('musique');
       expect(component.state()).toEqual({ kind: 'deployed', categoryId: 'musique' });
     });
+
+    it('categorySlot centers the active category and shifts periphery indices', () => {
+      component.openCategory('musique'); // index 1 of 2
+      expect(component.categorySlot(1)).toEqual({ x: 50, y: 50, rotation: 0 });
+      expect(component.categorySlot(0)).toEqual(component.peripherySlots()[0]);
+    });
+
+    it('falls back to rest slots when the active id is not in categories', () => {
+      component.openCategory('disparue');
+      expect(component.categorySlot(0)).toEqual(component.restSlots()[0]);
+    });
   });
 
   describe('rest rendering', () => {
@@ -117,6 +128,14 @@ describe('ConstellationComponent', () => {
       fixture.debugElement.queryAll(By.css('.tile'))[0].nativeElement.click();
       fixture.detectChanges();
       expect(component.state()).toEqual({ kind: 'deployed', categoryId: 'langages' });
+    });
+
+    it('escape key unwinds the state via the document listener', () => {
+      component.openCategory('langages');
+      fixture.detectChanges();
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      fixture.detectChanges();
+      expect(component.state().kind).toBe('rest');
     });
   });
 });

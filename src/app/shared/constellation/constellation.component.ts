@@ -97,6 +97,7 @@ export class ConstellationComponent {
     const cats = this.categories();
     if (s.kind === 'rest') return this.restSlots()[index];
     const activeIndex = cats.findIndex((c) => c.id === s.categoryId);
+    if (activeIndex === -1) return this.restSlots()[index];
     if (index === activeIndex) return { x: 50, y: 50, rotation: 0 };
     const slotIndex = index < activeIndex ? index : index - 1;
     return this.peripherySlots()[slotIndex];

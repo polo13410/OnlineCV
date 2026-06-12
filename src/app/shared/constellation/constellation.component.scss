@@ -15,7 +15,6 @@
   line {
     stroke: var(--color-border);
     stroke-width: 1px;
-    transition: opacity var(--transition-slow);
   }
 }
 
@@ -32,6 +31,10 @@
   transition: transform 0.55s cubic-bezier(0.3, 0.8, 0.3, 1),
     opacity var(--transition-slow),
     filter var(--transition-slow);
+}
+
+.tile-group:hover {
+  z-index: 3;
 }
 
 .tile {
