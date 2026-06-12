@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConstellationComponent } from './constellation.component';
@@ -182,6 +182,52 @@ describe('ConstellationComponent', () => {
       expect(fixture.debugElement.query(By.css('.custom-card'))).toBeTruthy();
       expect(fixture.debugElement.query(By.css('.custom-card')).nativeElement.textContent)
         .toBe('CUSTOM');
+    });
+
+    it('renders one line from center per bubble', () => {
+      expect(fixture.debugElement.queryAll(By.css('.lines line')).length).toBe(3);
+    });
+
+    it('restores focus to the active tile when going back to rest', fakeAsync(() => {
+      fixture.debugElement.query(By.css('.back')).nativeElement.click();
+      fixture.detectChanges();
+      tick();
+      expect(document.activeElement?.getAttribute('data-category-id')).toBe('langages');
+    }));
+  });
+
+  describe('detail rendering', () => {
+    beforeEach(() => {
+      component.openCategory('langages');
+      fixture.detectChanges();
+      fixture.debugElement.queryAll(By.css('button.bubble'))[0].nativeElement.click();
+      fixture.detectChanges();
+    });
+
+    it('opens the detail panel with title, meta and detail text', () => {
+      const panel = fixture.debugElement.query(By.css('.detail-panel'));
+      expect(panel).toBeTruthy();
+      expect(panel.nativeElement.textContent).toContain('TypeScript');
+      expect(panel.nativeElement.textContent).toContain('6 années');
+      expect(panel.nativeElement.textContent).toContain('niveau avancé');
+    });
+
+    it('dims the other bubbles', () => {
+      const dimmed = fixture.debugElement.queryAll(By.css('.bubble.is-dimmed'));
+      expect(dimmed.length).toBe(2);
+    });
+
+    it('closes on backdrop click', () => {
+      fixture.debugElement.query(By.css('.detail-backdrop')).nativeElement.click();
+      fixture.detectChanges();
+      expect(component.state().kind).toBe('deployed');
+      expect(fixture.debugElement.query(By.css('.detail-panel'))).toBeNull();
+    });
+
+    it('closes via the close button', () => {
+      fixture.debugElement.query(By.css('.detail-close')).nativeElement.click();
+      fixture.detectChanges();
+      expect(component.state().kind).toBe('deployed');
     });
   });
 });

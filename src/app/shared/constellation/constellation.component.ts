@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   contentChildren,
+  ElementRef,
   HostListener,
   inject,
   input,
@@ -35,6 +36,7 @@ export class ConstellationComponent {
 
   private readonly layout = inject(ConstellationLayoutService);
   private readonly cardTemplates = contentChildren(ConstellationCardDirective);
+  private readonly host = inject(ElementRef<HTMLElement>);
 
   readonly state = signal<ConstellationState>({ kind: 'rest' });
   readonly isMobile = signal(
@@ -137,9 +139,21 @@ export class ConstellationComponent {
     const s = this.state();
     if (s.kind === 'detail') {
       this.state.set({ kind: 'deployed', categoryId: s.categoryId });
+      this.focusByAttr('data-card-id', s.cardId);
     } else if (s.kind === 'deployed') {
       this.state.set({ kind: 'rest' });
+      this.focusByAttr('data-category-id', s.categoryId);
     }
+  }
+
+  /** Rend le focus clavier à l'élément d'origine après un repli d'état */
+  private focusByAttr(attr: string, value: string): void {
+    setTimeout(() => {
+      const el = this.host.nativeElement.querySelector(
+        `[${attr}="${CSS.escape(value)}"]`
+      ) as HTMLElement | null;
+      el?.focus();
+    });
   }
 
   @HostListener('document:keydown.escape')

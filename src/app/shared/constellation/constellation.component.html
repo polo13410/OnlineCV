@@ -48,8 +48,9 @@
         class="tile"
         type="button"
         (click)="openCategory(category.id)"
-        [disabled]="isActive(category.id)"
+        [attr.aria-disabled]="isActive(category.id)"
         [attr.aria-expanded]="isActive(category.id)"
+        [attr.data-category-id]="category.id"
       >
         <span class="tile-label">{{ category.label }}</span>
         <span class="tile-count">{{ category.cards.length }}</span>
@@ -79,6 +80,7 @@
             [class.is-focused]="detailCard()?.id === card.id"
             [style.--size]="diameterOf(card)"
             [disabled]="!card.detail"
+            [attr.data-card-id]="card.id"
             (click)="openDetail(card)"
           >
             <span class="bubble-title">{{ card.title }}</span>
@@ -92,5 +94,28 @@
     <button class="back" type="button" (click)="back()">
       {{ 'CONSTELLATION.BACK' | translate }}
     </button>
+  }
+
+  @if (detailCard(); as card) {
+    <div class="detail-backdrop" (click)="back()" aria-hidden="true"></div>
+    <aside class="detail-panel" role="dialog" [attr.aria-label]="card.title">
+      <h3 class="detail-title">{{ card.title }}</h3>
+      @if (card.meta) {
+        <p class="detail-meta">{{ card.meta }}</p>
+      }
+      @if (card.detail) {
+        <p class="detail-text">{{ card.detail }}</p>
+      }
+      @if (card.tags?.length) {
+        <div class="detail-tags">
+          @for (tag of card.tags; track tag) {
+            <span class="detail-tag">{{ tag }}</span>
+          }
+        </div>
+      }
+      <button class="detail-close" type="button" (click)="back()">
+        {{ 'CONSTELLATION.CLOSE' | translate }}
+      </button>
+    </aside>
   }
 </div>
