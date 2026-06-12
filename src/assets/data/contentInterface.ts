@@ -26,8 +26,10 @@ export interface Details {
 
 export interface Skill {
   lang: string
-  time: string
-  level: string
+  time: string          // affichage localisé ("6 années")
+  level: string         // phrase longue → panneau détail
+  years: number         // valeur numérique (taille de bulle)
+  levelKey: 'advanced' | 'intermediate' | 'beginner'
 }
 
 export interface SkillCategory {
