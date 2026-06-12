@@ -1,6 +1,21 @@
+const ALLOWED_ORIGINS = [
+  'https://paulpera.ch',
+  'https://www.paulpera.ch',
+  'https://paulpera.netlify.app',
+];
+// Deploy previews and branch deploys: https://<anything>--paulpera.netlify.app
+const NETLIFY_DEPLOY_RE = /^https:\/\/[a-z0-9-]+--paulpera\.netlify\.app$/;
+
 exports.handler = async (event) => {
+  const origin = event.headers?.origin ?? '';
+  const allowOrigin =
+    ALLOWED_ORIGINS.includes(origin) || NETLIFY_DEPLOY_RE.test(origin)
+      ? origin
+      : ALLOWED_ORIGINS[0];
+
   const CORS_HEADERS = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': allowOrigin,
+    Vary: 'Origin',
     'Content-Type': 'application/json',
   };
 
@@ -93,7 +108,9 @@ exports.handler = async (event) => {
         // instead of re-invoking the function and the Spotify API per request
         'Netlify-CDN-Cache-Control':
           'public, durable, s-maxage=3600, stale-while-revalidate=86400',
-        'Netlify-Vary': 'query=time_range',
+        // header=Origin: don't serve a response cached for one origin
+        // (with its Access-Control-Allow-Origin) to a different origin
+        'Netlify-Vary': 'query=time_range,header=Origin',
       },
       body: JSON.stringify({
         id: item.id,
