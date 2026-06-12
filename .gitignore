@@ -40,3 +40,12 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment variables
+.env
+
+# Brainstorming sessions
+.superpowers/
+
+# Local Netlify folder
+.netlify

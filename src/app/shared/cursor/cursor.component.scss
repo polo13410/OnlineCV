@@ -15,7 +15,7 @@
   background: var(--color-accent-primary);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease, opacity 0.2s ease;
   box-shadow: var(--glow-subtle);
   pointer-events: none;
 
@@ -24,6 +24,10 @@
     height: 10px;
     background: var(--color-accent-secondary);
     box-shadow: var(--glow-secondary);
+  }
+
+  &.hidden {
+    opacity: 0;
   }
 }
 
@@ -43,5 +47,9 @@
     height: 40px;
     opacity: 0.7;
     border-color: var(--color-accent-secondary);
+  }
+
+  &.hidden {
+    opacity: 0;
   }
 }

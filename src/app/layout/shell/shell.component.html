@@ -6,7 +6,7 @@
     (navToggle)="toggleNav()"
   />
 
-  <div class="shell-content" (click)="isMobile() && isMobileNavOpen() && closeNav()">
+  <div class="shell-content" (click)="onContentClick()">
     <header class="shell-topbar">
       @if (isMobile()) {
         <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">

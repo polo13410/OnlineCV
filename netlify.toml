@@ -1,0 +1,6 @@
+[build]
+  command = "ng build"
+  publish = "dist/online-cv"
+
+[functions]
+  directory = "netlify/functions"

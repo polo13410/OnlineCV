@@ -1,0 +1,65 @@
+<div class="range-selector">
+  @for (range of ranges; track range.value) {
+    <button
+      class="range-btn"
+      [class.range-btn--active]="selectedRange() === range.value"
+      (click)="selectRange(range.value)"
+    >
+      {{ range.labelKey | translate }}
+    </button>
+  }
+</div>
+
+<div class="tile-stack">
+  @if (status() === "loading") {
+    <div class="spotify-skeleton" @tileFade></div>
+  }
+
+  @if (status() === "loaded" && track(); as t) {
+    @if (view() === "card") {
+      <article class="track-card" [@tileFade]="selectedRange()">
+        <button
+          class="track-card__play"
+          (click)="startPlayback()"
+          [attr.aria-label]="'PASSIONS.SPOTIFY_PLAY' | translate"
+        >
+          <img class="track-card__cover" [src]="t.albumCover" alt="" />
+          <span class="track-card__play-icon" aria-hidden="true">▶</span>
+        </button>
+        <div class="track-card__info">
+          <p class="track-card__overline">
+            @if (selectedRange() !== "liked") {
+              <span>#1 ·</span>
+            }
+            {{ currentLabelKey() | translate }}
+          </p>
+          <p class="track-card__name">{{ t.name }}</p>
+          <p class="track-card__artist">{{ t.artist }}</p>
+        </div>
+        <a
+          class="track-card__spotify-link"
+          [href]="spotifyUrl()"
+          target="_blank"
+          rel="noopener"
+        >
+          Spotify ↗
+        </a>
+      </article>
+    } @else {
+      <div class="player-shell" @tileFade>
+        <div #embedHost></div>
+        <button
+          class="player-shell__close"
+          (click)="closePlayer()"
+          [attr.aria-label]="'PASSIONS.SPOTIFY_CLOSE' | translate"
+        >
+          ×
+        </button>
+      </div>
+    }
+  }
+
+  @if (status() === "error") {
+    <div class="spotify-error" @tileFade>{{ "PASSIONS.SPOTIFY_ERROR" | translate }}</div>
+  }
+</div>
