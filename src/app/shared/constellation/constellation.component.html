@@ -12,6 +12,14 @@
           vector-effect="non-scaling-stroke"
         />
       }
+    } @else {
+      @for (line of orbitLines(); track $index) {
+        <line
+          [attr.x1]="line.x1" [attr.y1]="line.y1"
+          [attr.x2]="line.x2" [attr.y2]="line.y2"
+          vector-effect="non-scaling-stroke"
+        />
+      }
     }
   </svg>
 
@@ -47,5 +55,42 @@
         <span class="tile-count">{{ category.cards.length }}</span>
       </button>
     </div>
+  }
+
+  @if (activeCategory(); as active) {
+    @for (card of active.cards; track card.id; let ci = $index) {
+      <div
+        class="bubble-wrap"
+        [style.--x]="orbitSlots()[ci].x"
+        [style.--y]="orbitSlots()[ci].y"
+        [style.--d]="ci"
+      >
+        @if (templateFor(card.templateId); as tpl) {
+          <div class="bubble bubble--custom">
+            <ng-container *ngTemplateOutlet="tpl"></ng-container>
+          </div>
+        } @else {
+          <button
+            class="bubble"
+            type="button"
+            [class.bubble--high]="card.emphasis === 'high'"
+            [class.bubble--low]="card.emphasis === 'low'"
+            [class.is-dimmed]="state().kind === 'detail' && detailCard()?.id !== card.id"
+            [class.is-focused]="detailCard()?.id === card.id"
+            [style.--size]="diameterOf(card)"
+            [disabled]="!card.detail"
+            (click)="openDetail(card)"
+          >
+            <span class="bubble-title">{{ card.title }}</span>
+            @if (card.meta) {
+              <span class="bubble-meta">{{ card.meta }}</span>
+            }
+          </button>
+        }
+      </div>
+    }
+    <button class="back" type="button" (click)="back()">
+      {{ 'CONSTELLATION.BACK' | translate }}
+    </button>
   }
 </div>

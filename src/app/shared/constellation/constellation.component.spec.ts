@@ -138,4 +138,50 @@ describe('ConstellationComponent', () => {
       expect(component.state().kind).toBe('rest');
     });
   });
+
+  describe('deployed rendering', () => {
+    beforeEach(() => {
+      component.openCategory('langages');
+      fixture.detectChanges();
+    });
+
+    it('renders one bubble per card of the active category', () => {
+      expect(fixture.debugElement.queryAll(By.css('.bubble')).length).toBe(3);
+    });
+
+    it('sizes bubbles proportionally to years', () => {
+      const bubbles = fixture.debugElement.queryAll(By.css('button.bubble'));
+      const sizeOf = (el: { nativeElement: HTMLElement }) =>
+        parseFloat(el.nativeElement.style.getPropertyValue('--size'));
+      expect(sizeOf(bubbles[0])).toBeGreaterThan(sizeOf(bubbles[1])); // TS 6 ans > PHP 1 an
+    });
+
+    it('disables bubbles without detail', () => {
+      const bubbles = fixture.debugElement.queryAll(By.css('button.bubble'));
+      expect(bubbles[2].nativeElement.disabled).toBeTrue();
+    });
+
+    it('marks non-active categories as periphery, still clickable', () => {
+      const periphery = fixture.debugElement.queryAll(By.css('.tile-group.is-periphery'));
+      expect(periphery.length).toBe(1);
+      periphery[0].query(By.css('.tile')).nativeElement.click();
+      fixture.detectChanges();
+      expect(component.state()).toEqual({ kind: 'deployed', categoryId: 'musique' });
+    });
+
+    it('back button returns to rest', () => {
+      fixture.debugElement.query(By.css('.back')).nativeElement.click();
+      fixture.detectChanges();
+      expect(component.state().kind).toBe('rest');
+      expect(fixture.debugElement.queryAll(By.css('.bubble')).length).toBe(0);
+    });
+
+    it('renders projected templates for templateId cards', () => {
+      component.openCategory('musique');
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css('.custom-card'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('.custom-card')).nativeElement.textContent)
+        .toBe('CUSTOM');
+    });
+  });
 });
