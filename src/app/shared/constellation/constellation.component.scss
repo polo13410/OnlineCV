@@ -320,3 +320,87 @@
   border-color: var(--color-accent-primary);
   box-shadow: var(--glow-primary);
 }
+
+// ── Task 7 : float, reduced-motion, mobile ────────────────────────────────
+
+.tile-float {
+  position: relative;
+  animation: constellation-float 5.5s ease-in-out infinite;
+  animation-delay: calc(var(--float-delay) * -1.3s);
+}
+
+@keyframes constellation-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+// le float s'arrête quand la constellation est déployée
+.is-deployed .tile-float {
+  animation: none;
+}
+
+@media (max-width: 768px) {
+  .constellation {
+    height: max(560px, 78vh);
+  }
+
+  .tile {
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .preview-ghost {
+    display: none; // pas de hover sur tactile
+  }
+
+  .back {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .detail-backdrop {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .detail-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    transform: none;
+    width: auto;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    animation: detail-up 0.25s ease both;
+  }
+
+  @keyframes detail-up {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile-float {
+    animation: none;
+  }
+
+  .bubble-wrap {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
+
+  .tile-group,
+  .bubble-wrap,
+  .preview-ghost {
+    transition-duration: 0.01s;
+  }
+}

@@ -33,28 +33,30 @@
       [style.--rot]="categorySlot(i).rotation"
       [style.--float-delay]="i"
     >
-      @if (state().kind === 'rest') {
-        @for (preview of previewCards(category); track preview.id; let pi = $index) {
-          <span
-            class="preview-ghost"
-            aria-hidden="true"
-            [style.--px]="previewOffsets()[pi].x"
-            [style.--py]="previewOffsets()[pi].y"
-            [style.--prot]="previewOffsets()[pi].rotation"
-          >{{ preview.title }}</span>
+      <div class="tile-float">
+        @if (state().kind === 'rest') {
+          @for (preview of previewCards(category); track preview.id; let pi = $index) {
+            <span
+              class="preview-ghost"
+              aria-hidden="true"
+              [style.--px]="previewOffsets()[pi].x"
+              [style.--py]="previewOffsets()[pi].y"
+              [style.--prot]="previewOffsets()[pi].rotation"
+            >{{ preview.title }}</span>
+          }
         }
-      }
-      <button
-        class="tile"
-        type="button"
-        (click)="openCategory(category.id)"
-        [attr.aria-disabled]="isActive(category.id) ? true : null"
-        [attr.aria-expanded]="isActive(category.id)"
-        [attr.data-category-id]="category.id"
-      >
-        <span class="tile-label">{{ category.label }}</span>
-        <span class="tile-count">{{ category.cards.length }}</span>
-      </button>
+        <button
+          class="tile"
+          type="button"
+          (click)="openCategory(category.id)"
+          [attr.aria-disabled]="isActive(category.id) ? true : null"
+          [attr.aria-expanded]="isActive(category.id)"
+          [attr.data-category-id]="category.id"
+        >
+          <span class="tile-label">{{ category.label }}</span>
+          <span class="tile-count">{{ category.cards.length }}</span>
+        </button>
+      </div>
     </div>
   }
 
