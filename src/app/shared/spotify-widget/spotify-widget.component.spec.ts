@@ -4,6 +4,7 @@ import {
   provideHttpClientTesting,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpotifyWidgetComponent } from './spotify-widget.component';
 import {
@@ -41,6 +42,7 @@ describe('SpotifyWidgetComponent', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideNoopAnimations(),
         { provide: SpotifyEmbedService, useValue: embedService },
       ],
     }).compileComponents();

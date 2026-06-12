@@ -16,7 +16,7 @@
 
 @if (status() === "loaded" && track(); as t) {
   @if (view() === "card") {
-    <article class="track-card">
+    <article class="track-card" [@trackFade]="selectedRange()">
       <button
         class="track-card__play"
         (click)="startPlayback()"

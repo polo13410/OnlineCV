@@ -8,6 +8,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { catchError, EMPTY, of, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,6 +33,16 @@ export interface SpotifyTrack {
   imports: [TranslateModule],
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
+  animations: [
+    // Re-fires on every selectedRange change (incl. cache hits where
+    // the card element is reused) and on first render (void => *)
+    trigger('trackFade', [
+      transition('* => *', [
+        style({ opacity: 0 }),
+        animate('250ms ease', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class SpotifyWidgetComponent implements OnInit, OnDestroy {
   readonly ranges: { labelKey: string; value: TrackSelection }[] = [
