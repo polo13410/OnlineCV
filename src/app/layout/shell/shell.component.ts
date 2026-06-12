@@ -30,4 +30,13 @@ export class ShellComponent {
   closeNav(): void {
     this.isMobileNavOpen.set(false);
   }
+
+  // Must return void: a (click) expression evaluating to `false`
+  // makes Angular call preventDefault(), cancelling link navigation
+  // for every click bubbling through the content area.
+  onContentClick(): void {
+    if (this.isMobile() && this.isMobileNavOpen()) {
+      this.closeNav();
+    }
+  }
 }
