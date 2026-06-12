@@ -38,6 +38,8 @@
     "CLOSE": "close"
   },
   "PASSIONS": {
+    "OVERLINE": "Passions",
+    "TITLE": "What drives me",
     "SPORTS_OVERLINE": "Sports",
     "OTHERS_OVERLINE": "Other",
     "SPORTS": "Sports",

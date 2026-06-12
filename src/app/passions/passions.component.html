@@ -2,35 +2,14 @@
 <div class="page-container">
 
   <div class="section-header" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'PASSIONS.SPORTS_OVERLINE' | translate }}</p>
-    <h2>{{ 'PASSIONS.SPORTS' | translate }}</h2>
-  </div>
-  <div class="passion-grid">
-    @for (sport of sports; track sport; let i = $index) {
-      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <span class="passion-glyph">◈</span>
-        <span class="passion-name">{{ sport }}</span>
-      </div>
-    }
+    <p class="section-overline">{{ 'PASSIONS.OVERLINE' | translate }}</p>
+    <h2>{{ 'PASSIONS.TITLE' | translate }}</h2>
   </div>
 
-  <div class="section-header section-header--other" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'PASSIONS.OTHERS_OVERLINE' | translate }}</p>
-    <h2>{{ 'PASSIONS.OTHERS' | translate }}</h2>
-  </div>
-  <div class="passion-grid">
-    @for (other of others; track other; let i = $index) {
-      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <span class="passion-glyph">◉</span>
-        <span class="passion-name">{{ other }}</span>
-      </div>
-    }
-  </div>
-
-  <div class="section-header section-header--other" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'PASSIONS.SPOTIFY_OVERLINE' | translate }}</p>
-    <h2>{{ 'PASSIONS.SPOTIFY_TITLE' | translate }}</h2>
-  </div>
-  <app-spotify-widget></app-spotify-widget>
+  <app-constellation [categories]="categories" seed="passions">
+    <ng-template appConstellationCard="spotify">
+      <app-spotify-widget></app-spotify-widget>
+    </ng-template>
+  </app-constellation>
 
 </div>

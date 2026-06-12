@@ -38,6 +38,8 @@
     "CLOSE": "fermer"
   },
   "PASSIONS": {
+    "OVERLINE": "Passions",
+    "TITLE": "Ce qui m'anime",
     "SPORTS_OVERLINE": "Sports",
     "OTHERS_OVERLINE": "Autres",
     "SPORTS": "Sports",
