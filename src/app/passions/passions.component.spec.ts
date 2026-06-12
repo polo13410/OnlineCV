@@ -57,4 +57,11 @@ describe('PassionsComponent', () => {
   it('renders the constellation with 3 tiles', () => {
     expect(fixture.debugElement.queryAll(By.css('.tile')).length).toBe(3);
   });
+
+  it('renders the spotify widget when the music category is deployed', () => {
+    const tiles = fixture.debugElement.queryAll(By.css('.tile'));
+    tiles[2].nativeElement.click(); // musique
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('app-spotify-widget'))).toBeTruthy();
+  });
 });

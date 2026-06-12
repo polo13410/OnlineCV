@@ -163,6 +163,12 @@
   border-radius: var(--border-radius-lg);
   padding: 0;
   overflow: hidden;
+  cursor: default;
+
+  &:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--glow-subtle);
+  }
 }
 
 .bubble-title {
