@@ -87,7 +87,14 @@ exports.handler = async (event) => {
     const item = timeRange === 'liked' ? data.items[0].track : data.items[0];
     return {
       statusCode: 200,
-      headers: CORS_HEADERS,
+      headers: {
+        ...CORS_HEADERS,
+        // Serve from Netlify's CDN for 1h (stale allowed 24h while revalidating)
+        // instead of re-invoking the function and the Spotify API per request
+        'Netlify-CDN-Cache-Control':
+          'public, durable, s-maxage=3600, stale-while-revalidate=86400',
+        'Netlify-Vary': 'query=time_range',
+      },
       body: JSON.stringify({
         id: item.id,
         name: item.name,
