@@ -10,6 +10,7 @@ describe('content skill data', () => {
           expect(['advanced', 'intermediate', 'beginner'])
             .withContext(ctx)
             .toContain(skill.levelKey as string);
+          expect(parseInt(skill.time, 10)).withContext(ctx).toBe(skill.years);
         }
       }
     }
@@ -17,8 +18,13 @@ describe('content skill data', () => {
 
   it('fr and en agree on years and levelKey for each skill position', () => {
     const [fr, en] = content;
+    expect(fr.language).toBe('french');
+    expect(en.language).toBe('english');
     expect(fr.skillCategories.length).toBe(en.skillCategories.length);
     fr.skillCategories.forEach((frCat, ci) => {
+      expect(frCat.skills.length)
+        .withContext(frCat.name)
+        .toBe(en.skillCategories[ci].skills.length);
       frCat.skills.forEach((frSkill, si) => {
         const enSkill = en.skillCategories[ci].skills[si];
         expect(frSkill.years).withContext(frSkill.lang).toBe(enSkill.years);

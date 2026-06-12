@@ -159,7 +159,7 @@ Valeurs exactes (identiques fr/en ; `years` = numérique du champ `time` existan
 | Méthodes | Architecture applicative | 4 | intermediate |
 | IA | MCP (Model Context Protocol) | 1 | advanced |
 | IA | RAG (Retrieval-Augmented Generation) | 1 | intermediate |
-| IA | IA Agentique / Agentic AI | 1 | advanced |
+| IA | IA Agentique / Agentic AI | 1 | intermediate |
 
 Format (exemple sur la première entrée, à appliquer partout) :
 
