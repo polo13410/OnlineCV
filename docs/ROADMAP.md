@@ -14,8 +14,10 @@ Ordre suggéré : du quick-win vers la refonte, chaque étape préparant la suiv
 
 ## 1. Spotify « en train d'écoute » — `feat/spotify-now-playing`
 
-**Intention :** au chargement, si une lecture Spotify est en cours, la carte affiche
-« 🎧 en ce moment » avec le titre joué ; sinon, fallback sur le comportement actuel (top track).
+**Intention :** au chargement, si une lecture Spotify est en cours, un **mini-chip discret
+en bas de sidebar** affiche « 🎧 en ce moment » avec le titre joué (pochette + titre, clique
+vers Passions) ; quand rien ne joue, le chip disparaît. Le widget Passions garde son
+comportement actuel (top tracks / dernier like).
 
 - Nouvel appel `/me/player/currently-playing` dans la function Netlify existante
 - Cache CDN court (30–60 s) pour ce mode — le quota free plan reste très loin (≪ 125k invocations/mois)
