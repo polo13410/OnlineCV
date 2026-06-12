@@ -5,6 +5,11 @@ Ce document ne fixe que les intentions ; chaque feature sera designée en détai
 
 Ordre suggéré : du quick-win vers la refonte, chaque étape préparant la suivante.
 
+**Principe de placement (décidé 2026-06-12)** : le contenu vivant est visible par défaut, jamais caché derrière un hover.
+- *Now playing* (live) → mini-chip en bas de **sidebar**, visible sur toutes les pages ; disparaît totalement quand rien ne joue ; clique vers la section musique de Passions
+- *Musiques du moment* (widget complet) → reste dans Passions ; la refonte (feature 4) l'absorbe : « Musique » devient une catégorie flottante dont la distribution de cartes projette le widget (déjà au format carte 152px)
+- *GitHub* → pas de section dédiée : tags sur les cartes skills (feature 3) ; en bonus optionnel, micro-badge « site mis à jour il y a X jours » en bas de sidebar
+
 ---
 
 ## 1. Spotify « en train d'écoute » — `feat/spotify-now-playing`
