@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   contentChildren,
+  effect,
   ElementRef,
   HostListener,
   inject,
@@ -93,6 +94,17 @@ export class ConstellationComponent {
     if (s.kind !== 'detail') return undefined;
     return this.activeCategory()?.cards.find((c) => c.id === s.cardId);
   });
+
+  constructor() {
+    // changement de langue : les ids de catégories (localisés) changent →
+    // la catégorie active disparaît, on replie proprement vers le repos
+    effect(() => {
+      const s = this.state();
+      if (s.kind !== 'rest' && !this.categories().some((c) => c.id === s.categoryId)) {
+        this.state.set({ kind: 'rest' });
+      }
+    });
+  }
 
   categorySlot(index: number): ConstellationSlot {
     const s = this.state();

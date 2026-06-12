@@ -104,6 +104,18 @@ describe('ConstellationComponent', () => {
       component.openCategory('disparue');
       expect(component.categorySlot(0)).toEqual(component.restSlots()[0]);
     });
+
+    it('collapses to rest when the active category disappears (language switch)', () => {
+      component.openCategory('langages');
+      fixture.detectChanges();
+      fixture.componentInstance.categories = [
+        { id: 'languages-en', label: 'Languages', cards: [{ id: 'ts-en', title: 'TypeScript' }] },
+      ];
+      fixture.detectChanges();
+      expect(component.state().kind).toBe('rest');
+      expect(fixture.debugElement.query(By.css('.constellation')).classes['is-deployed'])
+        .toBeFalsy();
+    });
   });
 
   describe('rest rendering', () => {
