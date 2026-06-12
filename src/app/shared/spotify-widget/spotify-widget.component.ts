@@ -1,11 +1,23 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  SpotifyEmbedService,
+  SpotifyEmbedController,
+} from './spotify-embed.service';
 
-export type TimeRange = 'short_term' | 'medium_term' | 'long_term';
+export type TrackSelection = 'short_term' | 'medium_term' | 'long_term' | 'liked';
 
 export interface SpotifyTrack {
   id: string;
@@ -21,21 +33,41 @@ export interface SpotifyTrack {
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
 })
-export class SpotifyWidgetComponent implements OnInit {
-  readonly ranges: { labelKey: string; value: TimeRange }[] = [
+export class SpotifyWidgetComponent implements OnInit, OnDestroy {
+  readonly ranges: { labelKey: string; value: TrackSelection }[] = [
     { labelKey: 'PASSIONS.SPOTIFY_WEEK', value: 'short_term' },
     { labelKey: 'PASSIONS.SPOTIFY_MONTH', value: 'medium_term' },
     { labelKey: 'PASSIONS.SPOTIFY_ALL', value: 'long_term' },
+    { labelKey: 'PASSIONS.SPOTIFY_LIKED', value: 'liked' },
   ];
 
-  selectedRange = signal<TimeRange>('short_term');
+  selectedRange = signal<TrackSelection>('short_term');
   status = signal<'loading' | 'loaded' | 'error'>('loading');
   track = signal<SpotifyTrack | null>(null);
-  embedUrl = signal<SafeResourceUrl | null>(null);
+  view = signal<'card' | 'player'>('card');
+
+  currentLabelKey = computed(
+    () => this.ranges.find((r) => r.value === this.selectedRange())!.labelKey
+  );
+  spotifyUrl = computed(() => {
+    const t = this.track();
+    return t ? `https://open.spotify.com/track/${t.id}` : '';
+  });
 
   private readonly http = inject(HttpClient);
-  private readonly sanitizer = inject(DomSanitizer);
-  private readonly rangeChange$ = new Subject<TimeRange>();
+  private readonly embed = inject(SpotifyEmbedService);
+  private readonly rangeChange$ = new Subject<TrackSelection>();
+  private controller: SpotifyEmbedController | null = null;
+
+  @ViewChild('embedHost')
+  set embedHost(ref: ElementRef<HTMLElement> | undefined) {
+    const track = this.track();
+    if (ref && track) {
+      this.embed
+        .createController(ref.nativeElement, track.id)
+        .then((controller) => (this.controller = controller));
+    }
+  }
 
   constructor() {
     this.rangeChange$
@@ -51,16 +83,10 @@ export class SpotifyWidgetComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.track.set(data);
-          this.embedUrl.set(
-            this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://open.spotify.com/embed/track/${data.id}?utm_source=generator`
-            )
-          );
           this.status.set('loaded');
         },
         error: () => {
           this.track.set(null);
-          this.embedUrl.set(null);
           this.status.set('error');
         },
       });
@@ -70,8 +96,28 @@ export class SpotifyWidgetComponent implements OnInit {
     this.rangeChange$.next('short_term');
   }
 
-  selectRange(range: TimeRange): void {
+  ngOnDestroy(): void {
+    this.destroyController();
+  }
+
+  selectRange(range: TrackSelection): void {
+    this.destroyController();
+    this.view.set('card');
     this.selectedRange.set(range);
     this.rangeChange$.next(range);
+  }
+
+  startPlayback(): void {
+    this.view.set('player');
+  }
+
+  closePlayer(): void {
+    this.destroyController();
+    this.view.set('card');
+  }
+
+  private destroyController(): void {
+    this.controller?.destroy();
+    this.controller = null;
   }
 }
