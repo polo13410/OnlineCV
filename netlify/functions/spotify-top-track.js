@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     };
   }
 
-  const validRanges = ['short_term', 'medium_term', 'long_term'];
+  const validRanges = ['short_term', 'medium_term', 'long_term', 'liked'];
   const timeRange = event.queryStringParameters?.time_range ?? 'short_term';
 
   if (!validRanges.includes(timeRange)) {
@@ -56,10 +56,14 @@ exports.handler = async (event) => {
 
     const { access_token } = await tokenRes.json();
 
-    const tracksRes = await fetch(
-      `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=1`,
-      { headers: { Authorization: `Bearer ${access_token}` } }
-    );
+    const apiUrl =
+      timeRange === 'liked'
+        ? 'https://api.spotify.com/v1/me/tracks?limit=1'
+        : `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=1`;
+
+    const tracksRes = await fetch(apiUrl, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
 
     if (!tracksRes.ok) {
       return {
@@ -79,7 +83,8 @@ exports.handler = async (event) => {
       };
     }
 
-    const item = data.items[0];
+    // Saved-tracks items wrap the track in a `track` property
+    const item = timeRange === 'liked' ? data.items[0].track : data.items[0];
     return {
       statusCode: 200,
       headers: CORS_HEADERS,
