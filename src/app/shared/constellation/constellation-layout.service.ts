@@ -15,6 +15,7 @@ export function slugify(value: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+// FNV-1a
 function hashSeed(seed: string): number {
   let h = 2166136261;
   for (let i = 0; i < seed.length; i++) {
@@ -48,6 +49,11 @@ const REST_TEMPLATES: ReadonlyArray<ReadonlyArray<readonly [number, number]>> = 
   [[16, 18], [44, 18], [72, 18], [30, 48], [58, 48], [86, 48], [18, 78], [46, 78]],
 ];
 
+/** Jitter appliqué aux gabarits : position ±3 (%), rotation ±2.5 (deg) */
+const POSITION_JITTER = 6;
+const ROTATION_JITTER = 5;
+
+/** Zigzag vertical 32/68 ; couvre jusqu'à 8 éléments (au-delà : fallback anneau) */
 function mobileTemplate(count: number): ReadonlyArray<readonly [number, number]> {
   const rows: Array<readonly [number, number]> = [];
   const step = count > 1 ? 76 / (count - 1) : 0;
@@ -69,22 +75,19 @@ export class ConstellationLayoutService {
     variant: 'desktop' | 'mobile' = 'desktop'
   ): ConstellationSlot[] {
     const rand = mulberry32(hashSeed(seed));
-    let template: ReadonlyArray<readonly [number, number]>;
-    if (variant === 'mobile') {
-      template = mobileTemplate(count);
-    } else if (count < REST_TEMPLATES.length) {
-      template = REST_TEMPLATES[count];
-    } else {
-      // au-delà des gabarits : répartition en anneau
+    if (count >= REST_TEMPLATES.length) {
+      // au-delà des gabarits : répartition en anneau (les deux variantes)
       return this.orbitSlots(count).map((slot) => ({
         ...slot,
-        rotation: (rand() - 0.5) * 5,
+        rotation: (rand() - 0.5) * ROTATION_JITTER,
       }));
     }
+    const template =
+      variant === 'mobile' ? mobileTemplate(count) : REST_TEMPLATES[count];
     return template.slice(0, count).map(([x, y]) => ({
-      x: x + (rand() - 0.5) * 6,
-      y: y + (rand() - 0.5) * 6,
-      rotation: (rand() - 0.5) * 5,
+      x: x + (rand() - 0.5) * POSITION_JITTER,
+      y: y + (rand() - 0.5) * POSITION_JITTER,
+      rotation: (rand() - 0.5) * ROTATION_JITTER,
     }));
   }
 
@@ -118,12 +121,12 @@ export class ConstellationLayoutService {
   }
 
   bubbleDiameter(years: number | undefined, maxYears: number): number {
-    if (!years || maxYears <= 0) return this.DEFAULT_DIAMETER;
-    const t = Math.min(years / maxYears, 1);
+    if (years == null || maxYears <= 0) return this.DEFAULT_DIAMETER;
+    const t = Math.max(0, Math.min(years / maxYears, 1));
     return Math.round(this.MIN_DIAMETER + t * (this.MAX_DIAMETER - this.MIN_DIAMETER));
   }
 
-  /** Offsets px des cartes preview floutées au survol d'une tile */
+  /** Offsets des cartes preview au survol d'une tile — en PIXELS (contrairement aux slots en %) */
   previewOffsets(count: number): ConstellationSlot[] {
     const base: ConstellationSlot[] = [
       { x: -16, y: -38, rotation: -5 },

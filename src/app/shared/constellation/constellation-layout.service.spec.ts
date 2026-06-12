@@ -32,14 +32,14 @@ describe('ConstellationLayoutService', () => {
     });
 
     it('returns the requested count', () => {
-      for (const n of [1, 3, 6, 8]) {
+      for (const n of [1, 3, 6, 8, 9, 12]) {
         expect(service.restSlots(n, 's').length).toBe(n);
       }
     });
 
     it('keeps slots within bounds (desktop and mobile)', () => {
       for (const variant of ['desktop', 'mobile'] as const) {
-        for (const n of [2, 3, 6, 8]) {
+        for (const n of [2, 3, 6, 8, 9, 12]) {
           for (const slot of service.restSlots(n, 'seed', variant)) {
             expect(slot.x).toBeGreaterThanOrEqual(8);
             expect(slot.x).toBeLessThanOrEqual(92);
@@ -51,12 +51,18 @@ describe('ConstellationLayoutService', () => {
     });
 
     it('keeps tiles separated (no overlap by construction)', () => {
-      for (const n of [3, 4, 5, 6, 7, 8]) {
-        const slots = service.restSlots(n, 'any-seed');
-        for (let i = 0; i < slots.length; i++) {
-          for (let j = i + 1; j < slots.length; j++) {
-            const d = Math.hypot(slots[i].x - slots[j].x, slots[i].y - slots[j].y);
-            expect(d).withContext(`n=${n} pair ${i},${j}`).toBeGreaterThanOrEqual(14);
+      for (const variant of ['desktop', 'mobile'] as const) {
+        for (const seed of ['any-seed', 'skills']) {
+          for (const n of [3, 4, 5, 6, 7, 8, 9, 12]) {
+            const slots = service.restSlots(n, seed, variant);
+            for (let i = 0; i < slots.length; i++) {
+              for (let j = i + 1; j < slots.length; j++) {
+                const d = Math.hypot(slots[i].x - slots[j].x, slots[i].y - slots[j].y);
+                expect(d)
+                  .withContext(`variant=${variant} seed=${seed} n=${n} pair ${i},${j}`)
+                  .toBeGreaterThanOrEqual(14);
+              }
+            }
           }
         }
       }
@@ -98,8 +104,10 @@ describe('ConstellationLayoutService', () => {
   describe('bubbleDiameter', () => {
     it('maps max years to MAX and stays bounded', () => {
       expect(service.bubbleDiameter(6, 6)).toBe(service.MAX_DIAMETER);
+      expect(service.bubbleDiameter(0, 6)).toBe(service.MIN_DIAMETER);
       expect(service.bubbleDiameter(1, 6)).toBeGreaterThanOrEqual(service.MIN_DIAMETER);
       expect(service.bubbleDiameter(1, 6)).toBeLessThan(service.bubbleDiameter(3, 6));
+      expect(service.bubbleDiameter(9, 6)).toBe(service.MAX_DIAMETER);
     });
 
     it('falls back to the default for cards without years', () => {
