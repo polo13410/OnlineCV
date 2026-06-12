@@ -6,33 +6,6 @@
     <h2>{{ 'SKILLS.TECH' | translate }}</h2>
   </div>
 
-  @for (category of skillCategories; track category.name; let ci = $index) {
-    <div class="skill-directory" appScrollReveal="stagger-reveal" [staggerIndex]="ci">
-      <div class="directory-header">
-        <span class="dir-name">{{ category.name }}</span>
-        <span class="dir-count">{{ category.skills.length }}</span>
-      </div>
-      <div class="skill-tags">
-        @for (skill of category.skills; track skill.lang) {
-          <div class="skill-tag" [attr.data-level]="getLevelClass(skill.level)">
-            <span class="tag-name">{{ skill.lang }}</span>
-            <span class="tag-meta">{{ skill.time }}</span>
-            <span class="tag-level">{{ skill.level }}</span>
-          </div>
-        }
-      </div>
-    </div>
-  }
-
-  <div class="section-header section-header--soft" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'SKILLS.SOFT_OVERLINE' | translate }}</p>
-    <h2>{{ 'SKILLS.SOFT' | translate }}</h2>
-  </div>
-
-  <div class="soft-tags">
-    @for (soft of softs; track soft; let si = $index) {
-      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si">{{ soft }}</span>
-    }
-  </div>
+  <app-constellation [categories]="categories" seed="skills"></app-constellation>
 
 </div>
