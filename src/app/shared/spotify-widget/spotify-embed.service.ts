@@ -10,12 +10,12 @@ interface SpotifyIframeApi {
   createController(
     element: HTMLElement,
     options: { uri: string; width: string | number; height: string | number },
-    callback: (controller: SpotifyEmbedController) => void
+    callback: (controller: SpotifyEmbedController) => void,
   ): void;
 }
 
 const EMBED_SCRIPT_URL = 'https://open.spotify.com/embed/iframe-api/v1';
-const EMBED_HEIGHT = 100;
+const EMBED_HEIGHT = 152;
 
 @Injectable({ providedIn: 'root' })
 export class SpotifyEmbedService {
@@ -23,20 +23,24 @@ export class SpotifyEmbedService {
 
   createController(
     element: HTMLElement,
-    trackId: string
+    trackId: string,
   ): Promise<SpotifyEmbedController> {
     return this.loadApi().then(
       (api) =>
         new Promise<SpotifyEmbedController>((resolve) => {
           api.createController(
             element,
-            { uri: `spotify:track:${trackId}`, width: '100%', height: EMBED_HEIGHT },
+            {
+              uri: `spotify:track:${trackId}`,
+              width: '100%',
+              height: EMBED_HEIGHT,
+            },
             (controller) => {
               controller.addListener('ready', () => controller.play());
               resolve(controller);
-            }
+            },
           );
-        })
+        }),
     );
   }
 
