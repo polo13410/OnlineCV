@@ -253,6 +253,8 @@
   border-radius: var(--border-radius-lg);
   box-shadow: var(--glow-primary);
   animation: detail-in 0.25s ease both;
+  max-height: calc(100% - 2 * var(--space-5));
+  overflow-y: auto;
 }
 
 @keyframes detail-in {

@@ -11,7 +11,7 @@ const CATS: ConstellationCategory[] = [
     id: 'langages',
     label: 'Langages',
     cards: [
-      { id: 'ts', title: 'TypeScript', years: 6, meta: '6 années', detail: 'niveau avancé', emphasis: 'high' },
+      { id: 'ts', title: 'TypeScript', years: 6, meta: '6 années', detail: 'niveau avancé', emphasis: 'high', tags: ['utilisé récemment'] },
       { id: 'php', title: 'PHP', years: 1, meta: '1 année', detail: 'bonnes bases', emphasis: 'low' },
       { id: 'sans-detail', title: 'Sans détail' },
     ],
@@ -194,6 +194,23 @@ describe('ConstellationComponent', () => {
       tick();
       expect(document.activeElement?.getAttribute('data-category-id')).toBe('langages');
     }));
+
+    it('moves focus into the dialog when a detail opens', fakeAsync(() => {
+      fixture.debugElement.queryAll(By.css('button.bubble'))[0].nativeElement.click();
+      fixture.detectChanges();
+      tick();
+      expect(document.activeElement?.classList.contains('detail-panel')).toBeTrue();
+    }));
+
+    it('returns focus to the bubble when the detail closes', fakeAsync(() => {
+      fixture.debugElement.queryAll(By.css('button.bubble'))[0].nativeElement.click();
+      fixture.detectChanges();
+      tick();
+      fixture.debugElement.query(By.css('.detail-close')).nativeElement.click();
+      fixture.detectChanges();
+      tick();
+      expect(document.activeElement?.getAttribute('data-card-id')).toBe('ts');
+    }));
   });
 
   describe('detail rendering', () => {
@@ -228,6 +245,10 @@ describe('ConstellationComponent', () => {
       fixture.debugElement.query(By.css('.detail-close')).nativeElement.click();
       fixture.detectChanges();
       expect(component.state().kind).toBe('deployed');
+    });
+
+    it('renders tags in the panel', () => {
+      expect(fixture.debugElement.queryAll(By.css('.detail-tag')).length).toBe(1);
     });
   });
 });

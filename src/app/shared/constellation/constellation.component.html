@@ -48,7 +48,7 @@
         class="tile"
         type="button"
         (click)="openCategory(category.id)"
-        [attr.aria-disabled]="isActive(category.id)"
+        [attr.aria-disabled]="isActive(category.id) ? true : null"
         [attr.aria-expanded]="isActive(category.id)"
         [attr.data-category-id]="category.id"
       >
@@ -98,7 +98,7 @@
 
   @if (detailCard(); as card) {
     <div class="detail-backdrop" (click)="back()" aria-hidden="true"></div>
-    <aside class="detail-panel" role="dialog" [attr.aria-label]="card.title">
+    <aside class="detail-panel" role="dialog" [attr.aria-label]="card.title" tabindex="-1">
       <h3 class="detail-title">{{ card.title }}</h3>
       @if (card.meta) {
         <p class="detail-meta">{{ card.meta }}</p>

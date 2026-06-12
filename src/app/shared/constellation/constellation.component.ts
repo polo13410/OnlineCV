@@ -133,6 +133,7 @@ export class ConstellationComponent {
     const s = this.state();
     if (s.kind === 'rest' || !card.detail) return;
     this.state.set({ kind: 'detail', categoryId: s.categoryId, cardId: card.id });
+    this.focusElement('.detail-panel');
   }
 
   back(): void {
@@ -148,11 +149,12 @@ export class ConstellationComponent {
 
   /** Rend le focus clavier à l'élément d'origine après un repli d'état */
   private focusByAttr(attr: string, value: string): void {
+    this.focusElement(`[${attr}="${CSS.escape(value)}"]`);
+  }
+
+  private focusElement(selector: string): void {
     setTimeout(() => {
-      const el = this.host.nativeElement.querySelector(
-        `[${attr}="${CSS.escape(value)}"]`
-      ) as HTMLElement | null;
-      el?.focus();
+      (this.host.nativeElement.querySelector(selector) as HTMLElement | null)?.focus();
     });
   }
 
