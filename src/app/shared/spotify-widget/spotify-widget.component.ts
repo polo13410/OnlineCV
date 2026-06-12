@@ -34,9 +34,19 @@ export interface SpotifyTrack {
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
   animations: [
-    // Re-fires on every selectedRange change (incl. cache hits where
-    // the card element is reused) and on first render (void => *)
-    trigger('trackFade', [
+    // Sequenced crossfade between tiles (skeleton / card / player / error):
+    // the leaving tile fades out in place (absolute, so it doesn't stack
+    // under the next one), the entering tile waits for it before fading in.
+    trigger('tileFade', [
+      transition(':leave', [
+        style({ position: 'absolute', top: 0, left: 0, width: '100%' }),
+        animate('150ms ease', style({ opacity: 0 })),
+      ]),
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('250ms 150ms ease', style({ opacity: 1 })),
+      ]),
+      // selectedRange change on a reused card element (cache hit)
       transition('* => *', [
         style({ opacity: 0 }),
         animate('250ms ease', style({ opacity: 1 })),

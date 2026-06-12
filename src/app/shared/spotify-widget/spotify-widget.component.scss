@@ -31,6 +31,12 @@
   }
 }
 
+.tile-stack {
+  // anchor for the absolutely-positioned leaving tile during the crossfade
+  position: relative;
+  min-height: 100px;
+}
+
 .spotify-skeleton {
   width: 100%;
   height: 100px;
