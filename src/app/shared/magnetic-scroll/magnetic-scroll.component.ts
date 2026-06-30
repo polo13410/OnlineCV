@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
+  effect,
   ElementRef,
   inject,
   Input,
@@ -71,6 +73,12 @@ export class MagneticScrollComponent
       ? window.matchMedia('(max-width: 768px)').matches
       : false,
   );
+
+  // True when the tallest card can't fit the stage → fall back to flow layout.
+  readonly tooTall = signal(false);
+
+  // The active layout: flow (native scroll) when narrow OR too tall, else cards.
+  readonly useFlow = computed(() => this.isMobile() || this.tooTall());
 
   private readonly PEEK = 150;
   private readonly TRAVEL = 160;
