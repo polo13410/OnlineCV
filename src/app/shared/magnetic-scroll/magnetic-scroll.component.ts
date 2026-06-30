@@ -236,6 +236,10 @@ export class MagneticScrollComponent
     if (this.wiredMode === 'desktop') {
       this.measureAndDecide();
     } else {
+      // Also covers wiredMode === null (before the first syncLayout measurement).
+      // Skip until the cache is populated, else a cold cache (all zeros) would
+      // spuriously flip back to the card layout.
+      if (this.lastInnerHeight === 0) return;
       const stageH =
         this.lastStageHeight + (window.innerHeight - this.lastInnerHeight);
       this.tooTall.set(
