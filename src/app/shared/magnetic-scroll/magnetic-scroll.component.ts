@@ -119,6 +119,10 @@ export class MagneticScrollComponent
       };
       mq.addEventListener('change', onMqChange);
       this.cleanups.push(() => mq.removeEventListener('change', onMqChange));
+
+      const onResize = () => this.ngZone.run(() => this.onViewportResize());
+      window.addEventListener('resize', onResize);
+      this.cleanups.push(() => window.removeEventListener('resize', onResize));
     }
   }
 
@@ -221,6 +225,27 @@ export class MagneticScrollComponent
     const max = Math.max(0, this.flatItems.length - 1);
     this.progress = Math.max(0, Math.min(max, this.progress));
     this.render(this.progress);
+  }
+
+  // On resize: when cards are mounted, re-measure directly. When already in flow
+  // because of height, the chrome above the stage is fixed-px, so the stage
+  // height tracks innerHeight 1:1 — derive it from the cached measurement and
+  // re-decide without needing the (unmounted) desktop DOM.
+  private onViewportResize(): void {
+    if (this.isMobile()) return; // width transitions handled by matchMedia
+    if (this.wiredMode === 'desktop') {
+      this.measureAndDecide();
+    } else {
+      const stageH =
+        this.lastStageHeight + (window.innerHeight - this.lastInnerHeight);
+      this.tooTall.set(
+        MagneticScrollComponent.exceedsStage(
+          this.maxCardHeight,
+          stageH,
+          this.FIT_SAFETY,
+        ),
+      );
+    }
   }
 
   private teardownLayoutListeners(): void {
