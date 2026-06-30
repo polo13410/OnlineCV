@@ -30,6 +30,20 @@ import {
 export class MagneticScrollComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
+  /**
+   * True when the tallest card overflows the stage. `safety` reserves a little
+   * breathing room so cards are never flush against the stage edges.
+   * Returns false when the stage hasn't been measured yet (height <= 0).
+   */
+  static exceedsStage(
+    maxCardHeight: number,
+    stageHeight: number,
+    safety: number,
+  ): boolean {
+    if (stageHeight <= 0) return false;
+    return maxCardHeight > stageHeight - safety;
+  }
+
   @Input() sections: MagneticScrollSection[] = [];
 
   // Desktop refs
