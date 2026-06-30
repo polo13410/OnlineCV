@@ -87,24 +87,29 @@ export class MagneticScrollComponent
   private readonly SNAP_MS = 120;
   private readonly MAX_OVR = 0.15;
 
+  private readonly FIT_SAFETY = 24;
+
   private heights: number[] = [];
+  private maxCardHeight = 0;
+  private lastStageHeight = 0;
+  private lastInnerHeight = 0;
   private raf: number | null = null;
   private snapTimer: ReturnType<typeof setTimeout> | null = null;
   private wheelBusy = false;
   private touchStart: { y: number; progress: number } | null = null;
   private cleanups: (() => void)[] = [];
+  private layoutCleanups: (() => void)[] = [];
+  private wiredMode: 'desktop' | 'flow' | null = null;
 
   private ngZone = inject(NgZone);
   private viewReady = false;
 
+  // Re-wires listeners and (re)measures whenever the active layout changes.
+  private readonly layoutEffect = effect(() => this.syncLayout());
+
   ngAfterViewInit(): void {
     this.viewReady = true;
     this.flatten();
-
-    if (!this.isMobile()) {
-      this.attachEvents();
-      this.scheduleMeasureAndRender();
-    }
 
     if (typeof window !== 'undefined') {
       const mq = window.matchMedia('(max-width: 768px)');
@@ -120,14 +125,13 @@ export class MagneticScrollComponent
     if (!changes['sections']) return;
     this.flatten();
     if (!this.viewReady) return;
-    if (!this.isMobile()) {
-      this.scheduleMeasureAndRender();
-    }
+    this.syncLayout();
   }
 
   ngOnDestroy(): void {
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.snapTimer) clearTimeout(this.snapTimer);
+    this.teardownLayoutListeners();
     this.cleanups.forEach((fn) => fn());
   }
 
@@ -174,14 +178,53 @@ export class MagneticScrollComponent
     });
   }
 
-  private scheduleMeasureAndRender(): void {
+  // Wire the listeners for the active layout (idempotent) and, on desktop,
+  // (re)measure to decide whether the section still fits. Deferred a double-RAF
+  // so the @if has swapped the DOM and ViewChildren have updated.
+  private syncLayout(): void {
+    const target: 'desktop' | 'flow' = this.useFlow() ? 'flow' : 'desktop';
     this.scheduleDoubleRaf(() => {
-      if (!this.stageRef || this.flatItems.length === 0) return;
-      this.measureAllHeights();
-      const max = Math.max(0, this.flatItems.length - 1);
-      this.progress = Math.max(0, Math.min(max, this.progress));
-      this.render(this.progress);
+      if (!this.viewReady) return;
+
+      if (this.wiredMode !== target) {
+        this.teardownLayoutListeners();
+        this.wiredMode = target;
+        if (target === 'desktop') {
+          this.attachEvents();
+        }
+        // flow: native scroll only — parity with existing mobile behaviour.
+      }
+
+      if (target === 'desktop') {
+        this.measureAndDecide();
+      }
     });
+  }
+
+  // Measure the cards, cache the fit inputs, and flip `tooTall` accordingly.
+  private measureAndDecide(): void {
+    if (!this.stageRef || this.flatItems.length === 0) return;
+    this.measureAllHeights();
+    this.maxCardHeight = this.heights.length ? Math.max(...this.heights) : 0;
+    const stageH = this.stageRef.nativeElement.clientHeight;
+    this.lastStageHeight = stageH;
+    this.lastInnerHeight =
+      typeof window !== 'undefined' ? window.innerHeight : 0;
+    this.tooTall.set(
+      MagneticScrollComponent.exceedsStage(
+        this.maxCardHeight,
+        stageH,
+        this.FIT_SAFETY,
+      ),
+    );
+    const max = Math.max(0, this.flatItems.length - 1);
+    this.progress = Math.max(0, Math.min(max, this.progress));
+    this.render(this.progress);
+  }
+
+  private teardownLayoutListeners(): void {
+    this.layoutCleanups.forEach((fn) => fn());
+    this.layoutCleanups = [];
   }
 
   private render(p: number): void {
@@ -332,7 +375,7 @@ export class MagneticScrollComponent
       el.addEventListener('touchmove', onTouchMove, { passive: false });
       el.addEventListener('touchend', onTouchEnd, { passive: true });
 
-      this.cleanups.push(
+      this.layoutCleanups.push(
         () => el.removeEventListener('wheel', onWheel),
         () => el.removeEventListener('touchstart', onTouchStart),
         () => el.removeEventListener('touchmove', onTouchMove),
