@@ -134,9 +134,8 @@ export class MagneticScrollComponent
   }
 
   ngOnDestroy(): void {
-    if (this.raf) cancelAnimationFrame(this.raf);
     if (this.snapTimer) clearTimeout(this.snapTimer);
-    this.teardownLayoutListeners();
+    this.teardownLayoutListeners(); // also cancels any in-flight spring RAF
     this.cleanups.forEach((fn) => fn());
   }
 
