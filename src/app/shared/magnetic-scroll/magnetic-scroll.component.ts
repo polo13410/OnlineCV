@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
+  effect,
   ElementRef,
   inject,
   Input,
@@ -30,6 +32,20 @@ import {
 export class MagneticScrollComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
+  /**
+   * True when the tallest card overflows the stage. `safety` reserves a little
+   * breathing room so cards are never flush against the stage edges.
+   * Returns false when the stage hasn't been measured yet (height <= 0).
+   */
+  static exceedsStage(
+    maxCardHeight: number,
+    stageHeight: number,
+    safety: number,
+  ): boolean {
+    if (stageHeight <= 0) return false;
+    return maxCardHeight > stageHeight - safety;
+  }
+
   @Input() sections: MagneticScrollSection[] = [];
 
   // Desktop refs
@@ -58,6 +74,12 @@ export class MagneticScrollComponent
       : false,
   );
 
+  // True when the tallest card can't fit the stage → fall back to flow layout.
+  readonly tooTall = signal(false);
+
+  // The active layout: flow (native scroll) when narrow OR too tall, else cards.
+  readonly useFlow = computed(() => this.isMobile() || this.tooTall());
+
   private readonly PEEK = 150;
   private readonly TRAVEL = 160;
   private readonly TOUCH_TRAVEL = 320;
@@ -65,24 +87,30 @@ export class MagneticScrollComponent
   private readonly SNAP_MS = 120;
   private readonly MAX_OVR = 0.15;
 
+  private readonly FIT_SAFETY = 24;
+
   private heights: number[] = [];
+  // Cached fit inputs — consumed by the resize handler (onViewportResize).
+  private maxCardHeight = 0;
+  private lastStageHeight = 0;
+  private lastInnerHeight = 0;
   private raf: number | null = null;
   private snapTimer: ReturnType<typeof setTimeout> | null = null;
   private wheelBusy = false;
   private touchStart: { y: number; progress: number } | null = null;
   private cleanups: (() => void)[] = [];
+  private layoutCleanups: (() => void)[] = [];
+  private wiredMode: 'desktop' | 'flow' | null = null;
 
   private ngZone = inject(NgZone);
   private viewReady = false;
 
+  // Re-wires listeners and (re)measures whenever the active layout changes.
+  private readonly layoutEffect = effect(() => this.syncLayout());
+
   ngAfterViewInit(): void {
     this.viewReady = true;
     this.flatten();
-
-    if (!this.isMobile()) {
-      this.attachEvents();
-      this.scheduleMeasureAndRender();
-    }
 
     if (typeof window !== 'undefined') {
       const mq = window.matchMedia('(max-width: 768px)');
@@ -91,6 +119,10 @@ export class MagneticScrollComponent
       };
       mq.addEventListener('change', onMqChange);
       this.cleanups.push(() => mq.removeEventListener('change', onMqChange));
+
+      const onResize = () => this.ngZone.run(() => this.onViewportResize());
+      window.addEventListener('resize', onResize);
+      this.cleanups.push(() => window.removeEventListener('resize', onResize));
     }
   }
 
@@ -98,14 +130,12 @@ export class MagneticScrollComponent
     if (!changes['sections']) return;
     this.flatten();
     if (!this.viewReady) return;
-    if (!this.isMobile()) {
-      this.scheduleMeasureAndRender();
-    }
+    this.syncLayout();
   }
 
   ngOnDestroy(): void {
-    if (this.raf) cancelAnimationFrame(this.raf);
     if (this.snapTimer) clearTimeout(this.snapTimer);
+    this.teardownLayoutListeners(); // also cancels any in-flight spring RAF
     this.cleanups.forEach((fn) => fn());
   }
 
@@ -152,14 +182,82 @@ export class MagneticScrollComponent
     });
   }
 
-  private scheduleMeasureAndRender(): void {
+  // Wire the listeners for the active layout (idempotent) and, on desktop,
+  // (re)measure to decide whether the section still fits. Deferred via a
+  // double-RAF so the @if has swapped the DOM and ViewChildren have updated.
+  private syncLayout(): void {
+    const target: 'desktop' | 'flow' = this.useFlow() ? 'flow' : 'desktop';
     this.scheduleDoubleRaf(() => {
-      if (!this.stageRef || this.flatItems.length === 0) return;
-      this.measureAllHeights();
-      const max = Math.max(0, this.flatItems.length - 1);
-      this.progress = Math.max(0, Math.min(max, this.progress));
-      this.render(this.progress);
+      if (!this.viewReady) return;
+
+      if (this.wiredMode !== target) {
+        this.teardownLayoutListeners();
+        this.wiredMode = target;
+        if (target === 'desktop') {
+          this.attachEvents();
+        }
+        // flow: native scroll only — parity with existing mobile behaviour.
+      }
+
+      if (target === 'desktop') {
+        this.measureAndDecide();
+      }
     });
+  }
+
+  // Measure the cards, cache the fit inputs, and flip `tooTall` accordingly.
+  private measureAndDecide(): void {
+    if (!this.stageRef || this.flatItems.length === 0) return;
+    this.measureAllHeights();
+    this.maxCardHeight = this.heights.length ? Math.max(...this.heights) : 0;
+    const stageH = this.stageRef.nativeElement.clientHeight;
+    this.lastStageHeight = stageH;
+    this.lastInnerHeight =
+      typeof window !== 'undefined' ? window.innerHeight : 0;
+    this.tooTall.set(
+      MagneticScrollComponent.exceedsStage(
+        this.maxCardHeight,
+        stageH,
+        this.FIT_SAFETY,
+      ),
+    );
+    const max = Math.max(0, this.flatItems.length - 1);
+    this.progress = Math.max(0, Math.min(max, this.progress));
+    this.render(this.progress);
+  }
+
+  // On resize: when cards are mounted, re-measure directly. When already in flow
+  // because of height, the chrome above the stage is fixed-px, so the stage
+  // height tracks innerHeight 1:1 — derive it from the cached measurement and
+  // re-decide without needing the (unmounted) desktop DOM.
+  private onViewportResize(): void {
+    if (this.isMobile()) return; // width transitions handled by matchMedia
+    if (this.wiredMode === 'desktop') {
+      this.measureAndDecide();
+    } else {
+      // Also covers wiredMode === null (before the first syncLayout measurement).
+      // Skip until the cache is populated, else a cold cache (all zeros) would
+      // spuriously flip back to the card layout.
+      if (this.lastInnerHeight === 0) return;
+      const stageH =
+        this.lastStageHeight + (window.innerHeight - this.lastInnerHeight);
+      this.tooTall.set(
+        MagneticScrollComponent.exceedsStage(
+          this.maxCardHeight,
+          stageH,
+          this.FIT_SAFETY,
+        ),
+      );
+    }
+  }
+
+  private teardownLayoutListeners(): void {
+    if (this.raf) {
+      cancelAnimationFrame(this.raf);
+      this.raf = null;
+    }
+    this.layoutCleanups.forEach((fn) => fn());
+    this.layoutCleanups = [];
   }
 
   private render(p: number): void {
@@ -310,7 +408,7 @@ export class MagneticScrollComponent
       el.addEventListener('touchmove', onTouchMove, { passive: false });
       el.addEventListener('touchend', onTouchEnd, { passive: true });
 
-      this.cleanups.push(
+      this.layoutCleanups.push(
         () => el.removeEventListener('wheel', onWheel),
         () => el.removeEventListener('touchstart', onTouchStart),
         () => el.removeEventListener('touchmove', onTouchMove),
