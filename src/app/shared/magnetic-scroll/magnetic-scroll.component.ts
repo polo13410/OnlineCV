@@ -90,6 +90,7 @@ export class MagneticScrollComponent
   private readonly FIT_SAFETY = 24;
 
   private heights: number[] = [];
+  // Cached fit inputs — consumed by the resize handler (onViewportResize).
   private maxCardHeight = 0;
   private lastStageHeight = 0;
   private lastInnerHeight = 0;
@@ -179,8 +180,8 @@ export class MagneticScrollComponent
   }
 
   // Wire the listeners for the active layout (idempotent) and, on desktop,
-  // (re)measure to decide whether the section still fits. Deferred a double-RAF
-  // so the @if has swapped the DOM and ViewChildren have updated.
+  // (re)measure to decide whether the section still fits. Deferred via a
+  // double-RAF so the @if has swapped the DOM and ViewChildren have updated.
   private syncLayout(): void {
     const target: 'desktop' | 'flow' = this.useFlow() ? 'flow' : 'desktop';
     this.scheduleDoubleRaf(() => {
@@ -223,6 +224,10 @@ export class MagneticScrollComponent
   }
 
   private teardownLayoutListeners(): void {
+    if (this.raf) {
+      cancelAnimationFrame(this.raf);
+      this.raf = null;
+    }
     this.layoutCleanups.forEach((fn) => fn());
     this.layoutCleanups = [];
   }
