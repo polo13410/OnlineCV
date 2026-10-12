@@ -33,6 +33,7 @@
 @keyframes slide-out-down  { to   { transform: translateY(100%); } }
 
 .panel {
+  @include m.vt-layer(panel);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -127,7 +128,7 @@
 }
 
 .panel-group-title {
-  @include m.lang-text();
+  @include m.lang-text(in-panel);
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -150,7 +151,7 @@
 .panel-item {
   // Skill selection view transition: slides in/out from the right, glides when reordered
   view-transition-name: match-element;
-  view-transition-class: panel-card;
+  view-transition-class: panel-card in-panel;
   display: block;
   width: 100%;
   padding: 0;

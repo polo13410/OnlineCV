@@ -99,6 +99,16 @@ button { font-family: var(--font-main); cursor: pointer; }
 ::view-transition-old(.lang-toggle) { display: none; }
 ::view-transition-new(.lang-toggle) { animation: none; }
 
+// Fixed layers (vt-layer mixin) and their content, stacked above the page cards like on screen
+::view-transition-group(.layer-panel) { z-index: 1; }
+::view-transition-group(.in-panel)    { z-index: 2; }
+::view-transition-group(.layer-top)   { z-index: 3; }
+::view-transition-group(.in-top)      { z-index: 4; }
+::view-transition-group(.layer-drawer) { z-index: 5; }
+::view-transition-group(.in-drawer)   { z-index: 6; }
+// Cards inside the skill panel ride along with their panel card on FR/EN (no own layer)
+html[data-vt='lang'] .panel-item * { view-transition-name: none !important; }
+
 // Dark/light switch: one snapshot of the whole page, cross-faded
 html[data-vt='theme'] * { view-transition-name: none !important; }
 

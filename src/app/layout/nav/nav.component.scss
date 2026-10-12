@@ -2,6 +2,7 @@
 @use '../../../styles/mixins' as m;
 
 .nav {
+  @include m.vt-layer(drawer);
   width: var(--sidebar-width);
   height: 100vh;
   background: var(--color-bg-surface);

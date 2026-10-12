@@ -24,6 +24,7 @@
 }
 
 .shell-topbar {
+  @include m.vt-layer(top);
   // Grows by the top inset so actions stay clear of the status bar / notch (viewport-fit=cover)
   height: calc(var(--header-height) + env(safe-area-inset-top));
   display: flex;
@@ -49,7 +50,7 @@
 }
 
 .contact-btn {
-  @include m.lang-box();
+  @include m.lang-box(in-top);
   height: 32px;
   padding: 0 16px;
   border: none;
