@@ -6,7 +6,8 @@ import { SKILLS } from './skills';
 describe('content data', () => {
   const [fr, en] = content;
   const neutral = (items: (ExperienceBase & { links?: unknown })[] = []) =>
-    items.map(({ id, icon, dateFrom, dateTo, skills, links }) => ({ id, icon, dateFrom, dateTo, skills, links }));
+    items.map(({ id, icon, iconFill, iconDark, dateFrom, dateTo, skills, links }) =>
+      ({ id, icon, iconFill, iconDark, dateFrom, dateTo, skills, links }));
 
   it('has the same language-neutral fields in FR and EN', () => {
     expect(neutral(en.experiences?.pro)).toEqual(neutral(fr.experiences?.pro));

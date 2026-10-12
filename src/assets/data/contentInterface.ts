@@ -44,6 +44,8 @@ export interface ProjectLink {
 export interface ExperienceBase {
   id: string // stable, used as page anchor
   icon?: string // path under src/assets
+  iconFill?: boolean // logo has its own background: fills the tile edge to edge
+  iconDark?: 'invert' | 'plate' // dark theme fix for logos too dark to read: invert a monochrome logo, or sit it on a light plate
   dateFrom: string // ISO 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD', orders the timeline
   dateTo?: string // ISO; absent = ongoing
   skills: SkillId[]

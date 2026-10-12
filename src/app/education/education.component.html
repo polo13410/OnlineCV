@@ -9,6 +9,8 @@
     <ng-template let-edu>
       <app-experience-card
         [icon]="edu.icon"
+        [iconFill]="!!edu.iconFill"
+        [iconDark]="edu.iconDark"
         [title]="edu.title"
         [subtitle]="edu.school + ' · ' + edu.location"
         [bullets]="edu.descriptions"

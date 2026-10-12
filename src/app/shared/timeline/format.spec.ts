@@ -16,8 +16,10 @@ describe('timeline format', () => {
     expect(formatPeriod('2017', '2020', 'fr', "Aujourd'hui")).toBe('2017 → 2020');
   });
 
-  it('formats durations in years and months', () => {
-    expect(formatDuration('2023-01', '2024-10', 'fr')).toBe('1 an 9 mois');
+  it('rounds durations to whole years, months only under a year', () => {
+    expect(formatDuration('2023-01', '2024-10', 'fr')).toBe('2 ans');
+    expect(formatDuration('2020-09', '2021-12', 'fr')).toBe('1 an');
+    expect(formatDuration('2018-09', '2019-02', 'fr')).toBe('5 mois');
     expect(formatDuration('2020-01', '2020-07', 'en')).toBe('6 mos');
     expect(formatDuration('2017', '2020', 'fr')).toBe('3 ans');
     expect(formatDuration('2024-10', undefined, 'en', new Date('2026-10-12'))).toBe('2 yrs');

@@ -1,7 +1,12 @@
 <!-- src/app/shared/experience-card/experience-card.component.html -->
 <article class="xp-card" [class.xp-card--compact]="variant === 'compact'">
   <header class="xp-head">
-    <span class="logo-tile">
+    <span
+      class="logo-tile"
+      [class.logo-tile--fill]="icon && iconFill"
+      [class.logo-tile--invert]="iconDark === 'invert'"
+      [class.logo-tile--plate]="iconDark === 'plate'"
+    >
       @if (icon) {
         <img [src]="icon" alt="" loading="lazy" />
       } @else {

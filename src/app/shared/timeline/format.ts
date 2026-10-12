@@ -29,17 +29,16 @@ export function formatPeriod(from: string, to: string | undefined, lang: Support
   return `${short(from)} → ${to ? short(to) : presentLabel}`;
 }
 
-/** '1 an 9 mois' / '1 yr 9 mos'; an ongoing period runs until `now`. */
+/** Rounded to whole years ('1 an 9 mois' → '2 ans'); months only under a year ('6 mois'). An ongoing period runs until `now`. */
 export function formatDuration(from: string, to: string | undefined, lang: SupportedLanguage, now = new Date()): string {
   const start = parse(from);
   const end = to ? parse(to) : now;
   const months = Math.max(1, (end.getUTCFullYear() - start.getUTCFullYear()) * 12 + end.getUTCMonth() - start.getUTCMonth());
-  const years = Math.floor(months / 12);
-  const rest = months % 12;
-  const words = lang === 'fr'
-    ? { y: (n: number) => `${n} an${n > 1 ? 's' : ''}`, m: (n: number) => `${n} mois` }
-    : { y: (n: number) => `${n} yr${n > 1 ? 's' : ''}`, m: (n: number) => `${n} mo${n > 1 ? 's' : ''}` };
-  return [years ? words.y(years) : '', rest ? words.m(rest) : ''].filter(Boolean).join(' ');
+  if (months < 12) {
+    return lang === 'fr' ? `${months} mois` : `${months} mo${months > 1 ? 's' : ''}`;
+  }
+  const years = Math.round(months / 12);
+  return lang === 'fr' ? `${years} an${years > 1 ? 's' : ''}` : `${years} yr${years > 1 ? 's' : ''}`;
 }
 
 /** Timeline meta for a dated experience: period (emphasised) then duration. */

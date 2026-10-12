@@ -28,6 +28,8 @@ export interface LinkedItem {
   group: 'pro' | 'perso';
   route: '/experiences' | '/projects';
   icon?: string;
+  iconFill?: boolean;
+  iconDark?: 'invert' | 'plate';
   title: string;
   subtitle?: string;
   dateFrom: string;
@@ -48,11 +50,11 @@ export function skillLabel(id: SkillId, lang: SupportedLanguage, short = false):
 
 export function linkedItems(data: CVDataContent): LinkedItem[] {
   const pro = [...(data.experiences?.pro ?? []), ...(data.experiences?.stage ?? [])].map((e): LinkedItem => ({
-    id: e.id, group: 'pro', route: '/experiences', icon: e.icon,
+    id: e.id, group: 'pro', route: '/experiences', icon: e.icon, iconFill: e.iconFill, iconDark: e.iconDark,
     title: e.title, subtitle: e.company, dateFrom: e.dateFrom, dateTo: e.dateTo, skills: e.skills,
   }));
   const perso = (data.projects ?? []).map((p): LinkedItem => ({
-    id: p.id, group: 'perso', route: '/projects', icon: p.icon,
+    id: p.id, group: 'perso', route: '/projects', icon: p.icon, iconFill: p.iconFill, iconDark: p.iconDark,
     title: p.name, dateFrom: p.dateFrom, skills: p.skills,
   }));
   return [...pro, ...perso];

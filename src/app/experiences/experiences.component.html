@@ -9,6 +9,8 @@
     <ng-template let-xp>
       <app-experience-card
         [icon]="xp.icon"
+        [iconFill]="!!xp.iconFill"
+        [iconDark]="xp.iconDark"
         [title]="xp.title"
         [subtitle]="xp.company + ' · ' + xp.location"
         [bullets]="xp.descriptions"
@@ -25,6 +27,8 @@
     <ng-template let-xp>
       <app-experience-card
         [icon]="xp.icon"
+        [iconFill]="!!xp.iconFill"
+        [iconDark]="xp.iconDark"
         [title]="xp.title"
         [subtitle]="xp.company + ' · ' + xp.location"
         [bullets]="xp.descriptions"

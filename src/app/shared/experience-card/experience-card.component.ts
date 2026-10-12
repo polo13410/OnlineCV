@@ -18,6 +18,8 @@ const COLLAPSED_BULLETS = 4;
 export class ExperienceCardComponent {
   @Input() variant: 'full' | 'compact' = 'full';
   @Input() icon?: string;
+  @Input() iconFill = false;
+  @Input() iconDark?: 'invert' | 'plate';
   @Input({ required: true }) title!: string;
   @Input() subtitle?: string;
   @Input() badge?: string;

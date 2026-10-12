@@ -10,6 +10,8 @@
     <ng-template let-card>
       <app-experience-card
         [icon]="card.project.icon"
+        [iconFill]="!!card.project.iconFill"
+        [iconDark]="card.project.iconDark"
         [title]="card.project.name"
         [badge]="card.project.status === 'in-progress' ? ('PROJECTS.STATUS_IN_PROGRESS' | translate) : undefined"
         [summary]="card.project.summary"
