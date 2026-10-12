@@ -96,13 +96,12 @@
     filter: grayscale(1);
   }
 
+  // Same hover as every card of the app (experience, passion, soft-skill)
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--glow-subtle);
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
   }
-
-  &[data-level='advanced']:hover     { border-color: var(--color-accent-primary); box-shadow: var(--glow-primary); }
-  &[data-level='intermediate']:hover { border-color: var(--color-accent-secondary); box-shadow: var(--glow-secondary); }
 }
 
 .tag-name {
@@ -139,8 +138,15 @@
   @include m.lang-box();
   transition:
     var(--reveal-transition),
-    border-color var(--transition-fast),
-    color var(--transition-fast);
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base),
+    color var(--transition-base);
 
-  &:hover { border-color: var(--color-accent-primary); color: var(--color-text-primary); }
+  &:hover {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+    color: var(--color-text-primary);
+  }
 }

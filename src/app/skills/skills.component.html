@@ -20,7 +20,6 @@
             class="skill-tag"
             [class.skill-tag--selected]="isSelected(skill.id)"
             [class.skill-tag--greyed]="isGreyed(skill.id)"
-            [attr.data-level]="getLevelClass(skill.level)"
             [attr.aria-pressed]="isSelected(skill.id)"
             (click)="onSkill(skill.id)"
           >

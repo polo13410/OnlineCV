@@ -49,6 +49,7 @@
 }
 
 .contact-btn {
+  @include m.lang-box();
   height: 32px;
   padding: 0 16px;
   border: none;

@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ViewTransitionService } from './view-transition.service';
 
 export type Theme = 'dark' | 'light';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly STORAGE_KEY = 'cv-theme';
+  private readonly viewTransition = inject(ViewTransitionService);
   private themeSubject = new BehaviorSubject<Theme>(this.loadTheme());
   public theme$ = this.themeSubject.asObservable();
 
@@ -19,9 +21,12 @@ export class ThemeService {
 
   toggle(): void {
     const next: Theme = this.themeSubject.value === 'dark' ? 'light' : 'dark';
-    this.themeSubject.next(next);
-    localStorage.setItem(this.STORAGE_KEY, next);
-    this.applyTheme(next);
+    // The whole page cross-fades to the new palette
+    this.viewTransition.run('theme', () => {
+      this.themeSubject.next(next);
+      localStorage.setItem(this.STORAGE_KEY, next);
+      this.applyTheme(next);
+    });
   }
 
   private loadTheme(): Theme {

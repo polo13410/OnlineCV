@@ -99,6 +99,18 @@ button { font-family: var(--font-main); cursor: pointer; }
 ::view-transition-old(.lang-toggle) { display: none; }
 ::view-transition-new(.lang-toggle) { animation: none; }
 
+// Dark/light switch: one snapshot of the whole page, cross-faded
+html[data-vt='theme'] * { view-transition-name: none !important; }
+
+// Skill selection: only the panel's cards and group titles animate (cards as one block)
+html[data-vt='skills'] app-skills .page-container *,
+html[data-vt='skills'] .panel-item * { view-transition-name: none !important; }
+// Card added / removed: slides in from / out to the right; moved: the group glides
+::view-transition-new(.panel-card):only-child { animation-name: vt-slide-in-right; }
+::view-transition-old(.panel-card):only-child { animation-name: vt-slide-out-right; }
+@keyframes vt-slide-in-right  { from { translate: 110% 0; opacity: 0; } }
+@keyframes vt-slide-out-right { to   { translate: 110% 0; opacity: 0; } }
+
 body.custom-cursor-active * { cursor: none !important; }
 
 // Keyframes (kept for easter egg pages)

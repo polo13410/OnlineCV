@@ -19,7 +19,7 @@
           <app-header-links show="cv" />
         }
         <button class="contact-btn" type="button" (click)="contact.open('general')">
-          {{ 'HEADER.CONTACT' | translate }}
+          <span>{{ 'HEADER.CONTACT' | translate }}</span>
         </button>
         @if (!isMobile()) {
           <app-header-links show="social" />

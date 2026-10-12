@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as m;
+
 :host {
   display: inline-flex;
   align-items: center;
@@ -5,6 +7,7 @@
 }
 
 .cv-btn {
+  @include m.lang-box();
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -30,6 +33,7 @@
 }
 
 .social {
+  @include m.lang-text();
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
