@@ -58,6 +58,7 @@ export class OverscrollNavComponent {
     const onTouchStart = (e: TouchEvent) => this.onTouchStart(e);
     const onTouchMove = (e: TouchEvent) => this.onTouchMove(e);
     const onTouchEnd = () => this.onTouchEnd();
+    const onTouchCancel = () => this.onTouchCancel();
 
     this.zone.runOutsideAngular(() => {
       // Not passive: the pull eats the wheel events (no rubber band, no scroll on the new page)
@@ -65,7 +66,7 @@ export class OverscrollNavComponent {
       window.addEventListener('touchstart', onTouchStart, { passive: true });
       window.addEventListener('touchmove', onTouchMove, { passive: true });
       window.addEventListener('touchend', onTouchEnd);
-      window.addEventListener('touchcancel', onTouchEnd);
+      window.addEventListener('touchcancel', onTouchCancel);
     });
 
     inject(DestroyRef).onDestroy(() => {
@@ -73,7 +74,7 @@ export class OverscrollNavComponent {
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('touchcancel', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchCancel);
       clearTimeout(this.resetTimer);
     });
 
@@ -145,6 +146,13 @@ export class OverscrollNavComponent {
     const edge = this.edge;
     if (edge && this.pull >= TOUCH_THRESHOLD[edge]) this.navigate(edge);
     else this.release();
+  }
+
+  /** The browser took the gesture over (system gesture, alert…): never a page change. */
+  private onTouchCancel(): void {
+    if (this.touchY === null) return;
+    this.touchY = null;
+    this.release();
   }
 
   private canPull(edge: Edge): boolean {

@@ -12,6 +12,7 @@ export type ViewTransitionKind = 'lang' | 'theme' | 'skills';
 export class ViewTransitionService {
   private readonly injector = inject(Injector);
   private readonly zone = inject(NgZone);
+  private transitionId = 0;
 
   run(kind: ViewTransitionKind, update: () => void | Promise<void>): void {
     const apply = () => this.zone.run(async () => {
@@ -24,9 +25,11 @@ export class ViewTransitionService {
       return;
     }
     const root = document.documentElement;
+    const id = ++this.transitionId;
     root.dataset['vt'] = kind;
     document.startViewTransition(apply).finished.finally(() => {
-      if (root.dataset['vt'] === kind) delete root.dataset['vt'];
+      // A newer transition (even of the same kind) took over: it cleans up after itself
+      if (id === this.transitionId && root.dataset['vt'] === kind) delete root.dataset['vt'];
     });
   }
 

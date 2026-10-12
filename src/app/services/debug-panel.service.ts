@@ -54,6 +54,8 @@ export class DebugPanelService {
   private loadColors(): Record<Theme, ColorOverrides> {
     try {
       const stored = JSON.parse(localStorage.getItem(this.STORAGE_KEY) ?? '{}');
+      // Saved before overrides were per theme: one flat map, applied to both themes
+      if (!stored.light && !stored.dark) return { light: { ...stored }, dark: { ...stored } };
       return { light: stored.light ?? {}, dark: stored.dark ?? {} };
     } catch { return { light: {}, dark: {} }; }
   }
