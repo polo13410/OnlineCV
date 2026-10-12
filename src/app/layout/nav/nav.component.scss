@@ -16,6 +16,9 @@
   @include m.mobile() {
     position: fixed;
     left: 0; top: 0;
+    height: 100dvh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     z-index: 50;
     transform: translateX(-100%);
     transition: transform var(--transition-base);

@@ -14,11 +14,24 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+// The document itself scrolls (no inner scroll container): mobile browsers can then
+// collapse their toolbars and draw the page edge to edge, behind the home indicator.
 html, body {
-  height: 100%;
-  overflow: hidden;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg-base);
+
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+    &:hover { background: var(--color-accent-primary); }
+  }
 }
 
 body {

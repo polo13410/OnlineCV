@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "PowerShell(npx ng build 2>&1)"
     ]
   }
 }

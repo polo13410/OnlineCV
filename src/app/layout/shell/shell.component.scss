@@ -3,9 +3,12 @@
 .shell {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
   position: relative;
+  // Landscape iPhone: keep content clear of the notch (viewport-fit=cover)
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 
   @include m.mobile() {
     grid-template-columns: 1fr;
@@ -15,7 +18,8 @@
 .shell-content {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  // clip (not hidden): hidden would make this a scroll container and break the sticky topbar
+  overflow-x: clip;
   min-width: 0;
 }
 
@@ -63,17 +67,8 @@
 
 .shell-main {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-
-  &::-webkit-scrollbar { width: 3px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb {
-    background: var(--color-border);
-    border-radius: 2px;
-    &:hover { background: var(--color-accent-primary); }
-  }
+  // Last content stays above the home indicator / floating browser toolbar
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .hamburger {

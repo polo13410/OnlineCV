@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { RouterModule } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
 import { NavComponent } from '../nav/nav.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,6 +28,17 @@ export class ShellComponent {
   );
 
   isMobileNavOpen = signal(false);
+
+  constructor() {
+    // The window is the scroll container: start each page at the top.
+    // Fragment links (/experiences#quanthome) are scrolled by the timeline itself.
+    const router = inject(Router);
+    router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      filter(e => !router.parseUrl(e.urlAfterRedirects).fragment),
+      takeUntilDestroyed(),
+    ).subscribe(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  }
 
   toggleNav(): void {
     this.isMobileNavOpen.update(v => !v);
