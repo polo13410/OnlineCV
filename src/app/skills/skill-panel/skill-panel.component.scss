@@ -1,38 +1,53 @@
 // src/app/skills/skill-panel/skill-panel.component.scss
 @use '../../../styles/mixins' as m;
 
-.panel {
+:host {
   position: fixed;
   top: var(--header-height);
   right: 0;
   bottom: 0;
   z-index: 20;
   width: var(--skill-panel-width);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  border-left: 1px solid var(--color-border);
-  background: var(--color-bg-base);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.06);
-  animation: slide-in-right 0.25s ease;
 
   @include m.mobile() {
     top: auto;
     left: 0;
     width: auto;
     height: 60vh;
+  }
+}
+
+// Slide in / out — classes set by animate.enter / animate.leave in the skills page;
+// Angular waits for the leave animation before removing the panel.
+:host(.panel-enter) { animation: slide-in-right var(--skill-panel-duration) cubic-bezier(0.2, 0.8, 0.2, 1); }
+:host(.panel-leave) { animation: slide-out-right var(--skill-panel-duration) ease-in forwards; }
+
+@include m.mobile() {
+  :host(.panel-enter) { animation-name: slide-in-up; }
+  :host(.panel-leave) { animation-name: slide-out-down; }
+}
+
+@keyframes slide-in-right  { from { transform: translateX(100%); } }
+@keyframes slide-out-right { to   { transform: translateX(100%); } }
+@keyframes slide-in-up     { from { transform: translateY(100%); } }
+@keyframes slide-out-down  { to   { transform: translateY(100%); } }
+
+.panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-bg-base);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.06);
+
+  @include m.mobile() {
     border-left: none;
     border-top: 1px solid var(--color-border);
     border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
     box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
-    animation-name: slide-in-up;
   }
-
-  @media (prefers-reduced-motion: reduce) { animation: none; }
 }
-
-@keyframes slide-in-right { from { transform: translateX(100%); } }
-@keyframes slide-in-up    { from { transform: translateY(100%); } }
 
 .panel-head {
   display: flex;

@@ -63,7 +63,7 @@ export const content: CVDataContent[] = [
         status: 'released',
         summary:
           "Outil d'aide à la décision pour Dofus : centralise les prix relevés par la communauté et propose plusieurs vues (recettes, coût de fabrication vs prix d'achat) pour choisir la meilleure option selon le type d'investissement visé.",
-        skills: ['react', 'typescript', 'htmlcss', 'netlify', 'supabase', 'tailwind'],
+        skills: ['react', 'typescript', 'htmlcss', 'netlify', 'supabase', 'tailwind', 'nodejs'],
         links: [
           { type: 'live', url: 'https://kamadvice.netlify.app' },
           { type: 'repo', url: 'https://github.com/polo13410/Kamadvice' },
@@ -79,7 +79,7 @@ export const content: CVDataContent[] = [
         status: 'in-progress',
         summary:
           'Application métier pour diététicien·ne·s : suivi des patients, rendez-vous, facturation, notes cliniques et suivi nutritionnel.',
-        skills: ['react', 'typescript', 'nodejs', 'docker', 'gcp', 'terraform', 'cicd', 'nestjs', 'sql', 'prisma'],
+        skills: ['react', 'typescript', 'nodejs', 'docker', 'gcp', 'terraform', 'cicd', 'nestjs', 'sql', 'prisma', 'htmlcss'],
         links: [{ type: 'repo', url: 'https://github.com/polo13410/vp_dietetic_center' }],
       },
       {
@@ -107,7 +107,7 @@ export const content: CVDataContent[] = [
           id: 'quanthome',
           icon: 'assets/pictures/experiences/quanthome.svg',
           dateFrom: '2024-10',
-          skills: ['typescript', 'nodejs', 'sql', 'gcp', 'cicd', 'architecture', 'testing', 'mcp', 'rag', 'agenticAi', 'docker', 'terraform', 'react', 'agile'],
+          skills: ['typescript', 'nodejs', 'sql', 'gcp', 'cicd', 'architecture', 'testing', 'mcp', 'rag', 'agenticAi', 'docker', 'terraform', 'react', 'agile', 'tailwind', 'htmlcss', 'python'],
           descriptions: [
             "Architecture et mise en place d'environnements cloud sur Google Cloud Platform (Cloud Run, Cloud SQL, CI/CD, IAM, networking).",
             "Migration et modernisation d'applications vers une architecture cloud centralisée.",
@@ -134,7 +134,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/propulselab.png',
           dateFrom: '2023-01',
           dateTo: '2024-10',
-          skills: ['typescript', 'python', 'php', 'htmlcss', 'nodejs', 'vue', 'laravel', 'cicd', 'terraform', 'docker', 'aws', 'agile', 'testing', 'architecture'],
+          skills: ['typescript', 'python', 'php', 'htmlcss', 'nodejs', 'vue', 'laravel', 'cicd', 'terraform', 'docker', 'aws', 'agile', 'testing', 'architecture', 'sql'],
           descriptions: [
             "Conception d'outils autour des paiements (PSP, remboursements, réconciliations, lutte contre la fraude), permettant une meilleure fiabilité des flux financiers et une réduction significative des chargebacks.",
             "Développement d'un link shortener paramétrable avec statistiques, améliorant l'efficacité des A/B tests et l'exploitation des données marketing.",
@@ -150,7 +150,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/metafactory.png',
           dateFrom: '2020-09',
           dateTo: '2022-05',
-          skills: ['csharp', 'dotnet', 'htmlcss', 'agile', 'testing'],
+          skills: ['csharp', 'dotnet', 'htmlcss', 'agile', 'testing', 'sql', 'python'],
           descriptions: [
             "Optimisation d\'une application en C# .net, accélérant la navigation utilisateur et réduisant les temps de réponse de l\'interface.",
             "Développement d\'une API REST et d\'une interface web en .NET, dissociant le front-end des serveurs, ce qui a amélioré la sécurité, facilité la maintenance et réduit les interruptions de service.",
@@ -166,7 +166,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/monext.png',
           dateFrom: '2020-01',
           dateTo: '2020-07',
-          skills: ['angular', 'typescript', 'htmlcss', 'java'],
+          skills: ['angular', 'typescript', 'htmlcss', 'java', 'sql', 'spring'],
           descriptions: [
             "Migration d'une app de terminal de paiement électronique virtuel en Angular pour la correspondance des normes de sécurité PCI-DSS, en réhabilitant et en modernisant l'interface utilisateur.",
           ],
@@ -179,7 +179,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/thales.png',
           dateFrom: '2018-09',
           dateTo: '2019-02',
-          skills: ['java'],
+          skills: ['java', 'sql'],
           descriptions: [
             "Création et intégration d'un plugin dans un programme Java  RCP permettant a l'utilisateur d'enregistrer et visualiser ses données experimentales grâce a une interface simple",
           ],
@@ -208,7 +208,7 @@ export const content: CVDataContent[] = [
         icon: 'assets/pictures/experiences/cesi.png',
         dateFrom: '2017',
         dateTo: '2020',
-        skills: [],
+        skills: ['sql'],
         descriptions: ['Développement logiciel & data-science'],
       },
       {
@@ -287,7 +287,7 @@ export const content: CVDataContent[] = [
         status: 'released',
         summary:
           'Decision-support tool for Dofus: centralizes community-reported prices and offers several views (recipes, crafting cost vs. purchase price) to pick the best option for the kind of investment you want to make.',
-        skills: ['react', 'typescript', 'htmlcss', 'netlify', 'supabase', 'tailwind'],
+        skills: ['react', 'typescript', 'htmlcss', 'netlify', 'supabase', 'tailwind', 'nodejs'],
         links: [
           { type: 'live', url: 'https://kamadvice.netlify.app' },
           { type: 'repo', url: 'https://github.com/polo13410/Kamadvice' },
@@ -303,7 +303,7 @@ export const content: CVDataContent[] = [
         status: 'in-progress',
         summary:
           'Business app for dieticians: patient follow-up, appointments, billing, clinical notes and nutrition tracking.',
-        skills: ['react', 'typescript', 'nodejs', 'docker', 'gcp', 'terraform', 'cicd', 'nestjs', 'sql', 'prisma'],
+        skills: ['react', 'typescript', 'nodejs', 'docker', 'gcp', 'terraform', 'cicd', 'nestjs', 'sql', 'prisma', 'htmlcss'],
         links: [{ type: 'repo', url: 'https://github.com/polo13410/vp_dietetic_center' }],
       },
       {
@@ -331,7 +331,7 @@ export const content: CVDataContent[] = [
           id: 'quanthome',
           icon: 'assets/pictures/experiences/quanthome.svg',
           dateFrom: '2024-10',
-          skills: ['typescript', 'nodejs', 'sql', 'gcp', 'cicd', 'architecture', 'testing', 'mcp', 'rag', 'agenticAi', 'docker', 'terraform', 'react', 'agile'],
+          skills: ['typescript', 'nodejs', 'sql', 'gcp', 'cicd', 'architecture', 'testing', 'mcp', 'rag', 'agenticAi', 'docker', 'terraform', 'react', 'agile', 'tailwind', 'htmlcss', 'python'],
           descriptions: [
             'Architecture and setup of cloud environments on Google Cloud Platform (Cloud Run, Cloud SQL, CI/CD, IAM, networking).',
             'Migration and modernization of applications towards a centralized cloud architecture.',
@@ -358,7 +358,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/propulselab.png',
           dateFrom: '2023-01',
           dateTo: '2024-10',
-          skills: ['typescript', 'python', 'php', 'htmlcss', 'nodejs', 'vue', 'laravel', 'cicd', 'terraform', 'docker', 'aws', 'agile', 'testing', 'architecture'],
+          skills: ['typescript', 'python', 'php', 'htmlcss', 'nodejs', 'vue', 'laravel', 'cicd', 'terraform', 'docker', 'aws', 'agile', 'testing', 'architecture', 'sql'],
           descriptions: [
             'Design of tools around payments (PSP, refunds, reconciliations, fraud prevention), enabling better reliability of financial flows and a significant reduction in chargebacks.',
             'Development of a configurable link shortener with statistics, improving the efficiency of A/B tests and the exploitation of marketing data.',
@@ -374,7 +374,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/metafactory.png',
           dateFrom: '2020-09',
           dateTo: '2022-05',
-          skills: ['csharp', 'dotnet', 'htmlcss', 'agile', 'testing'],
+          skills: ['csharp', 'dotnet', 'htmlcss', 'agile', 'testing', 'sql', 'python'],
           descriptions: [
             'Optimization of a C# .net application, accelerating user navigation and reducing interface response times.',
             'Development of a REST API and a web interface in .NET, separating the front-end from the servers, which improved security, facilitated maintenance and reduced service interruptions.',
@@ -390,7 +390,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/monext.png',
           dateFrom: '2020-01',
           dateTo: '2020-07',
-          skills: ['angular', 'typescript', 'htmlcss', 'java'],
+          skills: ['angular', 'typescript', 'htmlcss', 'java', 'sql', 'spring'],
           descriptions: [
             'Migration of a virtual electronic payment terminal application to Angular to meet PCI-DSS security standards, modernizing and redesigning the user interface.',
           ],
@@ -403,7 +403,7 @@ export const content: CVDataContent[] = [
           icon: 'assets/pictures/experiences/thales.png',
           dateFrom: '2018-09',
           dateTo: '2019-02',
-          skills: ['java'],
+          skills: ['java', 'sql'],
           descriptions: [
             'Creation and integration of a plugin in a Java RCP application allowing users to record and visualize experimental data through a simple interface.',
           ],
@@ -432,7 +432,7 @@ export const content: CVDataContent[] = [
         icon: 'assets/pictures/experiences/cesi.png',
         dateFrom: '2017',
         dateTo: '2020',
-        skills: [],
+        skills: ['sql'],
         descriptions: ['Software development & data science'],
       },
       {

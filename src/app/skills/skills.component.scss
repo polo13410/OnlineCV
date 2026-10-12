@@ -3,6 +3,7 @@
 
 :host {
   display: block;
+  transition: padding var(--skill-panel-duration) ease;
 
   // Leave room for the fixed side panel (desktop only; mobile uses a bottom sheet)
   &.panel-open { padding-right: var(--skill-panel-width); }
