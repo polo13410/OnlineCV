@@ -1,0 +1,124 @@
+// src/app/shared/timeline/timeline.component.scss
+@use '../../../styles/mixins' as m;
+
+$dot-col: 32px;
+$dot-col-mobile: 20px;
+
+:host { display: block; }
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--color-border);
+    transform: translateX(-50%);
+  }
+
+  @include m.mobile() {
+    gap: var(--space-4);
+    &::before { left: calc($dot-col-mobile / 2); }
+  }
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) $dot-col minmax(0, 1fr);
+  grid-template-areas: 'meta dot card';
+  align-items: center;
+  column-gap: var(--space-4);
+
+  &--flip {
+    grid-template-areas: 'card dot meta';
+    .timeline-meta { text-align: left; align-items: flex-start; }
+  }
+
+  @include m.mobile() {
+    grid-template-columns: $dot-col-mobile minmax(0, 1fr);
+    grid-template-areas:
+      'dot meta'
+      '.   card';
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
+
+    &--flip { grid-template-areas: 'dot meta' '. card'; }
+  }
+}
+
+.timeline-meta {
+  grid-area: meta;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 2px;
+
+  @include m.mobile() {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    text-align: left;
+    gap: 0 var(--space-2);
+  }
+}
+
+.meta-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+
+  // a label after a value starts a new group
+  .meta-value + & { margin-top: var(--space-2); }
+
+  @include m.mobile() {
+    .meta-value + & { margin-top: 0; margin-left: var(--space-2); }
+  }
+}
+
+.meta-value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+
+  &--emphasis {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+}
+
+.timeline-dot {
+  grid-area: dot;
+  justify-self: center;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-bg-base);
+  border: 2px solid var(--color-accent-primary);
+  box-shadow: 0 0 0 4px var(--color-bg-base);
+  transition: background var(--transition-base);
+}
+
+.timeline-card {
+  grid-area: card;
+  min-width: 0;
+  border-radius: var(--border-radius-md);
+  transition: box-shadow 0.4s ease;
+}
+
+// Card reached from the skills panel
+.timeline-row--target {
+  .timeline-dot { background: var(--color-accent-primary); }
+  .timeline-card { box-shadow: 0 0 0 2px var(--color-accent-primary); }
+}

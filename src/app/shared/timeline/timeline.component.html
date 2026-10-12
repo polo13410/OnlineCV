@@ -1,0 +1,28 @@
+<!-- src/app/shared/timeline/timeline.component.html -->
+<ol class="timeline">
+  @for (entry of entries; track entry.id; let i = $index; let odd = $odd) {
+    <li
+      class="timeline-row"
+      [id]="entry.id"
+      [class.timeline-row--flip]="odd"
+      [class.timeline-row--target]="targetId() === entry.id"
+      appScrollReveal="stagger-reveal"
+      [staggerIndex]="i"
+    >
+      <div class="timeline-meta">
+        @for (meta of entry.meta; track $index) {
+          @if (meta.label) {
+            <span class="meta-label">{{ meta.label }}</span>
+          }
+          <span class="meta-value" [class.meta-value--emphasis]="meta.emphasis">{{ meta.value }}</span>
+        }
+      </div>
+
+      <span class="timeline-dot" aria-hidden="true"></span>
+
+      <div class="timeline-card">
+        <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: entry.data }" />
+      </div>
+    </li>
+  }
+</ol>

@@ -1,7 +1,21 @@
 // src/app/skills/skills.component.scss
 @use '../../styles/mixins' as m;
 
+:host {
+  display: block;
+
+  // Leave room for the fixed side panel (desktop only; mobile uses a bottom sheet)
+  &.panel-open { padding-right: var(--skill-panel-width); }
+  @include m.mobile() { &.panel-open { padding-right: 0; padding-bottom: 60vh; } }
+}
+
 .page-container { @include m.page-container(); }
+
+.skills-hint {
+  margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
 
 .section-header {
   @include m.section-header();
@@ -54,8 +68,30 @@
   border-radius: var(--border-radius-sm);
   background: var(--color-bg-surface);
   min-width: 80px;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
-  cursor: default;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base),
+    opacity var(--transition-base),
+    filter var(--transition-base);
+  cursor: pointer;
+
+  &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 2px; }
+
+  &--selected {
+    border-color: var(--color-accent-primary);
+    box-shadow: inset 0 0 0 1px var(--color-accent-primary);
+    background: var(--color-bg-elevated);
+  }
+
+  // Never used together with the current selection — still clickable (restarts the selection)
+  &--greyed {
+    opacity: 0.35;
+    filter: grayscale(1);
+  }
 
   &:hover {
     transform: translateY(-1px);

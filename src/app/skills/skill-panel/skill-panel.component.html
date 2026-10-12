@@ -1,0 +1,42 @@
+<!-- src/app/skills/skill-panel/skill-panel.component.html -->
+<aside class="panel" [attr.aria-label]="'SKILLS.PANEL.TITLE' | translate">
+  <header class="panel-head">
+    <div class="panel-heading">
+      <p class="panel-overline">{{ 'SKILLS.PANEL.TITLE' | translate }}</p>
+      <button class="panel-close" type="button" (click)="closed.emit()" [attr.aria-label]="'SKILLS.PANEL.CLOSE' | translate" [title]="'SKILLS.PANEL.CLOSE' | translate">✕</button>
+    </div>
+    <div class="panel-chips">
+      @for (skill of selected(); track skill) {
+        <button class="panel-chip" type="button" (click)="toggleSkill.emit(skill)" [title]="'SKILLS.PANEL.REMOVE' | translate">
+          {{ label(skill) }}<span aria-hidden="true">✕</span>
+        </button>
+      }
+    </div>
+  </header>
+
+  <div class="panel-body">
+    @for (group of groups(); track group.key) {
+      <section class="panel-group">
+        <h3 class="panel-group-title">
+          {{ 'SKILLS.PANEL.' + group.key | translate }}
+          <span class="panel-count">{{ group.items.length }}</span>
+        </h3>
+        @for (item of group.items; track item.id) {
+          <button class="panel-item" type="button" (click)="open(item)">
+            <app-experience-card
+              variant="compact"
+              [icon]="item.icon"
+              [title]="item.title"
+              [subtitle]="item.subtitle"
+              [period]="item.period"
+              [skills]="item.skills"
+              [highlight]="selected()"
+            />
+          </button>
+        }
+      </section>
+    } @empty {
+      <p class="panel-empty">{{ 'SKILLS.PANEL.EMPTY' | translate }}</p>
+    }
+  </div>
+</aside>

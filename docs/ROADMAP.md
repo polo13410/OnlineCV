@@ -42,6 +42,7 @@ réellement utilisés récemment, dérivés de mes commits publics.
   pour éviter le rate-limit côté visiteur
 - Les données alimentent des **tags** sur les compétences (« utilisé récemment », langages de la semaine…)
 - Pensé pour être réutilisé par les cartes de la feature 4
+- S'appuie sur le registre `src/assets/data/skills.ts` (livré avec `feat/skill-linking`) : les tags GitHub deviennent des `SkillId`
 
 ## 4. Navigation « distribution de cartes » pour Skills (et Passions) — `feat/skills-constellation`
 
@@ -53,9 +54,15 @@ réellement utilisés récemment, dérivés de mes commits publics.
   distribution de cartes ; formes plus rondes, **taille proportionnelle aux années d'expérience**
 - **Navigation retour** pour replier et explorer les autres catégories
 - Réutilise la directive tilt (feature 2) et les tags GitHub (feature 3)
+- Données déjà prêtes : registre des compétences + tags sur chaque expérience (`feat/skill-linking`) ; la projection d'une compétence peut reprendre la logique de `skill-selection.ts`
 - La plus grosse feature : brainstorm dédié avec mockups avant toute implémentation
 
 ---
+
+## Livré
+
+- **Projets perso** (`feat/projects`) — frise en quinconce, dates GitHub en direct
+- **Compétences reliées** (`feat/skill-linking`) — registre unique des compétences, sélection combinée avec panneau des expériences, design frise commun à Exp pro / Projets / Formation
 
 ## Backlog / plus tard
 

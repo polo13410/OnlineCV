@@ -1,2 +1,6 @@
 // src/app/education/education.component.scss
-:host { display: block; }
+@use '../../styles/mixins' as m;
+
+.page-container { @include m.page-container(); }
+
+.section-header { @include m.section-header(); }

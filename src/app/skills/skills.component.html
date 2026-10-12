@@ -5,20 +5,37 @@
     <p class="section-overline">{{ 'SKILLS.OVERLINE' | translate }}</p>
     <h2>{{ 'SKILLS.TECH' | translate }}</h2>
   </div>
+  <p class="skills-hint" appScrollReveal="reveal">{{ 'SKILLS.HINT' | translate }}</p>
 
-  @for (category of skillCategories; track category.name; let ci = $index) {
+  @for (category of categories(); track category.id; let ci = $index) {
     <div class="skill-directory" appScrollReveal="stagger-reveal" [staggerIndex]="ci">
       <div class="directory-header">
-        <span class="dir-name">{{ category.name }}</span>
+        <span class="dir-name">{{ 'SKILLS.CATEGORY.' + category.id | translate }}</span>
         <span class="dir-count">{{ category.skills.length }}</span>
       </div>
       <div class="skill-tags">
-        @for (skill of category.skills; track skill.lang) {
-          <div class="skill-tag" [attr.data-level]="getLevelClass(skill.level)">
-            <span class="tag-name">{{ skill.lang }}</span>
-            <span class="tag-meta">{{ skill.time }}</span>
-            <span class="tag-level">{{ skill.level }}</span>
-          </div>
+        @for (skill of category.skills; track skill.id) {
+          <button
+            type="button"
+            class="skill-tag"
+            [class.skill-tag--selected]="isSelected(skill.id)"
+            [class.skill-tag--greyed]="isGreyed(skill.id)"
+            [attr.data-level]="getLevelClass(skill.level)"
+            [attr.aria-pressed]="isSelected(skill.id)"
+            (click)="onSkill(skill.id)"
+          >
+            <span class="tag-name">{{ skill.label }}</span>
+            <span class="tag-meta">{{ (skill.years > 1 ? 'SKILLS.YEARS_MANY' : 'SKILLS.YEARS_ONE') | translate: { count: skill.years } }}</span>
+            <span class="tag-level">
+              @if (skill.note) {
+                {{ skill.note }}
+              } @else if (skill.context) {
+                {{ 'SKILLS.LEVEL_LINE' | translate: { context: ('SKILLS.CONTEXT.' + skill.context | translate), level: ('SKILLS.LEVEL.' + skill.level | translate) } }}
+              } @else {
+                {{ 'SKILLS.LEVEL.' + skill.level | translate }}
+              }
+            </span>
+          </button>
         }
       </div>
     </div>
@@ -36,3 +53,12 @@
   </div>
 
 </div>
+
+@if (selected().length) {
+  <app-skill-panel
+    [selected]="selected()"
+    [results]="results()"
+    (toggleSkill)="onSkill($event)"
+    (closed)="clear()"
+  />
+}

@@ -1,2 +1,36 @@
 <!-- src/app/experiences/experiences.component.html -->
-<app-magnetic-scroll [sections]="sections()" />
+<div class="page-container">
+
+  <div class="section-header" appScrollReveal="reveal">
+    <p class="section-overline">{{ 'EXPERIENCES.OVERLINE' | translate }}</p>
+    <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
+  </div>
+  <app-timeline [entries]="pro()">
+    <ng-template let-xp>
+      <app-experience-card
+        [icon]="xp.icon"
+        [title]="xp.title"
+        [subtitle]="xp.company + ' · ' + xp.location"
+        [bullets]="xp.descriptions"
+        [skills]="xp.skills"
+      />
+    </ng-template>
+  </app-timeline>
+
+  <div class="section-header section-header--next" appScrollReveal="reveal">
+    <p class="section-overline">{{ 'EXPERIENCES.STAGES_OVERLINE' | translate }}</p>
+    <h2>{{ 'EXPERIENCES.INTERNSHIPS' | translate }}</h2>
+  </div>
+  <app-timeline [entries]="internships()">
+    <ng-template let-xp>
+      <app-experience-card
+        [icon]="xp.icon"
+        [title]="xp.title"
+        [subtitle]="xp.company + ' · ' + xp.location"
+        [bullets]="xp.descriptions"
+        [skills]="xp.skills"
+      />
+    </ng-template>
+  </app-timeline>
+
+</div>

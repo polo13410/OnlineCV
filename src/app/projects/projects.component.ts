@@ -1,42 +1,37 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { catchError, combineLatest, forkJoin, map, Observable, of, startWith, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Project, ProjectLink, ProjectLinkType } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
-import { LanguageService, SupportedLanguage } from '../services/language.service';
+import { LanguageService } from '../services/language.service';
+import { ExperienceCardComponent } from '../shared/experience-card/experience-card.component';
+import { TimelineComponent, TimelineEntry } from '../shared/timeline/timeline.component';
+import { formatDay, formatMonthYear } from '../shared/timeline/format';
 
-interface TimelineEntry {
+interface ProjectCard {
   project: Project;
   links: ProjectLink[];
-  created: string;
-  updated: string;
 }
+
+// Code link always comes first on a card
+const LINK_ORDER: Record<ProjectLinkType, number> = { repo: 0, live: 1, download: 2 };
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ScrollRevealDirective],
+  imports: [TranslateModule, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  entries: TimelineEntry[] = [];
+  entries: TimelineEntry<ProjectCard>[] = [];
   private readonly json = inject(GetJsonService);
   private readonly http = inject(HttpClient);
   private readonly langService = inject(LanguageService);
+  private readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
-
-  readonly linkLabels: Record<ProjectLinkType, string> = {
-    live:     'PROJECTS.LINK_LIVE',
-    repo:     'PROJECTS.LINK_REPO',
-    download: 'PROJECTS.LINK_DOWNLOAD',
-  };
-
-  // Code link always comes first on a card
-  private readonly linkOrder: Record<ProjectLinkType, number> = { repo: 0, live: 1, download: 2 };
 
   ngOnInit(): void {
     const projects$ = this.json.getProjects();
@@ -47,18 +42,28 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       startWith({} as Record<string, string>),
     );
 
-    combineLatest([projects$, pushedAt$, this.langService.currentLanguage$])
+    combineLatest([
+      projects$,
+      pushedAt$,
+      this.langService.currentLanguage$,
+      this.translate.stream(['PROJECTS.CREATED', 'PROJECTS.UPDATED']),
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(([projects, pushedAt, lang]) => {
+      .subscribe(([projects, pushedAt, lang, labels]) => {
         this.entries = [...projects]
-          .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+          .sort((a, b) => b.dateFrom.localeCompare(a.dateFrom))
           .map(project => {
             const slug = githubSlug(project);
             return {
-              project,
-              links: [...project.links].sort((a, b) => this.linkOrder[a.type] - this.linkOrder[b.type]),
-              created: formatDate(project.createdAt, lang, { month: 'long', year: 'numeric' }),
-              updated: formatDate((slug && pushedAt[slug]) || project.updatedAt, lang, { day: 'numeric', month: 'long', year: 'numeric' }),
+              id: project.id,
+              meta: [
+                { label: labels['PROJECTS.CREATED'], value: formatMonthYear(project.dateFrom, lang), emphasis: true },
+                { label: labels['PROJECTS.UPDATED'], value: formatDay((slug && pushedAt[slug]) || project.updatedAt, lang) },
+              ],
+              data: {
+                project,
+                links: [...project.links].sort((a, b) => LINK_ORDER[a.type] - LINK_ORDER[b.type]),
+              },
             };
           });
       });
@@ -87,8 +92,4 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 function githubSlug(project: Project): string | null {
   const repo = project.links.find(l => l.type === 'repo');
   return repo?.url.match(/github\.com\/([^/]+\/[^/]+)/)?.[1] ?? null;
-}
-
-function formatDate(iso: string, lang: SupportedLanguage, options: Intl.DateTimeFormatOptions): string {
-  return new Intl.DateTimeFormat(lang, { ...options, timeZone: 'UTC' }).format(new Date(iso));
 }

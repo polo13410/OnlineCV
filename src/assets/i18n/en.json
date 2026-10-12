@@ -24,7 +24,8 @@
     "OVERLINE": "Experience",
     "STAGES_OVERLINE": "Internships",
     "TITLE": "Professional experiences",
-    "INTERNSHIPS": "Internships"
+    "INTERNSHIPS": "Internships",
+    "PRESENT": "Present"
   },
   "EDUCATION": {
     "OVERLINE": "Education",
@@ -34,18 +35,55 @@
     "OVERLINE": "Skills",
     "SOFT_OVERLINE": "Soft skills",
     "TECH": "Tech skills",
-    "SOFT": "Soft skills"
+    "SOFT": "Soft skills",
+    "HINT": "Select one or more skills to see where I used them.",
+    "CATEGORY": {
+      "languages": "Programming & Scripting Languages",
+      "frameworks": "Frameworks & Libraries",
+      "data": "Databases",
+      "devops": "DevOps & Cloud",
+      "practices": "Methods & Practices",
+      "ai": "Artificial Intelligence & Agentic AI"
+    },
+    "LEVEL": {
+      "advanced": "advanced level",
+      "good": "good level",
+      "intermediate": "intermediate level",
+      "basics": "solid foundations",
+      "notions": "basic level",
+      "beginner": "beginner",
+      "daily": "daily practice"
+    },
+    "CONTEXT": {
+      "pro": "professional projects",
+      "perso": "personal projects",
+      "both": "professional & personal projects"
+    },
+    "LEVEL_LINE": "{{context}}: {{level}}",
+    "YEARS_ONE": "{{count}} year",
+    "YEARS_MANY": "{{count}} years",
+    "PANEL": {
+      "TITLE": "Used in",
+      "CLOSE": "Clear selection",
+      "REMOVE": "Remove",
+      "pro": "Professional",
+      "perso": "Personal",
+      "EMPTY": "No linked experience yet."
+    }
   },
   "PROJECTS": {
     "OVERLINE": "Personal projects",
     "TITLE": "My projects",
+    "STATUS_IN_PROGRESS": "In progress",
+    "CREATED": "Created in",
+    "UPDATED": "Last update"
+  },
+  "CARD": {
     "LINK_LIVE": "Visit",
     "LINK_REPO": "Code",
     "LINK_DOWNLOAD": "Download",
-    "STATUS_IN_PROGRESS": "In progress",
-    "STATUS_RELEASED": "Released",
-    "CREATED": "Created in",
-    "UPDATED": "Last update"
+    "SHOW_MORE": "Show more",
+    "SHOW_LESS": "Show less"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",

@@ -1,0 +1,221 @@
+// src/app/shared/experience-card/experience-card.component.scss
+@use '../../../styles/mixins' as m;
+
+:host { display: block; }
+
+.xp-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  box-sizing: border-box;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-surface);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+
+  &:hover {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+  }
+
+  @include m.mobile() { padding: var(--space-4); }
+
+  &--compact {
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+.xp-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+// White tile: keeps dark logos readable in dark mode and absorbs very different ratios
+.logo-tile {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 40px;
+  min-width: 40px;
+  max-width: 120px;
+  padding: 5px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: #fff;
+
+  img {
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .xp-card--compact & {
+    height: 32px;
+    min-width: 32px;
+    max-width: 96px;
+    padding: 4px;
+  }
+}
+
+.logo-initial {
+  font-weight: 700;
+  color: #10282e;
+}
+
+.xp-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.xp-title {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text-primary);
+
+  .xp-card--compact & { font-size: var(--font-size-sm); }
+}
+
+.xp-subtitle,
+.xp-period {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.xp-period { color: var(--color-text-muted); }
+
+.xp-badge {
+  align-self: flex-start;
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-primary);
+  border: 1px dashed var(--color-border-accent);
+  border-radius: 10px;
+  padding: 1px 8px;
+}
+
+.xp-summary {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.xp-bullets {
+  margin: 0;
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+
+  li::marker { color: var(--color-accent-primary); }
+}
+
+.xp-more {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  cursor: pointer;
+
+  &:hover { text-decoration: underline; }
+}
+
+.xp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xp-tag {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: 2px 8px;
+
+  &--active {
+    color: var(--color-bg-base);
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+}
+
+.xp-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.repo-btn {
+  display: inline-flex;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-base), transform var(--transition-base);
+
+  &:hover {
+    color: var(--color-accent-primary);
+    transform: translateY(-1px);
+  }
+}
+
+.xp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border-accent);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: background var(--transition-base), border-color var(--transition-base);
+
+  &:hover {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-accent-primary);
+  }
+}
+
+.link-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3fb950;
+  box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.2);
+}

@@ -1,0 +1,76 @@
+<!-- src/app/shared/experience-card/experience-card.component.html -->
+<article class="xp-card" [class.xp-card--compact]="variant === 'compact'">
+  <header class="xp-head">
+    <span class="logo-tile">
+      @if (icon) {
+        <img [src]="icon" alt="" loading="lazy" />
+      } @else {
+        <span class="logo-initial">{{ title.charAt(0) }}</span>
+      }
+    </span>
+    <div class="xp-titles">
+      <h3 class="xp-title">{{ title }}</h3>
+      @if (subtitle) {
+        <p class="xp-subtitle">{{ subtitle }}</p>
+      }
+      @if (period) {
+        <p class="xp-period">{{ period }}</p>
+      }
+    </div>
+    @if (badge) {
+      <span class="xp-badge">{{ badge }}</span>
+    }
+  </header>
+
+  @if (variant === 'full') {
+    @if (summary) {
+      <p class="xp-summary">{{ summary }}</p>
+    }
+    @if (bullets.length) {
+      <ul class="xp-bullets">
+        @for (bullet of visibleBullets; track bullet) {
+          <li>{{ bullet }}</li>
+        }
+      </ul>
+      @if (canExpand) {
+        <button class="xp-more" type="button" (click)="expanded.set(!expanded())" [attr.aria-expanded]="expanded()">
+          {{ (expanded() ? 'CARD.SHOW_LESS' : 'CARD.SHOW_MORE') | translate }}
+        </button>
+      }
+    }
+  }
+
+  @if (skills.length) {
+    <ul class="xp-tags">
+      @for (skill of skills; track skill) {
+        <li class="xp-tag" [class.xp-tag--active]="highlight.includes(skill)">{{ label(skill) }}</li>
+      }
+    </ul>
+  }
+
+  @if (variant === 'full' && links.length) {
+    <div class="xp-links">
+      @for (link of links; track link.url) {
+        @if (link.type === 'repo') {
+          <a class="repo-btn" [href]="link.url" target="_blank" rel="noopener noreferrer"
+             [attr.aria-label]="linkLabels.repo | translate" [title]="linkLabels.repo | translate">
+            <i class="devicon-github-original" aria-hidden="true"></i>
+          </a>
+        } @else {
+          <a class="xp-link" [href]="link.url" target="_blank" rel="noopener noreferrer">
+            @if (link.type === 'download') {
+              <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            } @else {
+              <span class="live-dot" aria-hidden="true"></span>
+            }
+            {{ linkLabels[link.type] | translate }}
+          </a>
+        }
+      }
+    </div>
+  }
+</article>

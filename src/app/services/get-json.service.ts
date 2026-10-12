@@ -81,19 +81,6 @@ export class GetJsonService {
   }
 
   /**
-   * Get skills for current language (reactive to language changes)
-   */
-  getSkills(): Observable<any> {
-    return this.languageService.currentLanguage$.pipe(
-      switchMap(() =>
-        this.dataObservable!.pipe(
-          map((data) => data[this.getCurrentLanguageIndex()].skillCategories)
-        )
-      )
-    );
-  }
-
-  /**
    * Get soft skills for current language (reactive to language changes)
    */
   getSoftSkills(): Observable<any> {
