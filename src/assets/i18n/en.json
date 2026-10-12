@@ -6,16 +6,18 @@
   },
   "NAV": {
     "HOME": "Home",
-    "EXPERIENCES": "Experiences",
+    "EXPERIENCES": "Professional experiences",
     "EDUCATION": "Education",
     "SKILLS": "Skills",
     "PASSIONS": "Passions",
+    "PROJECTS": "Personal projects",
     "MENU_TITLE": {
       "HOME": "Home",
-      "EXPERIENCES": "Experiences",
+      "EXPERIENCES": "Professional experiences",
       "EDUCATION": "Education",
       "SKILLS": "Skills",
-      "PASSIONS": "Passions"
+      "PASSIONS": "Passions",
+      "PROJECTS": "Personal projects"
     }
   },
   "EXPERIENCES": {
@@ -33,6 +35,17 @@
     "SOFT_OVERLINE": "Soft skills",
     "TECH": "Tech skills",
     "SOFT": "Soft skills"
+  },
+  "PROJECTS": {
+    "OVERLINE": "Personal projects",
+    "TITLE": "My projects",
+    "LINK_LIVE": "Visit",
+    "LINK_REPO": "Code",
+    "LINK_DOWNLOAD": "Download",
+    "STATUS_IN_PROGRESS": "In progress",
+    "STATUS_RELEASED": "Released",
+    "CREATED": "Created in",
+    "UPDATED": "Last update"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",

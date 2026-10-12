@@ -33,6 +33,7 @@ export class NavComponent implements OnInit, OnDestroy {
   navLinks = [
     { path: '/',            label: 'NAV.MENU_TITLE.HOME',        exact: true,  icon: 'home'       },
     { path: '/experiences', label: 'NAV.MENU_TITLE.EXPERIENCES', exact: false, icon: 'briefcase'  },
+    { path: '/projects',    label: 'NAV.MENU_TITLE.PROJECTS',    exact: false, icon: 'folder'     },
     { path: '/education',   label: 'NAV.MENU_TITLE.EDUCATION',   exact: false, icon: 'graduation' },
     { path: '/skills',      label: 'NAV.MENU_TITLE.SKILLS',      exact: false, icon: 'code'       },
     { path: '/passions',    label: 'NAV.MENU_TITLE.PASSIONS',    exact: false, icon: 'heart'      },

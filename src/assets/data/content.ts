@@ -188,6 +188,62 @@ export const content: CVDataContent[] = [
       { name: 'Montage photo/vidéo', type: 'other' },
       { name: 'Drones', type: 'other' },
     ],
+    projects: [
+      {
+        name: 'Chop Chop Save Converter',
+        kind: 'github',
+        icon: 'assets/pictures/projects/chopchop-save-converter.svg',
+        createdAt: '2026-10-08',
+        updatedAt: '2026-10-08',
+        status: 'released',
+        summary:
+          'Convertit les sauvegardes de la démo de Chop Chop Inc. en sauvegardes du jeu complet, les deux versions du jeu étant nativement incompatibles.',
+        tags: ['Python', 'GitHub Actions'],
+        links: [
+          { type: 'download', url: 'https://github.com/polo13410/chopchop-save-converter/releases/latest' },
+          { type: 'repo', url: 'https://github.com/polo13410/chopchop-save-converter' },
+        ],
+      },
+      {
+        name: 'Kamadvice',
+        kind: 'github',
+        icon: 'assets/pictures/projects/kamadvice.png',
+        createdAt: '2026-08-29',
+        updatedAt: '2026-09-15',
+        status: 'released',
+        summary:
+          "Outil d'aide à la décision pour Dofus : centralise les prix relevés par la communauté et propose plusieurs vues (recettes, coût de fabrication vs prix d'achat) pour choisir la meilleure option selon le type d'investissement visé.",
+        tags: ['React', 'TypeScript', 'Supabase', 'Tailwind', 'Netlify'],
+        links: [
+          { type: 'live', url: 'https://kamadvice.netlify.app' },
+          { type: 'repo', url: 'https://github.com/polo13410/Kamadvice' },
+        ],
+      },
+      {
+        name: 'VP Dietetic Center',
+        kind: 'github',
+        icon: 'assets/pictures/projects/vp-dietetic-center.png',
+        createdAt: '2025-04-01',
+        updatedAt: '2026-04-15',
+        status: 'in-progress',
+        summary:
+          'Application métier pour diététicien·ne·s : suivi des patients, rendez-vous, facturation, notes cliniques et suivi nutritionnel.',
+        tags: ['React', 'NestJS', 'PostgreSQL', 'Prisma', 'GCP', 'Terraform'],
+        links: [{ type: 'repo', url: 'https://github.com/polo13410/vp_dietetic_center' }],
+      },
+      {
+        name: 'Online CV',
+        kind: 'github',
+        icon: 'assets/pictures/logo.png',
+        createdAt: '2022-10-03',
+        updatedAt: '2026-06-30',
+        status: 'released',
+        summary:
+          'Ce site : mon parcours, mes compétences et un peu de ma personnalité.',
+        tags: ['Angular', 'TypeScript', 'Netlify Functions'],
+        links: [{ type: 'repo', url: 'https://github.com/polo13410/OnlineCV' }],
+      },
+    ],
     profile:
       "Développeur full-stack orienté produit, je suis capable de prendre en charge l'ensemble d'un projet, de l'architecture cloud jusqu'à la mise en production. Je conçois, développe et déploie des applications web modernes et scalables, avec une forte expertise en React, Node.js, PostgreSQL, Docker et architectures cloud (AWS, serverless), et une forte appétence pour l'automatisation et les systèmes IA modernes (agents, MCP, RAG). Mon approche reste pragmatique : code propre, systèmes maintenables et valeur métier concrète.",
     experiences: {
@@ -480,6 +536,62 @@ export const content: CVDataContent[] = [
       { name: 'New technologies', type: 'other' },
       { name: 'Photo/Video editing', type: 'other' },
       { name: 'Drones', type: 'other' },
+    ],
+    projects: [
+      {
+        name: 'Chop Chop Save Converter',
+        kind: 'github',
+        icon: 'assets/pictures/projects/chopchop-save-converter.svg',
+        createdAt: '2026-10-08',
+        updatedAt: '2026-10-08',
+        status: 'released',
+        summary:
+          'Converts Chop Chop Inc. demo saves into full-game saves, as the two versions of the game are natively incompatible.',
+        tags: ['Python', 'GitHub Actions'],
+        links: [
+          { type: 'download', url: 'https://github.com/polo13410/chopchop-save-converter/releases/latest' },
+          { type: 'repo', url: 'https://github.com/polo13410/chopchop-save-converter' },
+        ],
+      },
+      {
+        name: 'Kamadvice',
+        kind: 'github',
+        icon: 'assets/pictures/projects/kamadvice.png',
+        createdAt: '2026-08-29',
+        updatedAt: '2026-09-15',
+        status: 'released',
+        summary:
+          'Decision-support tool for Dofus: centralizes community-reported prices and offers several views (recipes, crafting cost vs. purchase price) to pick the best option for the kind of investment you want to make.',
+        tags: ['React', 'TypeScript', 'Supabase', 'Tailwind', 'Netlify'],
+        links: [
+          { type: 'live', url: 'https://kamadvice.netlify.app' },
+          { type: 'repo', url: 'https://github.com/polo13410/Kamadvice' },
+        ],
+      },
+      {
+        name: 'VP Dietetic Center',
+        kind: 'github',
+        icon: 'assets/pictures/projects/vp-dietetic-center.png',
+        createdAt: '2025-04-01',
+        updatedAt: '2026-04-15',
+        status: 'in-progress',
+        summary:
+          'Business app for dieticians: patient follow-up, appointments, billing, clinical notes and nutrition tracking.',
+        tags: ['React', 'NestJS', 'PostgreSQL', 'Prisma', 'GCP', 'Terraform'],
+        links: [{ type: 'repo', url: 'https://github.com/polo13410/vp_dietetic_center' }],
+      },
+      {
+        name: 'Online CV',
+        kind: 'github',
+        icon: 'assets/pictures/logo.png',
+        createdAt: '2022-10-03',
+        updatedAt: '2026-06-30',
+        status: 'released',
+        summary:
+          'This website: my background, my skills and a bit of my personality.',
+        tags: ['Angular', 'TypeScript', 'Netlify Functions'],
+        links: [{ type: 'repo', url: 'https://github.com/polo13410/OnlineCV' }],
+      },
     ],
     profile:
       'Product-oriented full-stack developer, I can take ownership of an entire project, from cloud architecture to production deployment. I design, develop and deploy modern, scalable web applications, with strong expertise in React, Node.js, PostgreSQL, Docker and cloud architectures (AWS, serverless), and a strong appetite for automation and modern AI systems (agents, MCP, RAG). My approach stays pragmatic: clean code, maintainable systems and concrete business value.',
