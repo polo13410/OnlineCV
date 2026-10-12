@@ -8,6 +8,7 @@ export interface CVDataContent {
   profile: string
   experiences?: Experiences
   educations?: Education[]
+  projects?: Project[]
 }
 
 export interface Header {
@@ -38,6 +39,27 @@ export interface SkillCategory {
 export interface Passion {
   name: string
   type: string
+}
+
+export type ProjectKind = 'github' | 'association'
+export type ProjectStatus = 'released' | 'in-progress'
+export type ProjectLinkType = 'repo' | 'live' | 'download'
+
+export interface ProjectLink {
+  type: ProjectLinkType
+  url: string
+}
+
+export interface Project {
+  name: string
+  kind: ProjectKind
+  status: ProjectStatus
+  icon: string // path under src/assets
+  createdAt: string // ISO date, orders the timeline
+  updatedAt: string // ISO date, fallback when GitHub can't be reached
+  summary: string
+  tags: string[]
+  links: ProjectLink[]
 }
 
 export interface Experiences {

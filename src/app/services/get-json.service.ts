@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CVDataContent } from 'src/assets/data/contentInterface';
+import { CVDataContent, Project } from 'src/assets/data/contentInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, switchMap } from 'rxjs';
 import { map } from 'rxjs';
@@ -132,4 +132,16 @@ export class GetJsonService {
     );
   }
 
+  /**
+   * Get projects for current language (reactive to language changes)
+   */
+  getProjects(): Observable<Project[]> {
+    return this.languageService.currentLanguage$.pipe(
+      switchMap(() =>
+        this.dataObservable!.pipe(
+          map((data) => data[this.getCurrentLanguageIndex()].projects ?? [])
+        )
+      )
+    );
+  }
 }

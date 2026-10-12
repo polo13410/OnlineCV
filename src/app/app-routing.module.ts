@@ -5,12 +5,14 @@ import { ExperiencesComponent } from './experiences/experiences.component';
 import { SkillsComponent } from './skills/skills.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PassionsComponent } from './passions/passions.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'experiences', component: ExperiencesComponent },
   { path: 'education', component: EducationComponent },
   { path: 'skills', component: SkillsComponent },
+  { path: 'projects', component: ProjectsComponent },
   { path: 'passions', component: PassionsComponent },
   { path: '**', component: NotFoundComponent },
 ];

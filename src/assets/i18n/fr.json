@@ -6,16 +6,18 @@
   },
   "NAV": {
     "HOME": "Accueil",
-    "EXPERIENCES": "Expériences",
+    "EXPERIENCES": "Expériences professionnelles",
     "EDUCATION": "Formation",
     "SKILLS": "Compétences",
     "PASSIONS": "Passions",
+    "PROJECTS": "Projets personnels",
     "MENU_TITLE": {
       "HOME": "Accueil",
-      "EXPERIENCES": "Expériences",
+      "EXPERIENCES": "Expériences professionnelles",
       "EDUCATION": "Formation",
       "SKILLS": "Compétences",
-      "PASSIONS": "Passions"
+      "PASSIONS": "Passions",
+      "PROJECTS": "Projets personnels"
     }
   },
   "EXPERIENCES": {
@@ -33,6 +35,17 @@
     "SOFT_OVERLINE": "Savoir-être",
     "TECH": "Tech skills",
     "SOFT": "Soft skills"
+  },
+  "PROJECTS": {
+    "OVERLINE": "Projets personnels",
+    "TITLE": "Mes projets",
+    "LINK_LIVE": "Visiter",
+    "LINK_REPO": "Code",
+    "LINK_DOWNLOAD": "Télécharger",
+    "STATUS_IN_PROGRESS": "En cours",
+    "STATUS_RELEASED": "Publié",
+    "CREATED": "Créé en",
+    "UPDATED": "Dernière mise à jour"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
