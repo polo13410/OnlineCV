@@ -6,8 +6,6 @@ const TEXT = "#10282e";
 const MUTED = "#4a6a70";
 const BORDER = "#d5e6e9";
 const SURFACE = "#eff6f7";
-const SITE_URL = "https://paulpera.ch";
-const LINKEDIN_URL = "https://www.linkedin.com/in/paulpera/";
 
 const esc = (value) =>
   String(value ?? "")
@@ -20,9 +18,9 @@ const esc = (value) =>
 const multiline = (value) => esc(value).replace(/\r?\n/g, "<br>");
 
 const TOPICS = {
-  pro: { fr: "Opportunité professionnelle", en: "Professional opportunity" },
-  project: { fr: "Projet", en: "Project" },
-  general: { fr: "Prise de contact", en: "Getting in touch" },
+  pro: "Opportunité professionnelle",
+  project: "Projet",
+  general: "Prise de contact",
 };
 
 function layout(title, body) {
@@ -62,7 +60,7 @@ function messageBlock(message) {
 /** Notification to me — always in French. Reply-To is the visitor. */
 exports.notificationEmail = (form) => {
   const fullName = `${form.firstName} ${form.lastName}`;
-  const topic = TOPICS[form.topic].fr;
+  const topic = TOPICS[form.topic];
   const subject = `[paulpera.ch] ${topic} — ${fullName}${form.company ? ` · ${form.company}` : ""}`;
 
   const html = layout(
@@ -94,76 +92,4 @@ exports.notificationEmail = (form) => {
     .join("\n");
 
   return { subject, html, text };
-};
-
-/** Automatic acknowledgement to the visitor, in their language, with a recap of what they sent. */
-exports.acknowledgementEmail = (form) => {
-  const fr = form.lang !== "en";
-  const t = fr
-    ? {
-        subject: `Merci pour votre message, ${form.firstName} !`,
-        hello: `Bonjour ${form.firstName},`,
-        thanks: `Merci ${form.firstName} pour votre message ! Je me réjouis de prendre connaissance de votre projet.`,
-        looking: "Je reviens vers vous le plus rapidement possible.",
-        recap: "Pour rappel, voici votre message :",
-        name: "Nom",
-        company: "Entreprise",
-        topic: "Sujet",
-        automatic:
-          "Ceci est un accusé de réception automatique. Vous pouvez répondre directement à ce mail.",
-      }
-    : {
-        subject: `Thank you for your message, ${form.firstName}!`,
-        hello: `Hello ${form.firstName},`,
-        thanks: `Thank you ${form.firstName} for your message! I'm looking forward to know more about your project.`,
-        looking: "I'll get back to you as soon as possible.",
-        recap: "For reference, here is your message:",
-        name: "Name",
-        company: "Company",
-        topic: "Topic",
-        automatic:
-          "This is an automatic acknowledgement. You can reply directly to this email.",
-      };
-  const lang = fr ? "fr" : "en";
-  const fullName = `${form.firstName} ${form.lastName}`;
-
-  const html = layout(
-    t.subject,
-    `
-    <p style="margin:0 0 16px;">${esc(t.hello)}</p>
-    <p style="margin:0 0 8px;">${esc(t.thanks)}</p>
-    <p style="margin:0 0 24px;">${esc(t.looking)}</p>
-    <p style="margin:0;font-size:13px;color:${MUTED};">${esc(t.recap)}</p>
-    ${detailsTable([
-      [t.name, esc(fullName)],
-      [t.company, form.company && esc(form.company)],
-      [t.topic, esc(TOPICS[form.topic][lang])],
-    ])}
-    ${messageBlock(form.message)}
-    <p style="margin:28px 0 0;">Paul Pera<br>
-      <span style="font-size:13px;color:${MUTED};">Lead Software Engineer &amp; Architect</span><br>
-      <a href="${SITE_URL}" style="font-size:13px;color:${ACCENT};text-decoration:none;">paulpera.ch</a>
-      <span style="font-size:13px;color:${MUTED};"> · </span>
-      <a href="${LINKEDIN_URL}" style="font-size:13px;color:${ACCENT};text-decoration:none;">LinkedIn</a>
-    </p>
-    <p style="margin:24px 0 0;padding-top:16px;border-top:1px solid ${BORDER};font-size:12px;color:${MUTED};">${esc(t.automatic)}</p>`,
-  );
-
-  const text = [
-    t.hello,
-    "",
-    t.thanks,
-    t.looking,
-    "",
-    t.recap,
-    "",
-    form.message,
-    "",
-    "Paul Pera — Lead Software Engineer & Architect",
-    SITE_URL,
-    "",
-    t.automatic,
-  ].join("\n");
-
-  return { subject: t.subject, html, text };
 };

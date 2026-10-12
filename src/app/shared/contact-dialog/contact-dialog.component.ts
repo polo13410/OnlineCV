@@ -2,7 +2,7 @@ import { Component, effect, ElementRef, HostListener, inject, signal, viewChild 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { ContactService, ContactTopic } from '../../services/contact.service';
 import { GetJsonService } from '../../services/get-json.service';
 import { LanguageService } from '../../services/language.service';
@@ -45,9 +45,10 @@ export class ContactDialogComponent {
   private readonly honeypot = viewChild<ElementRef<HTMLInputElement>>('honeypot');
 
   readonly status = signal<Status>('idle');
-  readonly sentTo = signal({ name: '', email: '' });
+  readonly sentName = signal('');
   private startedAt = 0;
   private returnFocus: HTMLElement | null = null;
+  private request?: Subscription;
 
   readonly form = inject(FormBuilder).nonNullable.group({
     firstName: ['', [Validators.required, Validators.maxLength(80)]],
@@ -70,8 +71,10 @@ export class ContactDialogComponent {
 
   close(): void {
     if (!this.contact.topic()) return;
+    // A request still in flight must not update the next dialog session
+    this.request?.unsubscribe();
     this.contact.close();
-    if (this.status() === 'sent' || this.status() === 'error') this.status.set('idle');
+    this.status.set('idle');
     this.returnFocus?.focus();
   }
 
@@ -121,7 +124,7 @@ export class ContactDialogComponent {
     const topic = this.contact.topic() ?? 'general';
     const value = this.form.getRawValue();
     this.status.set('sending');
-    this.contact.send({
+    this.request = this.contact.send({
       ...value,
       topic,
       lang: this.lang(),
@@ -129,7 +132,7 @@ export class ContactDialogComponent {
       startedAt: this.startedAt,
     }).subscribe({
       next: () => {
-        this.sentTo.set({ name: value.firstName, email: value.email });
+        this.sentName.set(value.firstName);
         this.status.set('sent');
         this.form.reset();
       },

@@ -123,7 +123,7 @@
     "OR_MAIL": "or email me directly",
     "PRIVACY": "Your details are only used to reply to you.",
     "SENT_TITLE": "Message sent!",
-    "SENT_TEXT": "Thank you {{name}}! An acknowledgement has just been sent to {{email}}.",
+    "SENT_TEXT": "Thank you {{name}}! Your message has arrived, I'll get back to you as soon as possible.",
     "ERROR": "Sending failed. Try again, or email me directly.",
     "CLOSE": "Close",
     "ERRORS": {

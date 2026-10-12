@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, inject, Input, OnDestroy, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, ContentChild, inject, Input, OnChanges, OnDestroy, OnInit, signal, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ScrollRevealDirective } from '../directives/scroll-reveal.directive';
@@ -35,7 +35,7 @@ const TARGET_HIGHLIGHT_MS = 2000;
   standalone: true,
   imports: [NgTemplateOutlet, ScrollRevealDirective],
 })
-export class TimelineComponent implements OnInit, OnDestroy {
+export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
   @Input() entries: TimelineEntry[] = [];
   @Input() invite?: TimelineInvite;
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<unknown>;
@@ -44,18 +44,31 @@ export class TimelineComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly destroy$ = new Subject<void>();
   private timers: ReturnType<typeof setTimeout>[] = [];
+  // Fragment waiting for its entry (entries can arrive after the URL, e.g. once translations load)
+  private pendingFragment: string | null = null;
 
   ngOnInit(): void {
     // A card linked from the skills panel (/experiences#quanthome) is scrolled to and flashed
     this.route.fragment.pipe(takeUntil(this.destroy$)).subscribe(fragment => {
-      if (!fragment || !this.entries.some(e => e.id === fragment)) return;
-      this.timers.push(setTimeout(() => {
-        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        document.getElementById(fragment)?.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
-        this.targetId.set(fragment);
-        this.timers.push(setTimeout(() => this.targetId.set(null), TARGET_HIGHLIGHT_MS));
-      }));
+      this.pendingFragment = fragment;
+      this.revealFragment();
     });
+  }
+
+  ngOnChanges(): void {
+    this.revealFragment();
+  }
+
+  private revealFragment(): void {
+    const fragment = this.pendingFragment;
+    if (!fragment || !this.entries.some(e => e.id === fragment)) return;
+    this.pendingFragment = null;
+    this.timers.push(setTimeout(() => {
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById(fragment)?.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      this.targetId.set(fragment);
+      this.timers.push(setTimeout(() => this.targetId.set(null), TARGET_HIGHLIGHT_MS));
+    }));
   }
 
   ngOnDestroy(): void {

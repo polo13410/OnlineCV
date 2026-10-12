@@ -123,7 +123,7 @@
     "OR_MAIL": "ou directement par mail",
     "PRIVACY": "Vos informations servent uniquement à vous répondre.",
     "SENT_TITLE": "Message envoyé !",
-    "SENT_TEXT": "Merci {{name}} ! Un accusé de réception vient de vous être envoyé à {{email}}.",
+    "SENT_TEXT": "Merci {{name}} ! Votre message est bien arrivé, je reviens vers vous le plus rapidement possible.",
     "ERROR": "L'envoi a échoué. Réessayez, ou écrivez-moi directement par mail.",
     "CLOSE": "Fermer",
     "ERRORS": {

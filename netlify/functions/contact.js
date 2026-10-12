@@ -1,5 +1,5 @@
 const { corsHeaders } = require('./lib/cors');
-const { notificationEmail, acknowledgementEmail } = require('./lib/contact-templates');
+const { notificationEmail } = require('./lib/contact-templates');
 
 const CONTACT_EMAIL = 'contact@paulpera.ch';
 const BREVO_URL = 'https://api.brevo.com/v3/smtp/email';
@@ -61,6 +61,7 @@ exports.handler = async (event) => {
   } catch {
     return reply(400, { error: 'Invalid JSON' });
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return reply(400, { error: 'Invalid form' });
 
   // Bots: honeypot filled or form submitted too fast → pretend success, send nothing
   const elapsed = Date.now() - Number(body.startedAt);
@@ -86,21 +87,6 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error('contact: notification failed', err.message);
     return reply(502, { error: 'Send failed' });
-  }
-
-  // The message reached me: a failed acknowledgement must not report an error to the visitor
-  const ack = acknowledgementEmail(form);
-  try {
-    await send(BREVO_API_KEY, {
-      sender: { name: 'Paul Pera', email: CONTACT_EMAIL },
-      to: [{ email: form.email, name: fullName }],
-      replyTo: { email: CONTACT_EMAIL, name: 'Paul Pera' },
-      subject: ack.subject,
-      htmlContent: ack.html,
-      textContent: ack.text,
-    });
-  } catch (err) {
-    console.error('contact: acknowledgement failed', err.message);
   }
 
   return reply(200, { ok: true });

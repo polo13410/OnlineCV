@@ -12,7 +12,7 @@
     @if (status() === 'sent') {
       <div class="contact-sent" role="status">
         <p class="sent-title">{{ 'CONTACT.SENT_TITLE' | translate }}</p>
-        <p>{{ 'CONTACT.SENT_TEXT' | translate: sentTo() }}</p>
+        <p>{{ 'CONTACT.SENT_TEXT' | translate: { name: sentName() } }}</p>
         <button class="contact-submit" type="button" (click)="close()">{{ 'CONTACT.CLOSE' | translate }}</button>
       </div>
     } @else {
