@@ -20,7 +20,6 @@
             class="skill-tag"
             [class.skill-tag--selected]="isSelected(skill.id)"
             [class.skill-tag--greyed]="isGreyed(skill.id)"
-            [attr.data-level]="getLevelClass(skill.level)"
             [attr.aria-pressed]="isSelected(skill.id)"
             (click)="onSkill(skill.id)"
           >
@@ -47,8 +46,8 @@
   </div>
 
   <div class="soft-tags">
-    @for (soft of softs; track soft; let si = $index) {
-      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si">{{ soft }}</span>
+    @for (soft of softs; track $index; let si = $index) {
+      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si"><span>{{ soft }}</span></span>
     }
   </div>
 

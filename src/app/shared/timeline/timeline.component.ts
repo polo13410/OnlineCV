@@ -64,8 +64,7 @@ export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
     if (!fragment || !this.entries.some(e => e.id === fragment)) return;
     this.pendingFragment = null;
     this.timers.push(setTimeout(() => {
-      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.getElementById(fragment)?.scrollIntoView({ block: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      document.getElementById(fragment)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       this.targetId.set(fragment);
       this.timers.push(setTimeout(() => this.targetId.set(null), TARGET_HIGHLIGHT_MS));
     }));

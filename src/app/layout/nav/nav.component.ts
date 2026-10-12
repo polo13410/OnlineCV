@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../../services/get-json.service';
+import { PAGES } from '../../services/page-navigation.service';
 import { BuildInfoComponent } from '../build-info/build-info.component';
 import { HeaderLinksComponent } from '../header-links/header-links.component';
 import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
@@ -26,14 +27,7 @@ export class NavComponent implements OnInit, OnDestroy {
   private readonly json = inject(GetJsonService);
   private readonly destroy$ = new Subject<void>();
 
-  navLinks = [
-    { path: '/',            label: 'NAV.MENU_TITLE.HOME',        exact: true,  icon: 'home'       },
-    { path: '/experiences', label: 'NAV.MENU_TITLE.EXPERIENCES', exact: false, icon: 'briefcase'  },
-    { path: '/projects',    label: 'NAV.MENU_TITLE.PROJECTS',    exact: false, icon: 'folder'     },
-    { path: '/education',   label: 'NAV.MENU_TITLE.EDUCATION',   exact: false, icon: 'graduation' },
-    { path: '/skills',      label: 'NAV.MENU_TITLE.SKILLS',      exact: false, icon: 'code'       },
-    { path: '/passions',    label: 'NAV.MENU_TITLE.PASSIONS',    exact: false, icon: 'heart'      },
-  ];
+  navLinks = PAGES;
 
   ngOnInit(): void {
     this.json.getHeader().pipe(takeUntil(this.destroy$)).subscribe(h => this.header.set(h));

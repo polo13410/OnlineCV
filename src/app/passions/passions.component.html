@@ -6,7 +6,7 @@
     <h2>{{ 'PASSIONS.SPORTS' | translate }}</h2>
   </div>
   <div class="passion-grid">
-    @for (sport of sports; track sport; let i = $index) {
+    @for (sport of sports; track $index; let i = $index) {
       <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
         <span class="passion-glyph">◈</span>
         <span class="passion-name">{{ sport }}</span>
@@ -19,7 +19,7 @@
     <h2>{{ 'PASSIONS.OTHERS' | translate }}</h2>
   </div>
   <div class="passion-grid">
-    @for (other of others; track other; let i = $index) {
+    @for (other of others; track $index; let i = $index) {
       <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
         <span class="passion-glyph">◉</span>
         <span class="passion-name">{{ other }}</span>

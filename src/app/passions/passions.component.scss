@@ -28,14 +28,12 @@
   background: var(--color-bg-surface);
   text-align: center;
   cursor: default;
-  // opacity included here so it's present both before AND after .revealed is added
+  @include m.lang-box();
   transition:
-    opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
+    var(--reveal-transition),
     border-color var(--transition-base),
     box-shadow var(--transition-base),
     transform var(--transition-base);
-
-  &.stagger-reveal { transform: none; } // kill the translateY slide, fade only
 
   &:hover {
     border-color: var(--color-accent-primary);

@@ -6,7 +6,7 @@ import { ScrollRevealService } from '../../services/scroll-reveal.service';
   standalone: true,
 })
 export class ScrollRevealDirective implements OnInit, OnDestroy {
-  @Input() appScrollReveal: 'reveal' | 'reveal-left' | 'stagger-reveal' = 'reveal';
+  @Input() appScrollReveal: 'reveal' | 'stagger-reveal' = 'reveal';
   @Input() staggerIndex = 0;
 
   private el = inject(ElementRef<HTMLElement>);

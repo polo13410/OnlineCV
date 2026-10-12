@@ -5,6 +5,11 @@
 
 :root {
   @include t.apply-tokens(); // light by default
+
+  // Page area (right of the sidebar): one page of the left-to-right strip
+  --page-offset: var(--sidebar-width);
+  --page-w: calc(100vw - var(--page-offset));
+  @include m.mobile() { --page-offset: 0px; }
 }
 
 [data-theme='dark'] {
@@ -23,6 +28,8 @@ html, body {
 
 html {
   scroll-behavior: smooth;
+  // Overscrolling the page edges changes page (OverscrollNavComponent): no rubber band / pull-to-refresh
+  overscroll-behavior-y: none;
   background-color: var(--color-bg-base);
 
   &::-webkit-scrollbar { width: 3px; }
@@ -63,23 +70,92 @@ a {
 
 button { font-family: var(--font-main); cursor: pointer; }
 
-// Scroll reveal
-.reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  &.revealed { opacity: 1; transform: translateY(0); }
+// Scroll reveal: fade + short rise, same settings everywhere.
+// Uses `translate` (not `transform`) so it never fights a card's hover lift.
+// Elements with their own `transition` list must include var(--reveal-transition).
+// (declared on the element itself so --reveal-delay resolves per element)
+.reveal, .stagger-reveal {
+  --reveal-transition:
+    opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay, 0s),
+    translate var(--reveal-duration) var(--reveal-ease) var(--reveal-delay, 0s);
+  opacity: 0;
+  translate: 0 var(--reveal-distance);
+  transition: var(--reveal-transition);
+  &.revealed { opacity: 1; translate: none; }
 }
-.reveal-left {
-  opacity: 0; transform: translateX(-20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  &.revealed { opacity: 1; transform: translateX(0); }
+.stagger-reveal { --reveal-delay: calc(var(--stagger-index, 0) * var(--reveal-stagger)); }
+
+// FR/EN switch (LanguageService wraps it in a view transition), see lang-box / lang-text mixins
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: var(--lang-morph-duration);
+  animation-timing-function: var(--lang-morph-ease);
 }
-.stagger-reveal {
-  opacity: 0; transform: translateY(14px);
-  transition:
-    opacity 0.4s ease calc(var(--stagger-index, 0) * 70ms),
-    transform 0.4s ease calc(var(--stagger-index, 0) * 70ms);
-  &.revealed { opacity: 1; transform: translateY(0); }
+// Card frame: only the new frame, stretched to the animated size — no fade
+::view-transition-old(.lang-box) { display: none; }
+::view-transition-new(.lang-box) { animation: none; width: 100%; height: 100%; }
+// Content: cross-fade at natural size (no stretched text while its box resizes)
+::view-transition-old(.lang-text),
+::view-transition-new(.lang-text) {
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+}
+// The toggle shows its own live knob slide instead of a cross-fade
+::view-transition-old(.lang-toggle) { display: none; }
+::view-transition-new(.lang-toggle) { animation: none; }
+
+// Fixed layers (vt-layer mixin) and their content, stacked above the page cards like on screen
+::view-transition-group(.layer-panel) { z-index: 1; }
+::view-transition-group(.in-panel)    { z-index: 2; }
+::view-transition-group(.layer-top)   { z-index: 3; }
+::view-transition-group(.in-top)      { z-index: 4; }
+::view-transition-group(.layer-drawer) { z-index: 5; }
+::view-transition-group(.in-drawer)   { z-index: 6; }
+// Cards inside the skill panel ride along with their panel card on FR/EN (no own layer)
+html[data-vt='lang'] .panel-item * { view-transition-name: none !important; }
+
+// Dark/light switch: one snapshot of the whole page, cross-faded
+html[data-vt='theme'] * { view-transition-name: none !important; }
+
+// Skill selection: only the panel's cards and group titles animate (cards as one block)
+html[data-vt='skills'] app-skills .page-container *,
+html[data-vt='skills'] .panel-item * { view-transition-name: none !important; }
+// Card added / removed: slides in from / out to the right; moved: the group glides
+::view-transition-new(.panel-card):only-child { animation-name: vt-slide-in-right; }
+::view-transition-old(.panel-card):only-child { animation-name: vt-slide-out-right; }
+@keyframes vt-slide-in-right  { from { translate: 110% 0; opacity: 0; } }
+@keyframes vt-slide-out-right { to   { translate: 110% 0; opacity: 0; } }
+
+// Page change (router, PageNavigationService): the pages sit side by side, left to right.
+// The page area is the root snapshot (nav and topbar are their own layers and stay put):
+// the old page slides out, the stand-ins of the pages in between (PageSweepComponent) pass by,
+// the new page slides in — one rigid strip, offsets in page widths.
+// --vt-sign: 1 to the right, -1 to the left; --vt-pages: pages travelled.
+html[data-vt^='page'] .shell-main * { view-transition-name: none !important; }
+html:not([data-vt='page']) app-page-sweep { display: none; }
+
+:root[data-vt='page'] {
+  &::view-transition-old(root),
+  &::view-transition-new(root),
+  &::view-transition-new(.page-sweep) {
+    animation: vt-page-strip var(--page-slide-duration) cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  &::view-transition-old(root) { --strip-from: 0; --strip-to: calc(var(--vt-sign) * var(--vt-pages) * -1); }
+  &::view-transition-new(root) { --strip-from: calc(var(--vt-sign) * var(--vt-pages)); --strip-to: 0; }
+  @for $k from 1 through 4 {
+    &::view-transition-new(page-sweep-#{$k}) {
+      --strip-from: calc(var(--vt-sign) * #{$k});
+      --strip-to: calc(var(--vt-sign) * (#{$k} - var(--vt-pages)));
+    }
+  }
+  // Above the sliding pages, under the nav / topbar layers
+  &::view-transition-group(.page-sweep) { z-index: 0; }
+}
+@keyframes vt-page-strip {
+  from { translate: calc(var(--strip-from) * var(--page-w)) 0; }
+  to   { translate: calc(var(--strip-to) * var(--page-w)) 0; }
 }
 
 body.custom-cursor-active * { cursor: none !important; }

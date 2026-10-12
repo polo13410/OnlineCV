@@ -12,7 +12,7 @@
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: var(--space-7) var(--space-6) var(--space-8);
-  animation: fadeInUp 0.4s ease;
+  animation: fadeInUp var(--reveal-duration) var(--reveal-ease);
 
   @include m.mobile() {
     padding: var(--space-5) var(--space-4);
@@ -20,6 +20,7 @@
 }
 
 .hero-body {
+  @include m.lang-box();
   display: grid;
   grid-template-columns: 160px 1fr;
   gap: var(--space-6);
@@ -114,6 +115,7 @@
 }
 
 .hero-profile {
+  @include m.lang-box();
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md) var(--border-radius-md);
@@ -124,6 +126,45 @@
   @include m.mobile() {
     padding: var(--space-4);
   }
+}
+
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+// Slides to the next page: the arrow leans that way on hover
+.discover-btn {
+  @include m.lang-box();
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 40px;
+  padding: 0 var(--space-5);
+  border-radius: 999px;
+  background: var(--color-accent-primary);
+  color: var(--color-bg-base);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--transition-base), box-shadow var(--transition-base);
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: translate var(--transition-base);
+  }
+
+  &:hover {
+    opacity: 1;
+    background: var(--color-accent-secondary);
+    box-shadow: var(--glow-primary);
+    svg { translate: 4px 0; }
+  }
+
+  &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 3px; }
 }
 
 .profile-prompt {
@@ -144,10 +185,6 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    translate: 0 var(--reveal-distance);
   }
 }

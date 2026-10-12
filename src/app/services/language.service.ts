@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { ViewTransitionService } from './view-transition.service';
 
 export type SupportedLanguage = 'fr' | 'en';
 
@@ -16,6 +17,8 @@ export class LanguageService {
     'fr': 0,
     'en': 1,
   };
+
+  private readonly viewTransition = inject(ViewTransitionService);
 
   private currentLanguageSubject: BehaviorSubject<SupportedLanguage>;
   public currentLanguage$: Observable<SupportedLanguage>;
@@ -50,9 +53,12 @@ export class LanguageService {
    * Switch to a specific language
    */
   setLanguage(lang: SupportedLanguage): void {
-    this.translate.use(lang);
-    this.currentLanguageSubject.next(lang);
-    this.storeLanguage(lang);
+    // Card frames resize/move, their content cross-fades (lang-box / lang-text mixins)
+    this.viewTransition.run('lang', async () => {
+      await firstValueFrom(this.translate.use(lang));
+      this.currentLanguageSubject.next(lang);
+      this.storeLanguage(lang);
+    });
   }
 
   /**

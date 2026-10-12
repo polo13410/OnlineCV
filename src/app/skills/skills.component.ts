@@ -2,9 +2,10 @@ import { Component, computed, HostListener, inject, OnDestroy, OnInit, signal } 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
-import { SkillId, SkillLevel } from 'src/assets/data/skills';
+import { SkillId } from 'src/assets/data/skills';
 import { GetJsonService } from '../services/get-json.service';
 import { SkillsService } from '../services/skills.service';
+import { ViewTransitionService } from '../services/view-transition.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { matching, selectable, toggle } from './skill-selection';
 import { SkillPanelComponent } from './skill-panel/skill-panel.component';
@@ -21,6 +22,7 @@ export class SkillsComponent implements OnInit, OnDestroy {
   softs?: string[];
   private readonly json = inject(GetJsonService);
   private readonly skillsService = inject(SkillsService);
+  private readonly viewTransition = inject(ViewTransitionService);
   private readonly destroy$ = new Subject<void>();
 
   readonly categories = toSignal(this.skillsService.getCategories(), { initialValue: [] });
@@ -47,7 +49,14 @@ export class SkillsComponent implements OnInit, OnDestroy {
   }
 
   onSkill(id: SkillId): void {
-    this.selected.set(toggle(this.items(), this.selected(), id));
+    const next = toggle(this.items(), this.selected(), id);
+    // Panel stays open: its cards slide in/out and glide to their new place (styles.scss).
+    // Opening/closing the panel keeps its own slide animation.
+    if (this.selected().length && next.length) {
+      this.viewTransition.run('skills', () => this.selected.set(next));
+    } else {
+      this.selected.set(next);
+    }
   }
 
   isSelected(id: SkillId): boolean {
@@ -57,12 +66,5 @@ export class SkillsComponent implements OnInit, OnDestroy {
   isGreyed(id: SkillId): boolean {
     const allowed = this.allowed();
     return !!allowed && !allowed.has(id) && !this.isSelected(id);
-  }
-
-  // Hover accent colour only distinguishes the two top levels
-  getLevelClass(level: SkillLevel): 'advanced' | 'intermediate' | 'beginner' {
-    if (level === 'advanced') return 'advanced';
-    if (level === 'intermediate') return 'intermediate';
-    return 'beginner';
   }
 }

@@ -12,7 +12,12 @@
       "SKILLS": "Skills",
       "PASSIONS": "Passions",
       "PROJECTS": "Personal projects"
-    }
+    },
+    "NEXT": "Next",
+    "PREVIOUS": "Previous"
+  },
+  "HOME": {
+    "DISCOVER": "Discover more"
   },
   "EXPERIENCES": {
     "OVERLINE": "Experience",

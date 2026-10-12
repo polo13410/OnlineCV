@@ -1,10 +1,12 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
+import { PageNavigationService } from '../services/page-navigation.service';
 import { TypewriterService } from '../services/typewriter.service';
 
 @Component({
@@ -12,9 +14,10 @@ import { TypewriterService } from '../services/typewriter.service';
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ScrollRevealDirective],
+  imports: [CommonModule, RouterLink, TranslateModule, ScrollRevealDirective],
 })
 export class HomepageComponent implements OnInit, OnDestroy {
+  readonly pageNav = inject(PageNavigationService);
   header = signal<Header | null>(null);
   profile = signal<string>('');
   displayedTitle = signal('');

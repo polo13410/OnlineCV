@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -7,16 +7,19 @@ import { NavComponent } from '../nav/nav.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContactService } from '../../services/contact.service';
+import { PageNavigationService } from '../../services/page-navigation.service';
 import { ContactDialogComponent } from '../../shared/contact-dialog/contact-dialog.component';
 import { HeaderLinksComponent } from '../header-links/header-links.component';
 import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
+import { OverscrollNavComponent } from '../overscroll-nav/overscroll-nav.component';
+import { PageSweepComponent } from '../page-sweep/page-sweep.component';
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   standalone: true,
-  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent],
+  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent, OverscrollNavComponent, PageSweepComponent],
 })
 export class ShellComponent {
   private breakpoints = inject(BreakpointObserver);
@@ -30,14 +33,26 @@ export class ShellComponent {
   isMobileNavOpen = signal(false);
 
   constructor() {
-    // The window is the scroll container: start each page at the top.
-    // Fragment links (/experiences#quanthome) are scrolled by the timeline itself.
+    // The window is the scroll container: start each page at the top, or at its bottom when
+    // overscrolling back to it. Fragment links (/experiences#quanthome) are scrolled by the timeline itself.
     const router = inject(Router);
+    const pageNav = inject(PageNavigationService);
+    const injector = inject(Injector);
     router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
       filter(e => !router.parseUrl(e.urlAfterRedirects).fragment),
       takeUntilDestroyed(),
-    ).subscribe(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    ).subscribe(e => {
+      if (!pageNav.takeBottomLanding(e.urlAfterRedirects)) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
+      // Once the new page is rendered (its height known), still before the slide captures it
+      afterNextRender(
+        () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }),
+        { injector },
+      );
+    });
   }
 
   toggleNav(): void {

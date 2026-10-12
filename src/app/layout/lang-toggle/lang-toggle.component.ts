@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
-import { DebugPanelService } from '../../services/debug-panel.service';
 import { LanguageService } from '../../services/language.service';
 
 /** FR/EN switch: a pill with a sliding knob, sized like the theme toggle. */
@@ -28,12 +27,9 @@ import { LanguageService } from '../../services/language.service';
 })
 export class LangToggleComponent {
   private readonly langService = inject(LanguageService);
-  private readonly debugPanel = inject(DebugPanelService);
   readonly lang = toSignal(this.langService.currentLanguage$, { requireSync: true });
 
   toggle(): void {
     this.langService.setLanguage(this.lang() === 'fr' ? 'en' : 'fr');
-    // Easter egg: 5 quick clicks open the debug panel
-    this.debugPanel.registerLangButtonClick();
   }
 }

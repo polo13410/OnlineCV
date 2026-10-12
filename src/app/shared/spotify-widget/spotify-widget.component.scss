@@ -1,6 +1,7 @@
 @use "../../../styles/mixins" as m;
 
 .range-selector {
+  @include m.lang-text();
   display: flex;
   gap: var(--space-2);
   margin-bottom: var(--space-4);
@@ -32,6 +33,7 @@
 }
 
 .tile-stack {
+  @include m.lang-text();
   // anchor for the absolutely-positioned leaving tile during the crossfade
   position: relative;
   min-height: 152px;

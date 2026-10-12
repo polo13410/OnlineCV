@@ -2,6 +2,7 @@
 
 // Section header: overline (9px uppercase) + bold title + hairline rule
 @mixin section-header() {
+  @include lang-text();
   margin-bottom: var(--space-6);
 
   .section-overline {
@@ -50,6 +51,31 @@
     transform: translateY(-2px);
     box-shadow: var(--glow-primary);
   }
+}
+
+// FR/EN switch (view transition, see styles.scss):
+// - lang-box: a card's frame (background/border) resizes and moves, never fades.
+//   Its direct children become lang-text, so the frame snapshot holds no content.
+// - lang-text: content that moves to its new place while cross-fading old → new language.
+// $layer: set when the element sits inside a vt-layer (`in-top`, `in-panel`, `in-drawer`),
+// so it is stacked above that layer during the transition.
+@mixin lang-text($layer: null) {
+  view-transition-name: match-element;
+  view-transition-class: lang-text $layer;
+}
+
+@mixin lang-box($layer: null) {
+  view-transition-name: match-element;
+  view-transition-class: lang-box $layer;
+  > * { @include lang-text($layer); }
+}
+
+// Fixed/sticky layer ($name: top, panel or drawer): its own snapshot, explicitly stacked
+// above the page cards during a view transition (styles.scss). Without it, the layer is
+// flattened into the page snapshot and the cards are drawn over it.
+@mixin vt-layer($name) {
+  view-transition-name: match-element;
+  view-transition-class: layer-#{$name};
 }
 
 @mixin mobile() {
