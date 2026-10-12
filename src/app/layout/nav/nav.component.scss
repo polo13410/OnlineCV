@@ -16,6 +16,10 @@
   @include m.mobile() {
     position: fixed;
     left: 0; top: 0;
+    height: 100dvh;
+    // Fixed, so outside the shell's padding: apply the insets here (notch on the left in landscape)
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) env(safe-area-inset-left);
+    width: calc(var(--sidebar-width) + env(safe-area-inset-left));
     z-index: 50;
     transform: translateX(-100%);
     transition: transform var(--transition-base);
