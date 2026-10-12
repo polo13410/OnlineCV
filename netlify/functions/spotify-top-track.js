@@ -1,23 +1,7 @@
-const ALLOWED_ORIGINS = [
-  'https://paulpera.ch',
-  'https://www.paulpera.ch',
-  'https://paulpera.netlify.app',
-];
-// Deploy previews and branch deploys: https://<anything>--paulpera.netlify.app
-const NETLIFY_DEPLOY_RE = /^https:\/\/[a-z0-9-]+--paulpera\.netlify\.app$/;
+const { corsHeaders } = require('./lib/cors');
 
 exports.handler = async (event) => {
-  const origin = event.headers?.origin ?? '';
-  const allowOrigin =
-    ALLOWED_ORIGINS.includes(origin) || NETLIFY_DEPLOY_RE.test(origin)
-      ? origin
-      : ALLOWED_ORIGINS[0];
-
-  const CORS_HEADERS = {
-    'Access-Control-Allow-Origin': allowOrigin,
-    Vary: 'Origin',
-    'Content-Type': 'application/json',
-  };
+  const CORS_HEADERS = corsHeaders(event);
 
   if (event.httpMethod === 'OPTIONS') {
     return {

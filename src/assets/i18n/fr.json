@@ -1,16 +1,10 @@
 {
-  "APP": {
-    "TITLE": "Paul PERA",
-    "MENU": "Menu",
-    "VERSION_PDF": "Version PDF"
+  "HEADER": {
+    "CV": "Télécharger le CV",
+    "CONTACT": "Me contacter",
+    "LANG": "Changer de langue"
   },
   "NAV": {
-    "HOME": "Accueil",
-    "EXPERIENCES": "Expériences professionnelles",
-    "EDUCATION": "Formation",
-    "SKILLS": "Compétences",
-    "PASSIONS": "Passions",
-    "PROJECTS": "Projets personnels",
     "MENU_TITLE": {
       "HOME": "Accueil",
       "EXPERIENCES": "Expériences professionnelles",
@@ -24,7 +18,15 @@
     "OVERLINE": "Expériences",
     "STAGES_OVERLINE": "Stages",
     "TITLE": "Experiences professionnelles",
-    "INTERNSHIPS": "Stages"
+    "INTERNSHIPS": "Stages",
+    "PRESENT": "Aujourd'hui",
+    "INVITE": {
+      "META": "Prochain chapitre",
+      "TITLE": "Et vous ?",
+      "TEXT": "Je suis toujours ouvert à de nouveaux défis et ravi d'échanger autour de projets ambitieux, en IA, web ou logiciel.",
+      "CTA": "Écrivez-moi",
+      "SUBJECT": "Prise de contact depuis paulpera.ch"
+    }
   },
   "EDUCATION": {
     "OVERLINE": "Formation",
@@ -34,18 +36,63 @@
     "OVERLINE": "Compétences",
     "SOFT_OVERLINE": "Savoir-être",
     "TECH": "Tech skills",
-    "SOFT": "Soft skills"
+    "SOFT": "Soft skills",
+    "HINT": "Sélectionne une ou plusieurs compétences pour voir où je les ai utilisées.",
+    "CATEGORY": {
+      "languages": "Langages de programmation & scripting",
+      "frameworks": "Frameworks & librairies",
+      "data": "Bases de données",
+      "devops": "DevOps & Cloud",
+      "practices": "Méthodes & pratiques",
+      "ai": "Intelligence Artificielle & IA Agentique"
+    },
+    "LEVEL": {
+      "advanced": "niveau avancé",
+      "good": "bon niveau",
+      "intermediate": "niveau intermédiaire",
+      "basics": "bonnes bases",
+      "notions": "bases",
+      "beginner": "débutant",
+      "daily": "pratique quotidienne"
+    },
+    "CONTEXT": {
+      "pro": "projets professionnels",
+      "perso": "projets personnels",
+      "both": "projets professionnels & personnels"
+    },
+    "LEVEL_LINE": "{{context}} : {{level}}",
+    "YEARS_ONE": "{{count}} année",
+    "YEARS_MANY": "{{count}} années",
+    "PANEL": {
+      "TITLE": "Utilisées dans",
+      "CLOSE": "Tout désélectionner",
+      "REMOVE": "Retirer",
+      "pro": "Professionnel",
+      "perso": "Personnel",
+      "EMPTY": "Pas encore d'expérience associée."
+    }
   },
   "PROJECTS": {
     "OVERLINE": "Projets personnels",
     "TITLE": "Mes projets",
+    "STATUS_IN_PROGRESS": "En cours",
+    "CREATED": "Créé en",
+    "UPDATED": "Dernière mise à jour",
+    "INVITE": {
+      "META": "Prochain projet",
+      "TITLE": "Votre projet ici ?",
+      "TEXT": "Une idée, une association, un side project ? Je suis toujours partant pour construire quelque chose ensemble.",
+      "CTA": "En parler",
+      "SUBJECT": "Une idée de projet"
+    }
+  },
+  "CARD": {
     "LINK_LIVE": "Visiter",
     "LINK_REPO": "Code",
     "LINK_DOWNLOAD": "Télécharger",
-    "STATUS_IN_PROGRESS": "En cours",
-    "STATUS_RELEASED": "Publié",
-    "CREATED": "Créé en",
-    "UPDATED": "Dernière mise à jour"
+    "SHOW_MORE": "Voir plus",
+    "SHOW_LESS": "Voir moins",
+    "LINKEDIN": "Ou sur LinkedIn"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
@@ -62,15 +109,32 @@
     "SPOTIFY_PLAY": "Écouter",
     "SPOTIFY_CLOSE": "Fermer le lecteur"
   },
-  "ERROR": {
-    "NOT_FOUND": "Uh Oh! 404!",
-    "BACK_HOME": "Retour a l'accueil"
+  "CONTACT": {
+    "TITLE_PRO": "Parlons de votre opportunité",
+    "TITLE_PROJECT": "Parlons de votre projet",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom",
+    "EMAIL": "Email",
+    "COMPANY": "Entreprise",
+    "OPTIONAL": "(optionnel)",
+    "MESSAGE": "Message",
+    "SEND": "Envoyer",
+    "SENDING": "Envoi…",
+    "OR_MAIL": "ou directement par mail",
+    "PRIVACY": "Vos informations servent uniquement à vous répondre.",
+    "SENT_TITLE": "Message envoyé !",
+    "SENT_TEXT": "Merci {{name}} ! Votre message est bien arrivé, je reviens vers vous le plus rapidement possible.",
+    "ERROR": "L'envoi a échoué. Réessayez, ou écrivez-moi directement par mail.",
+    "CLOSE": "Fermer",
+    "ERRORS": {
+      "REQUIRED": "Champ requis",
+      "EMAIL": "Adresse email invalide",
+      "MESSAGE": "10 caractères minimum"
+    },
+    "TITLE_GENERAL": "Prenons contact",
+    "SUBJECT_GENERAL": "Prise de contact depuis paulpera.ch"
   },
-  "CODE_INFO": {
-    "ANGULAR_VERSION": "Angular version",
-    "NODE_VERSION": "Node deployment version"
-  },
-  "LANGUAGE": {
-    "SWITCH": "Changer de langue"
+  "BUILD": {
+    "UPDATED": "mis à jour le"
   }
 }

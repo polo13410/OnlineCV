@@ -1,0 +1,193 @@
+// src/app/shared/contact-dialog/contact-dialog.component.scss
+@use '../../../styles/mixins' as m;
+
+.contact-overlay {
+  position: fixed;
+  inset: 0;
+  // Above the app chrome, below the custom cursor (9999) and password-manager menus
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: rgba(5, 20, 24, 0.55);
+  backdrop-filter: blur(2px);
+
+  &.overlay-enter { animation: overlay-in 0.22s ease; }
+  &.overlay-leave { animation: overlay-out 0.18s ease forwards; }
+
+  &.overlay-enter .contact-panel { animation: panel-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  &.overlay-leave .contact-panel { animation: panel-out 0.18s ease forwards; }
+}
+
+@keyframes overlay-in  { from { opacity: 0; } }
+@keyframes overlay-out { to   { opacity: 0; } }
+@keyframes panel-in    { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
+@keyframes panel-out   { to   { opacity: 0; transform: translateY(8px) scale(0.98); } }
+
+.contact-panel {
+  box-sizing: border-box;
+  width: min(520px, 100%);
+  color: var(--color-text-primary);
+  max-height: calc(100vh - 2 * var(--space-6));
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-6) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-base);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+
+  @include m.mobile() { padding: var(--space-4); }
+}
+
+.contact-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+
+  h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+}
+
+.contact-close {
+  border: none;
+  background: none;
+  padding: var(--space-1);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--color-text-secondary);
+
+  &:hover { color: var(--color-accent-primary); }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+
+  @include m.mobile() { grid-template-columns: 1fr; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  input,
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background: var(--color-bg-surface);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent-primary);
+      box-shadow: 0 0 0 3px var(--color-border-accent);
+    }
+
+    &[aria-invalid='true'] { border-color: #c2410c; }
+  }
+
+  textarea { resize: vertical; min-height: 110px; }
+}
+
+.field-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+
+  em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+}
+
+.field-error,
+.contact-error {
+  font-size: var(--font-size-xs);
+  color: #c2410c;
+}
+
+.contact-error { margin: 0; }
+
+// Off-screen rather than display:none so naive bots still fill it
+.contact-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.contact-submit {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-accent-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-bg-base);
+  transition: background var(--transition-base), opacity var(--transition-base);
+
+  &:hover:not(:disabled) { background: var(--color-accent-secondary); }
+  &:disabled { opacity: 0.6; cursor: progress; }
+}
+
+.contact-mail {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+.contact-privacy {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.contact-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+
+  p { margin: 0; font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+
+  .sent-title {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .contact-submit { margin-top: var(--space-3); }
+}

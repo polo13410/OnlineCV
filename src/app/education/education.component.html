@@ -1,2 +1,22 @@
 <!-- src/app/education/education.component.html -->
-<app-magnetic-scroll [sections]="sections()" />
+<div class="page-container">
+
+  <div class="section-header" appScrollReveal="reveal">
+    <p class="section-overline">{{ 'EDUCATION.OVERLINE' | translate }}</p>
+    <h2>{{ 'EDUCATION.TITLE' | translate }}</h2>
+  </div>
+  <app-timeline [entries]="entries()">
+    <ng-template let-edu>
+      <app-experience-card
+        [icon]="edu.icon"
+        [iconFill]="!!edu.iconFill"
+        [iconDark]="edu.iconDark"
+        [title]="edu.title"
+        [subtitle]="edu.school + ' · ' + edu.location"
+        [bullets]="edu.descriptions"
+        [skills]="edu.skills"
+      />
+    </ng-template>
+  </app-timeline>
+
+</div>

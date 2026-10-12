@@ -8,20 +8,38 @@
 
   <div class="shell-content" (click)="onContentClick()">
     <header class="shell-topbar">
-      @if (isMobile()) {
-        <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">
-          <span [class.open]="isMobileNavOpen()"></span>
-          <span [class.open]="isMobileNavOpen()"></span>
-          <span [class.open]="isMobileNavOpen()"></span>
+      <div class="topbar-group">
+        @if (isMobile()) {
+          <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">
+            <span [class.open]="isMobileNavOpen()"></span>
+            <span [class.open]="isMobileNavOpen()"></span>
+            <span [class.open]="isMobileNavOpen()"></span>
+          </button>
+        } @else {
+          <app-header-links show="cv" />
+        }
+        <button class="contact-btn" type="button" (click)="contact.open('general')">
+          {{ 'HEADER.CONTACT' | translate }}
         </button>
-      }
-      <app-theme-toggle />
+        @if (!isMobile()) {
+          <app-header-links show="social" />
+        }
+      </div>
+
+      <div class="topbar-group">
+        @if (!isMobile()) {
+          <app-lang-toggle />
+        }
+        <app-theme-toggle />
+      </div>
     </header>
 
     <main class="shell-main">
       <router-outlet />
     </main>
   </div>
+
+  <app-contact-dialog />
 
   @if (isMobile() && isMobileNavOpen()) {
     <div class="nav-backdrop" (click)="closeNav()"></div>

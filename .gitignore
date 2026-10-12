@@ -49,3 +49,6 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# Generated at build time (scripts/build-info.mjs)
+/src/assets/build-info.json

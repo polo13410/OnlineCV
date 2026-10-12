@@ -1,16 +1,10 @@
 {
-  "APP": {
-    "TITLE": "Paul PERA",
-    "MENU": "Menu",
-    "VERSION_PDF": "PDF Version"
+  "HEADER": {
+    "CV": "Download CV",
+    "CONTACT": "Get in touch",
+    "LANG": "Switch language"
   },
   "NAV": {
-    "HOME": "Home",
-    "EXPERIENCES": "Professional experiences",
-    "EDUCATION": "Education",
-    "SKILLS": "Skills",
-    "PASSIONS": "Passions",
-    "PROJECTS": "Personal projects",
     "MENU_TITLE": {
       "HOME": "Home",
       "EXPERIENCES": "Professional experiences",
@@ -24,7 +18,15 @@
     "OVERLINE": "Experience",
     "STAGES_OVERLINE": "Internships",
     "TITLE": "Professional experiences",
-    "INTERNSHIPS": "Internships"
+    "INTERNSHIPS": "Internships",
+    "PRESENT": "Present",
+    "INVITE": {
+      "META": "Next chapter",
+      "TITLE": "What about you?",
+      "TEXT": "I'm always open to new challenges and happy to talk about ambitious projects in AI, web or software.",
+      "CTA": "Contact me",
+      "SUBJECT": "Getting in touch from paulpera.ch"
+    }
   },
   "EDUCATION": {
     "OVERLINE": "Education",
@@ -34,18 +36,63 @@
     "OVERLINE": "Skills",
     "SOFT_OVERLINE": "Soft skills",
     "TECH": "Tech skills",
-    "SOFT": "Soft skills"
+    "SOFT": "Soft skills",
+    "HINT": "Select one or more skills to see where I used them.",
+    "CATEGORY": {
+      "languages": "Programming & Scripting Languages",
+      "frameworks": "Frameworks & Libraries",
+      "data": "Databases",
+      "devops": "DevOps & Cloud",
+      "practices": "Methods & Practices",
+      "ai": "Artificial Intelligence & Agentic AI"
+    },
+    "LEVEL": {
+      "advanced": "advanced level",
+      "good": "good level",
+      "intermediate": "intermediate level",
+      "basics": "solid foundations",
+      "notions": "basic level",
+      "beginner": "beginner",
+      "daily": "daily practice"
+    },
+    "CONTEXT": {
+      "pro": "professional projects",
+      "perso": "personal projects",
+      "both": "professional & personal projects"
+    },
+    "LEVEL_LINE": "{{context}}: {{level}}",
+    "YEARS_ONE": "{{count}} year",
+    "YEARS_MANY": "{{count}} years",
+    "PANEL": {
+      "TITLE": "Used in",
+      "CLOSE": "Clear selection",
+      "REMOVE": "Remove",
+      "pro": "Professional",
+      "perso": "Personal",
+      "EMPTY": "No linked experience yet."
+    }
   },
   "PROJECTS": {
     "OVERLINE": "Personal projects",
     "TITLE": "My projects",
+    "STATUS_IN_PROGRESS": "In progress",
+    "CREATED": "Created in",
+    "UPDATED": "Last update",
+    "INVITE": {
+      "META": "Next project",
+      "TITLE": "Your project here?",
+      "TEXT": "An idea, a non-profit, a side project? I'm always up for building something together.",
+      "CTA": "Let's talk",
+      "SUBJECT": "A project idea"
+    }
+  },
+  "CARD": {
     "LINK_LIVE": "Visit",
     "LINK_REPO": "Code",
     "LINK_DOWNLOAD": "Download",
-    "STATUS_IN_PROGRESS": "In progress",
-    "STATUS_RELEASED": "Released",
-    "CREATED": "Created in",
-    "UPDATED": "Last update"
+    "SHOW_MORE": "Show more",
+    "SHOW_LESS": "Show less",
+    "LINKEDIN": "Or on LinkedIn"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
@@ -62,15 +109,32 @@
     "SPOTIFY_PLAY": "Play",
     "SPOTIFY_CLOSE": "Close player"
   },
-  "ERROR": {
-    "NOT_FOUND": "Uh Oh! Page not found!",
-    "BACK_HOME": "Back to home"
+  "CONTACT": {
+    "TITLE_PRO": "Let's talk about your opportunity",
+    "TITLE_PROJECT": "Let's talk about your project",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "EMAIL": "Email",
+    "COMPANY": "Company",
+    "OPTIONAL": "(optional)",
+    "MESSAGE": "Message",
+    "SEND": "Send",
+    "SENDING": "Sending…",
+    "OR_MAIL": "or email me directly",
+    "PRIVACY": "Your details are only used to reply to you.",
+    "SENT_TITLE": "Message sent!",
+    "SENT_TEXT": "Thank you {{name}}! Your message has arrived, I'll get back to you as soon as possible.",
+    "ERROR": "Sending failed. Try again, or email me directly.",
+    "CLOSE": "Close",
+    "ERRORS": {
+      "REQUIRED": "Required",
+      "EMAIL": "Invalid email address",
+      "MESSAGE": "At least 10 characters"
+    },
+    "TITLE_GENERAL": "Get in touch",
+    "SUBJECT_GENERAL": "Getting in touch from paulpera.ch"
   },
-  "CODE_INFO": {
-    "ANGULAR_VERSION": "Angular version",
-    "NODE_VERSION": "Node deployment version"
-  },
-  "LANGUAGE": {
-    "SWITCH": "Switch language"
+  "BUILD": {
+    "UPDATED": "updated"
   }
 }

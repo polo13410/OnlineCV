@@ -6,63 +6,19 @@
     <h2>{{ 'PROJECTS.TITLE' | translate }}</h2>
   </div>
 
-  <ol class="timeline">
-    @for (entry of entries; track entry.project.name; let i = $index; let odd = $odd) {
-      <li class="timeline-row" [class.timeline-row--flip]="odd" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <div class="timeline-meta">
-          <span class="meta-label">{{ 'PROJECTS.CREATED' | translate }}</span>
-          <span class="meta-created">{{ entry.created }}</span>
-          <span class="meta-label meta-label--updated">{{ 'PROJECTS.UPDATED' | translate }}</span>
-          <span class="meta-updated">{{ entry.updated }}</span>
-        </div>
-
-        <span class="timeline-dot" aria-hidden="true"></span>
-
-        <article class="project-card">
-          <header class="project-head">
-            <img class="project-icon" [src]="entry.project.icon" alt="" width="36" height="36" loading="lazy" />
-            <h3 class="project-name">{{ entry.project.name }}</h3>
-            @if (entry.project.status === 'in-progress') {
-              <span class="project-status">{{ 'PROJECTS.STATUS_IN_PROGRESS' | translate }}</span>
-            }
-          </header>
-
-          <p class="project-summary">{{ entry.project.summary }}</p>
-
-          <ul class="project-tags">
-            @for (tag of entry.project.tags; track tag) {
-              <li class="project-tag">{{ tag }}</li>
-            }
-          </ul>
-
-          @if (entry.links.length) {
-            <div class="project-links">
-              @for (link of entry.links; track link.url) {
-                @if (link.type === 'repo') {
-                  <a class="repo-btn" [href]="link.url" target="_blank" rel="noopener noreferrer"
-                     [attr.aria-label]="linkLabels.repo | translate" [title]="linkLabels.repo | translate">
-                    <i class="devicon-github-original" aria-hidden="true"></i>
-                  </a>
-                } @else {
-                  <a class="project-link" [href]="link.url" target="_blank" rel="noopener noreferrer">
-                    @if (link.type === 'download') {
-                      <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                      </svg>
-                    } @else {
-                      <span class="live-dot" aria-hidden="true"></span>
-                    }
-                    {{ linkLabels[link.type] | translate }}
-                  </a>
-                }
-              }
-            </div>
-          }
-        </article>
-      </li>
-    }
-  </ol>
+  <app-timeline [entries]="entries" [invite]="invite">
+    <ng-template let-card>
+      <app-experience-card
+        [icon]="card.project.icon"
+        [iconFill]="!!card.project.iconFill"
+        [iconDark]="card.project.iconDark"
+        [title]="card.project.name"
+        [badge]="card.project.status === 'in-progress' ? ('PROJECTS.STATUS_IN_PROGRESS' | translate) : undefined"
+        [summary]="card.project.summary"
+        [skills]="card.project.skills"
+        [links]="card.links"
+      />
+    </ng-template>
+  </app-timeline>
 
 </div>

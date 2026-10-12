@@ -1,8 +1,9 @@
+import { SkillId } from './skills'
+
 export interface CVDataContent {
   language: string
   header: Header
   details: Details
-  skillCategories: SkillCategory[]
   softskills: string[]
   passions: Passion[]
   profile: string
@@ -25,17 +26,6 @@ export interface Details {
   licenses: string[]
 }
 
-export interface Skill {
-  lang: string
-  time: string
-  level: string
-}
-
-export interface SkillCategory {
-  name: string
-  skills: Skill[]
-}
-
 export interface Passion {
   name: string
   type: string
@@ -50,15 +40,23 @@ export interface ProjectLink {
   url: string
 }
 
-export interface Project {
+// Shared by pro experiences, internships, side projects and education
+export interface ExperienceBase {
+  id: string // stable, used as page anchor
+  icon?: string // path under src/assets
+  iconFill?: boolean // logo has its own background: fills the tile edge to edge
+  iconDark?: 'invert' | 'plate' // dark theme fix for logos too dark to read: invert a monochrome logo, or sit it on a light plate
+  dateFrom: string // ISO 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD', orders the timeline
+  dateTo?: string // ISO; absent = ongoing
+  skills: SkillId[]
+}
+
+export interface Project extends ExperienceBase {
   name: string
   kind: ProjectKind
   status: ProjectStatus
-  icon: string // path under src/assets
-  createdAt: string // ISO date, orders the timeline
   updatedAt: string // ISO date, fallback when GitHub can't be reached
   summary: string
-  tags: string[]
   links: ProjectLink[]
 }
 
@@ -67,35 +65,16 @@ export interface Experiences {
   stage: Experience[]
 }
 
-export interface Experience {
+export interface Experience extends ExperienceBase {
   title: string
   company: string
   location: string
-  dfrom: string
-  to: string
   descriptions: string[]
 }
 
-export interface Education {
+export interface Education extends ExperienceBase {
   title: string
   school: string
   location: string
-  dfrom: string
-  to: string
   descriptions: string[]
-}
-
-export interface MagneticScrollItem {
-  title:        string;
-  organisation: string; // company name or school name
-  location:     string;
-  dateFrom:     string;
-  dateTo:       string;
-  descriptions: string[];
-}
-
-export interface MagneticScrollSection {
-  overline: string;
-  title:    string;
-  items:    MagneticScrollItem[];
 }

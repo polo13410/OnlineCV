@@ -1,0 +1,60 @@
+<!-- src/app/shared/timeline/timeline.component.html -->
+<ol class="timeline">
+  @if (invite) {
+    <li class="timeline-row timeline-row--invite" appScrollReveal="stagger-reveal" [staggerIndex]="0">
+      <div class="timeline-meta">
+        <ng-container *ngTemplateOutlet="metaTemplate; context: { $implicit: invite.meta }" />
+      </div>
+
+      <span class="timeline-dot timeline-dot--empty" aria-hidden="true"></span>
+
+      <div class="timeline-card">
+        <article class="invite-card">
+          <h3 class="invite-title">{{ invite.title }}</h3>
+          <p class="invite-text">{{ invite.text }}</p>
+          <div class="invite-actions">
+            <button class="invite-cta" type="button" (click)="invite.cta.action()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <polyline points="22 6 12 13 2 6"/>
+              </svg>
+              {{ invite.cta.label }}
+            </button>
+            @if (invite.secondary) {
+              <a class="invite-secondary" [href]="invite.secondary.href" target="_blank" rel="noopener noreferrer">{{ invite.secondary.label }}</a>
+            }
+          </div>
+        </article>
+      </div>
+    </li>
+  }
+  @for (entry of entries; track entry.id; let i = $index; let odd = $odd) {
+    <li
+      class="timeline-row"
+      [id]="entry.id"
+      [class.timeline-row--flip]="invite ? !odd : odd"
+      [class.timeline-row--target]="targetId() === entry.id"
+      appScrollReveal="stagger-reveal"
+      [staggerIndex]="invite ? i + 1 : i"
+    >
+      <div class="timeline-meta">
+        <ng-container *ngTemplateOutlet="metaTemplate; context: { $implicit: entry.meta }" />
+      </div>
+
+      <span class="timeline-dot" aria-hidden="true"></span>
+
+      <div class="timeline-card">
+        <ng-container *ngTemplateOutlet="cardTemplate; context: { $implicit: entry.data }" />
+      </div>
+    </li>
+  }
+</ol>
+
+<ng-template #metaTemplate let-metas>
+  @for (meta of metas; track $index) {
+    @if (meta.label) {
+      <span class="meta-label">{{ meta.label }}</span>
+    }
+    <span class="meta-value" [class.meta-value--emphasis]="meta.emphasis">{{ meta.value }}</span>
+  }
+</ng-template>

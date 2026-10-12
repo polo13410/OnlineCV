@@ -5,16 +5,22 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { NavComponent } from '../nav/nav.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContactService } from '../../services/contact.service';
+import { ContactDialogComponent } from '../../shared/contact-dialog/contact-dialog.component';
+import { HeaderLinksComponent } from '../header-links/header-links.component';
+import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   standalone: true,
-  imports: [RouterModule, NavComponent, ThemeToggleComponent],
+  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent],
 })
 export class ShellComponent {
   private breakpoints = inject(BreakpointObserver);
+  readonly contact = inject(ContactService);
 
   isMobile = toSignal(
     this.breakpoints.observe('(max-width: 768px)').pipe(map(r => r.matches)),

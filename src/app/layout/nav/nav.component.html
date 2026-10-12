@@ -66,36 +66,15 @@
 
   <div class="nav-spacer"></div>
 
-  <div class="nav-lang">
-    <button
-      class="lang-btn"
-      [class.active]="currentLang() === 'fr'"
-      (click)="onLangClick('fr')"
-    >
-      FR
-    </button>
-    <span class="lang-sep">/</span>
-    <button
-      class="lang-btn"
-      [class.active]="currentLang() === 'en'"
-      (click)="onLangClick('en')"
-    >
-      EN
-    </button>
-  </div>
-
-  <div class="nav-footer">
-    <button class="nav-action" (click)="downloadPDF()">
-      <span class="action-icon">↓</span>
-      <span>CV.pdf</span>
-    </button>
-    <div class="nav-social">
-      <button class="social-btn" (click)="openLinkedIn()" title="LinkedIn">
-        <i class="devicon-linkedin-plain"></i>
-      </button>
-      <button class="social-btn" (click)="openGitHub()" title="GitHub">
-        <i class="devicon-github-original"></i>
-      </button>
+  @if (isMobile) {
+    <div class="nav-mobile-actions">
+      <app-header-links show="cv" />
+      <div class="nav-mobile-row">
+        <app-lang-toggle />
+        <app-header-links show="social" />
+      </div>
     </div>
-  </div>
+  }
+
+  <app-build-info class="nav-build" />
 </nav>
