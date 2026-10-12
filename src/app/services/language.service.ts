@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { afterNextRender, inject, Injectable, Injector, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 
 export type SupportedLanguage = 'fr' | 'en';
 
@@ -16,6 +16,9 @@ export class LanguageService {
     'fr': 0,
     'en': 1,
   };
+
+  private readonly injector = inject(Injector);
+  private readonly zone = inject(NgZone);
 
   private currentLanguageSubject: BehaviorSubject<SupportedLanguage>;
   public currentLanguage$: Observable<SupportedLanguage>;
@@ -50,9 +53,29 @@ export class LanguageService {
    * Switch to a specific language
    */
   setLanguage(lang: SupportedLanguage): void {
-    this.translate.use(lang);
-    this.currentLanguageSubject.next(lang);
-    this.storeLanguage(lang);
+    // Applied inside a view transition: the page cross-fades and cards (lang-morph mixin)
+    // glide to their new size/position. The DOM must be fully re-rendered before the
+    // callback resolves, so wait for the translations and the next Angular render.
+    const apply = () => this.zone.run(async () => {
+      await firstValueFrom(this.translate.use(lang));
+      this.currentLanguageSubject.next(lang);
+      this.storeLanguage(lang);
+      await this.nextRender();
+    });
+
+    if (!document.startViewTransition) {
+      void apply();
+      return;
+    }
+    document.startViewTransition(apply);
+  }
+
+  /** Resolves after Angular's next render (or 500ms, so a missed render never freezes the page). */
+  private nextRender(): Promise<void> {
+    return new Promise(resolve => {
+      afterNextRender(() => resolve(), { injector: this.injector });
+      setTimeout(resolve, 500);
+    });
   }
 
   /**

@@ -58,6 +58,17 @@
   --transition-base: 0.22s ease;
   --transition-slow: 0.4s ease;
 
+  // Entrance (scroll reveal) — one setting for every page
+  // (gentle ease-out: a steep one finishes the rise while the element is still transparent)
+  --reveal-distance: 24px;
+  --reveal-duration: 0.6s;
+  --reveal-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --reveal-stagger: 70ms;
+
+  // FR/EN switch: card boxes resize/move, their content cross-fades
+  --lang-morph-duration: 0.4s;
+  --lang-morph-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
   // Terminal chrome dots (kept for easter eggs)
   --terminal-dot-red: #ff5f57;
   --terminal-dot-yellow: #febc2e;

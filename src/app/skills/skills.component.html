@@ -47,8 +47,8 @@
   </div>
 
   <div class="soft-tags">
-    @for (soft of softs; track soft; let si = $index) {
-      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si">{{ soft }}</span>
+    @for (soft of softs; track $index; let si = $index) {
+      <span class="soft-tag" appScrollReveal="stagger-reveal" [staggerIndex]="si"><span>{{ soft }}</span></span>
     }
   </div>
 

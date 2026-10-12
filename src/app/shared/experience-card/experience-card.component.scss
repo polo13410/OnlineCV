@@ -4,6 +4,7 @@
 :host { display: block; }
 
 .xp-card {
+  @include m.lang-box();
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
