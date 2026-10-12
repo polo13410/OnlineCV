@@ -95,8 +95,10 @@
   }
 }
 
+// Absolute over the whole (document-tall) shell, not fixed: iOS 26 Safari tints its bottom
+// toolbar from fixed elements touching the bottom edge and keeps the grey once they are gone.
 .nav-backdrop {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 49;
