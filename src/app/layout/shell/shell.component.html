@@ -8,28 +8,29 @@
 
   <div class="shell-content" (click)="onContentClick()">
     <header class="shell-topbar">
-      @if (isMobile()) {
-        <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">
-          <span [class.open]="isMobileNavOpen()"></span>
-          <span [class.open]="isMobileNavOpen()"></span>
-          <span [class.open]="isMobileNavOpen()"></span>
-        </button>
-      } @else {
-        <app-header-links show="cv" />
-      }
-
-      <div class="topbar-actions">
-        @if (!isMobile()) {
-          <app-lang-toggle />
-        }
-        <app-theme-toggle />
-        @if (!isMobile()) {
-          <span class="topbar-sep" aria-hidden="true"></span>
-          <app-header-links show="social" />
+      <div class="topbar-group">
+        @if (isMobile()) {
+          <button class="hamburger" (click)="$event.stopPropagation(); toggleNav()" [attr.aria-label]="'Toggle navigation'">
+            <span [class.open]="isMobileNavOpen()"></span>
+            <span [class.open]="isMobileNavOpen()"></span>
+            <span [class.open]="isMobileNavOpen()"></span>
+          </button>
+        } @else {
+          <app-header-links show="cv" />
         }
         <button class="contact-btn" type="button" (click)="contact.open('general')">
           {{ 'HEADER.CONTACT' | translate }}
         </button>
+        @if (!isMobile()) {
+          <app-header-links show="social" />
+        }
+      </div>
+
+      <div class="topbar-group">
+        @if (!isMobile()) {
+          <app-lang-toggle />
+        }
+        <app-theme-toggle />
       </div>
     </header>
 

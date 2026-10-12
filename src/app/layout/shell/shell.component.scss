@@ -37,17 +37,10 @@
   }
 }
 
-.topbar-actions {
+.topbar-group {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-left: auto;
-}
-
-.topbar-sep {
-  width: 1px;
-  height: 20px;
-  background: var(--color-border);
 }
 
 .contact-btn {
