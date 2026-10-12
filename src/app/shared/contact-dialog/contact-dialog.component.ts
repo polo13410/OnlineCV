@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
-import { ContactService } from '../../services/contact.service';
+import { ContactService, ContactTopic } from '../../services/contact.service';
 import { GetJsonService } from '../../services/get-json.service';
 import { LanguageService } from '../../services/language.service';
 import { mailto } from '../contact';
@@ -11,6 +11,17 @@ import { mailto } from '../contact';
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([tabindex="-1"]), textarea';
+
+const TITLE_KEYS: Record<ContactTopic, string> = {
+  pro: 'CONTACT.TITLE_PRO',
+  project: 'CONTACT.TITLE_PROJECT',
+  general: 'CONTACT.TITLE_GENERAL',
+};
+const SUBJECT_KEYS: Record<ContactTopic, string> = {
+  pro: 'EXPERIENCES.INVITE.SUBJECT',
+  project: 'PROJECTS.INVITE.SUBJECT',
+  general: 'CONTACT.SUBJECT_GENERAL',
+};
 
 /**
  * Contact form overlay; opened through ContactService.open().
@@ -89,9 +100,12 @@ export class ContactDialogComponent {
     if (event.target === event.currentTarget) this.close();
   }
 
+  titleKey(): string {
+    return TITLE_KEYS[this.contact.topic() ?? 'general'];
+  }
+
   mailtoHref(): string {
-    const page = this.contact.topic() === 'project' ? 'PROJECTS' : 'EXPERIENCES';
-    return mailto(this.email(), this.translate.instant(`${page}.INVITE.SUBJECT`));
+    return mailto(this.email(), this.translate.instant(SUBJECT_KEYS[this.contact.topic() ?? 'general']));
   }
 
   showError(field: keyof typeof this.form.controls): boolean {
@@ -104,7 +118,7 @@ export class ContactDialogComponent {
       this.form.markAllAsTouched();
       return;
     }
-    const topic = this.contact.topic() ?? 'pro';
+    const topic = this.contact.topic() ?? 'general';
     const value = this.form.getRawValue();
     this.status.set('sending');
     this.contact.send({

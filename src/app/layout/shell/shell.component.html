@@ -14,8 +14,23 @@
           <span [class.open]="isMobileNavOpen()"></span>
           <span [class.open]="isMobileNavOpen()"></span>
         </button>
+      } @else {
+        <app-header-links show="cv" />
       }
-      <app-theme-toggle />
+
+      <div class="topbar-actions">
+        @if (!isMobile()) {
+          <app-lang-toggle />
+        }
+        <app-theme-toggle />
+        @if (!isMobile()) {
+          <span class="topbar-sep" aria-hidden="true"></span>
+          <app-header-links show="social" />
+        }
+        <button class="contact-btn" type="button" (click)="contact.open('general')">
+          {{ 'HEADER.CONTACT' | translate }}
+        </button>
+      </div>
     </header>
 
     <main class="shell-main">

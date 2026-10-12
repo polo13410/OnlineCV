@@ -6,6 +6,7 @@ const BREVO_URL = 'https://api.brevo.com/v3/smtp/email';
 // A human needs a few seconds to fill the form; faster submissions are bots.
 const MIN_FILL_MS = 3000;
 
+const TOPICS = ['pro', 'project', 'general'];
 const SINGLE_LINE = /^[^\r\n<>]+$/;
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 
@@ -18,7 +19,7 @@ function validate(body) {
     email: str(body.email),
     company: str(body.company),
     message: str(body.message),
-    topic: body.topic === 'project' ? 'project' : 'pro',
+    topic: TOPICS.includes(body.topic) ? body.topic : 'general',
     lang: body.lang === 'en' ? 'en' : 'fr',
   };
 

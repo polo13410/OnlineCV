@@ -22,6 +22,7 @@ const multiline = (value) => esc(value).replace(/\r?\n/g, "<br>");
 const TOPICS = {
   pro: { fr: "Opportunité professionnelle", en: "Professional opportunity" },
   project: { fr: "Projet", en: "Project" },
+  general: { fr: "Prise de contact", en: "Getting in touch" },
 };
 
 function layout(title, body) {

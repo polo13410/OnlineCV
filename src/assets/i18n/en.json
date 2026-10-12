@@ -1,16 +1,10 @@
 {
-  "APP": {
-    "TITLE": "Paul PERA",
-    "MENU": "Menu",
-    "VERSION_PDF": "PDF Version"
+  "HEADER": {
+    "CV": "Download CV",
+    "CONTACT": "Get in touch",
+    "LANG": "Switch language"
   },
   "NAV": {
-    "HOME": "Home",
-    "EXPERIENCES": "Professional experiences",
-    "EDUCATION": "Education",
-    "SKILLS": "Skills",
-    "PASSIONS": "Passions",
-    "PROJECTS": "Personal projects",
     "MENU_TITLE": {
       "HOME": "Home",
       "EXPERIENCES": "Professional experiences",
@@ -115,17 +109,6 @@
     "SPOTIFY_PLAY": "Play",
     "SPOTIFY_CLOSE": "Close player"
   },
-  "ERROR": {
-    "NOT_FOUND": "Uh Oh! Page not found!",
-    "BACK_HOME": "Back to home"
-  },
-  "CODE_INFO": {
-    "ANGULAR_VERSION": "Angular version",
-    "NODE_VERSION": "Node deployment version"
-  },
-  "LANGUAGE": {
-    "SWITCH": "Switch language"
-  },
   "CONTACT": {
     "TITLE_PRO": "Let's talk about your opportunity",
     "TITLE_PROJECT": "Let's talk about your project",
@@ -147,6 +130,11 @@
       "REQUIRED": "Required",
       "EMAIL": "Invalid email address",
       "MESSAGE": "At least 10 characters"
-    }
+    },
+    "TITLE_GENERAL": "Get in touch",
+    "SUBJECT_GENERAL": "Getting in touch from paulpera.ch"
+  },
+  "BUILD": {
+    "UPDATED": "updated"
   }
 }

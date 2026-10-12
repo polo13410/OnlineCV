@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SupportedLanguage } from './language.service';
 
-export type ContactTopic = 'pro' | 'project';
+export type ContactTopic = 'pro' | 'project' | 'general';
 
 export interface ContactRequest {
   firstName: string;

@@ -4,18 +4,17 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
-import { DebugPanelService } from '../../services/debug-panel.service';
 import { GetJsonService } from '../../services/get-json.service';
-import { GetPdfService } from '../../services/get-pdf.service';
-import { LanguageService, SupportedLanguage } from '../../services/language.service';
-import { GITHUB_URL, LINKEDIN_URL } from '../../shared/contact';
+import { BuildInfoComponent } from '../build-info/build-info.component';
+import { HeaderLinksComponent } from '../header-links/header-links.component';
+import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule],
+  imports: [CommonModule, RouterModule, TranslateModule, BuildInfoComponent, HeaderLinksComponent, LangToggleComponent],
 })
 export class NavComponent implements OnInit, OnDestroy {
   @Input() isMobile = false;
@@ -23,12 +22,8 @@ export class NavComponent implements OnInit, OnDestroy {
   @Output() navToggle = new EventEmitter<void>();
 
   header = signal<Header | null>(null);
-  currentLang = signal<SupportedLanguage>('fr');
 
   private readonly json = inject(GetJsonService);
-  private readonly pdf = inject(GetPdfService);
-  private readonly langService = inject(LanguageService);
-  private readonly debugPanel = inject(DebugPanelService);
   private readonly destroy$ = new Subject<void>();
 
   navLinks = [
@@ -42,30 +37,10 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.json.getHeader().pipe(takeUntil(this.destroy$)).subscribe(h => this.header.set(h));
-    this.langService.currentLanguage$.pipe(takeUntil(this.destroy$)).subscribe(l => this.currentLang.set(l));
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  onLangClick(lang: SupportedLanguage): void {
-    this.langService.setLanguage(lang);
-    this.debugPanel.registerLangButtonClick();
-  }
-
-  downloadPDF(): void {
-    this.pdf.downloadFile(this.currentLang()).pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((blob: Blob) => {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
-      a.setAttribute('download', `CV_PaulPERA_${this.currentLang() === 'fr' ? 'FR' : 'EN'}.pdf`);
-      a.click();
-    });
-  }
-
-  openLinkedIn(): void { window.open(LINKEDIN_URL, '_blank'); }
-  openGitHub(): void { window.open(GITHUB_URL, '_blank'); }
 }

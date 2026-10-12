@@ -4,7 +4,7 @@
   <div #panel class="contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-title">
     <header class="contact-head">
       <h2 id="contact-title">
-        {{ (contact.topic() === 'project' ? 'CONTACT.TITLE_PROJECT' : 'CONTACT.TITLE_PRO') | translate }}
+        {{ titleKey() | translate }}
       </h2>
       <button class="contact-close" type="button" (click)="close()" [attr.aria-label]="'CONTACT.CLOSE' | translate">✕</button>
     </header>
@@ -16,23 +16,23 @@
         <button class="contact-submit" type="button" (click)="close()">{{ 'CONTACT.CLOSE' | translate }}</button>
       </div>
     } @else {
-      <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <form class="contact-form" name="contact" autocomplete="on" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <div class="field-row">
           <label class="field">
             <span class="field-label">{{ 'CONTACT.FIRST_NAME' | translate }}</span>
-            <input formControlName="firstName" autocomplete="given-name" [attr.aria-invalid]="showError('firstName')" />
+            <input id="contact-given-name" name="given-name" formControlName="firstName" autocomplete="given-name" [attr.aria-invalid]="showError('firstName')" />
             @if (showError('firstName')) { <span class="field-error">{{ 'CONTACT.ERRORS.REQUIRED' | translate }}</span> }
           </label>
           <label class="field">
             <span class="field-label">{{ 'CONTACT.LAST_NAME' | translate }}</span>
-            <input formControlName="lastName" autocomplete="family-name" [attr.aria-invalid]="showError('lastName')" />
+            <input id="contact-family-name" name="family-name" formControlName="lastName" autocomplete="family-name" [attr.aria-invalid]="showError('lastName')" />
             @if (showError('lastName')) { <span class="field-error">{{ 'CONTACT.ERRORS.REQUIRED' | translate }}</span> }
           </label>
         </div>
 
         <label class="field">
           <span class="field-label">{{ 'CONTACT.EMAIL' | translate }}</span>
-          <input type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="showError('email')" />
+          <input id="contact-email" name="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="showError('email')" />
           @if (showError('email')) {
             <span class="field-error">{{ (form.controls.email.hasError('required') ? 'CONTACT.ERRORS.REQUIRED' : 'CONTACT.ERRORS.EMAIL') | translate }}</span>
           }
@@ -40,19 +40,19 @@
 
         <label class="field">
           <span class="field-label">{{ 'CONTACT.COMPANY' | translate }} <em>{{ 'CONTACT.OPTIONAL' | translate }}</em></span>
-          <input formControlName="company" autocomplete="organization" />
+          <input id="contact-organization" name="organization" formControlName="company" autocomplete="organization" />
         </label>
 
         <label class="field">
           <span class="field-label">{{ 'CONTACT.MESSAGE' | translate }}</span>
-          <textarea formControlName="message" rows="5" [attr.aria-invalid]="showError('message')"></textarea>
+          <textarea id="contact-message" name="message" formControlName="message" rows="5" [attr.aria-invalid]="showError('message')"></textarea>
           @if (showError('message')) {
             <span class="field-error">{{ (form.controls.message.hasError('required') ? 'CONTACT.ERRORS.REQUIRED' : 'CONTACT.ERRORS.MESSAGE') | translate }}</span>
           }
         </label>
 
         <!-- Honeypot: hidden from humans, filled by bots -->
-        <input #honeypot class="contact-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input #honeypot class="contact-hp" name="leave-empty" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         @if (status() === 'error') {
           <p class="contact-error" role="alert">{{ 'CONTACT.ERROR' | translate }}</p>

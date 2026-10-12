@@ -1,16 +1,10 @@
 {
-  "APP": {
-    "TITLE": "Paul PERA",
-    "MENU": "Menu",
-    "VERSION_PDF": "Version PDF"
+  "HEADER": {
+    "CV": "Télécharger le CV",
+    "CONTACT": "Me contacter",
+    "LANG": "Changer de langue"
   },
   "NAV": {
-    "HOME": "Accueil",
-    "EXPERIENCES": "Expériences professionnelles",
-    "EDUCATION": "Formation",
-    "SKILLS": "Compétences",
-    "PASSIONS": "Passions",
-    "PROJECTS": "Projets personnels",
     "MENU_TITLE": {
       "HOME": "Accueil",
       "EXPERIENCES": "Expériences professionnelles",
@@ -115,17 +109,6 @@
     "SPOTIFY_PLAY": "Écouter",
     "SPOTIFY_CLOSE": "Fermer le lecteur"
   },
-  "ERROR": {
-    "NOT_FOUND": "Uh Oh! 404!",
-    "BACK_HOME": "Retour a l'accueil"
-  },
-  "CODE_INFO": {
-    "ANGULAR_VERSION": "Angular version",
-    "NODE_VERSION": "Node deployment version"
-  },
-  "LANGUAGE": {
-    "SWITCH": "Changer de langue"
-  },
   "CONTACT": {
     "TITLE_PRO": "Parlons de votre opportunité",
     "TITLE_PROJECT": "Parlons de votre projet",
@@ -147,6 +130,11 @@
       "REQUIRED": "Champ requis",
       "EMAIL": "Adresse email invalide",
       "MESSAGE": "10 caractères minimum"
-    }
+    },
+    "TITLE_GENERAL": "Prenons contact",
+    "SUBJECT_GENERAL": "Prise de contact depuis paulpera.ch"
+  },
+  "BUILD": {
+    "UPDATED": "mis à jour le"
   }
 }

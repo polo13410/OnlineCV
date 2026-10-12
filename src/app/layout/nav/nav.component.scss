@@ -92,75 +92,24 @@
 
 .nav-spacer { flex: 1; }
 
-.nav-lang {
+.nav-mobile-actions {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-3);
+  padding: var(--space-4);
   border-top: 1px solid var(--color-border);
   flex-shrink: 0;
 }
 
-.lang-btn {
-  background: none;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  font-family: var(--font-main);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 3px var(--space-2);
-  border-radius: var(--border-radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-
-  &:hover { color: var(--color-text-primary); border-color: var(--color-text-secondary); }
-  &.active { color: var(--color-accent-primary); border-color: var(--color-accent-primary); box-shadow: var(--glow-subtle); }
+.nav-mobile-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
 }
 
-.lang-sep { color: var(--color-text-muted); font-size: var(--font-size-xs); }
-
-.nav-footer {
+.nav-build {
   padding: var(--space-3) var(--space-4) var(--space-4);
   border-top: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-shrink: 0;
-}
-
-.nav-action {
-  background: none;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-family: var(--font-main);
-  font-size: var(--font-size-xs);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--border-radius-sm);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-
-  &:hover {
-    color: var(--color-accent-primary);
-    border-color: var(--color-accent-primary);
-    box-shadow: var(--glow-subtle);
-  }
-}
-
-.nav-social { display: flex; gap: var(--space-2); }
-
-.social-btn {
-  background: none;
-  border: none;
-  color: var(--color-text-muted);
-  font-size: 18px;
-  padding: var(--space-1);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-
-  &:hover { color: var(--color-accent-primary); }
 }
