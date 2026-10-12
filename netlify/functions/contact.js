@@ -63,9 +63,14 @@ exports.handler = async (event) => {
   }
   if (!body || typeof body !== 'object' || Array.isArray(body)) return reply(400, { error: 'Invalid form' });
 
-  // Bots: honeypot filled or form submitted too fast → pretend success, send nothing
-  const elapsed = Date.now() - Number(body.startedAt);
-  if (body.website || !(elapsed >= MIN_FILL_MS)) return reply(200, { ok: true });
+  // Bots: honeypot filled or form submitted too fast → pretend success, send nothing.
+  // fillMs is a duration measured by the browser: comparing a client timestamp to the
+  // server clock would drop real messages whenever the visitor's clock runs ahead.
+  const fillMs = Number(body.fillMs);
+  if (body.website || !(fillMs >= MIN_FILL_MS)) {
+    console.warn('contact: dropped as bot', { honeypot: Boolean(body.website), fillMs });
+    return reply(200, { ok: true });
+  }
 
   const form = validate(body);
   if (!form) return reply(400, { error: 'Invalid form' });

@@ -129,7 +129,7 @@ export class ContactDialogComponent {
       topic,
       lang: this.lang(),
       website: this.honeypot()?.nativeElement.value ?? '',
-      startedAt: this.startedAt,
+      fillMs: Date.now() - this.startedAt,
     }).subscribe({
       next: () => {
         this.sentName.set(value.firstName);

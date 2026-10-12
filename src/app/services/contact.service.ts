@@ -14,7 +14,7 @@ export interface ContactRequest {
   topic: ContactTopic;
   lang: SupportedLanguage;
   website: string; // honeypot: always empty for humans
-  startedAt: number; // when the form was opened (bots submit instantly)
+  fillMs: number; // time spent on the form, measured client-side (bots submit instantly)
 }
 
 /** Opens the contact dialog (rendered once in the shell) and sends its content. */
