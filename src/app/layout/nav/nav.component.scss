@@ -21,10 +21,19 @@
     padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) env(safe-area-inset-left);
     width: calc(var(--sidebar-width) + env(safe-area-inset-left));
     z-index: 50;
-    transform: translateX(-100%);
-    transition: transform var(--transition-base);
     box-shadow: 4px 0 24px rgba(16, 40, 46, 0.12);
-    &.open { transform: translateX(0); }
+    // Closed drawer is display:none, not just off-screen: iOS 26 Safari keeps tinting its
+    // bottom toolbar from any rendered fixed element at the bottom edge, even translated away.
+    // allow-discrete + @starting-style keep the slide in/out across the display switch.
+    display: none;
+    transform: translateX(-100%);
+    transition: transform var(--transition-base), display var(--transition-base) allow-discrete;
+
+    &.open {
+      display: flex;
+      transform: translateX(0);
+      @starting-style { transform: translateX(-100%); }
+    }
   }
 }
 
