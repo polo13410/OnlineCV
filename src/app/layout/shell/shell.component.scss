@@ -72,6 +72,11 @@
   flex: 1;
   // Last content stays above the home indicator / floating browser toolbar
   padding-bottom: env(safe-area-inset-bottom);
+  // Gives way while overscrolling to the next / previous page (OverscrollNavComponent).
+  // An offset, not a transform: fixed elements inside a page (skill panel) stay put.
+  position: relative;
+  top: var(--pull-shift, 0px);
+  transition: top var(--pull-transition, 0.35s) ease-out;
 }
 
 .hamburger {
