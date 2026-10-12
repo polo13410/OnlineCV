@@ -1,0 +1,73 @@
+<!-- src/app/shared/contact-dialog/contact-dialog.component.html -->
+@if (contact.topic()) {
+<div class="contact-overlay" animate.enter="overlay-enter" animate.leave="overlay-leave" (click)="onBackdropClick($event)">
+  <div #panel class="contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <header class="contact-head">
+      <h2 id="contact-title">
+        {{ (contact.topic() === 'project' ? 'CONTACT.TITLE_PROJECT' : 'CONTACT.TITLE_PRO') | translate }}
+      </h2>
+      <button class="contact-close" type="button" (click)="close()" [attr.aria-label]="'CONTACT.CLOSE' | translate">✕</button>
+    </header>
+
+    @if (status() === 'sent') {
+      <div class="contact-sent" role="status">
+        <p class="sent-title">{{ 'CONTACT.SENT_TITLE' | translate }}</p>
+        <p>{{ 'CONTACT.SENT_TEXT' | translate: sentTo() }}</p>
+        <button class="contact-submit" type="button" (click)="close()">{{ 'CONTACT.CLOSE' | translate }}</button>
+      </div>
+    } @else {
+      <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">{{ 'CONTACT.FIRST_NAME' | translate }}</span>
+            <input formControlName="firstName" autocomplete="given-name" [attr.aria-invalid]="showError('firstName')" />
+            @if (showError('firstName')) { <span class="field-error">{{ 'CONTACT.ERRORS.REQUIRED' | translate }}</span> }
+          </label>
+          <label class="field">
+            <span class="field-label">{{ 'CONTACT.LAST_NAME' | translate }}</span>
+            <input formControlName="lastName" autocomplete="family-name" [attr.aria-invalid]="showError('lastName')" />
+            @if (showError('lastName')) { <span class="field-error">{{ 'CONTACT.ERRORS.REQUIRED' | translate }}</span> }
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">{{ 'CONTACT.EMAIL' | translate }}</span>
+          <input type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="showError('email')" />
+          @if (showError('email')) {
+            <span class="field-error">{{ (form.controls.email.hasError('required') ? 'CONTACT.ERRORS.REQUIRED' : 'CONTACT.ERRORS.EMAIL') | translate }}</span>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field-label">{{ 'CONTACT.COMPANY' | translate }} <em>{{ 'CONTACT.OPTIONAL' | translate }}</em></span>
+          <input formControlName="company" autocomplete="organization" />
+        </label>
+
+        <label class="field">
+          <span class="field-label">{{ 'CONTACT.MESSAGE' | translate }}</span>
+          <textarea formControlName="message" rows="5" [attr.aria-invalid]="showError('message')"></textarea>
+          @if (showError('message')) {
+            <span class="field-error">{{ (form.controls.message.hasError('required') ? 'CONTACT.ERRORS.REQUIRED' : 'CONTACT.ERRORS.MESSAGE') | translate }}</span>
+          }
+        </label>
+
+        <!-- Honeypot: hidden from humans, filled by bots -->
+        <input #honeypot class="contact-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        @if (status() === 'error') {
+          <p class="contact-error" role="alert">{{ 'CONTACT.ERROR' | translate }}</p>
+        }
+
+        <div class="contact-actions">
+          <button class="contact-submit" type="submit" [disabled]="status() === 'sending'">
+            {{ (status() === 'sending' ? 'CONTACT.SENDING' : 'CONTACT.SEND') | translate }}
+          </button>
+          <a class="contact-mail" [href]="mailtoHref()">{{ 'CONTACT.OR_MAIL' | translate }}</a>
+        </div>
+
+        <p class="contact-privacy">{{ 'CONTACT.PRIVACY' | translate }}</p>
+      </form>
+    }
+  </div>
+</div>
+}

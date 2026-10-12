@@ -5,13 +5,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { NavComponent } from '../nav/nav.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { ContactDialogComponent } from '../../shared/contact-dialog/contact-dialog.component';
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   standalone: true,
-  imports: [RouterModule, NavComponent, ThemeToggleComponent],
+  imports: [RouterModule, NavComponent, ThemeToggleComponent, ContactDialogComponent],
 })
 export class ShellComponent {
   private breakpoints = inject(BreakpointObserver);

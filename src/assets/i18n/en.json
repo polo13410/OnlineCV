@@ -25,7 +25,14 @@
     "STAGES_OVERLINE": "Internships",
     "TITLE": "Professional experiences",
     "INTERNSHIPS": "Internships",
-    "PRESENT": "Present"
+    "PRESENT": "Present",
+    "INVITE": {
+      "META": "Next chapter",
+      "TITLE": "What about you?",
+      "TEXT": "I'm always open to new challenges and happy to talk about ambitious projects in AI, web or software.",
+      "CTA": "Email me",
+      "SUBJECT": "Getting in touch from paulpera.ch"
+    }
   },
   "EDUCATION": {
     "OVERLINE": "Education",
@@ -76,14 +83,22 @@
     "TITLE": "My projects",
     "STATUS_IN_PROGRESS": "In progress",
     "CREATED": "Created in",
-    "UPDATED": "Last update"
+    "UPDATED": "Last update",
+    "INVITE": {
+      "META": "Next project",
+      "TITLE": "Your project here?",
+      "TEXT": "An idea, a non-profit, a side project? I'm always up for building something together.",
+      "CTA": "Let's talk",
+      "SUBJECT": "A project idea"
+    }
   },
   "CARD": {
     "LINK_LIVE": "Visit",
     "LINK_REPO": "Code",
     "LINK_DOWNLOAD": "Download",
     "SHOW_MORE": "Show more",
-    "SHOW_LESS": "Show less"
+    "SHOW_LESS": "Show less",
+    "LINKEDIN": "Or on LinkedIn"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
@@ -110,5 +125,28 @@
   },
   "LANGUAGE": {
     "SWITCH": "Switch language"
+  },
+  "CONTACT": {
+    "TITLE_PRO": "Let's talk about your opportunity",
+    "TITLE_PROJECT": "Let's talk about your project",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name",
+    "EMAIL": "Email",
+    "COMPANY": "Company",
+    "OPTIONAL": "(optional)",
+    "MESSAGE": "Message",
+    "SEND": "Send",
+    "SENDING": "Sending…",
+    "OR_MAIL": "or email me directly",
+    "PRIVACY": "Your details are only used to reply to you.",
+    "SENT_TITLE": "Message sent!",
+    "SENT_TEXT": "Thank you {{name}}! An acknowledgement has just been sent to {{email}}.",
+    "ERROR": "Sending failed. Try again, or email me directly.",
+    "CLOSE": "Close",
+    "ERRORS": {
+      "REQUIRED": "Required",
+      "EMAIL": "Invalid email address",
+      "MESSAGE": "At least 10 characters"
+    }
   }
 }

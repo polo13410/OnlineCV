@@ -5,7 +5,7 @@
     <p class="section-overline">{{ 'EXPERIENCES.OVERLINE' | translate }}</p>
     <h2>{{ 'EXPERIENCES.TITLE' | translate }}</h2>
   </div>
-  <app-timeline [entries]="pro()">
+  <app-timeline [entries]="pro()" [invite]="invite()">
     <ng-template let-xp>
       <app-experience-card
         [icon]="xp.icon"

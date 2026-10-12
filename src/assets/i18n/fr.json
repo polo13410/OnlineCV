@@ -25,7 +25,14 @@
     "STAGES_OVERLINE": "Stages",
     "TITLE": "Experiences professionnelles",
     "INTERNSHIPS": "Stages",
-    "PRESENT": "Aujourd'hui"
+    "PRESENT": "Aujourd'hui",
+    "INVITE": {
+      "META": "Prochain chapitre",
+      "TITLE": "Et vous ?",
+      "TEXT": "Je suis toujours ouvert à de nouveaux défis et ravi d'échanger autour de projets ambitieux, en IA, web ou logiciel.",
+      "CTA": "M'écrire",
+      "SUBJECT": "Prise de contact depuis paulpera.ch"
+    }
   },
   "EDUCATION": {
     "OVERLINE": "Formation",
@@ -76,14 +83,22 @@
     "TITLE": "Mes projets",
     "STATUS_IN_PROGRESS": "En cours",
     "CREATED": "Créé en",
-    "UPDATED": "Dernière mise à jour"
+    "UPDATED": "Dernière mise à jour",
+    "INVITE": {
+      "META": "Prochain projet",
+      "TITLE": "Votre projet ici ?",
+      "TEXT": "Une idée, une association, un side project ? Je suis toujours partant pour construire quelque chose ensemble.",
+      "CTA": "En parler",
+      "SUBJECT": "Une idée de projet"
+    }
   },
   "CARD": {
     "LINK_LIVE": "Visiter",
     "LINK_REPO": "Code",
     "LINK_DOWNLOAD": "Télécharger",
     "SHOW_MORE": "Voir plus",
-    "SHOW_LESS": "Voir moins"
+    "SHOW_LESS": "Voir moins",
+    "LINKEDIN": "Ou sur LinkedIn"
   },
   "PASSIONS": {
     "SPORTS_OVERLINE": "Sports",
@@ -110,5 +125,28 @@
   },
   "LANGUAGE": {
     "SWITCH": "Changer de langue"
+  },
+  "CONTACT": {
+    "TITLE_PRO": "Parlons de votre opportunité",
+    "TITLE_PROJECT": "Parlons de votre projet",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom",
+    "EMAIL": "Email",
+    "COMPANY": "Entreprise",
+    "OPTIONAL": "(optionnel)",
+    "MESSAGE": "Message",
+    "SEND": "Envoyer",
+    "SENDING": "Envoi…",
+    "OR_MAIL": "ou directement par mail",
+    "PRIVACY": "Vos informations servent uniquement à vous répondre.",
+    "SENT_TITLE": "Message envoyé !",
+    "SENT_TEXT": "Merci {{name}} ! Un accusé de réception vient de vous être envoyé à {{email}}.",
+    "ERROR": "L'envoi a échoué. Réessayez, ou écrivez-moi directement par mail.",
+    "CLOSE": "Fermer",
+    "ERRORS": {
+      "REQUIRED": "Champ requis",
+      "EMAIL": "Adresse email invalide",
+      "MESSAGE": "10 caractères minimum"
+    }
   }
 }

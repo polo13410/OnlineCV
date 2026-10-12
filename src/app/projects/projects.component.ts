@@ -4,10 +4,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { catchError, combineLatest, forkJoin, map, Observable, of, startWith, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Project, ProjectLink, ProjectLinkType } from 'src/assets/data/contentInterface';
+import { ContactService } from '../services/contact.service';
 import { GetJsonService } from '../services/get-json.service';
 import { LanguageService } from '../services/language.service';
 import { ExperienceCardComponent } from '../shared/experience-card/experience-card.component';
-import { TimelineComponent, TimelineEntry } from '../shared/timeline/timeline.component';
+import { TimelineComponent, TimelineEntry, TimelineInvite } from '../shared/timeline/timeline.component';
+import { buildInvite, inviteKeys } from '../shared/timeline/invite';
 import { formatDay, formatMonthYear } from '../shared/timeline/format';
 
 interface ProjectCard {
@@ -27,10 +29,12 @@ const LINK_ORDER: Record<ProjectLinkType, number> = { repo: 0, live: 1, download
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
   entries: TimelineEntry<ProjectCard>[] = [];
+  invite?: TimelineInvite;
   private readonly json = inject(GetJsonService);
   private readonly http = inject(HttpClient);
   private readonly langService = inject(LanguageService);
   private readonly translate = inject(TranslateService);
+  private readonly contact = inject(ContactService);
   private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -67,6 +71,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             };
           });
       });
+
+    this.translate.stream(inviteKeys('PROJECTS'))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((labels: Record<string, string>) => this.invite = buildInvite('PROJECTS', labels, () => this.contact.open('project')));
   }
 
   ngOnDestroy(): void {

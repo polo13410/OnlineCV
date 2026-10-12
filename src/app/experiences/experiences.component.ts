@@ -3,11 +3,13 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject, combineLatest, takeUntil } from 'rxjs';
 import { Experience, Experiences } from 'src/assets/data/contentInterface';
+import { ContactService } from '../services/contact.service';
 import { GetJsonService } from '../services/get-json.service';
 import { LanguageService, SupportedLanguage } from '../services/language.service';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { ExperienceCardComponent } from '../shared/experience-card/experience-card.component';
-import { TimelineComponent, TimelineEntry } from '../shared/timeline/timeline.component';
+import { TimelineComponent, TimelineEntry, TimelineInvite } from '../shared/timeline/timeline.component';
+import { buildInvite, inviteKeys } from '../shared/timeline/invite';
 import { periodMeta } from '../shared/timeline/format';
 
 @Component({
@@ -20,10 +22,12 @@ import { periodMeta } from '../shared/timeline/format';
 export class ExperiencesComponent implements OnInit, OnDestroy {
   pro = signal<TimelineEntry<Experience>[]>([]);
   internships = signal<TimelineEntry<Experience>[]>([]);
+  invite = signal<TimelineInvite | undefined>(undefined);
 
   private readonly json        = inject(GetJsonService);
   private readonly langService = inject(LanguageService);
   private readonly translate   = inject(TranslateService);
+  private readonly contact     = inject(ContactService);
   private readonly destroy$    = new Subject<void>();
 
   ngOnInit(): void {
@@ -38,6 +42,10 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
       this.pro.set(toEntries(data.pro));
       this.internships.set(toEntries(data.stage));
     });
+
+    this.translate.stream(inviteKeys('EXPERIENCES'))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((labels: Record<string, string>) => this.invite.set(buildInvite('EXPERIENCES', labels, () => this.contact.open('pro'))));
   }
 
   ngOnDestroy(): void {

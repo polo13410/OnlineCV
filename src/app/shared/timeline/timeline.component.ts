@@ -16,6 +16,15 @@ export interface TimelineEntry<T = unknown> {
   data: T;
 }
 
+/** Optional "next chapter" slot shown above the most recent entry. */
+export interface TimelineInvite {
+  meta: TimelineMeta[];
+  title: string;
+  text: string;
+  cta: { label: string; action: () => void };
+  secondary?: { label: string; href: string };
+}
+
 const TARGET_HIGHLIGHT_MS = 2000;
 
 /** Zig-zag timeline: meta (dates) and card alternate sides of a centre line. */
@@ -28,6 +37,7 @@ const TARGET_HIGHLIGHT_MS = 2000;
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   @Input() entries: TimelineEntry[] = [];
+  @Input() invite?: TimelineInvite;
   @ContentChild(TemplateRef) cardTemplate!: TemplateRef<unknown>;
 
   readonly targetId = signal<string | null>(null);

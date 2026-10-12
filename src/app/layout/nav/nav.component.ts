@@ -8,6 +8,7 @@ import { DebugPanelService } from '../../services/debug-panel.service';
 import { GetJsonService } from '../../services/get-json.service';
 import { GetPdfService } from '../../services/get-pdf.service';
 import { LanguageService, SupportedLanguage } from '../../services/language.service';
+import { GITHUB_URL, LINKEDIN_URL } from '../../shared/contact';
 
 @Component({
   selector: 'app-nav',
@@ -65,6 +66,6 @@ export class NavComponent implements OnInit, OnDestroy {
     });
   }
 
-  openLinkedIn(): void { window.open('https://www.linkedin.com/in/paulpera/', '_blank'); }
-  openGitHub(): void { window.open('https://github.com/polo13410', '_blank'); }
+  openLinkedIn(): void { window.open(LINKEDIN_URL, '_blank'); }
+  openGitHub(): void { window.open(GITHUB_URL, '_blank'); }
 }
