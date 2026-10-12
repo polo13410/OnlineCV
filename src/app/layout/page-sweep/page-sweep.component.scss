@@ -1,0 +1,57 @@
+// src/app/layout/page-sweep/page-sweep.component.scss
+@use '../../../styles/mixins' as m;
+
+// Covers the page area like a real page; only shown during a page view transition (styles.scss)
+.sweep-page {
+  view-transition-class: page-sweep;
+  position: fixed;
+  inset: 0 0 0 var(--page-offset);
+  padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+  background: var(--color-bg-base);
+  // Hidden once the slide is over (its image is off-screen by then): the transition's end is
+  // painted before the stand-ins are removed, they must not flash over the new page
+  animation: sweep-done 0s var(--page-slide-duration) forwards;
+}
+
+@keyframes sweep-done { to { visibility: hidden; } }
+
+.sweep-inner {
+  @include m.page-container();
+}
+
+.sweep-overline {
+  margin: 0 0 var(--space-2);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.sweep-title {
+  font-size: var(--font-size-2xl);
+  margin: 0 0 var(--space-6);
+}
+
+.sweep-lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+
+  span {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--color-bg-elevated);
+    &:nth-child(1) { width: 92%; }
+    &:nth-child(2) { width: 80%; }
+    &:nth-child(3) { width: 55%; }
+  }
+}
+
+.sweep-card {
+  height: 140px;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-surface);
+}

@@ -5,6 +5,11 @@
 
 :root {
   @include t.apply-tokens(); // light by default
+
+  // Page area (right of the sidebar): one page of the left-to-right strip
+  --page-offset: var(--sidebar-width);
+  --page-w: calc(100vw - var(--page-offset));
+  @include m.mobile() { --page-offset: 0px; }
 }
 
 [data-theme='dark'] {
@@ -23,6 +28,8 @@ html, body {
 
 html {
   scroll-behavior: smooth;
+  // Overscrolling the page edges changes page (OverscrollNavComponent): no rubber band / pull-to-refresh
+  overscroll-behavior-y: none;
   background-color: var(--color-bg-base);
 
   &::-webkit-scrollbar { width: 3px; }
@@ -120,6 +127,36 @@ html[data-vt='skills'] .panel-item * { view-transition-name: none !important; }
 ::view-transition-old(.panel-card):only-child { animation-name: vt-slide-out-right; }
 @keyframes vt-slide-in-right  { from { translate: 110% 0; opacity: 0; } }
 @keyframes vt-slide-out-right { to   { translate: 110% 0; opacity: 0; } }
+
+// Page change (router, PageNavigationService): the pages sit side by side, left to right.
+// The page area is the root snapshot (nav and topbar are their own layers and stay put):
+// the old page slides out, the stand-ins of the pages in between (PageSweepComponent) pass by,
+// the new page slides in — one rigid strip, offsets in page widths.
+// --vt-sign: 1 to the right, -1 to the left; --vt-pages: pages travelled.
+html[data-vt^='page'] .shell-main * { view-transition-name: none !important; }
+html:not([data-vt='page']) app-page-sweep { display: none; }
+
+:root[data-vt='page'] {
+  &::view-transition-old(root),
+  &::view-transition-new(root),
+  &::view-transition-new(.page-sweep) {
+    animation: vt-page-strip var(--page-slide-duration) cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  &::view-transition-old(root) { --strip-from: 0; --strip-to: calc(var(--vt-sign) * var(--vt-pages) * -1); }
+  &::view-transition-new(root) { --strip-from: calc(var(--vt-sign) * var(--vt-pages)); --strip-to: 0; }
+  @for $k from 1 through 4 {
+    &::view-transition-new(page-sweep-#{$k}) {
+      --strip-from: calc(var(--vt-sign) * #{$k});
+      --strip-to: calc(var(--vt-sign) * (#{$k} - var(--vt-pages)));
+    }
+  }
+  // Above the sliding pages, under the nav / topbar layers
+  &::view-transition-group(.page-sweep) { z-index: 0; }
+}
+@keyframes vt-page-strip {
+  from { translate: calc(var(--strip-from) * var(--page-w)) 0; }
+  to   { translate: calc(var(--strip-to) * var(--page-w)) 0; }
+}
 
 body.custom-cursor-active * { cursor: none !important; }
 
