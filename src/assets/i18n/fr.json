@@ -13,16 +13,14 @@
       "PASSIONS": "Passions",
       "PROJECTS": "Projets personnels"
     },
-    "NEXT": "Suivant",
-    "PREVIOUS": "Précédent",
-    "SCROLL_TO": "Défilez vers"
+    "SCROLL_TO": "Scrollez pour"
   },
   "HOME": {
     "DISCOVER": "En découvrir plus"
   },
   "EXPERIENCES": {
     "OVERLINE": "Expériences",
-    "STAGES_OVERLINE": "Stages",
+    "STAGES_OVERLINE": "Expériences",
     "TITLE": "Experiences professionnelles",
     "INTERNSHIPS": "Stages",
     "PRESENT": "Aujourd'hui",
@@ -36,11 +34,11 @@
   },
   "EDUCATION": {
     "OVERLINE": "Formation",
-    "TITLE": "Formations"
+    "TITLE": "Écoles"
   },
   "SKILLS": {
     "OVERLINE": "Compétences",
-    "SOFT_OVERLINE": "Savoir-être",
+    "SOFT_OVERLINE": "Compétences",
     "TECH": "Tech skills",
     "SOFT": "Soft skills",
     "HINT": "Sélectionne une ou plusieurs compétences pour voir où je les ai utilisées.",
@@ -101,12 +99,12 @@
     "LINKEDIN": "Ou sur LinkedIn"
   },
   "PASSIONS": {
-    "SPORTS_OVERLINE": "Sports",
-    "OTHERS_OVERLINE": "Autres",
+    "SPORTS_OVERLINE": "Passions",
+    "OTHERS_OVERLINE": "Passions",
     "SPORTS": "Sports",
     "OTHERS": "Autres",
-    "SPOTIFY_OVERLINE": "Musique",
-    "SPOTIFY_TITLE": "Ma musique du moment",
+    "SPOTIFY_OVERLINE": "Passions",
+    "SPOTIFY_TITLE": "Mes musiques du moment",
     "SPOTIFY_WEEK": "Cette semaine",
     "SPOTIFY_MONTH": "Ce mois-ci",
     "SPOTIFY_ALL": "Depuis toujours",

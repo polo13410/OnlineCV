@@ -17,7 +17,6 @@
         @if (text(); as key) {
           {{ key | translate }}
         } @else {
-          <span class="step-dir">{{ (step() === 1 ? 'NAV.NEXT' : 'NAV.PREVIOUS') | translate }}</span>
           {{ page.label | translate }}
         }
       </span>
