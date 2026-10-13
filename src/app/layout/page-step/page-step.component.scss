@@ -1,0 +1,105 @@
+// src/app/layout/page-step/page-step.component.scss
+// --pull (0 → 1) and --pull-transition are set on <html> by OverscrollNavComponent
+@use '../../../styles/mixins' as m;
+
+:host { display: block; }
+
+.page-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-4);
+}
+
+.step-hint {
+  @include m.lang-text();
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.step-btn {
+  @include m.lang-box();
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; // keeps the fill (z-index -1) inside the pill, above its background
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 40px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--color-border-accent);
+  border-radius: 999px;
+  background: var(--color-bg-surface);
+  box-shadow: var(--glow-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-text-primary);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  // Fill: grows with the overscroll pull, from the side of the page it leads to
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--color-accent-primary) 18%, transparent);
+    transform-origin: left;
+    scale: 0 1;
+    transition: scale var(--pull-transition, 0.35s) ease-out;
+
+    :host(.previous) & { transform-origin: right; }
+  }
+  &.pulling::before { scale: var(--pull, 0) 1; }
+
+  // The arrow leans towards the page it leads to
+  &:hover, &.pulling {
+    opacity: 1;
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary);
+    .step-arrow { translate: 4px 0; }
+    :host(.previous) & .step-arrow { translate: -4px 0; }
+  }
+
+  &.ready {
+    background: var(--color-accent-primary);
+    color: var(--color-bg-base);
+    .step-dir, .step-arrow { color: inherit; }
+  }
+
+  &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 3px; }
+
+  // Call to action (home): solid accent, the pull fills it with the darker accent
+  :host(.primary) & {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-primary);
+    color: var(--color-bg-base);
+    box-shadow: var(--glow-primary);
+    .step-arrow { color: inherit; }
+    &::before { background: var(--color-accent-tertiary); }
+    &:hover { background: var(--color-accent-secondary); }
+    &.ready { background: var(--color-accent-tertiary); }
+  }
+}
+
+.step-dir {
+  margin-right: 4px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.step-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-accent-primary);
+  transition: translate var(--transition-base), color var(--transition-base);
+}

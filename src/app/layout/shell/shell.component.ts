@@ -11,6 +11,7 @@ import { PageNavigationService } from '../../services/page-navigation.service';
 import { ContactDialogComponent } from '../../shared/contact-dialog/contact-dialog.component';
 import { HeaderLinksComponent } from '../header-links/header-links.component';
 import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
+import { PageStepComponent } from '../page-step/page-step.component';
 import { OverscrollNavComponent } from '../overscroll-nav/overscroll-nav.component';
 import { PageSweepComponent } from '../page-sweep/page-sweep.component';
 
@@ -19,11 +20,12 @@ import { PageSweepComponent } from '../page-sweep/page-sweep.component';
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   standalone: true,
-  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent, OverscrollNavComponent, PageSweepComponent],
+  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent, OverscrollNavComponent, PageStepComponent, PageSweepComponent],
 })
 export class ShellComponent {
   private breakpoints = inject(BreakpointObserver);
   readonly contact = inject(ContactService);
+  readonly pageNav = inject(PageNavigationService);
 
   isMobile = toSignal(
     this.breakpoints.observe('(max-width: 768px)').pipe(map(r => r.matches)),
@@ -36,7 +38,7 @@ export class ShellComponent {
     // The window is the scroll container: start each page at the top, or at its bottom when
     // overscrolling back to it. Fragment links (/experiences#quanthome) are scrolled by the timeline itself.
     const router = inject(Router);
-    const pageNav = inject(PageNavigationService);
+    const pageNav = this.pageNav;
     const injector = inject(Injector);
     router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),

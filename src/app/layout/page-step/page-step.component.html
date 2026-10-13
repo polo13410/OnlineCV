@@ -1,0 +1,32 @@
+@if (page(); as page) {
+  <div class="page-step">
+    <span class="step-hint">{{ 'NAV.SCROLL_TO' | translate }}</span>
+    <a
+      class="step-btn"
+      [routerLink]="page.path"
+      [class.pulling]="pulling()"
+      [class.ready]="pulling() && pageNav.pullReady()"
+    >
+      @if (step() === -1) {
+        <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+      }
+      <span class="step-label">
+        @if (text(); as key) {
+          {{ key | translate }}
+        } @else {
+          <span class="step-dir">{{ (step() === 1 ? 'NAV.NEXT' : 'NAV.PREVIOUS') | translate }}</span>
+          {{ page.label | translate }}
+        }
+      </span>
+      @if (step() === 1) {
+        <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      }
+    </a>
+  </div>
+}

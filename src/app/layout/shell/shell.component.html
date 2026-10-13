@@ -35,7 +35,12 @@
     </header>
 
     <main class="shell-main">
+      <app-page-step [step]="-1" />
       <router-outlet />
+      <!-- Home places it right under its card -->
+      @if (pageNav.current() > 0) {
+        <app-page-step class="step-bottom" [step]="1" />
+      }
     </main>
   </div>
 

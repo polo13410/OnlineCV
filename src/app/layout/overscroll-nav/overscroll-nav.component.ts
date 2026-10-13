@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, DestroyRef, effect, inject, NgZone, signal, untracked } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, DestroyRef, effect, inject, NgZone, untracked } from '@angular/core';
 import { Page, PageNavigationService } from '../../services/page-navigation.service';
 
 type Edge = 'top' | 'bottom';
@@ -22,21 +21,14 @@ const MAX_SHIFT = 44;
  * past the top the previous one. Only a gesture that starts against the edge pulls, so a scroll
  * (or its momentum) running into the edge never changes page by itself.
  * Progress is written as CSS variables on <html> (--pull, --pull-shift, --pull-transition):
- * the page gives way (shell) and the edge hint fills up.
+ * the page gives way (shell) and the pulled edge's button (PageStepComponent) fills up.
  */
 @Component({
   selector: 'app-overscroll-nav',
-  templateUrl: './overscroll-nav.component.html',
-  styleUrl: './overscroll-nav.component.scss',
+  template: '',
   standalone: true,
-  imports: [TranslateModule],
 })
 export class OverscrollNavComponent {
-  /** What the hint shows; kept after a release so it fades out with its label. */
-  readonly side = signal<Edge>('bottom');
-  readonly target = signal<Page | null>(null);
-  readonly ready = signal(false);
-
   private readonly pageNav = inject(PageNavigationService);
   private readonly zone = inject(NgZone);
   private readonly document = inject(DOCUMENT);
@@ -184,16 +176,12 @@ export class OverscrollNavComponent {
   private setPull(edge: Edge, pull: number, threshold: number): void {
     if (this.edge !== edge) {
       this.edge = edge;
-      const target = this.neighbor(edge);
-      this.zone.run(() => {
-        this.side.set(edge);
-        this.target.set(target);
-      });
+      this.zone.run(() => this.pageNav.pullEdge.set(edge));
     }
     this.pull = pull;
     const progress = Math.min(pull / threshold, 1);
     const ready = progress >= 1;
-    if (this.ready() !== ready) this.zone.run(() => this.ready.set(ready));
+    if (this.pageNav.pullReady() !== ready) this.zone.run(() => this.pageNav.pullReady.set(ready));
 
     // Resistance: the page gives way less and less as the pull grows
     const shift = MAX_SHIFT * (1 - (1 - progress) ** 2) * (edge === 'bottom' ? -1 : 1);
@@ -220,6 +208,11 @@ export class OverscrollNavComponent {
     this.root.style.setProperty('--pull-transition', instant ? '0s' : '0.35s');
     this.root.style.setProperty('--pull', '0');
     this.root.style.setProperty('--pull-shift', '0px');
-    if (this.ready()) this.zone.run(() => this.ready.set(false));
+    if (this.pageNav.pullEdge() || this.pageNav.pullReady()) {
+      this.zone.run(() => {
+        this.pageNav.pullEdge.set(null);
+        this.pageNav.pullReady.set(false);
+      });
+    }
   }
 }

@@ -70,6 +70,9 @@
 
 .shell-main {
   flex: 1;
+  // Column, so the "next" step sits at the bottom of the screen even on a short page
+  display: flex;
+  flex-direction: column;
   // Last content stays above the home indicator / floating browser toolbar
   padding-bottom: env(safe-area-inset-bottom);
   // Gives way while overscrolling to the next / previous page (OverscrollNavComponent).
@@ -78,6 +81,8 @@
   top: var(--pull-shift, 0px);
   transition: top var(--pull-transition, 0.35s) ease-out;
 }
+
+.step-bottom { margin-top: auto; }
 
 .hamburger {
   background: none;

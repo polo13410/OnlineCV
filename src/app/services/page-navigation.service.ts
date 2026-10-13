@@ -40,6 +40,9 @@ export class PageNavigationService {
   readonly current = signal(-1);
   /** Stand-ins rendered during a jump; only set once the old page was captured. */
   readonly sweep = signal<SweepPage[]>([]);
+  /** Edge being overscrolled (OverscrollNavComponent), and whether the pull is enough to change page. */
+  readonly pullEdge = signal<'top' | 'bottom' | null>(null);
+  readonly pullReady = signal(false);
 
   private pendingSweep: SweepPage[] = [];
   private transitionId = 0;
