@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { SkillId } from 'src/assets/data/skills';
 import { matching, selectable, toggle } from './skill-selection';
 
@@ -19,8 +20,8 @@ describe('skill selection', () => {
     expect(selected).toEqual(['typescript']);
     expect(ids(matching(items, selected))).toEqual(['a', 'b']);
     const allowed = selectable(items, selected)!;
-    expect(allowed.has('htmlcss')).toBeTrue();
-    expect(allowed.has('python')).toBeFalse();
+    expect(allowed.has('htmlcss')).toBe(true);
+    expect(allowed.has('python')).toBe(false);
   });
 
   it('adds a selectable skill and narrows the results', () => {

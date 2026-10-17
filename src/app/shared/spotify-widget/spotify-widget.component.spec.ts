@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import {
@@ -16,8 +17,8 @@ describe('SpotifyWidgetComponent', () => {
   let component: SpotifyWidgetComponent;
   let fixture: ComponentFixture<SpotifyWidgetComponent>;
   let httpMock: HttpTestingController;
-  let embedService: jasmine.SpyObj<SpotifyEmbedService>;
-  let controller: jasmine.SpyObj<SpotifyEmbedController>;
+  let embedService: MockedObject<Pick<SpotifyEmbedService, 'createController'>>;
+  let controller: MockedObject<SpotifyEmbedController>;
 
   const mockTrack = {
     id: 'track123',
@@ -27,15 +28,13 @@ describe('SpotifyWidgetComponent', () => {
   };
 
   beforeEach(async () => {
-    controller = jasmine.createSpyObj<SpotifyEmbedController>('controller', [
-      'play',
-      'destroy',
-      'addListener',
-    ]);
-    embedService = jasmine.createSpyObj<SpotifyEmbedService>('SpotifyEmbedService', [
-      'createController',
-    ]);
-    embedService.createController.and.resolveTo(controller);
+    controller = {
+      play: vi.fn(),
+      destroy: vi.fn(),
+      addListener: vi.fn(),
+    };
+    embedService = { createController: vi.fn() };
+    embedService.createController.mockResolvedValue(controller);
 
     await TestBed.configureTestingModule({
       imports: [SpotifyWidgetComponent],
@@ -130,7 +129,7 @@ describe('SpotifyWidgetComponent', () => {
 
     expect(component.view()).toBe('player');
     expect(embedService.createController).toHaveBeenCalledWith(
-      jasmine.any(HTMLElement),
+      expect.any(HTMLElement),
       'track123'
     );
     expect(fixture.nativeElement.querySelector('.player-shell')).toBeTruthy();

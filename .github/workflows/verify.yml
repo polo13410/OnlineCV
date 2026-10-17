@@ -28,8 +28,6 @@ jobs:
         run: npm ci --strict-peer-deps
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Use Chromium for Karma
-        run: node -e "require('node:fs').appendFileSync(process.env.GITHUB_ENV, 'CHROME_BIN=' + require('@playwright/test').chromium.executablePath() + '\n')"
       - name: Build and test
         run: npm run verify
       - name: Upload browser report

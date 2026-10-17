@@ -22,11 +22,14 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project with Angular's esbuild application builder.
+The deployable files remain in `dist/online-cv`, matching Netlify's publish directory.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npx playwright install chromium` once, then `npm test` to watch the unit tests
+with Vitest in Chromium. Run `npm run test:ci` for a single headless run.
+The existing 39 unit tests use Vitest assertions and mocks and Angular's TestBed.
 
 ## Running end-to-end tests
 
@@ -46,9 +49,9 @@ npx playwright install chromium
 npm run verify
 ```
 
-`verify` runs the production build, headless Karma unit tests, and Playwright smoke tests.
-Karma needs Chrome/Chromium; set `CHROME_BIN` if it is not detected automatically.
-To use an installed Google Chrome for Playwright, set `PLAYWRIGHT_CHANNEL=chrome`.
+`verify` runs the production build, headless Vitest unit tests, and Playwright smoke tests.
+Both test suites use the Chromium downloaded by Playwright; `CHROME_BIN` is no longer needed.
+To use an installed Google Chrome for the end-to-end suite only, set `PLAYWRIGHT_CHANNEL=chrome`.
 The build needs network access to inline Google Fonts.
 
 Native build dependencies have reviewed, version-pinned install-script approvals in
@@ -85,24 +88,20 @@ approving compiler/runtime updates. Stop on peer dependency conflicts rather tha
 Review passing update PRs and the Netlify preview before merging. The checks cover the
 listed flows, not every visual detail or live third-party integration.
 
-The 2026-10-17 major update uses Angular/CLI/Material/CDK 22.2.3, ngx-translate 18,
-TypeScript 6.0.3, and Jasmine 6.3.0 with matching Jasmine 6 types. Angular migrations
+The 2026-10-17 update uses Angular/CLI/Material/CDK 22.2.3, ngx-translate 18,
+TypeScript 6.0.3, and Vitest 5.0.5 with its matching Playwright browser provider. Angular migrations
 preserve the previous eager change detection and XHR behavior. Translation components
 now import `TranslatePipe` directly and tests use `provideTranslateService()`.
 
 TypeScript 7 is outside Angular 22's supported compiler range (`>=6.0 <6.1`).
-Jasmine 7 is incompatible with Karma and Zone.js: the test suite fails during
-initialization, as also documented in the [Jasmine 7 upgrade guide](https://jasmine.github.io/upgrade-guides/7.0).
-Renovate bounds both packages to the compatible versions; revisit those rules when
-upgrading Angular or changing the test stack. The `karma-jasmine` override makes the
-adapter use the project's Jasmine version instead of its bundled Jasmine 4 dependency.
+Renovate bounds TypeScript to compatible versions; revisit that rule when upgrading Angular.
 
-`npm audit --omit=dev` reports zero vulnerabilities; the full audit reports 11 high
-development-tool advisories. npm proposes breaking downgrades for the remaining
-findings; review those separately instead of running `npm audit fix --force`.
-Angular's legacy Webpack builders and Zone.js's Jasmine patch also emit deprecation
-warnings. Moving to the application builder or a different test runner is a separate
-migration; the existing Karma tests remain in use here.
+The build now uses `@angular/build` instead of the legacy Webpack builders, and the
+unit tests use Vitest browser mode instead of Karma/Jasmine. Test-only Zone.js patches
+are removed; the application's runtime Zone.js and existing animation behavior are retained.
+The production build, 39 unit tests, and 6 desktop/mobile smoke tests pass after migration.
+The full `npm audit` and `npm audit --omit=dev` both report zero vulnerabilities as of
+2026-10-17. Future dependency releases can change those audit results.
 
 ## Further help
 
