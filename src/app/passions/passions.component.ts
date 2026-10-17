@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { SpotifyWidgetComponent } from '../shared/spotify-widget/spotify-widget.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,8 @@ import { GetJsonService } from '../services/get-json.service';
   templateUrl: './passions.component.html',
   styleUrl: './passions.component.scss',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ScrollRevealDirective, SpotifyWidgetComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [CommonModule, TranslatePipe, ScrollRevealDirective, SpotifyWidgetComponent],
 })
 export class PassionsComponent implements OnInit, OnDestroy {
   sports: string[] = [];

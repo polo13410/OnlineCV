@@ -31,7 +31,7 @@ export class LanguageService {
 
     // Set up ngx-translate
     this.translate.addLangs(['fr', 'en']);
-    this.translate.setDefaultLang(this.DEFAULT_LANGUAGE);
+    this.translate.setFallbackLang(this.DEFAULT_LANGUAGE);
     this.translate.use(storedLang);
   }
 

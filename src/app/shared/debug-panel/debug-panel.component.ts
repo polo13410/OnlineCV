@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DebugPanelService } from '../../services/debug-panel.service';
 
@@ -13,6 +13,7 @@ interface ColorControl {
   templateUrl: './debug-panel.component.html',
   styleUrl: './debug-panel.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, FormsModule],
 })
 export class DebugPanelComponent {

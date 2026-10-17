@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { PassionsComponent } from './passions.component';
 
@@ -12,9 +12,10 @@ describe('PassionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PassionsComponent, TranslateModule.forRoot()],
+      imports: [PassionsComponent],
       providers: [
-        provideHttpClient(),
+        provideTranslateService(),
+        provideHttpClient(withXhr()),
         provideHttpClientTesting(),
         provideNoopAnimations(),
       ],

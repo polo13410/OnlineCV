@@ -1,6 +1,6 @@
-import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageNavigationService } from '../../services/page-navigation.service';
 
 /**
@@ -12,7 +12,8 @@ import { PageNavigationService } from '../../services/page-navigation.service';
   templateUrl: './page-step.component.html',
   styleUrl: './page-step.component.scss',
   standalone: true,
-  imports: [RouterLink, TranslateModule],
+  imports: [RouterLink, TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { '[class.previous]': 'step() === -1', '[class.primary]': 'primary()' },
 })
 export class PageStepComponent {

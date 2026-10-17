@@ -26,6 +26,16 @@
       "matchManagers": ["npm"],
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Angular 22 compiler requires TypeScript 6.0.x; review this bound when upgrading Angular.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": ">=6.0.0 <6.1.0"
+    },
+    {
+      "description": "Jasmine 7 is incompatible with the current Karma and Zone.js test stack.",
+      "matchPackageNames": ["jasmine-core", "@types/jasmine"],
+      "allowedVersions": "<7.0.0"
     }
   ]
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
 import { PageStepComponent } from '../layout/page-step/page-step.component';
@@ -13,9 +12,9 @@ import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.direct
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
-    TranslateModule,
     ScrollRevealDirective,
     PageStepComponent,
   ],

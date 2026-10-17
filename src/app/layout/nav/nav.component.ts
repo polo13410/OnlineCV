@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Header } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../../services/get-json.service';
@@ -15,7 +15,8 @@ import { LangToggleComponent } from '../lang-toggle/lang-toggle.component';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, BuildInfoComponent, HeaderLinksComponent, LangToggleComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [CommonModule, RouterModule, TranslatePipe, BuildInfoComponent, HeaderLinksComponent, LangToggleComponent],
 })
 export class NavComponent implements OnInit, OnDestroy {
   @Input() isMobile = false;

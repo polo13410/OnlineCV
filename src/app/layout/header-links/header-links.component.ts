@@ -1,6 +1,6 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language.service';
 import { GITHUB_URL, LINKEDIN_URL } from '../../shared/contact';
 
@@ -35,7 +35,8 @@ import { GITHUB_URL, LINKEDIN_URL } from '../../shared/contact';
   `,
   styleUrl: './header-links.component.scss',
   standalone: true,
-  imports: [TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe],
 })
 export class HeaderLinksComponent {
   @Input() show: 'cv' | 'social' | 'all' = 'all';

@@ -1,7 +1,7 @@
-import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SkillId } from 'src/assets/data/skills';
 import { LanguageService } from '../../services/language.service';
 import { LinkedItem, skillLabel } from '../../services/skills.service';
@@ -18,7 +18,8 @@ interface PanelGroup {
   templateUrl: './skill-panel.component.html',
   styleUrl: './skill-panel.component.scss',
   standalone: true,
-  imports: [TranslateModule, ExperienceCardComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, ExperienceCardComponent],
 })
 export class SkillPanelComponent {
   readonly selected = input.required<SkillId[]>();

@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language.service';
 
 /** FR/EN switch: a pill with a sliding knob, sized like the theme toggle. */
@@ -23,7 +23,8 @@ import { LanguageService } from '../../services/language.service';
   `,
   styleUrl: './lang-toggle.component.scss',
   standalone: true,
-  imports: [TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe],
 })
 export class LangToggleComponent {
   private readonly langService = inject(LanguageService);

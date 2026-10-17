@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
 import { catchError, combineLatest, forkJoin, map, Observable, of, startWith, Subject, switchMap, take, takeUntil } from 'rxjs';
 import { Project, ProjectLink, ProjectLinkType } from 'src/assets/data/contentInterface';
@@ -25,7 +25,8 @@ const LINK_ORDER: Record<ProjectLinkType, number> = { repo: 0, live: 1, download
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
   standalone: true,
-  imports: [TranslateModule, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
   entries: TimelineEntry<ProjectCard>[] = [];

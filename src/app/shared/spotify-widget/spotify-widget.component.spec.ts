@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import {
   provideHttpClientTesting,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { SpotifyWidgetComponent } from './spotify-widget.component';
 import {
   SpotifyEmbedService,
@@ -38,9 +38,10 @@ describe('SpotifyWidgetComponent', () => {
     embedService.createController.and.resolveTo(controller);
 
     await TestBed.configureTestingModule({
-      imports: [SpotifyWidgetComponent, TranslateModule.forRoot()],
+      imports: [SpotifyWidgetComponent],
       providers: [
-        provideHttpClient(),
+        provideTranslateService(),
+        provideHttpClient(withXhr()),
         provideHttpClientTesting(),
         provideNoopAnimations(),
         { provide: SpotifyEmbedService, useValue: embedService },

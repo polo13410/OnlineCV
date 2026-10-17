@@ -33,6 +33,16 @@ test('loads the CV, switches language, persists it and downloads the matching PD
   expect(await download.failure()).toBeNull();
   await page.reload();
   await expect(page.locator('a.cv-btn').first()).toHaveAttribute('href', 'assets/data/pdfVersion-en.pdf');
+  await expect(page.locator('a.cv-btn').first()).toContainText('Download CV');
+  if (test.info().project.name === 'mobile') {
+    await page.getByRole('button', { name: 'Toggle navigation' }).click();
+  }
+  const persistedLanguage = page.locator('app-lang-toggle:visible').getByRole('switch');
+  await expect(persistedLanguage).toHaveAttribute('aria-checked', 'true');
+  await persistedLanguage.click();
+  await expect(persistedLanguage).toHaveAttribute('aria-checked', 'false');
+  await expect(page.locator('a.cv-btn').first()).toHaveAttribute('href', 'assets/data/pdfVersion-fr.pdf');
+  await expect(page.locator('a.cv-btn').first()).toContainText('Télécharger le CV');
 });
 
 test('navigates through CV sections and supports direct route reloads', async ({ page }) => {

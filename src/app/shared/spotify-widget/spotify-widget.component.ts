@@ -7,12 +7,13 @@ import {
   computed,
   inject,
   signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { catchError, EMPTY, of, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   SpotifyEmbedService,
   SpotifyEmbedController,
@@ -30,9 +31,10 @@ export interface SpotifyTrack {
 @Component({
   selector: 'app-spotify-widget',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslatePipe],
   templateUrl: './spotify-widget.component.html',
   styleUrl: './spotify-widget.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     // Sequenced crossfade between tiles (skeleton / card / player / error):
     // the leaving tile fades out in place (absolute, so it doesn't stack

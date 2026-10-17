@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, ContentChild, inject, Input, OnChanges, OnDestroy, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, ContentChild, inject, Input, OnChanges, OnDestroy, OnInit, signal, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ScrollRevealDirective } from '../directives/scroll-reveal.directive';
@@ -33,6 +33,7 @@ const TARGET_HIGHLIGHT_MS = 2000;
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgTemplateOutlet, ScrollRevealDirective],
 })
 export class TimelineComponent implements OnInit, OnChanges, OnDestroy {
