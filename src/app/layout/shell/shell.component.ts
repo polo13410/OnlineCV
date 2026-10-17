@@ -1,11 +1,11 @@
-import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, Component, inject, Injector, signal, ChangeDetectionStrategy } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { NavComponent } from '../nav/nav.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ContactService } from '../../services/contact.service';
 import { PageNavigationService } from '../../services/page-navigation.service';
 import { ContactDialogComponent } from '../../shared/contact-dialog/contact-dialog.component';
@@ -20,7 +20,8 @@ import { PageSweepComponent } from '../page-sweep/page-sweep.component';
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
   standalone: true,
-  imports: [RouterModule, TranslateModule, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent, OverscrollNavComponent, PageStepComponent, PageSweepComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterModule, TranslatePipe, NavComponent, ThemeToggleComponent, ContactDialogComponent, HeaderLinksComponent, LangToggleComponent, OverscrollNavComponent, PageStepComponent, PageSweepComponent],
 })
 export class ShellComponent {
   private breakpoints = inject(BreakpointObserver);

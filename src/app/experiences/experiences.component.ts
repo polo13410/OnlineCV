@@ -1,6 +1,6 @@
 // src/app/experiences/experiences.component.ts
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, combineLatest, takeUntil } from 'rxjs';
 import { Experience, Experiences } from 'src/assets/data/contentInterface';
 import { ContactService } from '../services/contact.service';
@@ -17,7 +17,8 @@ import { periodMeta } from '../shared/timeline/format';
   templateUrl: './experiences.component.html',
   styleUrl: './experiences.component.scss',
   standalone: true,
-  imports: [TranslateModule, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
   pro = signal<TimelineEntry<Experience>[]>([]);

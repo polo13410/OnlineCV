@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ShellComponent } from './layout/shell/shell.component';
 import { CursorComponent } from './shared/cursor/cursor.component';
 import { DebugPanelComponent } from './shared/debug-panel/debug-panel.component';
@@ -11,6 +11,7 @@ import { DebugPanelComponent } from './shared/debug-panel/debug-panel.component'
     <app-debug-panel />
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ShellComponent, CursorComponent, DebugPanelComponent],
 })
 export class AppComponent {}

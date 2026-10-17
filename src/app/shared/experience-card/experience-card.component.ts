@@ -1,6 +1,6 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProjectLink, ProjectLinkType } from 'src/assets/data/contentInterface';
 import { SkillId } from 'src/assets/data/skills';
 import { LanguageService } from '../../services/language.service';
@@ -13,7 +13,8 @@ const COLLAPSED_BULLETS = 4;
   templateUrl: './experience-card.component.html',
   styleUrl: './experience-card.component.scss',
   standalone: true,
-  imports: [TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe],
 })
 export class ExperienceCardComponent {
   @Input() variant: 'full' | 'compact' = 'full';

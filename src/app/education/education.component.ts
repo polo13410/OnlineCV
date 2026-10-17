@@ -1,6 +1,6 @@
 // src/app/education/education.component.ts
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, combineLatest, takeUntil } from 'rxjs';
 import { Education } from 'src/assets/data/contentInterface';
 import { GetJsonService } from '../services/get-json.service';
@@ -15,7 +15,8 @@ import { periodMeta } from '../shared/timeline/format';
   templateUrl: './education.component.html',
   styleUrl: './education.component.scss',
   standalone: true,
-  imports: [TranslateModule, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
 })
 export class EducationComponent implements OnInit, OnDestroy {
   entries = signal<TimelineEntry<Education>[]>([]);

@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PAGES, PageNavigationService } from '../../services/page-navigation.service';
 
 /**
@@ -26,7 +26,8 @@ import { PAGES, PageNavigationService } from '../../services/page-navigation.ser
   `,
   styleUrl: './page-sweep.component.scss',
   standalone: true,
-  imports: [TranslateModule, DecimalPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe, DecimalPipe],
 })
 export class PageSweepComponent {
   readonly pageNav = inject(PageNavigationService);

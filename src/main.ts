@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withViewTransitions } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app/app.component';
@@ -16,8 +16,15 @@ bootstrapApplication(AppComponent, {
       onViewTransitionCreated: info => inject(PageNavigationService).onViewTransition(info),
     })),
     provideAnimationsAsync(),
-    provideHttpClient(),
-    provideTranslateService({ lang: 'fr' }),
-    provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
+    provideHttpClient(withXhr()),
+    provideTranslateService({
+      lang: 'fr',
+      fallbackLang: 'fr',
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json',
+        failOnError: true,
+      }),
+    }),
   ],
 }).catch(err => console.error(err));

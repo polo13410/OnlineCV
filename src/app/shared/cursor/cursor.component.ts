@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, inject, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, NgZone, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -10,6 +10,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
   `,
   styleUrl: './cursor.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'cursor-host' },
 })
 export class CursorComponent implements OnInit, OnDestroy {

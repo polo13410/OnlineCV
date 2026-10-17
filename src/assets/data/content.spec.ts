@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { content } from './content';
 import { ExperienceBase } from './contentInterface';
 import { SKILLS } from './skills';
@@ -27,7 +28,7 @@ describe('content data', () => {
   it('only references registered skills', () => {
     const all = [...(fr.experiences?.pro ?? []), ...(fr.experiences?.stage ?? []), ...(fr.projects ?? [])];
     for (const item of all) {
-      for (const skill of item.skills) expect(SKILLS[skill]).withContext(`${item.id} → ${skill}`).toBeDefined();
+        for (const skill of item.skills) expect(SKILLS[skill], `${item.id} → ${skill}`).toBeDefined();
     }
   });
 });

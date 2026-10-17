@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DebugPanelService } from '../../services/debug-panel.service';
 import { ThemeService } from '../../services/theme.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,6 +16,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     </button>
   `,
   styleUrl: './theme-toggle.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class ThemeToggleComponent {

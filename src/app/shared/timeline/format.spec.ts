@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { formatDay, formatDuration, formatMonthYear, formatPeriod } from './format';
 
 describe('timeline format', () => {

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, DestroyRef, effect, inject, NgZone, untracked } from '@angular/core';
+import { Component, DestroyRef, effect, inject, NgZone, untracked, ChangeDetectionStrategy } from '@angular/core';
 import { Page, PageNavigationService } from '../../services/page-navigation.service';
 
 type Edge = 'top' | 'bottom';
@@ -26,6 +26,7 @@ const MAX_SHIFT = 44;
 @Component({
   selector: 'app-overscroll-nav',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class OverscrollNavComponent {

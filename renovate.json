@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Europe/Zurich",
+  "schedule": ["before 6am on monday"],
+  "minimumReleaseAge": "7 days",
+  "automerge": false,
+  "prConcurrentLimit": 3,
+  "lockFileMaintenance": { "enabled": true },
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "matchPackageNames": ["/^@angular\\//", "/^@angular-devkit\\//"],
+      "groupName": "Angular",
+      "separateMajorMinor": true
+    },
+    {
+      "matchPackageNames": ["typescript", "rxjs", "zone.js"],
+      "groupName": "Angular runtime and compiler dependencies"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Angular 22 compiler requires TypeScript 6.0.x; review this bound when upgrading Angular.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": ">=6.0.0 <6.1.0"
+    }
+  ]
+}

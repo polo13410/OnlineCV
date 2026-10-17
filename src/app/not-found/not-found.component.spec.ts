@@ -1,4 +1,7 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { NotFoundComponent } from './not-found.component';
 
@@ -8,7 +11,8 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
+      imports: [NotFoundComponent],
+      providers: [provideTranslateService(), provideRouter([])],
     })
     .compileComponents();
 

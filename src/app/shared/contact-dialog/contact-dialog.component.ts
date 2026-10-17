@@ -1,7 +1,7 @@
-import { Component, effect, ElementRef, HostListener, inject, signal, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { map, Subscription } from 'rxjs';
 import { ContactService, ContactTopic } from '../../services/contact.service';
 import { GetJsonService } from '../../services/get-json.service';
@@ -33,7 +33,8 @@ const SUBJECT_KEYS: Record<ContactTopic, string> = {
   templateUrl: './contact-dialog.component.html',
   styleUrl: './contact-dialog.component.scss',
   standalone: true,
-  imports: [ReactiveFormsModule, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ReactiveFormsModule, TranslatePipe],
 })
 export class ContactDialogComponent {
   readonly contact = inject(ContactService);

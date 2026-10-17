@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, VERSION } from '@angular/core';
+import { Component, computed, inject, VERSION, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, of } from 'rxjs';
 import { LanguageService } from '../../services/language.service';
 import { formatDay } from '../../shared/timeline/format';
@@ -14,7 +14,7 @@ interface BuildInfo {
 
 const REPO_URL = 'https://github.com/polo13410/OnlineCV';
 
-/** "Angular 21.2 · Node 24.x · updated on … · a1b2c3d" — build-info.json only exists in built sites. */
+/** "Angular 22.2 · Node 26.x · updated on … · a1b2c3d" — build-info.json only exists in built sites. */
 @Component({
   selector: 'app-build-info',
   template: `
@@ -35,7 +35,8 @@ const REPO_URL = 'https://github.com/polo13410/OnlineCV';
   `,
   styleUrl: './build-info.component.scss',
   standalone: true,
-  imports: [TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [TranslatePipe],
 })
 export class BuildInfoComponent {
   readonly angular = `${VERSION.major}.${VERSION.minor}`;
