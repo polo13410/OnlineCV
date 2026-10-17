@@ -1,5 +1,6 @@
 import { Component, computed, HostListener, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SkillId } from 'src/assets/data/skills';
@@ -15,7 +16,7 @@ import { SkillPanelComponent } from './skill-panel/skill-panel.component';
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
   standalone: true,
-  imports: [TranslatePipe, ScrollRevealDirective, SkillPanelComponent],
+  imports: [TranslatePipe, ScrollRevealDirective, SkillPanelComponent, MatIconModule],
   changeDetection: ChangeDetectionStrategy.Eager,
   host: { '[class.panel-open]': 'selected().length > 0' },
 })
