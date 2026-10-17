@@ -51,6 +51,12 @@ Karma needs Chrome/Chromium; set `CHROME_BIN` if it is not detected automaticall
 To use an installed Google Chrome for Playwright, set `PLAYWRIGHT_CHANNEL=chrome`.
 The build needs network access to inline Google Fonts.
 
+Native build dependencies have reviewed, version-pinned install-script approvals in
+`package.json` (`allowScripts`). When an update introduces an unreviewed version, run
+`npm install-scripts ls`, inspect its setup script, then use
+`npm install-scripts approve <pkg>` and `npm rebuild <pkg>` for the reviewed package.
+Run `npm run verify` afterward.
+
 The `Verify` GitHub Actions workflow runs these checks for every pull request and pushes
 to `master`/`main`, using Node 24 and a downloaded Chromium. Failed browser tests retain
 screenshots and traces in the uploaded report.
