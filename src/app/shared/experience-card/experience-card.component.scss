@@ -105,13 +105,37 @@
 .xp-period { color: var(--color-text-muted); }
 
 .xp-badge {
-  align-self: flex-start;
+  align-self: center;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
   font-size: var(--font-size-xs);
-  color: var(--color-accent-primary);
-  border: 1px dashed var(--color-border-accent);
-  border-radius: 10px;
-  padding: 1px 8px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-radius: 999px;
+  padding: 2px 8px;
+
+  &--orange {
+    color: #9a3412;
+    background: #fff7ed;
+    border-color: #fdba74;
+  }
+}
+
+:host-context([data-theme='dark']) .xp-badge {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.14);
+  border-color: #3b82f6;
+
+  &--orange {
+    color: #fdba74;
+    background: rgba(249, 115, 22, 0.14);
+    border-color: #f97316;
+  }
 }
 
 .xp-summary {

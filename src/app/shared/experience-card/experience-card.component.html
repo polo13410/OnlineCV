@@ -23,7 +23,7 @@
       }
     </div>
     @if (badge) {
-      <span class="xp-badge">{{ badge }}</span>
+      <span class="xp-badge" [class.xp-badge--orange]="badgeTone === 'orange'">{{ badge }}</span>
     }
   </header>
 

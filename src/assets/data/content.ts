@@ -66,7 +66,7 @@ export const content: CVDataContent[] = [
         icon: 'assets/pictures/projects/kamadvice.png',
         dateFrom: '2026-08-29',
         updatedAt: '2026-09-15',
-        status: 'released',
+        status: 'beta',
         summary:
           "Outil d'aide à la décision pour Dofus : centralise les prix relevés par la communauté et propose plusieurs vues (recettes, coût de fabrication vs prix d'achat) pour choisir la meilleure option selon le type d'investissement visé.",
         skills: [
@@ -377,7 +377,7 @@ export const content: CVDataContent[] = [
         icon: 'assets/pictures/projects/kamadvice.png',
         dateFrom: '2026-08-29',
         updatedAt: '2026-09-15',
-        status: 'released',
+        status: 'beta',
         summary:
           'Decision-support tool for Dofus: centralizes community-reported prices and offers several views (recipes, crafting cost vs. purchase price) to pick the best option for the kind of investment you want to make.',
         skills: [
