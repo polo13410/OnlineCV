@@ -60,6 +60,8 @@
 
   &--fill img { object-fit: cover; }
 
+  .logo-image--dark { display: none; }
+
   .xp-card--compact & {
     width: 32px;
     height: 32px;
@@ -68,6 +70,9 @@
 
 // Dark theme: logos too dark to read on the dark card
 :host-context([data-theme='dark']) {
+  .logo-image--light { display: none; }
+  .logo-tile .logo-image--dark { display: block; }
+
   .logo-tile--invert img { filter: invert(1); }
 
   .logo-tile--plate { background: #fff; }

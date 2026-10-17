@@ -8,7 +8,10 @@
       [class.logo-tile--plate]="iconDark === 'plate'"
     >
       @if (icon) {
-        <img [src]="icon" alt="" loading="lazy" />
+        <img [src]="icon" [class.logo-image--light]="!!iconDarkSrc" alt="" loading="lazy" />
+        @if (iconDarkSrc) {
+          <img class="logo-image--dark" [src]="iconDarkSrc" alt="" loading="lazy" />
+        }
       } @else {
         <span class="logo-initial">{{ title.charAt(0) }}</span>
       }
