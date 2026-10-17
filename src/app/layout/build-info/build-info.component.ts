@@ -19,9 +19,15 @@ const REPO_URL = 'https://github.com/polo13410/OnlineCV';
   selector: 'app-build-info',
   template: `
     <p>
-      <span>Angular {{ angular }}</span>
+      <span class="runtime" [title]="'Angular ' + angular">
+        <img src="assets/icons/angular.svg" alt="Angular" width="14" height="14" />
+        {{ angular }}
+      </span>
       @if (info(); as info) {
-        <span>Node {{ info.node }}</span>
+        <span class="runtime" [title]="'Node.js ' + info.node">
+          <img src="assets/icons/nodejs.svg" alt="Node.js" width="14" height="14" />
+          {{ info.node }}
+        </span>
       }
     </p>
     @if (info(); as info) {
