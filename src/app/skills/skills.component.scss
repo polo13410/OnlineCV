@@ -1,20 +1,31 @@
 // src/app/skills/skills.component.scss
-@use '../../styles/mixins' as m;
+@use "../../styles/mixins" as m;
 
 :host {
   display: block;
   transition: padding var(--skill-panel-duration) ease;
 
   // Leave room for the fixed side panel (desktop only; mobile uses a bottom sheet)
-  &.panel-open { padding-right: var(--skill-panel-width); }
-  @include m.mobile() { &.panel-open { padding-right: 0; padding-bottom: 60vh; } }
+  &.panel-open {
+    padding-right: var(--skill-panel-width);
+  }
+  @include m.mobile() {
+    &.panel-open {
+      padding-right: 0;
+      padding-bottom: 60vh;
+    }
+  }
 }
 
-.page-container { @include m.page-container(); }
+.page-container {
+  @include m.page-container();
+}
 
 .section-header {
   @include m.section-header();
-  &--soft { margin-top: var(--space-8); }
+  &--soft {
+    margin-top: var(--space-8);
+  }
 }
 
 .skill-directory {
@@ -75,7 +86,10 @@
     filter var(--transition-base);
   cursor: pointer;
 
-  &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 2px; }
+  &:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
 
   &--selected {
     border-color: var(--color-accent-primary);
@@ -109,9 +123,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
   overflow: hidden;
   border: none;
   border-radius: 999px;
@@ -119,7 +133,9 @@
   color: var(--color-bg-base);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-base), background var(--transition-base);
+  transition:
+    opacity var(--transition-base),
+    background var(--transition-base);
 
   .skill-tag:hover &,
   .skill-tag:focus-visible & {
@@ -148,7 +164,11 @@
   white-space: nowrap;
 }
 
-.soft-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.soft-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
 
 .soft-tag {
   display: inline-block;
