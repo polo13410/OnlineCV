@@ -41,7 +41,6 @@
     "SOFT_OVERLINE": "Compétences",
     "TECH": "Tech skills",
     "SOFT": "Soft skills",
-    "HINT": "Sélectionne une ou plusieurs compétences pour voir où je les ai utilisées.",
     "CATEGORY": {
       "languages": "Langages de programmation & scripting",
       "frameworks": "Frameworks & librairies",

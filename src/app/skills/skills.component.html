@@ -5,7 +5,6 @@
     <p class="section-overline">{{ 'SKILLS.OVERLINE' | translate }}</p>
     <h2>{{ 'SKILLS.TECH' | translate }}</h2>
   </div>
-  <p class="skills-hint" appScrollReveal="reveal">{{ 'SKILLS.HINT' | translate }}</p>
 
   @for (category of categories(); track category.id; let ci = $index) {
     <div class="skill-directory" appScrollReveal="stagger-reveal" [staggerIndex]="ci">
@@ -23,7 +22,10 @@
             [attr.aria-pressed]="isSelected(skill.id)"
             (click)="onSkill(skill.id)"
           >
-            <span class="tag-name">{{ skill.label }}</span>
+            <span class="tag-heading">
+              <span class="tag-name">{{ skill.label }}</span>
+              <span class="tag-action" aria-hidden="true">{{ isSelected(skill.id) ? '✓' : '+' }}</span>
+            </span>
             <span class="tag-meta">{{ (skill.years > 1 ? 'SKILLS.YEARS_MANY' : 'SKILLS.YEARS_ONE') | translate: { count: skill.years } }}</span>
             <span class="tag-level">
               @if (skill.note) {
