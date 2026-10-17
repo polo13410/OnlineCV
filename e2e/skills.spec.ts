@@ -21,7 +21,7 @@ test('shows skill filter actions without changing the tile width', async ({ page
   expect(await tag.evaluate(el => el.getBoundingClientRect().width)).toBe(width);
   await tag.press('Space');
   await expect(tag).toHaveAttribute('aria-pressed', 'true');
-  await expect(action).toHaveText('✕');
+  await expect(action).toHaveText('x');
   await expect(action).toHaveCSS('opacity', '1');
   expect(await tag.evaluate(el => el.getBoundingClientRect().width)).toBe(width);
 });
