@@ -6,7 +6,7 @@
     <h2>{{ 'PROJECTS.TITLE' | translate }}</h2>
   </div>
 
-  <app-timeline [entries]="entries" [invite]="invite">
+  <app-timeline [entries]="entries()" [invite]="invite">
     <ng-template let-card>
       <app-experience-card
         [icon]="card.project.icon"
