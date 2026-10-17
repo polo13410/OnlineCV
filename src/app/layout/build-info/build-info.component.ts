@@ -14,7 +14,7 @@ interface BuildInfo {
 
 const REPO_URL = 'https://github.com/polo13410/OnlineCV';
 
-/** "Angular 21.2 · Node 24.x · updated on … · a1b2c3d" — build-info.json only exists in built sites. */
+/** "Angular 22.2 · Node 26.x · updated on … · a1b2c3d" — build-info.json only exists in built sites. */
 @Component({
   selector: 'app-build-info',
   template: `

@@ -8,7 +8,7 @@
 [![Angular Material](https://img.shields.io/badge/Angular_Material-22-3F51B5?logo=angular&logoColor=white)](https://material.angular.dev)
 [![ngx-translate](https://img.shields.io/badge/i18n-FR_%7C_EN-blue)](https://github.com/ngx-translate/core)
 [![Netlify Functions](https://img.shields.io/badge/Netlify_Functions-Spotify_API-1DB954?logo=spotify&logoColor=white)](https://docs.netlify.com/functions/overview/)
-[![Node.js](https://img.shields.io/badge/Node.js-24.15%2B-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Node.js](https://img.shields.io/badge/Node.js-26-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
 
@@ -41,7 +41,7 @@ never send email and do not validate the deployed Netlify functions or Spotify s
 
 ## Dependency updates
 
-Use Node 24.15 or newer within Node 24 LTS (see `.nvmrc`). Before and after an update batch, run:
+Use Node 26 (see `.nvmrc`). Before and after an update batch, run:
 
 ```sh
 npm ci --strict-peer-deps
@@ -61,7 +61,7 @@ Native build dependencies have reviewed, version-pinned install-script approvals
 Run `npm run verify` afterward.
 
 The `Verify` GitHub Actions workflow runs these checks for every pull request and pushes
-to `master`/`main`, using Node 24 and a downloaded Chromium. Failed browser tests retain
+to `master`/`main`, using Node 26 and a downloaded Chromium. Failed browser tests retain
 screenshots and traces in the uploaded report.
 
 ### Activate automatic update proposals (repository owner)
@@ -102,6 +102,17 @@ are removed; the application's runtime Zone.js and existing animation behavior a
 The production build, 39 unit tests, and 6 desktop/mobile smoke tests pass after migration.
 The full `npm audit` and `npm audit --omit=dev` both report zero vulnerabilities as of
 2026-10-17. Future dependency releases can change those audit results.
+
+## Netlify Node version
+
+Local development, GitHub Actions, and Netlify builds use Node 26. GitHub Actions reads
+`.nvmrc`; Netlify uses that file and the matching `NODE_VERSION` in `netlify.toml`.
+The build command remains `npm run build` and the publish directory is `dist/online-cv`.
+
+Netlify Functions use a separate AWS Lambda runtime. If Node 26 is not a supported
+Lambda runtime, Netlify defaults the functions to Node 24. A site-level
+`AWS_LAMBDA_JS_RUNTIME` override must be checked in the Netlify UI or authenticated CLI;
+it cannot be set in `netlify.toml`.
 
 ## Further help
 
