@@ -23,7 +23,10 @@
             [attr.aria-pressed]="isSelected(skill.id)"
             (click)="onSkill(skill.id)"
           >
-            <span class="tag-name">{{ skill.label }}</span>
+            <span class="tag-name">
+              <span>{{ skill.label }}</span>
+              <span class="tag-action" aria-hidden="true">{{ isSelected(skill.id) ? 'x' : '+' }}</span>
+            </span>
             <span class="tag-meta">{{ (skill.years > 1 ? 'SKILLS.YEARS_MANY' : 'SKILLS.YEARS_ONE') | translate: { count: skill.years } }}</span>
             <span class="tag-level">
               @if (skill.note) {

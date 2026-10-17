@@ -105,10 +105,30 @@
 }
 
 .tag-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text-primary);
   white-space: nowrap;
+}
+
+.tag-action {
+  // Reuse the panel chips' text-symbol action; reserve its space to avoid hover reflow.
+  flex-shrink: 0;
+  width: 1em;
+  text-align: center;
+  color: var(--color-accent-primary);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+
+  .skill-tag:hover &,
+  .skill-tag:focus-visible & { opacity: 1; }
+
+  @media (hover: none) { opacity: 1; }
 }
 
 .tag-meta {
