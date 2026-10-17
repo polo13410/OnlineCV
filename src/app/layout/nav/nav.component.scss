@@ -55,6 +55,13 @@
   flex-shrink: 0;
   width: 32px;
   height: 32px;
+
+  &--dark { display: none; }
+}
+
+:host-context([data-theme='dark']) {
+  .nav-logo--light { display: none; }
+  .nav-logo--dark { display: block; }
 }
 
 .nav-name {
