@@ -117,10 +117,17 @@
   border-radius: 999px;
   background: var(--color-accent-primary);
   color: var(--color-bg-base);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-  transition: background var(--transition-base), transform var(--transition-base);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base), background var(--transition-base);
+
+  svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+
+    &.tag-action-check { width: 12px; height: 12px; }
+  }
 
   &::after {
     content: '';
@@ -134,8 +141,8 @@
 
   .skill-tag:hover &,
   .skill-tag:focus-visible & {
+    opacity: 1;
     background: var(--color-accent-secondary);
-    transform: translateY(-1px);
   }
 
   .skill-tag--selected &::after { display: none; }

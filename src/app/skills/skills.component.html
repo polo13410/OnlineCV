@@ -24,7 +24,15 @@
           >
             <span class="tag-heading">
               <span class="tag-name">{{ skill.label }}</span>
-              <span class="tag-action" aria-hidden="true">{{ isSelected(skill.id) ? '✓' : '+' }}</span>
+              <span class="tag-action" aria-hidden="true">
+                <svg [class.tag-action-check]="isSelected(skill.id)" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  @if (isSelected(skill.id)) {
+                    <path d="m3 8 3 3 7-7" />
+                  } @else {
+                    <path d="M8 3v10M3 8h10" />
+                  }
+                </svg>
+              </span>
             </span>
             <span class="tag-meta">{{ (skill.years > 1 ? 'SKILLS.YEARS_MANY' : 'SKILLS.YEARS_ONE') | translate: { count: skill.years } }}</span>
             <span class="tag-level">
