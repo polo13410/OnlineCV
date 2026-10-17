@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../shared/directives/scroll-reveal.directive';
@@ -29,7 +29,7 @@ const LINK_ORDER: Record<ProjectLinkType, number> = { repo: 0, live: 1, download
   imports: [TranslatePipe, ScrollRevealDirective, TimelineComponent, ExperienceCardComponent],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  entries: TimelineEntry<ProjectCard>[] = [];
+  readonly entries = signal<TimelineEntry<ProjectCard>[]>([]);
   invite?: TimelineInvite;
   private readonly json = inject(GetJsonService);
   private readonly http = inject(HttpClient);
@@ -55,7 +55,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     ])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([projects, pushedAt, lang, labels]) => {
-        this.entries = [...projects]
+        this.entries.set([...projects]
           .sort((a, b) => b.dateFrom.localeCompare(a.dateFrom))
           .map(project => {
             const slug = githubSlug(project);
@@ -70,7 +70,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 links: [...project.links].sort((a, b) => LINK_ORDER[a.type] - LINK_ORDER[b.type]),
               },
             };
-          });
+          }));
       });
 
     this.translate.stream(inviteKeys('PROJECTS'))

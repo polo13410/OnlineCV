@@ -24,6 +24,7 @@ export class ExperienceCardComponent {
   @Input({ required: true }) title!: string;
   @Input() subtitle?: string;
   @Input() badge?: string;
+  @Input() badgeTone: 'blue' | 'orange' = 'blue';
   @Input() period?: string;
   @Input() summary?: string;
   @Input() bullets: string[] = [];

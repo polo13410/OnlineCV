@@ -6,14 +6,15 @@
     <h2>{{ 'PROJECTS.TITLE' | translate }}</h2>
   </div>
 
-  <app-timeline [entries]="entries" [invite]="invite">
+  <app-timeline [entries]="entries()" [invite]="invite">
     <ng-template let-card>
       <app-experience-card
         [icon]="card.project.icon"
         [iconFill]="!!card.project.iconFill"
         [iconDark]="card.project.iconDark"
         [title]="card.project.name"
-        [badge]="card.project.status === 'in-progress' ? ('PROJECTS.STATUS_IN_PROGRESS' | translate) : undefined"
+        [badge]="card.project.status === 'in-progress' ? ('PROJECTS.STATUS_IN_PROGRESS' | translate) : card.project.status === 'beta' ? ('PROJECTS.STATUS_BETA' | translate) : undefined"
+        [badgeTone]="card.project.status === 'beta' ? 'orange' : 'blue'"
         [summary]="card.project.summary"
         [skills]="card.project.skills"
         [links]="card.links"

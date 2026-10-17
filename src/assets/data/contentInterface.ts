@@ -31,7 +31,7 @@ export interface Passion {
 }
 
 export type ProjectKind = 'github' | 'association';
-export type ProjectStatus = 'released' | 'in-progress';
+export type ProjectStatus = 'released' | 'in-progress' | 'beta';
 export type ProjectLinkType = 'repo' | 'live' | 'download';
 
 export interface ProjectLink {
