@@ -96,7 +96,7 @@ test('changes language without recreating or revealing the passion tiles again',
   }
 });
 
-test('fades in the description after expansion has finished', async ({ page, isMobile }) => {
+test('fades in the description before expansion finishes without showing the initial reflow', async ({ page, isMobile }) => {
   await page.goto('/passions');
   const card = page.getByRole('button', { name: 'Handball', exact: true });
   await expect(card.locator('..')).toHaveClass(/revealed/);
@@ -118,8 +118,9 @@ test('fades in the description after expansion has finished', async ({ page, isM
   else await card.hover();
   await expect(card).toHaveAttribute('data-fade-samples');
   const samples = JSON.parse((await card.getAttribute('data-fade-samples'))!) as { height: number; opacity: number }[];
-  expect(samples.filter(sample => sample.height < 299).length).toBeGreaterThan(1);
-  expect(samples.filter(sample => sample.height < 299).every(sample => sample.opacity === 0)).toBe(true);
+  expect(samples.filter(sample => sample.height < 250).length).toBeGreaterThan(1);
+  expect(samples.filter(sample => sample.height < 250).every(sample => sample.opacity === 0)).toBe(true);
+  expect(samples.some(sample => sample.height < 299 && sample.opacity > 0)).toBe(true);
   expect(samples.some(sample => sample.opacity > 0 && sample.opacity < 1)).toBe(true);
   expect(samples.at(-1)!.opacity).toBe(1);
 });
