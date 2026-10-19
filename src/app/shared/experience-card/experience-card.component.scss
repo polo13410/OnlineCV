@@ -33,13 +33,6 @@
   }
 }
 
-// Only content that is actually translated gets the sequential fade. Stable
-// content such as logos, subtitles and skill tags stays visible throughout.
-.xp-card .xp-card-text {
-  @include m.lang-text();
-  view-transition-class: lang-text card-text;
-}
-
 .xp-head {
   display: flex;
   align-items: center;

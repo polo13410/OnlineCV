@@ -17,7 +17,7 @@
       }
     </span>
     <div class="xp-titles">
-      <h3 class="xp-title" [class.xp-card-text]="translateTitle">{{ title }}</h3>
+      <h3 class="xp-title">{{ title }}</h3>
       @if (subtitle) {
         <p class="xp-subtitle">{{ subtitle }}</p>
       }
@@ -26,16 +26,16 @@
       }
     </div>
     @if (badge) {
-      <span class="xp-badge xp-card-text" [class.xp-badge--orange]="badgeTone === 'orange'">{{ badge }}</span>
+      <span class="xp-badge" [class.xp-badge--orange]="badgeTone === 'orange'">{{ badge }}</span>
     }
   </header>
 
   @if (variant === 'full') {
     @if (summary) {
-      <p class="xp-summary xp-card-text">{{ summary }}</p>
+      <p class="xp-summary">{{ summary }}</p>
     }
     @if (bullets.length) {
-      <div class="xp-description xp-card-text" [id]="descriptionId"
+      <div class="xp-description" [id]="descriptionId"
            [class.xp-description--measured]="descriptionHeight() !== null"
            [class.xp-description--expanded]="expanded()"
            [class.xp-description--clipped]="canExpand() && !expanded()"

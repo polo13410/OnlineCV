@@ -24,7 +24,6 @@ export class ExperienceCardComponent {
   @Input() iconFill = false;
   @Input() iconDark?: 'invert' | 'plate';
   @Input({ required: true }) title!: string;
-  @Input() translateTitle = false;
   @Input() subtitle?: string;
   @Input() badge?: string;
   @Input() badgeTone: 'blue' | 'orange' = 'blue';
