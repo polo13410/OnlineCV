@@ -61,6 +61,8 @@ export class PassionsComponent implements OnInit, OnDestroy {
   private positionInspection(slot: HTMLElement): { centerX: number; centerY: number; width: number } {
     const bounds = slot.getBoundingClientRect();
     const width = Math.max(bounds.width, Math.min(300, window.innerWidth - 48));
+    slot.style.setProperty('--inspect-width', `${width}px`);
+    slot.style.setProperty('--title-width', `${bounds.width}px`);
     const center = bounds.left + bounds.width / 2;
     // Leave room for the tilt and shadow, including on narrow touch screens.
     const clamped = Math.max(width / 2 + 24, Math.min(window.innerWidth - width / 2 - 24, center));

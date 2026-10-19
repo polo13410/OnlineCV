@@ -23,8 +23,10 @@ for (const theme of ['light', 'dark']) {
         await expect(card).toHaveCSS('height', '300px');
         const description = card.locator('.passion-description');
         await expect(description).not.toHaveText(/\?/);
+        await expect(description).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
         expect(await card.locator('.passion-back').evaluate(face => {
-          const children = Array.from(face.children).map(child => child.getBoundingClientRect());
+          const children = Array.from(face.children).filter(child => getComputedStyle(child).display !== 'none')
+            .map(child => child.getBoundingClientRect());
           const bounds = face.getBoundingClientRect();
           return face.scrollHeight <= face.clientHeight + 1 && children.every(child =>
             child.top >= bounds.top - 1 && child.bottom <= bounds.bottom + 1);
@@ -96,22 +98,29 @@ test('changes language without recreating or revealing the passion tiles again',
   }
 });
 
-test('moves the title up and quickly zooms the description into the expanded tile', async ({ page, isMobile }) => {
+test('keeps the title continuous and zooms fixed-layout copy from zero within 300ms', async ({ page, isMobile }) => {
   await page.goto('/passions');
   const card = page.getByRole('button', { name: 'Handball', exact: true });
   await expect(card.locator('..')).toHaveClass(/revealed/);
+  await card.locator('..').evaluate(el => Promise.all(el.getAnimations().map(a => a.finished)));
   await card.evaluate(el => {
-    const title = el.querySelector<HTMLElement>('.passion-back .passion-name')!;
+    const title = el.querySelector<HTMLElement>('.passion-front .passion-name')!;
     const description = el.querySelector<HTMLElement>('.passion-description')!;
-    const samples: { titleY: number; descriptionScale: number }[] = [];
+    const samples: { time: number; titleY: number; descriptionScale: number; width: number; height: number }[] = [];
     el.addEventListener('transitionrun', event => {
       if (event.target !== el || (event as TransitionEvent).propertyName !== 'height') return;
       const start = performance.now();
       const sample = () => {
         const titleTransform = new DOMMatrixReadOnly(getComputedStyle(title).transform);
         const descriptionTransform = new DOMMatrixReadOnly(getComputedStyle(description).transform);
-        samples.push({ titleY: titleTransform.m42, descriptionScale: descriptionTransform.m11 });
-        if (performance.now() - start < 500) requestAnimationFrame(sample);
+        samples.push({
+          time: performance.now() - start,
+          titleY: titleTransform.m42,
+          descriptionScale: descriptionTransform.m11,
+          width: description.offsetWidth,
+          height: description.offsetHeight,
+        });
+        if (performance.now() - start < 350) requestAnimationFrame(sample);
         else el.setAttribute('data-zoom-samples', JSON.stringify(samples));
       };
       requestAnimationFrame(sample);
@@ -121,13 +130,27 @@ test('moves the title up and quickly zooms the description into the expanded til
   else await card.hover();
   await expect(card).toHaveAttribute('data-zoom-samples');
   const samples = JSON.parse((await card.getAttribute('data-zoom-samples'))!) as {
+    time: number;
     titleY: number;
     descriptionScale: number;
+    width: number;
+    height: number;
   }[];
-  expect(Math.max(...samples.map(sample => sample.titleY))).toBeGreaterThan(20);
-  expect(Math.min(...samples.map(sample => sample.descriptionScale))).toBeLessThan(0.8);
-  expect(Math.abs(samples.at(-1)!.titleY)).toBeLessThan(0.1);
-  expect(samples.at(-1)!.descriptionScale).toBeCloseTo(1, 2);
+  expect(samples.some(sample => sample.titleY > -120 && sample.titleY < 0)).toBe(true);
+  expect(samples.some(sample => sample.descriptionScale === 0)).toBe(true);
+  expect(samples.some(sample => sample.descriptionScale > 0.1 && sample.descriptionScale < 0.9)).toBe(true);
+  const firstVisible = samples.find(sample => sample.descriptionScale > 0.05)!;
+  expect(firstVisible.titleY).toBeCloseTo(-126, 1);
+  expect(new Set(samples.map(sample => sample.width)).size).toBe(1);
+  expect(new Set(samples.map(sample => sample.height)).size).toBe(1);
+  expect(samples.find(sample => sample.descriptionScale === 1)!.time).toBeLessThan(300);
+  for (let i = 1; i < samples.length; i++) {
+    expect(samples[i].titleY).toBeLessThanOrEqual(samples[i - 1].titleY + 0.1);
+  }
+  if (!isMobile) {
+    await expect(card.locator('.passion-front')).toHaveCSS('opacity', '1');
+    await expect(card.locator('.passion-back .passion-name')).toHaveCSS('display', 'none');
+  }
 });
 
 test('keeps the inspection animation enabled with reduced motion and the grid compact', async ({ page, isMobile }) => {
@@ -148,8 +171,8 @@ test('keeps the inspection animation enabled with reduced motion and the grid co
       el.setAttribute('data-animated-height', 'true');
     }
   }));
-  await card.evaluate(el => el.querySelector('.passion-description')!.addEventListener('animationstart', () => {
-    el.setAttribute('data-animated-description', 'true');
+  await card.evaluate(el => el.querySelector('.passion-description')!.addEventListener('transitionrun', event => {
+    if ((event as TransitionEvent).propertyName === 'transform') el.setAttribute('data-animated-description', 'true');
   }));
   if (isMobile) await card.tap();
   else await card.hover();
