@@ -9,11 +9,11 @@
 
 .passion-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--space-3);
 
   @include m.mobile() {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: var(--space-2);
   }
 }
@@ -23,10 +23,15 @@
   position: relative;
   perspective: 900px;
   min-width: 0;
-  &:has(:focus-visible), &.is-inspecting, &.is-open { z-index: 1; }
+  height: 116px;
+  &:has(:focus-visible), &.is-inspecting, &.is-open { z-index: 10; }
 }
 
 .passion-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   display: grid;
   width: 100%;
   height: 100%;
@@ -38,7 +43,8 @@
   font: inherit;
   text-align: center;
   transform-style: preserve-3d;
-  transition: transform 240ms ease;
+  // This inspection animation is part of the interaction, including reduced motion.
+  transition: width 320ms ease, height 320ms ease, left 320ms ease, transform 320ms ease;
 
   &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 4px; }
 }
@@ -50,7 +56,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
-  min-height: 280px;
+  min-width: 0;
+  min-height: 0;
   padding: var(--space-5) var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: inherit;
@@ -61,6 +68,7 @@
 }
 
 .passion-back {
+  overflow: hidden;
   transform: rotateY(180deg);
   .passion-name { color: var(--color-accent-primary); }
 }
@@ -69,6 +77,19 @@
 .passion-name { font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: 600; }
 .passion-description { font-size: var(--font-size-sm); line-height: 1.6; color: var(--color-text-secondary); }
 .passion-action { font-size: 1rem; line-height: 1; color: var(--color-accent-primary); }
+.passion-front .passion-action { position: absolute; right: var(--space-3); bottom: var(--space-3); }
+
+.is-inspecting, .is-open {
+  .passion-tile {
+    width: max(100%, min(300px, calc(100vw - 48px)));
+    height: 300px;
+    left: calc(50% + var(--inspect-shift, 0px));
+  }
+  .passion-back {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary), 0 24px 48px rgb(0 0 0 / 22%);
+  }
+}
 
 .is-open .passion-tile { transform: rotateY(180deg); }
 
@@ -79,28 +100,16 @@
   .passion-tile:focus-visible .passion-action { opacity: 1; }
   .is-inspecting, .is-open {
     .passion-tile {
-      transform: translateY(-6px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.045);
+      transform: translateY(-12px) translateZ(28px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
     }
     .passion-front { opacity: 0; }
     .passion-back {
       opacity: 1;
-      border-color: var(--color-accent-primary);
-      box-shadow: var(--glow-primary), 0 16px 32px rgb(0 0 0 / 12%);
     }
   }
 }
 
 @include m.mobile() {
-  .passion-face { padding: var(--space-4) var(--space-3); min-height: 340px; }
+  .passion-face { padding: var(--space-4) var(--space-3); }
   .passion-description { font-size: 12px; line-height: 1.6; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .passion-tile, .passion-face { transition: none; }
-  .passion-back { transform: none; opacity: 0; }
-  .is-open, .is-inspecting {
-    .passion-tile { transform: none; }
-    .passion-front { opacity: 0; }
-    .passion-back { opacity: 1; }
-  }
 }

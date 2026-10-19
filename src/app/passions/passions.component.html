@@ -9,7 +9,7 @@
         <div class="passion-slot" appScrollReveal="stagger-reveal" [staggerIndex]="i"
           (pointermove)="inspect($event, passion)" (pointerleave)="leave($event)"
           [class.is-inspecting]="hovered === passion" [class.is-open]="opened === passion">
-          <button type="button" class="passion-tile" (click)="toggle(passion)"
+          <button type="button" class="passion-tile" (click)="toggle(passion, $event)"
             (keydown.escape)="opened = null; hovered = null" (blur)="opened = null"
             [attr.aria-label]="passion.name" [attr.aria-expanded]="opened === passion || hovered === passion"
             [attr.aria-describedby]="opened === passion || hovered === passion ? 'passion-' + section + '-' + i : null">

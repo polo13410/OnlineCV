@@ -41,6 +41,7 @@ export class PassionsComponent implements OnInit, OnDestroy {
     this.hovered = passion;
     const card = event.currentTarget as HTMLElement;
     const bounds = card.getBoundingClientRect();
+    this.positionInspection(card);
     const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
     const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
     card.style.setProperty('--tilt-x', `${(0.5 - y) * 12}deg`);
@@ -55,8 +56,18 @@ export class PassionsComponent implements OnInit, OnDestroy {
     card.style.removeProperty('--tilt-y');
   }
 
-  toggle(passion: Passion): void {
+  toggle(passion: Passion, event: MouseEvent): void {
+    this.positionInspection((event.currentTarget as HTMLElement).parentElement!);
     this.opened = this.opened === passion ? null : passion;
+  }
+
+  private positionInspection(slot: HTMLElement): void {
+    const bounds = slot.getBoundingClientRect();
+    const width = Math.max(bounds.width, Math.min(300, window.innerWidth - 48));
+    const center = bounds.left + bounds.width / 2;
+    // Leave room for the tilt and shadow, including on narrow touch screens.
+    const clamped = Math.max(width / 2 + 24, Math.min(window.innerWidth - width / 2 - 24, center));
+    slot.style.setProperty('--inspect-shift', `${clamped - center}px`);
   }
 
   ngOnDestroy(): void {

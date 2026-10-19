@@ -20,6 +20,7 @@ for (const theme of ['light', 'dark']) {
         if (isMobile) await card.tap();
         else await card.hover();
         await expect(card).toHaveAttribute('aria-expanded', 'true');
+        await expect(card).toHaveCSS('height', '300px');
         const description = card.locator('.passion-description');
         await expect(description).not.toHaveText(/\?/);
         expect(await card.locator('.passion-back').evaluate(face => {
@@ -28,6 +29,9 @@ for (const theme of ['light', 'dark']) {
           return face.scrollHeight <= face.clientHeight + 1 && children.every(child =>
             child.top >= bounds.top - 1 && child.bottom <= bounds.bottom + 1);
         })).toBe(true);
+        if (isMobile) await card.tap();
+        else await page.mouse.move(0, 0);
+        await expect(card).toHaveCSS('height', '116px');
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     });
@@ -67,13 +71,39 @@ test('inspection follows the mouse and resets on leave; touch flips twice', asyn
   }
 });
 
-test('reduced motion reveals the description without tilting or flipping', async ({ page, isMobile }) => {
+test('keeps the inspection animation enabled with reduced motion and the grid compact', async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/passions');
   const card = page.getByRole('button', { name: 'Handball', exact: true });
+  const slots = page.locator('.passion-slot');
+  await expect(slots.first()).toHaveClass(/revealed/);
+  await slots.evaluateAll(elements => Promise.all(elements.flatMap(el => el.getAnimations().map(animation => animation.finished))));
+  await expect(card).toHaveCSS('height', '116px');
+  const before = await slots.evaluateAll(elements => elements.map(el => {
+    const { x, y, width, height } = el.getBoundingClientRect();
+    return { x, y, width, height };
+  }));
+  const compactWidth = await card.evaluate(el => el.getBoundingClientRect().width);
+  await card.evaluate(el => el.addEventListener('transitionrun', event => {
+    if (event.target === el && (event as TransitionEvent).propertyName === 'height') {
+      el.setAttribute('data-animated-height', 'true');
+    }
+  }));
   if (isMobile) await card.tap();
   else await card.hover();
+  await expect(card).toHaveAttribute('data-animated-height', 'true');
   await expect(card).toHaveAttribute('aria-expanded', 'true');
+  await expect(card).toHaveCSS('height', '300px');
+  expect(await card.evaluate(el => el.getBoundingClientRect().width)).toBeGreaterThan(compactWidth * 1.3);
+  const after = await slots.evaluateAll(elements => elements.map(el => {
+    const { x, y, width, height } = el.getBoundingClientRect();
+    return { x, y, width, height };
+  }));
+  expect(after).toEqual(before);
+  await expect(card).not.toHaveCSS('transform', 'none');
+  await expect(card.locator('..')).toHaveCSS('z-index', '10');
+  if (isMobile) await card.tap();
+  else await page.mouse.move(0, 0);
+  await expect(card).toHaveCSS('height', '116px');
   await expect(card).toHaveCSS('transform', 'none');
-  await expect(card.locator('.passion-back')).toHaveCSS('opacity', '1');
 });
