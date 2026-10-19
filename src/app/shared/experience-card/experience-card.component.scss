@@ -5,9 +5,6 @@
 
 .xp-card {
   @include m.lang-box();
-  // Text blocks can wrap differently between languages; fade the old block out
-  // before revealing the new one while the card frame changes size.
-  > * { view-transition-class: lang-text card-text; }
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -34,6 +31,13 @@
     gap: var(--space-2);
     padding: var(--space-3) var(--space-4);
   }
+}
+
+// Only content that is actually translated gets the sequential fade. Stable
+// content such as logos, subtitles and skill tags stays visible throughout.
+.xp-card .xp-card-text {
+  @include m.lang-text();
+  view-transition-class: lang-text card-text;
 }
 
 .xp-head {
