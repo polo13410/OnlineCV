@@ -5,6 +5,9 @@
 
 .xp-card {
   @include m.lang-box();
+  // Text blocks can wrap differently between languages; fade the old block out
+  // before revealing the new one while the card frame changes size.
+  > * { view-transition-class: lang-text card-text; }
   display: flex;
   flex-direction: column;
   gap: var(--space-3);

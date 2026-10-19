@@ -102,6 +102,25 @@ button { font-family: var(--font-main); cursor: pointer; }
   object-fit: none;
   object-position: left top;
 }
+
+// Shared education / experience / project cards: avoid overlaying two different
+// line layouts while the frame moves and resizes. Keep its existing morph.
+:root[data-vt='lang'] {
+  &::view-transition-old(.card-text) {
+    animation: card-lang-out var(--lang-morph-duration) ease-out both;
+  }
+  &::view-transition-new(.card-text) {
+    animation: card-lang-in var(--lang-morph-duration) ease-out both;
+  }
+}
+@keyframes card-lang-out {
+  from { opacity: 1; }
+  35%, to { opacity: 0; }
+}
+@keyframes card-lang-in {
+  from, 45% { opacity: 0; }
+  to { opacity: 1; }
+}
 // The toggle shows its own live knob slide instead of a cross-fade
 ::view-transition-old(.lang-toggle) { display: none; }
 ::view-transition-new(.lang-toggle) { animation: none; }
