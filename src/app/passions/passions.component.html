@@ -5,23 +5,25 @@
       <h2>{{ (section === 0 ? 'PASSIONS.SPORTS' : 'PASSIONS.OTHERS') | translate }}</h2>
     </div>
     <div class="passion-grid">
-      @for (passion of group; track passion.name; let i = $index) {
+      @for (passion of group; track passion.id; let i = $index) {
         <div class="passion-slot" appScrollReveal="stagger-reveal" [staggerIndex]="i"
           (pointermove)="inspect($event, passion)" (pointerleave)="leave($event)"
-          [class.is-inspecting]="hovered === passion" [class.is-open]="opened === passion">
+          [class.is-inspecting]="hovered === passion.id" [class.is-open]="opened === passion.id">
           <button type="button" class="passion-tile" (click)="toggle(passion, $event)"
             (keydown.escape)="opened = null; hovered = null" (blur)="opened = null"
-            [attr.aria-label]="passion.name" [attr.aria-expanded]="opened === passion || hovered === passion"
-            [attr.aria-describedby]="opened === passion || hovered === passion ? 'passion-' + section + '-' + i : null">
-            <span class="passion-face passion-front" [attr.aria-hidden]="opened === passion || hovered === passion">
-              <span class="passion-glyph" aria-hidden="true">{{ section === 0 ? '◈' : '◉' }}</span>
-              <span class="passion-name">{{ passion.name }}</span>
-              <span class="passion-action" aria-hidden="true">+</span>
-            </span>
-            <span class="passion-face passion-back" [attr.aria-hidden]="opened !== passion && hovered !== passion">
-              <span class="passion-name">{{ passion.name }}</span>
-              <span class="passion-description" [id]="'passion-' + section + '-' + i">{{ passion.description }}</span>
-              <span class="passion-action" aria-hidden="true">↶</span>
+            [attr.aria-label]="passion.name" [attr.aria-expanded]="opened === passion.id || hovered === passion.id"
+            [attr.aria-describedby]="opened === passion.id || hovered === passion.id ? 'passion-' + section + '-' + i : null">
+            <span class="passion-tilt">
+              <span class="passion-face passion-front" [attr.aria-hidden]="opened === passion.id || hovered === passion.id">
+                <span class="passion-glyph" aria-hidden="true">{{ section === 0 ? '◈' : '◉' }}</span>
+                <span class="passion-name">{{ passion.name }}</span>
+                <span class="passion-action" aria-hidden="true">+</span>
+              </span>
+              <span class="passion-face passion-back" [attr.aria-hidden]="opened !== passion.id && hovered !== passion.id">
+                <span class="passion-name">{{ passion.name }}</span>
+                <span class="passion-description" [id]="'passion-' + section + '-' + i">{{ passion.description }}</span>
+                <span class="passion-action" aria-hidden="true">↶</span>
+              </span>
             </span>
           </button>
         </div>

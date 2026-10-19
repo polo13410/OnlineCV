@@ -18,8 +18,8 @@ import { GetJsonService } from '../services/get-json.service';
 export class PassionsComponent implements OnInit, OnDestroy {
   sports: Passion[] = [];
   others: Passion[] = [];
-  opened: Passion | null = null;
-  hovered: Passion | null = null;
+  opened: string | null = null;
+  hovered: string | null = null;
   private readonly json = inject(GetJsonService);
   private readonly destroy$ = new Subject<void>();
 
@@ -27,8 +27,6 @@ export class PassionsComponent implements OnInit, OnDestroy {
     this.json.getPassions().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.sports = [];
       this.others = [];
-      this.opened = null;
-      this.hovered = null;
       data.forEach((p: Passion) => {
         if (p.type === 'sport') this.sports.push(p);
         else this.others.push(p);
@@ -38,12 +36,11 @@ export class PassionsComponent implements OnInit, OnDestroy {
 
   inspect(event: PointerEvent, passion: Passion): void {
     if (event.pointerType !== 'mouse' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    this.hovered = passion;
+    this.hovered = passion.id;
     const card = event.currentTarget as HTMLElement;
-    const bounds = card.getBoundingClientRect();
-    this.positionInspection(card);
-    const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
-    const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
+    const { centerX, centerY, width } = this.positionInspection(card);
+    const x = Math.max(0, Math.min(1, 0.5 + (event.clientX - centerX) / width));
+    const y = Math.max(0, Math.min(1, 0.5 + (event.clientY - (centerY - 12)) / 300));
     card.style.setProperty('--tilt-x', `${(0.5 - y) * 12}deg`);
     card.style.setProperty('--tilt-y', `${(x - 0.5) * 12}deg`);
   }
@@ -58,16 +55,17 @@ export class PassionsComponent implements OnInit, OnDestroy {
 
   toggle(passion: Passion, event: MouseEvent): void {
     this.positionInspection((event.currentTarget as HTMLElement).parentElement!);
-    this.opened = this.opened === passion ? null : passion;
+    this.opened = this.opened === passion.id ? null : passion.id;
   }
 
-  private positionInspection(slot: HTMLElement): void {
+  private positionInspection(slot: HTMLElement): { centerX: number; centerY: number; width: number } {
     const bounds = slot.getBoundingClientRect();
     const width = Math.max(bounds.width, Math.min(300, window.innerWidth - 48));
     const center = bounds.left + bounds.width / 2;
     // Leave room for the tilt and shadow, including on narrow touch screens.
     const clamped = Math.max(width / 2 + 24, Math.min(window.innerWidth - width / 2 - 24, center));
     slot.style.setProperty('--inspect-shift', `${clamped - center}px`);
+    return { centerX: clamped, centerY: bounds.top + bounds.height / 2, width };
   }
 
   ngOnDestroy(): void {

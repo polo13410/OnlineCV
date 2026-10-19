@@ -26,60 +26,70 @@ export const content: CVDataContent[] = [
     ],
     passions: [
       {
+        id: 'handball',
         name: 'Handball',
         type: 'sport',
         description:
           "Je joue depuis tout petit. Le handball me permet de me dépenser et de me défouler, mais la stratégie y compte autant que l'engagement physique. Lire le jeu, communiquer et construire avec mes coéquipiers : c'est ce mélange qui me plaît et qui nourrit mon esprit d'équipe.",
       },
       {
+        id: 'ski',
         name: 'Ski',
         type: 'sport',
         description:
           "Depuis l'enfance, je retrouve à ski ce mélange de vitesse, de liberté et de calme. Sur une descente, je choisis ma trajectoire et je prends mes décisions seul. J'aime cette autonomie, qui demande de rester attentif et de faire confiance à son jugement.",
       },
       {
+        id: 'hiking',
         name: 'Randonnée',
         type: 'sport',
         description:
           "En Haute-Savoie et en Suisse, j'ai peu à peu pris goût aux paysages et aux rencontres en chemin. Marcher réduit le bruit du quotidien : sans notifications ni distraction à portée de main, mes idées trouvent leur rythme. J'y cultive la patience et le plaisir de prendre le temps.",
       },
       {
+        id: 'skateboarding',
         name: 'Skateboard',
         type: 'sport',
         description:
           "Le skate m'accompagne depuis tout petit, au skatepark comme dans mes premiers déplacements avant le permis. Le freestyle est l'une des formes d'art qui me parlent le plus. Chercher un mouvement, le répéter et enfin le réussir m'apporte une satisfaction particulière, entre créativité et persévérance.",
       },
       {
+        id: 'climbing',
         name: 'Escalade',
         type: 'sport',
         description:
           "J'aime la compétition, la progression et le fait de dépasser ce que je pensais possible. Les blocs modernes me rappellent le freestyle, avec leur part de créativité dans le mouvement. En montagne, l'escalade rejoint mon goût de la randonnée. Deux ambiances qui nourrissent ma persévérance et mon envie d'explorer.",
       },
       {
+        id: 'space',
         name: 'Espace',
         type: 'other',
         description:
           "Les fusées, les systèmes stellaires et les phénomènes physiques me passionnent depuis toujours. L'espace nourrit autant ma curiosité que mon ambition : pouvoir un jour travailler dans ce domaine est un objectif qui me donne envie de continuer à apprendre et à avancer.",
       },
       {
+        id: 'science',
         name: 'Science',
         type: 'other',
         description:
           "J'aime comprendre le monde qui m'entoure : poser une question, chercher une explication et la confronter aux faits. Cette approche logique et cartésienne correspond à ma façon de raisonner. La science entretient ma curiosité et m'apprend aussi à revoir mes idées quand les observations les contredisent.",
       },
       {
+        id: 'technology',
         name: 'Nouvelles technologies',
         type: 'other',
         description:
           "J'aime découvrir les avancées du moment, les essayer et comprendre ce qu'elles rendent possible. L'IA, par exemple, m'a permis de monter rapidement en compétences en explorant de nouvelles façons d'apprendre et de créer. Cette veille nourrit ma curiosité et mon envie d'expérimenter.",
       },
       {
+        id: 'editing',
         name: 'Montage photo/vidéo',
         type: 'other',
         description:
           "Le montage est une forme d'art que j'aime explorer en autodidacte. Pour donner forme à une idée, je découvre des techniques et des domaines que je ne connais pas encore. J'y retrouve le plaisir d'apprendre par moi-même, de créer et de partager un regard avec les autres.",
       },
       {
+        id: 'gaming',
         name: 'Jeux vidéo',
         type: 'other',
         description:
@@ -380,60 +390,70 @@ export const content: CVDataContent[] = [
     ],
     passions: [
       {
+        id: 'handball',
         name: 'Handball',
         type: 'sport',
         description:
           "I've played since childhood. Handball lets me burn off energy, but strategy matters just as much as physical commitment. Reading the game, communicating and building a play with my teammates are what I enjoy most. That combination keeps strengthening my sense of teamwork.",
       },
       {
+        id: 'ski',
         name: 'Skiing',
         type: 'sport',
         description:
           "Since childhood, skiing has given me a mix of speed, freedom and calm. On a descent, I choose my line and make my own decisions. I enjoy that independence, which calls for attention and trust in my own judgement.",
       },
       {
+        id: 'hiking',
         name: 'Hiking',
         type: 'sport',
         description:
           "In Haute-Savoie and Switzerland, I've gradually grown to love the landscapes and the people I meet along the way. Walking quiets the daily noise: without notifications or distractions close at hand, my thoughts find their own pace. It teaches me patience and the pleasure of taking my time.",
       },
       {
+        id: 'skateboarding',
         name: 'Skateboarding',
         type: 'sport',
         description:
           "Skating has been part of my life since childhood, from the skatepark to getting around before I had a driving licence. Freestyle is one of the art forms I love most. Finding a movement, practising it and finally landing it brings a particular satisfaction, combining creativity and persistence.",
       },
       {
+        id: 'climbing',
         name: 'Climbing',
         type: 'sport',
         description:
           "I enjoy competition, steady progress and pushing beyond what I thought possible. Modern bouldering reminds me of freestyle, with its creative approach to movement. In the mountains, climbing connects with my love of hiking. Both fuel my persistence and my desire to explore.",
       },
       {
+        id: 'space',
         name: 'Space',
         type: 'other',
         description:
           "Rockets, star systems and physical phenomena have fascinated me for as long as I can remember. Space feeds both my curiosity and my ambition: the possibility of working in this field one day gives me a goal that keeps me learning and moving forward.",
       },
       {
+        id: 'science',
         name: 'Science',
         type: 'other',
         description:
           "I like understanding the world around me: asking questions, looking for explanations and testing them against the facts. This logical, analytical approach fits how I think. Science keeps my curiosity alive and teaches me to reconsider my ideas when the evidence points elsewhere.",
       },
       {
+        id: 'technology',
         name: 'New technologies',
         type: 'other',
         description:
           "I enjoy discovering the latest advances, trying them out and understanding what they make possible. AI, for example, has helped me develop my skills quickly by exploring new ways to learn and create. Keeping up with technology feeds my curiosity and my desire to experiment.",
       },
       {
+        id: 'editing',
         name: 'Photo/Video editing',
         type: 'other',
         description:
           "Editing is an art form I enjoy exploring through self-directed learning. Bringing an idea to life leads me to techniques and subjects I haven't encountered before. It combines the pleasure of learning independently, creating and sharing a personal perspective with others.",
       },
       {
+        id: 'gaming',
         name: 'Video games',
         type: 'other',
         description:

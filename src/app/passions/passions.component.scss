@@ -49,6 +49,17 @@
   &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 4px; }
 }
 
+.passion-tilt {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 160ms ease;
+}
+
 .passion-face {
   grid-area: 1 / 1;
   display: flex;
@@ -63,7 +74,6 @@
   border-radius: inherit;
   background: var(--color-bg-surface);
   backface-visibility: hidden;
-  @include m.lang-box();
   transition: opacity 180ms ease, border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
@@ -71,7 +81,13 @@
   overflow: hidden;
   transform: rotateY(180deg);
   .passion-name { color: var(--color-accent-primary); }
+  > * {
+    opacity: 0;
+    transition: opacity 0ms;
+  }
 }
+
+.passion-name, .passion-description { @include m.lang-text(); }
 
 .passion-glyph { font-size: 1.4rem; color: var(--color-accent-primary); line-height: 1; }
 .passion-name { font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: 600; }
@@ -88,6 +104,10 @@
   .passion-back {
     border-color: var(--color-accent-primary);
     box-shadow: var(--glow-primary), 0 24px 48px rgb(0 0 0 / 22%);
+    > * {
+      opacity: 1;
+      transition: opacity 180ms ease 320ms;
+    }
   }
 }
 
@@ -100,7 +120,12 @@
   .passion-tile:focus-visible .passion-action { opacity: 1; }
   .is-inspecting, .is-open {
     .passion-tile {
-      transform: translateY(-12px) translateZ(28px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+      transform: translateY(-12px) translateZ(28px);
+    }
+    .passion-tilt {
+      transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+      // Cursor tracking is immediate; only expansion and lift are eased.
+      transition: none;
     }
     .passion-front { opacity: 0; }
     .passion-back {

@@ -60,6 +60,15 @@ test('inspection follows the mouse and resets on leave; touch flips twice', asyn
     const bounds = (await slot.boundingBox())!;
     await page.mouse.move(bounds.x + bounds.width - 20, bounds.y + bounds.height - 20);
     expect(await slot.evaluate(el => el.style.getPropertyValue('--tilt-y'))).not.toBe(first);
+    // Sample rendered rotation on the next frame while the mouse keeps moving.
+    const tilt = card.locator('.passion-tilt');
+    for (const x of [30, bounds.width - 30, 40]) {
+      await page.mouse.move(bounds.x + x, bounds.y + bounds.height / 2);
+      expect(await tilt.evaluate(el => {
+        const expected = Math.sin(parseFloat(getComputedStyle(el).getPropertyValue('--tilt-y')) * Math.PI / 180);
+        return Math.abs(new DOMMatrixReadOnly(getComputedStyle(el).transform).m31 - expected);
+      })).toBeLessThan(0.001);
+    }
     await page.mouse.move(0, 0);
     await expect(card).toHaveAttribute('aria-expanded', 'false');
     await expect(card).toHaveCSS('transform', 'none');
@@ -69,6 +78,50 @@ test('inspection follows the mouse and resets on leave; touch flips twice', asyn
     await card.press('Escape');
     await expect(card).toHaveAttribute('aria-expanded', 'false');
   }
+});
+
+test('changes language without recreating or revealing the passion tiles again', async ({ page, isMobile }) => {
+  await page.goto('/passions');
+  const slots = page.locator('.passion-slot');
+  await expect(slots.first()).toHaveClass(/revealed/);
+  await slots.evaluateAll(elements => elements.forEach((el, i) => el.setAttribute('data-original', String(i))));
+  if (isMobile) await page.getByRole('button', { name: 'Toggle navigation' }).click();
+  const language = page.locator('app-lang-toggle:visible').getByRole('switch');
+  for (const name of ['Skiing', 'Ski']) {
+    await language.click();
+    await expect(page.getByRole('button', { name, exact: true })).toHaveCount(1);
+    await expect(page.locator('html')).not.toHaveAttribute('data-vt', 'lang');
+    for (let i = 0; i < 10; i++) await expect(slots.nth(i)).toHaveAttribute('data-original', String(i));
+    await expect(slots.first()).toHaveClass(/revealed/);
+  }
+});
+
+test('fades in the description after expansion has finished', async ({ page, isMobile }) => {
+  await page.goto('/passions');
+  const card = page.getByRole('button', { name: 'Handball', exact: true });
+  await expect(card.locator('..')).toHaveClass(/revealed/);
+  await card.evaluate(el => {
+    const description = el.querySelector<HTMLElement>('.passion-description')!;
+    const samples: { height: number; opacity: number }[] = [];
+    el.addEventListener('transitionrun', event => {
+      if (event.target !== el || (event as TransitionEvent).propertyName !== 'height') return;
+      const start = performance.now();
+      const sample = () => {
+        samples.push({ height: parseFloat(getComputedStyle(el).height), opacity: Number(getComputedStyle(description).opacity) });
+        if (performance.now() - start < 600) requestAnimationFrame(sample);
+        else el.setAttribute('data-fade-samples', JSON.stringify(samples));
+      };
+      requestAnimationFrame(sample);
+    });
+  });
+  if (isMobile) await card.tap();
+  else await card.hover();
+  await expect(card).toHaveAttribute('data-fade-samples');
+  const samples = JSON.parse((await card.getAttribute('data-fade-samples'))!) as { height: number; opacity: number }[];
+  expect(samples.filter(sample => sample.height < 299).length).toBeGreaterThan(1);
+  expect(samples.filter(sample => sample.height < 299).every(sample => sample.opacity === 0)).toBe(true);
+  expect(samples.some(sample => sample.opacity > 0 && sample.opacity < 1)).toBe(true);
+  expect(samples.at(-1)!.opacity).toBe(1);
 });
 
 test('keeps the inspection animation enabled with reduced motion and the grid compact', async ({ page, isMobile }) => {
