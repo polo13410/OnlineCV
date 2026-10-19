@@ -120,15 +120,16 @@
   transition: transform 120ms ease, color 120ms ease;
 }
 .passion-description {
-  // Compose at the final width from the first frame; only its scale changes.
+  // Keep the final layout and center while zooming with the card.
   position: absolute;
   top: 50%;
   left: 50%;
   width: calc(var(--inspect-width) - 2 * var(--passion-pad-x) - 2px);
   translate: -50% -50%;
   transform: scale(0);
-  transform-origin: center top;
-  transition: transform 140ms ease;
+  opacity: 0;
+  transform-origin: center;
+  transition: transform 160ms ease, opacity 160ms ease;
   font-size: var(--font-size-sm);
   line-height: 1.6;
   color: var(--color-text-secondary);
@@ -151,7 +152,7 @@
     color: var(--color-accent-primary);
   }
   .passion-glyph { transform: scale(0); }
-  .passion-description { transform: scale(1); transition-delay: 120ms; }
+  .passion-description { transform: scale(1); opacity: 1; }
 }
 
 .is-open .passion-tile { transform: rotateY(180deg); }

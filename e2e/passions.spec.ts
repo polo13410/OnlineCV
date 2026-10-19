@@ -98,15 +98,20 @@ test('changes language without recreating or revealing the passion tiles again',
   }
 });
 
-test('keeps the title continuous and zooms fixed-layout copy from zero within 300ms', async ({ page, isMobile }) => {
+test('keeps the title continuous and zooms fixed-layout copy in sync with the tile', async ({ page, isMobile }) => {
   await page.goto('/passions');
   const card = page.getByRole('button', { name: 'Handball', exact: true });
   await expect(card.locator('..')).toHaveClass(/revealed/);
   await card.locator('..').evaluate(el => Promise.all(el.getAnimations().map(a => a.finished)));
+  await expect(card.locator('.passion-description')).toHaveCSS('transform', 'matrix(0, 0, 0, 0, 0, 0)');
+  await expect(card.locator('.passion-description')).toHaveCSS('opacity', '0');
   await card.evaluate(el => {
     const title = el.querySelector<HTMLElement>('.passion-front .passion-name')!;
     const description = el.querySelector<HTMLElement>('.passion-description')!;
-    const samples: { time: number; titleY: number; descriptionScale: number; width: number; height: number }[] = [];
+    const samples: {
+      time: number; titleY: number; descriptionScale: number; opacity: number;
+      cardHeight: number; width: number; height: number;
+    }[] = [];
     el.addEventListener('transitionrun', event => {
       if (event.target !== el || (event as TransitionEvent).propertyName !== 'height') return;
       const start = performance.now();
@@ -117,6 +122,8 @@ test('keeps the title continuous and zooms fixed-layout copy from zero within 30
           time: performance.now() - start,
           titleY: titleTransform.m42,
           descriptionScale: descriptionTransform.m11,
+          opacity: Number(getComputedStyle(description).opacity),
+          cardHeight: parseFloat(getComputedStyle(el).height),
           width: description.offsetWidth,
           height: description.offsetHeight,
         });
@@ -133,14 +140,18 @@ test('keeps the title continuous and zooms fixed-layout copy from zero within 30
     time: number;
     titleY: number;
     descriptionScale: number;
+    opacity: number;
+    cardHeight: number;
     width: number;
     height: number;
   }[];
   expect(samples.some(sample => sample.titleY > -120 && sample.titleY < 0)).toBe(true);
-  expect(samples.some(sample => sample.descriptionScale === 0)).toBe(true);
   expect(samples.some(sample => sample.descriptionScale > 0.1 && sample.descriptionScale < 0.9)).toBe(true);
-  const firstVisible = samples.find(sample => sample.descriptionScale > 0.05)!;
-  expect(firstVisible.titleY).toBeCloseTo(-126, 1);
+  for (const sample of samples) {
+    expect(sample.descriptionScale).toBeCloseTo((sample.cardHeight - 116) / (300 - 116), 2);
+    expect(sample.opacity).toBeCloseTo(sample.descriptionScale, 2);
+  }
+  expect(samples.at(-1)!.titleY).toBeCloseTo(-126, 1);
   expect(new Set(samples.map(sample => sample.width)).size).toBe(1);
   expect(new Set(samples.map(sample => sample.height)).size).toBe(1);
   expect(samples.find(sample => sample.descriptionScale === 1)!.time).toBeLessThan(300);
