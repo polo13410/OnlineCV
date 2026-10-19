@@ -26,6 +26,7 @@ export interface Details {
 }
 
 export interface Passion {
+  description: string;
   name: string;
   type: string;
 }
