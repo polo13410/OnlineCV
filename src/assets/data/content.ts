@@ -168,7 +168,7 @@ export const content: CVDataContent[] = [
           ],
         },
         {
-          title: 'Développeur full-stack, DevOps & architecte solutions',
+          title: 'Cloud Solution Architect & Full Stack Dev | DevOps',
           company: 'Propulse Lab',
           location: 'Lausanne, Suisse',
           id: 'propulselab',
@@ -199,7 +199,7 @@ export const content: CVDataContent[] = [
             "Migration de services PHP/Laravel hébergés sur EC2 vers Node.js et TypeScript sur AWS Lambda. Adaptation des images PHP/Laravel sur AWS, intégration de PSP dont Stripe et participation au démarrage d'une solution multi-PSP.",
             "Développement d'interfaces avec Vue.js 3 et Quasar. Création d'un raccourcisseur de liens configurable avec statistiques et A/B testing des parcours et bons de commande.",
             "Mise en place de pipelines CI/CD avec GitHub Actions, Seed CI et CircleCI. Gestion de l'infrastructure en code avec Terraform et documentation des développements.",
-            "Formations SQL et AWS Athena auprès de collaborateurs débutants ou non développeurs pour faciliter leur accès aux données métier.",
+            'Formations SQL et AWS Athena auprès de collaborateurs débutants ou non développeurs pour faciliter leur accès aux données métier.',
           ],
         },
         {
@@ -211,12 +211,7 @@ export const content: CVDataContent[] = [
           iconFill: true,
           dateFrom: '2020-09',
           dateTo: '2022-05',
-          skills: [
-            'csharp',
-            'dotnet',
-            'sql',
-            'python',
-          ],
+          skills: ['csharp', 'dotnet', 'sql', 'python'],
           descriptions: [
             "Évolution d'un logiciel de trading et de shipping pour Total, au sein de MetaFactory. Gestion des prix, commandes, quantités de produits pétroliers et acheminements.",
             "Développement en C#/.NET et Microsoft SQL dans une application métier complexe. Création de sélecteurs pour des hiérarchies de produits en cascade et amélioration de la réactivité de l'interface, avec une autonomie technique croissante.",
@@ -238,7 +233,7 @@ export const content: CVDataContent[] = [
           descriptions: [
             "Cadrage du projet de modernisation du terminal de paiement virtuel Payline face aux exigences PCI-DSS. Analyse de l'existant, des besoins et des pistes de migration vers Angular et des API REST.",
             "Documentation des orientations fonctionnelles et techniques, suivi des dépendances et échanges avec les équipes. Adaptation des priorités pendant le Covid ; préparation d'une migration planifiée après le stage.",
-            "Mise en place et exécution de tests fonctionnels sur les services de paiement en ligne. Contributions ponctuelles à des outils Angular, en complément du travail de gestion de projet et de qualification.",
+            'Mise en place et exécution de tests fonctionnels sur les services de paiement en ligne. Contributions ponctuelles à des outils Angular, en complément du travail de gestion de projet et de qualification.',
           ],
         },
         {
@@ -268,7 +263,7 @@ export const content: CVDataContent[] = [
           skills: ['java', 'htmlcss'],
           descriptions: [
             "Conception en autonomie de Kosmetic, un outil Java/Swing de personnalisation du portail SAP BusinessObjects Fiori BI. Configuration des couleurs, logos, textes d'accueil et thèmes pour les consultants.",
-            "Automatisation des modifications CSS, JavaScript et de configuration par expressions régulières. Sauvegarde des fichiers, copie des ressources et redémarrage du serveur depuis une interface guidée, avec une architecture MVC.",
+            'Automatisation des modifications CSS, JavaScript et de configuration par expressions régulières. Sauvegarde des fichiers, copie des ressources et redémarrage du serveur depuis une interface guidée, avec une architecture MVC.',
             "Choix techniques et suivi régulier avec le directeur technique. Versionnement Git, préparation d'une application portable avec Launch4j et rédaction d'un guide utilisateur pour la transmission aux consultants.",
           ],
         },
@@ -469,11 +464,11 @@ export const content: CVDataContent[] = [
             'python',
           ],
           descriptions: [
-            "Technical ownership of real estate data applications, from design to production. Defined architecture and standards, coordinated development and delegated tasks with a high degree of autonomy.",
-            "Built the Google Cloud infrastructure: Cloud Run, Cloud SQL, IAM and networking. Migrated applications into this centralised architecture and automated deployments with GitHub Actions.",
-            "Full-stack development with TypeScript, React, Node.js and PostgreSQL. Created a shared authentication system for multiple applications and internal services.",
-            "Developed an agentic chat platform for real estate analysis, integrated AI models and built an internal MCP server. Created RAG tools for documentation and access to internal knowledge.",
-            "Created CLI tools to simplify team workflows. Improved software quality practices, automation and system maintainability.",
+            'Technical ownership of real estate data applications, from design to production. Defined architecture and standards, coordinated development and delegated tasks with a high degree of autonomy.',
+            'Built the Google Cloud infrastructure: Cloud Run, Cloud SQL, IAM and networking. Migrated applications into this centralised architecture and automated deployments with GitHub Actions.',
+            'Full-stack development with TypeScript, React, Node.js and PostgreSQL. Created a shared authentication system for multiple applications and internal services.',
+            'Developed an agentic chat platform for real estate analysis, integrated AI models and built an internal MCP server. Created RAG tools for documentation and access to internal knowledge.',
+            'Created CLI tools to simplify team workflows. Improved software quality practices, automation and system maintainability.',
           ],
         },
         {
@@ -502,13 +497,13 @@ export const content: CVDataContent[] = [
             'sql',
           ],
           descriptions: [
-            "Developed payment, refund and subscription services within the Transactions team. Worked independently with support from an experienced developer and in close collaboration with the business analyst.",
-            "Automated bank reconciliation to match payments, refunds, invoices and subscriptions with cent-level accuracy. Reduced manual checks for developers and the finance team.",
-            "Built chargeback analysis and dispute scripts, integrated PSP fraud prevention tools and implemented early refunds. Significantly reduced chargebacks and improved case handling.",
-            "Migrated PHP/Laravel services hosted on EC2 to Node.js and TypeScript on AWS Lambda. Adapted PHP/Laravel images on AWS, integrated PSPs including Stripe and contributed to the initial stages of a multi-PSP solution.",
-            "Developed interfaces with Vue.js 3 and Quasar. Created a configurable link shortener with statistics and A/B testing for user journeys and order forms.",
-            "Set up CI/CD pipelines with GitHub Actions, Seed CI and CircleCI. Managed infrastructure as code with Terraform and documented development work.",
-            "Delivered SQL and AWS Athena training to beginners and non-developer colleagues to help them access business data.",
+            'Developed payment, refund and subscription services within the Transactions team. Worked independently with support from an experienced developer and in close collaboration with the business analyst.',
+            'Automated bank reconciliation to match payments, refunds, invoices and subscriptions with cent-level accuracy. Reduced manual checks for developers and the finance team.',
+            'Built chargeback analysis and dispute scripts, integrated PSP fraud prevention tools and implemented early refunds. Significantly reduced chargebacks and improved case handling.',
+            'Migrated PHP/Laravel services hosted on EC2 to Node.js and TypeScript on AWS Lambda. Adapted PHP/Laravel images on AWS, integrated PSPs including Stripe and contributed to the initial stages of a multi-PSP solution.',
+            'Developed interfaces with Vue.js 3 and Quasar. Created a configurable link shortener with statistics and A/B testing for user journeys and order forms.',
+            'Set up CI/CD pipelines with GitHub Actions, Seed CI and CircleCI. Managed infrastructure as code with Terraform and documented development work.',
+            'Delivered SQL and AWS Athena training to beginners and non-developer colleagues to help them access business data.',
           ],
         },
         {
@@ -520,16 +515,11 @@ export const content: CVDataContent[] = [
           iconFill: true,
           dateFrom: '2020-09',
           dateTo: '2022-05',
-          skills: [
-            'csharp',
-            'dotnet',
-            'sql',
-            'python',
-          ],
+          skills: ['csharp', 'dotnet', 'sql', 'python'],
           descriptions: [
-            "Developed a trading and shipping application for Total at MetaFactory. Supported pricing, orders, petroleum product quantities and shipments.",
-            "Developed features in C#/.NET and Microsoft SQL within a complex business application. Built selectors for cascading product hierarchies and improved interface responsiveness, with increasing technical autonomy.",
-            "Reverse-engineered a C++ API and translated its functionality into Python. Restructured the code to simplify maintenance and future changes.",
+            'Developed a trading and shipping application for Total at MetaFactory. Supported pricing, orders, petroleum product quantities and shipments.',
+            'Developed features in C#/.NET and Microsoft SQL within a complex business application. Built selectors for cascading product hierarchies and improved interface responsiveness, with increasing technical autonomy.',
+            'Reverse-engineered a C++ API and translated its functionality into Python. Restructured the code to simplify maintenance and future changes.',
           ],
         },
       ],
@@ -545,9 +535,9 @@ export const content: CVDataContent[] = [
           dateTo: '2020-07',
           skills: ['angular', 'typescript', 'htmlcss', 'agile', 'testing'],
           descriptions: [
-            "Helped scope the modernisation of Payline’s virtual payment terminal to address PCI-DSS requirements. Analysed the existing system, business needs and migration options involving Angular and REST APIs.",
-            "Documented functional and technical plans, tracked dependencies and liaised with teams. Adapted priorities during Covid and prepared a migration scheduled for after the internship.",
-            "Prepared and carried out functional tests on online payment services. Made occasional contributions to Angular tools alongside project management and quality assurance work.",
+            'Helped scope the modernisation of Payline’s virtual payment terminal to address PCI-DSS requirements. Analysed the existing system, business needs and migration options involving Angular and REST APIs.',
+            'Documented functional and technical plans, tracked dependencies and liaised with teams. Adapted priorities during Covid and prepared a migration scheduled for after the internship.',
+            'Prepared and carried out functional tests on online payment services. Made occasional contributions to Angular tools alongside project management and quality assurance work.',
           ],
         },
         {
@@ -561,9 +551,9 @@ export const content: CVDataContent[] = [
           dateTo: '2019-01',
           skills: ['java'],
           descriptions: [
-            "Developed a Java plugin for PLATIN, an Eclipse RCP application controlling ground test equipment in the space sector. Added storage and visualisation of experimental measurements.",
-            "Selected and integrated InfluxDB, developed measurement acquisition and used concurrent processing to keep the interface responsive. Created a graphical interface and scripting commands to configure sources and sampling frequency.",
-            "Integrated Grafana dashboards within the application and through a browser. Worked independently in an international English-speaking team using Jira, Git and Bitbucket; production delivery followed the internship.",
+            'Developed a Java plugin for PLATIN, an Eclipse RCP application controlling ground test equipment in the space sector. Added storage and visualisation of experimental measurements.',
+            'Selected and integrated InfluxDB, developed measurement acquisition and used concurrent processing to keep the interface responsive. Created a graphical interface and scripting commands to configure sources and sampling frequency.',
+            'Integrated Grafana dashboards within the application and through a browser. Worked independently in an international English-speaking team using Jira, Git and Bitbucket; production delivery followed the internship.',
           ],
         },
         {
@@ -576,9 +566,9 @@ export const content: CVDataContent[] = [
           dateTo: '2018-04',
           skills: ['java', 'htmlcss'],
           descriptions: [
-            "Independently designed Kosmetic, a Java/Swing tool for consultants to customise the SAP BusinessObjects Fiori BI portal. Configured colours, logos, welcome messages and themes.",
-            "Automated CSS, JavaScript and configuration changes using regular expressions. Implemented file backups, resource copying and server restarts through a guided interface with an MVC architecture.",
-            "Selected the technical approach and reported progress to the technical director. Used Git, packaged a portable application with Launch4j and wrote a user guide for handover to consultants.",
+            'Independently designed Kosmetic, a Java/Swing tool for consultants to customise the SAP BusinessObjects Fiori BI portal. Configured colours, logos, welcome messages and themes.',
+            'Automated CSS, JavaScript and configuration changes using regular expressions. Implemented file backups, resource copying and server restarts through a guided interface with an MVC architecture.',
+            'Selected the technical approach and reported progress to the technical director. Used Git, packaged a portable application with Launch4j and wrote a user guide for handover to consultants.',
           ],
         },
       ],
