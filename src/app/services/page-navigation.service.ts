@@ -10,7 +10,7 @@ export interface Page {
   exact: boolean;
 }
 
-/** The pages sit side by side in this order, left to right (nav, overscroll and slides follow it). */
+/** Pages are stacked in this order, top to bottom (nav, overscroll and slides follow it). */
 export const PAGES: readonly Page[] = [
   { path: '/',            label: 'NAV.MENU_TITLE.HOME',        exact: true,  icon: 'home'       },
   { path: '/experiences', label: 'NAV.MENU_TITLE.EXPERIENCES', exact: false, icon: 'briefcase'  },
@@ -61,7 +61,7 @@ export class PageNavigationService {
     });
   }
 
-  /** The page next to the current one (step 1: right, -1: left), null at either end. */
+  /** The page next to the current one (step 1: below, -1: above), null at either end. */
   neighbor(step: 1 | -1): Page | null {
     const i = this.current();
     return i < 0 ? null : PAGES[i + step] ?? null;

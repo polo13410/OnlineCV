@@ -6,9 +6,9 @@
 :root {
   @include t.apply-tokens(); // light by default
 
-  // Page area (right of the sidebar): one page of the left-to-right strip
+  // Page area (right of the sidebar); vertical transitions travel one visible screen.
   --page-offset: var(--sidebar-width);
-  --page-w: calc(100vw - var(--page-offset));
+  --page-h: 100dvh;
   @include m.mobile() { --page-offset: 0px; }
 }
 
@@ -128,11 +128,11 @@ html[data-vt='skills'] .panel-item * { view-transition-name: none !important; }
 @keyframes vt-slide-in-right  { from { translate: 110% 0; opacity: 0; } }
 @keyframes vt-slide-out-right { to   { translate: 110% 0; opacity: 0; } }
 
-// Page change (router, PageNavigationService): the pages sit side by side, left to right.
+// Page change (router, PageNavigationService): pages are stacked from top to bottom.
 // The page area is the root snapshot (nav and topbar are their own layers and stay put):
 // the old page slides out, the stand-ins of the pages in between (PageSweepComponent) pass by,
-// the new page slides in — one rigid strip, offsets in page widths.
-// --vt-sign: 1 to the right, -1 to the left; --vt-pages: pages travelled.
+// the new page slides in — one rigid strip, offsets in viewport heights.
+// --vt-sign: 1 to the next page below, -1 to the previous above; --vt-pages: pages travelled.
 html[data-vt^='page'] .shell-main * { view-transition-name: none !important; }
 html:not([data-vt='page']) app-page-sweep { display: none; }
 
@@ -154,8 +154,8 @@ html:not([data-vt='page']) app-page-sweep { display: none; }
   &::view-transition-group(.page-sweep) { z-index: 0; }
 }
 @keyframes vt-page-strip {
-  from { translate: calc(var(--strip-from) * var(--page-w)) 0; }
-  to   { translate: calc(var(--strip-to) * var(--page-w)) 0; }
+  from { translate: 0 calc(var(--strip-from) * var(--page-h)); }
+  to   { translate: 0 calc(var(--strip-to) * var(--page-h)); }
 }
 
 body.custom-cursor-active * { cursor: none !important; }
