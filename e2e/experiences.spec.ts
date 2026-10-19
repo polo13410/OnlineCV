@@ -103,13 +103,21 @@ test('adapts previews to language and width and keeps the control legible in bot
   await expect(page.locator('app-education .xp-more')).toHaveCount(0);
 });
 
-test('opens immediately when reduced motion is requested', async ({ page }) => {
+test('keeps card animations enabled even when reduced motion is requested', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/experiences');
   const card = page.locator('#quanthome .xp-card');
-  await card.locator('.xp-more').click();
+  await expect(card.locator('.xp-more')).toBeVisible();
+  const animated = await card.evaluate(async el => {
+    (el.querySelector('.xp-more') as HTMLButtonElement).click();
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    return el.querySelector('.xp-description')!.getAnimations().length > 0;
+  });
+  expect(animated).toBe(true);
   await expect(card.locator('.xp-more')).toHaveAttribute('aria-expanded', 'true');
-  await expect(card.locator('.xp-description')).toHaveCSS('transition-duration', '0s');
+  await expect(card.locator('.xp-description')).toHaveCSS('transition-duration', '0.28s');
+  await expect(card.locator('.xp-more svg')).toHaveCSS('transition-duration', '0.28s');
   await expect.poll(() => card.locator('.xp-description').evaluate(el =>
     Math.abs(el.clientHeight - el.scrollHeight)
   )).toBeLessThanOrEqual(1);

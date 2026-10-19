@@ -220,10 +220,6 @@
   @include m.mobile() { min-height: 44px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .xp-description, .xp-more, .xp-more svg { transition: none; }
-}
-
 .xp-tags {
   display: flex;
   flex-wrap: wrap;
