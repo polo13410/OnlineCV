@@ -17,7 +17,7 @@ const TOUCH_SLOP = 10;
 const MAX_SHIFT = 44;
 
 /**
- * Overscroll to change page: past the bottom of a page the next one (on the right) is pulled in,
+ * Overscroll to change page: past the bottom of a page the next one (below) is pulled in,
  * past the top the previous one. Only a gesture that starts against the edge pulls, so a scroll
  * (or its momentum) running into the edge never changes page by itself.
  * Progress is written as CSS variables on <html> (--pull, --pull-shift, --pull-transition):
