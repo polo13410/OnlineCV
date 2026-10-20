@@ -1,36 +1,38 @@
-<!-- src/app/passions/passions.component.html -->
 <div class="page-container">
-
-  <div class="section-header" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'PASSIONS.SPORTS_OVERLINE' | translate }}</p>
-    <h2>{{ 'PASSIONS.SPORTS' | translate }}</h2>
-  </div>
-  <div class="passion-grid">
-    @for (sport of sports; track $index; let i = $index) {
-      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <span class="passion-glyph">◈</span>
-        <span class="passion-name">{{ sport }}</span>
-      </div>
-    }
-  </div>
-
-  <div class="section-header section-header--other" appScrollReveal="reveal">
-    <p class="section-overline">{{ 'PASSIONS.OTHERS_OVERLINE' | translate }}</p>
-    <h2>{{ 'PASSIONS.OTHERS' | translate }}</h2>
-  </div>
-  <div class="passion-grid">
-    @for (other of others; track $index; let i = $index) {
-      <div class="passion-tile" appScrollReveal="stagger-reveal" [staggerIndex]="i">
-        <span class="passion-glyph">◉</span>
-        <span class="passion-name">{{ other }}</span>
-      </div>
-    }
-  </div>
-
+  @for (group of [sports, others]; track $index; let section = $index) {
+    <div class="section-header" [class.section-header--other]="section === 1" appScrollReveal="reveal">
+      <p class="section-overline">{{ (section === 0 ? 'PASSIONS.SPORTS_OVERLINE' : 'PASSIONS.OTHERS_OVERLINE') | translate }}</p>
+      <h2>{{ (section === 0 ? 'PASSIONS.SPORTS' : 'PASSIONS.OTHERS') | translate }}</h2>
+    </div>
+    <div class="passion-grid">
+      @for (passion of group; track passion.id; let i = $index) {
+        <div class="passion-slot" appScrollReveal="stagger-reveal" [staggerIndex]="i"
+          (pointermove)="inspect($event, passion)" (pointerleave)="leave($event)"
+          [class.is-inspecting]="hovered === passion.id" [class.is-open]="opened === passion.id">
+          <button type="button" class="passion-tile" (click)="toggle(passion, $event)"
+            (keydown.escape)="opened = null; hovered = null" (blur)="opened = null"
+            [attr.aria-label]="passion.name" [attr.aria-expanded]="opened === passion.id || hovered === passion.id"
+            [attr.aria-describedby]="opened === passion.id || hovered === passion.id ? 'passion-' + section + '-' + i : null">
+            <span class="passion-tilt">
+              <span class="passion-face passion-front" [attr.aria-hidden]="opened === passion.id || hovered === passion.id">
+                <span class="passion-glyph" aria-hidden="true">{{ section === 0 ? '◈' : '◉' }}</span>
+                <span class="passion-name">{{ passion.name }}</span>
+                <span class="passion-action" aria-hidden="true">+</span>
+              </span>
+              <span class="passion-face passion-back" [attr.aria-hidden]="opened !== passion.id && hovered !== passion.id">
+                <span class="passion-name">{{ passion.name }}</span>
+                <span class="passion-description" [id]="'passion-' + section + '-' + i">{{ passion.description }}</span>
+                <span class="passion-action" aria-hidden="true">↶</span>
+              </span>
+            </span>
+          </button>
+        </div>
+      }
+    </div>
+  }
   <div class="section-header section-header--other" appScrollReveal="reveal">
     <p class="section-overline">{{ 'PASSIONS.SPOTIFY_OVERLINE' | translate }}</p>
     <h2>{{ 'PASSIONS.SPOTIFY_TITLE' | translate }}</h2>
   </div>
   <app-spotify-widget></app-spotify-widget>
-
 </div>

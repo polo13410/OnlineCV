@@ -1,4 +1,3 @@
-// src/app/passions/passions.component.scss
 @use '../../styles/mixins' as m;
 
 .page-container { @include m.page-container(); }
@@ -13,43 +12,179 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--space-3);
 
-  @include m.mobile() { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--space-2); }
+  @include m.mobile() {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-2);
+  }
+}
+
+// Keep the pointer surface still, so tilting never changes cursor coordinates.
+.passion-slot {
+  --passion-pad-x: var(--space-4);
+  --inspect-width: 300px;
+  position: relative;
+  perspective: 900px;
+  min-width: 0;
+  height: 116px;
+  z-index: 0;
+  transition: z-index 0s 160ms, var(--reveal-transition);
+  &:has(:focus-visible), &.is-inspecting, &.is-open {
+    z-index: 10;
+    transition: z-index 0s, var(--reveal-transition);
+  }
 }
 
 .passion-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius-md);
+  background: transparent;
+  color: var(--color-text-primary);
+  font: inherit;
+  text-align: center;
+  transform-style: preserve-3d;
+  // This inspection animation is part of the interaction, including reduced motion.
+  transition: width 160ms ease, height 160ms ease, left 160ms ease, transform 160ms ease;
+
+  &:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 4px; }
+}
+
+.passion-tilt {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 160ms ease;
+}
+
+.passion-face {
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-5) var(--space-3);
+  gap: var(--space-3);
+  min-width: 0;
+  min-height: 0;
+  padding: var(--space-5) var(--space-4);
   border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
+  border-radius: inherit;
   background: var(--color-bg-surface);
-  text-align: center;
-  cursor: default;
-  @include m.lang-box();
-  transition:
-    var(--reveal-transition),
-    border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    transform var(--transition-base);
-
-  &:hover {
-    border-color: var(--color-accent-primary);
-    box-shadow: var(--glow-primary);
-    transform: translateY(-2px);
-  }
+  backface-visibility: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
+
+.passion-back {
+  overflow: hidden;
+  transform: rotateY(180deg);
+  .passion-name {
+    color: var(--color-accent-primary);
+    transform: translate(-50%, -126px);
+  }
+  .passion-action { position: absolute; bottom: var(--space-4); }
+}
+
+.passion-name, .passion-description { @include m.lang-text(); }
 
 .passion-glyph {
   font-size: 1.4rem;
   color: var(--color-accent-primary);
   line-height: 1;
+  position: absolute;
+  top: 50%;
+  translate: 0 -24px;
+  transition: transform 120ms ease;
 }
-
 .passion-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--inspect-width) - 2 * var(--passion-pad-x) - 2px);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+}
+.passion-front .passion-name {
+  width: calc(var(--title-width, 100%) - 2 * var(--passion-pad-x) - 2px);
+  transform: translate(-50%, 6px);
+  transition: transform 120ms ease, color 120ms ease;
+}
+.passion-description {
+  // Keep the final layout and center while zooming with the card.
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--inspect-width) - 2 * var(--passion-pad-x) - 2px);
+  translate: -50% -50%;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: center;
+  transition: transform 160ms ease, opacity 160ms ease;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+.passion-action { font-size: 1rem; line-height: 1; color: var(--color-accent-primary); }
+.passion-front .passion-action { position: absolute; right: var(--space-3); bottom: var(--space-3); }
+
+.is-inspecting, .is-open {
+  .passion-tile {
+    width: var(--inspect-width);
+    height: 300px;
+    left: calc(50% + var(--inspect-shift, 0px));
+  }
+  .passion-back {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--glow-primary), 0 24px 48px rgb(0 0 0 / 22%);
+  }
+  .passion-front .passion-name {
+    transform: translate(-50%, -126px);
+    color: var(--color-accent-primary);
+  }
+  .passion-glyph { transform: scale(0); }
+  .passion-description { transform: scale(1); opacity: 1; }
+}
+
+.is-open .passion-tile { transform: rotateY(180deg); }
+
+@media (hover: hover) and (pointer: fine) {
+  // On desktop the description faces the reader while the whole card tilts.
+  .passion-front {
+    z-index: 1;
+    background: transparent;
+    border-color: transparent;
+    pointer-events: none;
+  }
+  .passion-back {
+    transform: none;
+    .passion-name { display: none; }
+  }
+  .passion-action { opacity: 0; }
+  .passion-tile:focus-visible .passion-action { opacity: 1; }
+  .is-inspecting, .is-open {
+    .passion-tile {
+      transform: translateY(-12px) translateZ(28px);
+    }
+    .passion-tilt {
+      transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+      // Cursor tracking is immediate; only expansion and lift are eased.
+      transition: none;
+    }
+  }
+}
+
+@include m.mobile() {
+  .passion-slot { --passion-pad-x: var(--space-3); }
+  .passion-face { padding: var(--space-4) var(--space-3); }
+  .passion-description { font-size: 12px; line-height: 1.6; }
 }
