@@ -109,6 +109,7 @@ export const content: CVDataContent[] = [
           "Tableau de bord de l'export de données Uber (courses, Uber Eats, villes, habitudes, compte), calculé entièrement dans le navigateur : aucun backend, cartes hors ligne et CSP bloquant toute requête sortante.",
         skills: ['react', 'typescript', 'htmlcss', 'netlify', 'testing', 'cicd'],
         links: [
+          { type: 'live', url: 'https://uberewind.netlify.app' },
           { type: 'repo', url: 'https://github.com/polo13410/Uberewind' },
         ],
       },
@@ -488,6 +489,7 @@ export const content: CVDataContent[] = [
           'Dashboard for your Uber data export (rides, Uber Eats, cities, habits, account), computed entirely in the browser: no backend, offline maps and a CSP that blocks every outgoing request.',
         skills: ['react', 'typescript', 'htmlcss', 'netlify', 'testing', 'cicd'],
         links: [
+          { type: 'live', url: 'https://uberewind.netlify.app' },
           { type: 'repo', url: 'https://github.com/polo13410/Uberewind' },
         ],
       },
